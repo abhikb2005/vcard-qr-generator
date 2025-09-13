@@ -4,228 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vCard QR Code Generator</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .form-group { margin: 15px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { background: #007bff; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        #qrCanvas { border: 1px solid #ddd; margin: 20px 0; }
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
+    <h1>vCard QR Code Generator</h1>
+    
     <div class="container">
-        <header class="app-header">
-            <h1>vCard QR Code Generator</h1>
-            <p class="app-description">Create QR codes for your contact information instantly</p>
-        </header>
-
-        <div class="app-layout">
-            <!-- Contact Information Form -->
-            <section class="form-section">
-                <div class="card">
-                    <div class="card__header">
-                        <h2>Contact Information</h2>
-                        <button type="button" class="btn btn--sm btn--outline" id="fillSampleBtn">Fill Sample Data</button>
-                    </div>
-                    <div class="card__body">
-                        <form id="contactForm" class="contact-form">
-                            <!-- Basic Info -->
-                            <div class="form-group">
-                                <label for="fullName" class="form-label">Full Name *</label>
-                                <input type="text" id="fullName" class="form-control" required>
-                                <div class="error-message" id="fullNameError"></div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="organization" class="form-label">Organization</label>
-                                    <input type="text" id="organization" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="title" class="form-label">Job Title</label>
-                                    <input type="text" id="title" class="form-control">
-                                </div>
-                            </div>
-
-                            <!-- Phone Numbers -->
-                            <fieldset class="form-fieldset">
-                                <legend>Phone Numbers</legend>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="workPhone" class="form-label">Work Phone</label>
-                                        <input type="tel" id="workPhone" class="form-control">
-                                        <div class="error-message" id="workPhoneError"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="mobilePhone" class="form-label">Mobile Phone</label>
-                                        <input type="tel" id="mobilePhone" class="form-control">
-                                        <div class="error-message" id="mobilePhoneError"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="homePhone" class="form-label">Home Phone</label>
-                                    <input type="tel" id="homePhone" class="form-control">
-                                    <div class="error-message" id="homePhoneError"></div>
-                                </div>
-                            </fieldset>
-
-                            <!-- Email Addresses -->
-                            <fieldset class="form-fieldset">
-                                <legend>Email Addresses</legend>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="workEmail" class="form-label">Work Email</label>
-                                        <input type="email" id="workEmail" class="form-control">
-                                        <div class="error-message" id="workEmailError"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="personalEmail" class="form-label">Personal Email</label>
-                                        <input type="email" id="personalEmail" class="form-control">
-                                        <div class="error-message" id="personalEmailError"></div>
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <!-- Website -->
-                            <div class="form-group">
-                                <label for="website" class="form-label">Website</label>
-                                <input type="url" id="website" class="form-control">
-                                <div class="error-message" id="websiteError"></div>
-                            </div>
-
-                            <!-- Address -->
-                            <fieldset class="form-fieldset">
-                                <legend>Address</legend>
-                                <div class="form-group">
-                                    <label for="street" class="form-label">Street Address</label>
-                                    <input type="text" id="street" class="form-control">
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="city" class="form-label">City</label>
-                                        <input type="text" id="city" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">State</label>
-                                        <input type="text" id="state" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="zip" class="form-label">ZIP Code</label>
-                                        <input type="text" id="zip" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="country" class="form-label">Country</label>
-                                        <input type="text" id="country" class="form-control">
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <!-- Note -->
-                            <div class="form-group">
-                                <label for="note" class="form-label">Note</label>
-                                <textarea id="note" class="form-control" rows="3" placeholder="Additional information..."></textarea>
-                            </div>
-
-                            <!-- Form Actions -->
-                            <div class="form-actions">
-                                <button type="button" class="btn btn--outline" id="clearFormBtn">Clear Form</button>
-                                <button type="submit" class="btn btn--primary" id="generateBtn">Generate QR Code</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-
-            <!-- QR Code and Controls -->
-            <section class="qr-section">
-                <!-- QR Code Preview -->
-                <div class="card">
-                    <div class="card__header">
-                        <h3>QR Code Preview</h3>
-                    </div>
-                    <div class="card__body qr-preview-body">
-                        <div class="qr-container">
-                            <canvas id="qrCanvas"></canvas>
-                            <div class="qr-placeholder" id="qrPlaceholder">
-                                <div class="qr-icon">📱</div>
-                                <p>Enter contact information to generate QR code</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- QR Code Customization -->
-                <div class="card">
-                    <div class="card__header">
-                        <h3>Customize QR Code</h3>
-                    </div>
-                    <div class="card__body">
-                        <div class="customization-controls">
-                            <div class="form-group">
-                                <label for="qrSize" class="form-label">Size</label>
-                                <select id="qrSize" class="form-control">
-                                    <option value="128">Small (128px)</option>
-                                    <option value="256" selected>Medium (256px)</option>
-                                    <option value="512">Large (512px)</option>
-                                </select>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="foregroundColor" class="form-label">Foreground Color</label>
-                                    <input type="color" id="foregroundColor" class="form-control color-input" value="#000000">
-                                </div>
-                                <div class="form-group">
-                                    <label for="backgroundColor" class="form-label">Background Color</label>
-                                    <input type="color" id="backgroundColor" class="form-control color-input" value="#ffffff">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Download and Export -->
-                <div class="card">
-                    <div class="card__header">
-                        <h3>Export Options</h3>
-                    </div>
-                    <div class="card__body">
-                        <div class="export-actions">
-                            <button type="button" class="btn btn--primary btn--full-width" id="downloadBtn" disabled>
-                                📥 Download QR Code (PNG)
-                            </button>
-                            <button type="button" class="btn btn--outline btn--full-width" id="copyVcardBtn" disabled>
-                                📋 Copy vCard Data
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- vCard Preview -->
-                <div class="card">
-                    <div class="card__header">
-                        <h3>vCard Data Preview</h3>
-                    </div>
-                    <div class="card__body">
-                        <pre id="vcardPreview" class="vcard-preview">Fill out the form to see vCard data...</pre>
-                    </div>
-                </div>
-            </section>
+        <div>
+            <h2>Contact Information</h2>
+            <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input type="text" id="fullName" placeholder="John Doe" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" placeholder="+1-555-123-4567">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="john@example.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input type="text" id="company" placeholder="Acme Corp">
+            </div>
+            
+            <button onclick="generateQR()" id="generateBtn">Generate QR Code</button>
+            <button onclick="fillSample()" type="button">Fill Sample Data</button>
+        </div>
+        
+        <div>
+            <h2>QR Code Preview</h2>
+            <canvas id="qrCanvas" width="300" height="300"></canvas>
+            <br>
+            <button onclick="downloadQR()" id="downloadBtn">Download QR Code</button>
         </div>
     </div>
 
-    <!-- Success Toast -->
-    <div class="toast" id="successToast">
-        <div class="toast-content">
-            <span class="toast-message"></span>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
     <script>
-console.log('QRCode available:', typeof QRCode !== 'undefined');
-if (typeof QRCode !== 'undefined') {
-    console.log('QRCode library loaded successfully!');
-} else {
-    console.log('ERROR: QRCode library failed to load!');
-}
-</script>
-
+        function fillSample() {
+            document.getElementById('fullName').value = 'John Doe';
+            document.getElementById('phone').value = '+1-555-123-4567';
+            document.getElementById('email').value = 'john@example.com';
+            document.getElementById('company').value = 'Acme Corporation';
+        }
+        
+        function generateVCard() {
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            
+            let vcard = 'BEGIN:VCARD\n';
+            vcard += 'VERSION:3.0\n';
+            vcard += `FN:${fullName}\n`;
+            if (company) vcard += `ORG:${company}\n`;
+            if (phone) vcard += `TEL:${phone}\n`;
+            if (email) vcard += `EMAIL:${email}\n`;
+            vcard += 'END:VCARD';
+            
+            return vcard;
+        }
+        
+        function generateQR() {
+            const fullName = document.getElementById('fullName').value;
+            if (!fullName) {
+                alert('Please enter a full name');
+                return;
+            }
+            
+            try {
+                if (typeof QRCode === 'undefined') {
+                    alert('QR code library not loaded. Please refresh the page.');
+                    return;
+                }
+                
+                const vcardData = generateVCard();
+                const canvas = document.getElementById('qrCanvas');
+                
+                // Clear canvas first
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                QRCode.toCanvas(canvas, vcardData, {
+                    width: 300,
+                    margin: 2
+                }, function (error) {
+                    if (error) {
+                        console.error('QR Generation Error:', error);
+                        alert('Failed to generate QR code');
+                    } else {
+                        console.log('QR code generated successfully!');
+                    }
+                });
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error generating QR code: ' + error.message);
+            }
+        }
+        
+        function downloadQR() {
+            const canvas = document.getElementById('qrCanvas');
+            const link = document.createElement('a');
+            link.download = 'vcard-qr-code.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Test if library loaded
+        window.onload = function() {
+            console.log('QRCode library status:', typeof QRCode !== 'undefined' ? 'LOADED' : 'NOT LOADED');
+        };
+    </script>
 </body>
 </html>
