@@ -1,249 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <!-- Basic Meta -->
-<meta name="description" content="Create free vCard QR codes for business cards, networking, and sharing your contact instantly.">
-<meta name="keywords" content="vcard qr code, business card qr, contact qr code generator, digital business card, free qr code">
-<meta name="author" content="vCard QR code generator">
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://vcardqrcodegenerator.com/">
-<meta property="og:title" content="Free vCard QR Code Generator">
-<meta property="og:description" content="Create professional contact QR codes instantly for your business cards. Free and fast!">
-<meta property="og:image" content="https://github.com/abhikb2005/vcardqrcodegenerator/raw/main/vcard-qr-generator-promo.png">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://vcardqrcodegenerator.com/">
-<meta name="twitter:title" content="Free vCard QR Code Generator">
-<meta name="twitter:description" content="Create professional contact QR codes instantly for business cards. Free and fast!">
-<meta name="twitter:image" content="https://github.com/abhikb2005/vcardqrcodegenerator/raw/main/vcard-qr-generator-promo.png">
+    <!-- Your excellent SEO and Meta Tags -->
+    <meta name="description" content="Create free vCard QR codes for business cards, networking, and sharing your contact instantly.">
+    <meta name="keywords" content="vcard qr code, business card qr, contact qr code generator, digital business card, free qr code">
+    <meta name="author" content="vCard QR code generator">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vcardqrcodegenerator.com/">
+    <meta property="og:title" content="Free vCard QR Code Generator">
+    <meta property="og:description" content="Create professional contact QR codes instantly for your business cards. Free and fast!">
+    <!-- CORRECTED PROMO IMAGE LINK -->
+    <meta property="og:image" content="https://raw.githubusercontent.com/abhikb2005/vcard-qr-generator/main/vcard-qr-generator-promo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://vcardqrcodegenerator.com/">
+    <meta name="twitter:title" content="Free vCard QR Code Generator">
+    <meta name="twitter:description" content="Create professional contact QR codes instantly for business cards. Free and fast!">
+    <!-- CORRECTED PROMO IMAGE LINK -->
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/abhikb2005/vcard-qr-generator/main/vcard-qr-generator-promo.png">
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vCard QR Code Generator</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        button {
-            background: #007bff;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        .secondary {
-            background: #6c757d;
-        }
-        .secondary:hover {
-            background: #545b62;
-        }
-        #qrcode {
-            margin: 20px 0;
-            text-align: center;
-        }
-        .status {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .success { background: #d4edda; color: #155724; }
-        .error { background: #f8d7da; color: #721c24; }
+        body { font-family: 'Inter', sans-serif; }
     </style>
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "vCard QR Code Generator",
-  "url": "https://vcardqrcodegenerator.com",
-  "description": "Create professional contact QR codes instantly for business cards. Free and fast!",
-  "applicationCategory": "BusinessApplication",
-  "operatingSystem": "Web Browser",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "author": {
-    "@type": "Person",
-    "name": "Abilash Kumar"
-  }
-}
-</script>
 </head>
-<body>
-    <div class="container">
-        <h1>🏷️ vCard QR Code Generator</h1>
-        <p style="text-align: center; color: #666;">Create professional QR codes for your business cards</p>
-        
-        <div class="form-group">
-            <label for="fullName">Full Name (Required)</label>
-            <input type="text" id="fullName" placeholder="John Doe">
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-md border border-slate-200">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">vCard QR Code Generator</h1>
+                <p class="mt-2 text-slate-600">Enter your contact details below to create a scannable QR code.</p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <!-- Form Section -->
+                <form id="vcard-form" class="space-y-4">
+                    <div>
+                        <label for="fullName" class="block text-sm font-medium text-slate-700 mb-1">Full Name (Required)</label>
+                        <input type="text" id="fullName" placeholder="John Doe" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="+1-555-123-4567" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                        <input type="email" id="email" placeholder="john@example.com" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label for="company" class="block text-sm font-medium text-slate-700 mb-1">Company</label>
+                        <input type="text" id="company" placeholder="Acme Corporation" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-slate-700 mb-1">Job Title</label>
+                        <input type="text" id="title" placeholder="Software Engineer" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                    </div>
+                </form>
+
+                <!-- QR Code Section -->
+                <div class="flex flex-col items-center justify-center mt-6 md:mt-0">
+                    <div id="qrcode" class="p-4 border border-slate-200 rounded-lg bg-white w-full max-w-[250px] aspect-square flex items-center justify-center"></div>
+                    <a id="downloadBtn" href="#" download="vcard-qrcode.png" class="mt-6 inline-flex items-center justify-center w-full max-w-[250px] px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition disabled:opacity-50 disabled:cursor-not-allowed" aria-disabled="true">
+                        Download QR Code
+                    </a>
+                </div>
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" placeholder="+1-555-123-4567">
-        </div>
-        
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="john@example.com">
-        </div>
-        
-        <div class="form-group">
-            <label for="company">Company</label>
-            <input type="text" id="company" placeholder="Acme Corporation">
-        </div>
-        
-        <div class="form-group">
-            <label for="title">Job Title</label>
-            <input type="text" id="title" placeholder="Software Engineer">
-        </div>
-        
-        <button onclick="fillSampleData()">📋 Fill Sample Data</button>
-        <button onclick="generateQRCode()" class="secondary">🔄 Generate QR Code</button>
-        
-        <div id="status"></div>
-        <div id="qrcode"></div>
-        
-        <button onclick="downloadQR()" id="downloadBtn" style="display: none;">⬇️ Download QR Code</button>
     </div>
 
-    <!-- Using QRServer API - Most Reliable Method -->
     <script>
-        // Global variables
-        let currentQRUrl = '';
-        
-        function showStatus(message, type) {
-            const statusDiv = document.getElementById('status');
-            statusDiv.innerHTML = message;
-            statusDiv.className = `status ${type}`;
-        }
-        
-        function fillSampleData() {
-            document.getElementById('fullName').value = 'John Doe';
-            document.getElementById('phone').value = '+1-555-123-4567';
-            document.getElementById('email').value = 'john@example.com';
-            document.getElementById('company').value = 'Acme Corporation';
-            document.getElementById('title').value = 'Software Engineer';
-            showStatus('✅ Sample data filled successfully!', 'success');
-        }
-        
-        function createVCard() {
-            const fullName = document.getElementById('fullName').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const company = document.getElementById('company').value.trim();
-            const title = document.getElementById('title').value.trim();
-            
-            if (!fullName) {
-                throw new Error('Full name is required');
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('vcard-form');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const qrCodeElement = document.getElementById('qrcode');
+            let qrcode = null;
+
+            function initializeQRCode() {
+                if (!qrcode) {
+                    qrcode = new QRCode(qrCodeElement, {
+                        width: 234,
+                        height: 234,
+                        colorDark: '#000000',
+                        colorLight: '#ffffff',
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                }
             }
-            
-            let vcard = 'BEGIN:VCARD\\n';
-            vcard += 'VERSION:3.0\\n';
-            vcard += `FN:${fullName}\\n`;
-            vcard += `N:${fullName};;;;\\n`;
-            if (company) vcard += `ORG:${company}\\n`;
-            if (title) vcard += `TITLE:${title}\\n`;
-            if (phone) vcard += `TEL;TYPE=WORK,VOICE:${phone}\\n`;
-            if (email) vcard += `EMAIL;TYPE=INTERNET:${email}\\n`;
-            vcard += 'END:VCARD';
-            
-            return vcard;
-        }
-        
-        function generateQRCode() {
-            try {
+
+            const generateQRCode = () => {
                 const fullName = document.getElementById('fullName').value.trim();
                 if (!fullName) {
-                    showStatus('❌ Please enter a full name', 'error');
+                    qrCodeElement.innerHTML = '<span class="text-slate-400 text-center text-sm">Enter a name to generate QR code</span>';
+                    downloadBtn.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
+                    downloadBtn.setAttribute('aria-disabled', 'true');
                     return;
                 }
+
+                // Initialize QR code generator on first valid input
+                initializeQRCode();
+
+                const phone = document.getElementById('phone').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const company = document.getElementById('company').value.trim();
+                const title = document.getElementById('title').value.trim();
+
+                const nameParts = fullName.split(' ');
+                const firstName = nameParts.shift() || '';
+                const lastName = nameParts.join(' ') || '';
+
+                const vCardString = `BEGIN:VCARD
+VERSION:3.0
+N:${lastName};${firstName};;;
+FN:${fullName}
+ORG:${company}
+TITLE:${title}
+TEL;TYPE=WORK,VOICE:${phone}
+EMAIL:${email}
+END:VCARD`;
                 
-                showStatus('⏳ Generating QR code...', 'success');
-                
-                const vcardData = createVCard();
-                
-                // Using QRServer.com API - most reliable method
-                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(vcardData)}`;
-                currentQRUrl = qrUrl;
-                
-                const qrDiv = document.getElementById('qrcode');
-                qrDiv.innerHTML = `<img src="${qrUrl}" alt="QR Code" style="border: 2px solid #ddd; padding: 10px; background: white;">`;
-                
-                document.getElementById('downloadBtn').style.display = 'inline-block';
-                showStatus('🎉 QR code generated successfully!', 'success');
-                
-            } catch (error) {
-                showStatus('❌ Error: ' + error.message, 'error');
-            }
-        }
-        
-        function downloadQR() {
-            if (!currentQRUrl) {
-                showStatus('❌ No QR code to download', 'error');
-                return;
-            }
+                qrcode.makeCode(vCardString);
+
+                setTimeout(() => {
+                    const qrImg = qrCodeElement.querySelector('img');
+                    if (qrImg && qrImg.src) {
+                        downloadBtn.href = qrImg.src;
+                        downloadBtn.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
+                        downloadBtn.setAttribute('aria-disabled', 'false');
+                    }
+                }, 100);
+            };
             
-            const link = document.createElement('a');
-            link.href = currentQRUrl;
-            link.download = 'vcard-qr-code.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showStatus('📥 QR code downloaded!', 'success');
-        }
-        
-        // Test function on page load
-        window.onload = function() {
-            showStatus('✅ Ready! Fill in your contact information and click Generate QR Code.', 'success');
-            console.log('Page loaded successfully');
-        };
-        
-        // Auto-generate on Enter key
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                generateQRCode();
-            }
+            form.addEventListener('input', generateQRCode);
+            generateQRCode(); // Initial call to show placeholder text
         });
     </script>
 </body>
