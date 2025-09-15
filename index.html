@@ -10,27 +10,6 @@
 
   gtag('config', 'G-E90B41BNEH');
 </script>
-    <link rel="canonical" href="https://vcardqrcodegenerator.com/" />
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "vCard QR Code Generator",
-  "url": "https://vcardqrcodegenerator.com/",
-  "applicationCategory": "Utility",
-  "operatingSystem": "All",
-  "description": "Free vCard QR code generator for creating contact QR codes instantly.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "author": {
-    "@type": "Person",
-    "name": "Abilash K B"
-  }
-}
-</script>
     <!-- Your excellent SEO and Meta Tags -->
     <meta name="description" content="Create free vCard QR codes for business cards, networking, and sharing your contact instantly.">
     <meta name="keywords" content="vcard qr code, business card qr, contact qr code generator, digital business card, free qr code">
@@ -58,84 +37,145 @@
 
     <style>
         body { font-family: 'Inter', sans-serif; }
+        /* For dark mode, the QR code canvas needs a white background */
+        #qrcode canvas, #qrcode img { background-color: white; border-radius: 0.25rem; }
+        .hidden { display: none; }
+        #confirmModal { background-color: rgba(0, 0, 0, 0.5); }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
 
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <div class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-md border border-slate-200">
+        <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
             <header class="text-center mb-8">
-                <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">vCard QR Code Generator</h1>
-                <p class="mt-2 text-slate-600">Enter your contact details below to create a scannable QR code.</p>
+                <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">vCard QR Code Generator</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Enter your contact details below to create a scannable QR code.</p>
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                 <!-- Form Section -->
-                <form id="vcard-form" class="space-y-4">
-                    <div>
-                        <label for="fullName" class="block text-sm font-medium text-slate-700 mb-1">Full Name (Required)</label>
-                        <input type="text" id="fullName" placeholder="John Doe" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Contact Information</h2>
+                        <div class="flex items-center space-x-2">
+                            <button id="fillSampleBtn" class="px-3 py-1 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-gray-700 rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition">Fill Sample</button>
+                            <button id="clearDataBtn" class="px-3 py-1 text-sm font-medium text-red-600 dark:text-red-400 bg-red-100 dark:bg-gray-700 rounded-md hover:bg-red-200 dark:hover:bg-gray-600 transition">Clear</button>
+                        </div>
                     </div>
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
-                        <input type="tel" id="phone" placeholder="+1-555-123-4567" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
-                        <input type="email" id="email" placeholder="john@example.com" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
-                    </div>
-                    <div>
-                        <label for="company" class="block text-sm font-medium text-slate-700 mb-1">Company</label>
-                        <input type="text" id="company" placeholder="Acme Corporation" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
-                    </div>
-                    <div>
-                        <label for="title" class="block text-sm font-medium text-slate-700 mb-1">Job Title</label>
-                        <input type="text" id="title" placeholder="Software Engineer" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition">
-                    </div>
-                </form>
+                    <form id="vcard-form" class="space-y-4">
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name (Required)</label>
+                            <input type="text" id="fullName" placeholder="John Doe" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+15551234567" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                            <input type="email" id="email" placeholder="john@example.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                        </div>
+                        <div>
+                            <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company</label>
+                             <input type="text" id="company" placeholder="Acme Corporation" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                        </div>
+                         <div>
+                            <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job Title</label>
+                            <input type="text" id="title" placeholder="Software Engineer" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                        </div>
+                    </form>
+                </div>
 
                 <!-- QR Code Section -->
                 <div class="flex flex-col items-center justify-center mt-6 md:mt-0">
-                    <div id="qrcode" class="p-4 border border-slate-200 rounded-lg bg-white w-full max-w-[250px] aspect-square flex items-center justify-center"></div>
-                    <a id="downloadBtn" href="#" download="vcard-qrcode.png" class="mt-6 inline-flex items-center justify-center w-full max-w-[250px] px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition disabled:opacity-50 disabled:cursor-not-allowed" aria-disabled="true">
-                        Download QR Code
-                    </a>
+                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white w-full max-w-[250px] aspect-square flex items-center justify-center">
+                        <div id="qrcode"></div>
+                        <div id="qrPlaceholder" class="text-gray-400 dark:text-gray-500 text-center text-sm">Enter a name to generate QR code</div>
+                    </div>
+                    <div class="w-full max-w-[250px] mt-6 space-y-3">
+                        <a id="downloadBtn" href="#" download="vcard-qrcode.png" class="inline-flex items-center justify-center w-full px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition disabled:opacity-50 disabled:cursor-not-allowed" aria-disabled="true">
+                            Download QR Code
+                        </a>
+                        <button id="shareBtn" class="hidden w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            Share
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true"></div>
+        <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Clear Form Data?</h3>
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Are you sure you want to clear all the data? This action cannot be undone.</p>
+            <div class="mt-6 flex justify-center space-x-4">
+                <button id="cancelClearBtn" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600">Cancel</button>
+                <button id="confirmClearBtn" class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">Confirm Clear</button>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('vcard-form');
             const downloadBtn = document.getElementById('downloadBtn');
+            const shareBtn = document.getElementById('shareBtn');
             const qrCodeElement = document.getElementById('qrcode');
-            let qrcode = null;
+            const qrPlaceholder = document.getElementById('qrPlaceholder');
+            const fillSampleBtn = document.getElementById('fillSampleBtn');
+            const phoneInput = document.getElementById('phone');
+            const clearDataBtn = document.getElementById('clearDataBtn');
+            const confirmModal = document.getElementById('confirmModal');
+            const confirmClearBtn = document.getElementById('confirmClearBtn');
+            const cancelClearBtn = document.getElementById('cancelClearBtn');
+            
+            const qrcode = new QRCode(qrCodeElement, {
+                width: 218, 
+                height: 218,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
 
-            function initializeQRCode() {
-                if (!qrcode) {
-                    qrcode = new QRCode(qrCodeElement, {
-                        width: 234,
-                        height: 234,
-                        colorDark: '#000000',
-                        colorLight: '#ffffff',
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                }
+            if (navigator.share) {
+                shareBtn.classList.remove('hidden');
             }
+
+            const updateUIState = (hasContent) => {
+                const buttons = [downloadBtn, shareBtn];
+                if (hasContent) {
+                    qrPlaceholder.classList.add('hidden');
+                    qrCodeElement.classList.remove('hidden');
+                    buttons.forEach(btn => {
+                        btn.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
+                        btn.removeAttribute('disabled');
+                    });
+                } else {
+                    qrPlaceholder.classList.remove('hidden');
+                    qrCodeElement.classList.add('hidden');
+                    buttons.forEach(btn => {
+                        btn.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
+                        btn.setAttribute('disabled', 'true');
+                    });
+                    downloadBtn.href = '#';
+                }
+            };
 
             const generateQRCode = () => {
                 const fullName = document.getElementById('fullName').value.trim();
+
                 if (!fullName) {
-                    qrCodeElement.innerHTML = '<span class="text-slate-400 text-center text-sm">Enter a name to generate QR code</span>';
-                    downloadBtn.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
-                    downloadBtn.setAttribute('aria-disabled', 'true');
+                    qrcode.clear();
+                    updateUIState(false);
                     return;
                 }
-
-                // Initialize QR code generator on first valid input
-                initializeQRCode();
-
+                
+                updateUIState(true);
+                
                 const phone = document.getElementById('phone').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const company = document.getElementById('company').value.trim();
@@ -158,18 +198,72 @@ END:VCARD`;
                 qrcode.makeCode(vCardString);
 
                 setTimeout(() => {
-                    const qrImg = qrCodeElement.querySelector('img');
-                    if (qrImg && qrImg.src) {
-                        downloadBtn.href = qrImg.src;
-                        downloadBtn.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
-                        downloadBtn.setAttribute('aria-disabled', 'false');
+                    const canvas = qrCodeElement.querySelector('canvas');
+                    if (canvas) {
+                        downloadBtn.href = canvas.toDataURL();
                     }
                 }, 100);
             };
+
+            const shareQRCode = async () => {
+                const canvas = qrCodeElement.querySelector('canvas');
+                if (!canvas || !navigator.share) return;
+
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'vcard-qrcode.png', { type: 'image/png' });
+                    const shareData = {
+                        files: [file],
+                        title: 'My vCard QR Code',
+                    };
+                    try {
+                        await navigator.share(shareData);
+                    } catch (err) {
+                        console.error('Share failed:', err);
+                    }
+                }, 'image/png');
+            };
+
+            const fillSampleData = () => {
+                document.getElementById('fullName').value = 'Jane Appleseed';
+                document.getElementById('phone').value = '+18006927753';
+                document.getElementById('email').value = 'jane.appleseed@example.com';
+                document.getElementById('company').value = 'Apple Inc.';
+                document.getElementById('title').value = 'Creative Director';
+                generateQRCode();
+            };
             
+            const sanitizePhoneInput = () => {
+                phoneInput.value = phoneInput.value.replace(/[^0-9+]/g, '');
+            };
+
+            const handleClearData = () => {
+                form.reset();
+                generateQRCode();
+                confirmModal.classList.add('hidden');
+            };
+
+            // Event Listeners
             form.addEventListener('input', generateQRCode);
-            generateQRCode(); // Initial call to show placeholder text
+            fillSampleBtn.addEventListener('click', fillSampleData);
+            shareBtn.addEventListener('click', shareQRCode);
+            phoneInput.addEventListener('input', sanitizePhoneInput);
+            
+            // Modal Listeners
+            clearDataBtn.addEventListener('click', () => confirmModal.classList.remove('hidden'));
+            cancelClearBtn.addEventListener('click', () => confirmModal.classList.add('hidden'));
+            confirmClearBtn.addEventListener('click', handleClearData);
+            confirmModal.addEventListener('click', (e) => {
+                if (e.target === confirmModal) {
+                    confirmModal.classList.add('hidden');
+                }
+            });
+
+
+            // Initial UI State
+            updateUIState(false);
+            qrcode.clear();
         });
     </script>
 </body>
 </html>
+
