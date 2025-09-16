@@ -76,6 +76,10 @@
                             <input type="email" id="email" placeholder="john@example.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
                         </div>
                         <div>
+                            <label for="website" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website</label>
+                            <input type="url" id="website" placeholder="[https://example.com](https://example.com)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                        </div>
+                        <div>
                             <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company</label>
                              <input type="text" id="company" placeholder="Acme Corporation" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
                         </div>
@@ -190,6 +194,7 @@
                 
                 const phone = document.getElementById('phone').value.trim();
                 const email = document.getElementById('email').value.trim();
+                const website = document.getElementById('website').value.trim();
                 const company = document.getElementById('company').value.trim();
                 const title = document.getElementById('title').value.trim();
 
@@ -205,6 +210,7 @@ ORG:${company}
 TITLE:${title}
 TEL;TYPE=WORK,VOICE:${phone}
 EMAIL:${email}
+URL:${website}
 END:VCARD`;
                 
                 qrcode.makeCode(vCardString);
@@ -239,6 +245,7 @@ END:VCARD`;
                 document.getElementById('fullName').value = 'Jane Appleseed';
                 document.getElementById('phone').value = '+18006927753';
                 document.getElementById('email').value = 'jane.appleseed@example.com';
+                document.getElementById('website').value = '[https://www.apple.com](https://www.apple.com)';
                 document.getElementById('company').value = 'Apple Inc.';
                 document.getElementById('title').value = 'Creative Director';
                 generateQRCode();
