@@ -61,6 +61,12 @@
       #qrcode canvas, #qrcode img { background-color: white; border-radius: 0.25rem; }
       .hidden { display: none; }
       #confirmModal { background-color: rgba(0, 0, 0, 0.5); }
+                /* Ensure the QR code container has explicit dimensions so the canvas renders visibly */
+        #qrcode {
+          width: 218px;
+          height: 218px;
+        }
+        
     </style>
     
     <!-- Page Layout Styles (non-destructive) -->
