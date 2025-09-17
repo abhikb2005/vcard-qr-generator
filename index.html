@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-E90B41BNEH');
-</script>
-    <!-- Your excellent SEO and Meta Tags -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} 
+      gtag('js', new Date());
+      gtag('config', 'G-E90B41BNEH');
+    </script>
+    <!-- SEO and Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free vCard QR Code Generator</title>
     <meta name="description" content="Create free vCard QR codes for business cards, networking, and sharing your contact instantly.">
     <meta name="keywords" content="vcard qr code, business card qr, contact qr code generator, digital business card, free qr code">
     <meta name="author" content="vCard QR code generator">
@@ -18,471 +20,517 @@
     <meta property="og:url" content="https://vcardqrcodegenerator.com/">
     <meta property="og:title" content="Free vCard QR Code Generator">
     <meta property="og:description" content="Create professional contact QR codes instantly for your business cards. Free and fast!">
-    <!-- CORRECTED PROMO IMAGE LINK -->
     <meta property="og:image" content="https://raw.githubusercontent.com/abhikb2005/vcard-qr-generator/main/vcard-qr-generator-promo.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://vcardqrcodegenerator.com/">
     <meta name="twitter:title" content="Free vCard QR Code Generator">
     <meta name="twitter:description" content="Create professional contact QR codes instantly for business cards. Free and fast!">
-    <!-- CORRECTED PROMO IMAGE LINK -->
     <meta name="twitter:image" content="https://raw.githubusercontent.com/abhikb2005/vcard-qr-generator/main/vcard-qr-generator-promo.png">
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vCard QR Code Generator</title>
-    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://vcardqrcodegenerator.com/" />
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "vCard QR Code Generator",
+      "url": "https://vcardqrcodegenerator.com/",
+      "applicationCategory": "Utility",
+      "operatingSystem": "All",
+      "description": "Free vCard QR code generator for creating contact QR codes instantly.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Abilash K B"
+      }
+    }
+    </script>
+    <!-- Tailwind and QRCode Library -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    
+    <!-- Base Styles -->
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        /* For dark mode, the QR code canvas needs a white background */
-        #qrcode canvas, #qrcode img { background-color: white; border-radius: 0.25rem; }
-        .hidden { display: none; }
-        #confirmModal { background-color: rgba(0, 0, 0, 0.5); }
+      body { font-family: 'Inter', sans-serif; }
+      /* For dark mode, the QR code canvas needs a white background */
+      #qrcode canvas, #qrcode img { background-color: white; border-radius: 0.25rem; }
+      .hidden { display: none; }
+      #confirmModal { background-color: rgba(0, 0, 0, 0.5); }
     </style>
-    <!-- BEGIN: layout styles (non-destructive) -->
-<style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
-  }
-  .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-align: center;
-    padding: 60px 20px;
-  }
-  .hero h1 {
-    font-size: 3.2rem;
-    font-weight: 700;
-    margin: 0 0 20px 0;
-    line-height: 1.2;
-  }
-  .hero .subtitle {
-    font-size: 1.4rem;
-    font-weight: 300;
-    margin: 0 0 40px 0;
-    opacity: 0.9;
-  }
-  .benefits {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin: 40px 0;
-    flex-wrap: wrap;
-  }
-  .benefit { text-align: center; max-width: 200px; }
-  .benefit-icon { font-size: 2.5rem; margin-bottom: 15px; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-  .main-content {
-    background: white;
-    margin: -80px auto 0;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    padding: 40px;
-    max-width: 800px;
-    position: relative;
-    z-index: 10;
-  }
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin: 60px 0;
-    background: #f8fafc;
-    padding: 40px 20px;
-  }
-  .feature { text-align: center; padding: 20px; }
-  .feature h3 { color: #4f46e5; font-size: 1.2rem; margin: 15px 0 10px 0; }
-  .cta-section { background: #1f2937; color: white; text-align: center; padding: 60px 20px; }
-  .btn {
-    background: #10b981; color: white; padding: 15px 30px; border: none; border-radius: 8px;
-    font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block;
-  }
-  .btn:hover { background: #059669; transform: translateY(-2px); }
-  .how-it-works { padding: 60px 20px; text-align: center; }
-  .steps {
-    display: flex; justify-content: center; gap: 40px; margin: 40px 0; flex-wrap: wrap;
-  }
-  .step { max-width: 200px; text-align: center; }
-  .step-number {
-    background: #4f46e5; color: white; width: 40px; height: 40px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-weight: 700;
-  }
-  /* keep your existing form/QR styles; this only adds layout */
-</style>
-<!-- END: layout styles -->
-
+    
+    <!-- Page Layout Styles (non-destructive) -->
+    <style>
+      /* Global resets and backgrounds */
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+      }
+      .hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-align: center;
+        padding: 60px 20px;
+      }
+      .hero h1 {
+        font-size: 3.2rem;
+        font-weight: 700;
+        margin: 0 0 20px 0;
+        line-height: 1.2;
+      }
+      .hero .subtitle {
+        font-size: 1.4rem;
+        font-weight: 300;
+        margin: 0 0 40px 0;
+        opacity: 0.9;
+      }
+      .benefits {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin: 40px 0;
+        flex-wrap: wrap;
+      }
+      .benefit {
+        text-align: center;
+        max-width: 200px;
+      }
+      .benefit-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .main-content {
+        background: white;
+        margin: -80px auto 0;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        padding: 40px;
+        max-width: 800px;
+        position: relative;
+        z-index: 10;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin: 60px 0;
+        background: #f8fafc;
+        padding: 40px 20px;
+      }
+      .feature {
+        text-align: center;
+        padding: 20px;
+      }
+      .feature h3 {
+        color: #4f46e5;
+        font-size: 1.2rem;
+        margin: 15px 0 10px 0;
+      }
+      .cta-section {
+        background: #1f2937;
+        color: white;
+        text-align: center;
+        padding: 60px 20px;
+      }
+      .btn {
+        background: #10b981;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .btn:hover {
+        background: #059669;
+        transform: translateY(-2px);
+      }
+      .how-it-works {
+        padding: 60px 20px;
+        text-align: center;
+      }
+      .steps {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin: 40px 0;
+        flex-wrap: wrap;
+      }
+      .step {
+        max-width: 200px;
+        text-align: center;
+      }
+      .step-number {
+        background: #4f46e5;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-weight: 700;
+      }
+    </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
-<!-- BEGIN: Hero -->
-<div class="hero">
-  <div class="container">
-    <h1>Create Professional vCard QR Codes in Seconds</h1>
-    <p class="subtitle">Transform your networking with instant digital business cards. No app required — just scan and save!</p>
-
-    <div class="benefits">
-      <div class="benefit">
-        <div class="benefit-icon">⚡</div>
-        <strong>Instant Sharing</strong><br>Share contacts with one scan
-      </div>
-      <div class="benefit">
-        <div class="benefit-icon">💚</div>
-        <strong>100% Free</strong><br>No hidden fees or limits
-      </div>
-      <div class="benefit">
-        <div class="benefit-icon">📱</div>
-        <strong>Works Everywhere</strong><br>iOS, Android, any QR reader
+<body>
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <h1>Create Professional vCard QR Codes in Seconds</h1>
+      <p class="subtitle">Transform your networking with instant digital business cards. No app required — just scan and save!</p>
+      
+      <div class="benefits">
+        <div class="benefit">
+          <div class="benefit-icon">⚡</div>
+          <strong>Instant Sharing</strong><br>
+          Share contacts with one scan
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">💚</div>
+          <strong>100% Free</strong><br>
+          No hidden fees or limits
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">📱</div>
+          <strong>Works Everywhere</strong><br>
+          iOS, Android, any QR reader
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- END: Hero -->
+  <!-- End Hero -->
 
-<!-- BEGIN: Main container + card -->
-<div class="container">
-  <div class="main-content">
-    <h2 style="text-align:center; margin-bottom:30px;">Generate Your vCard QR Code</h2>
-
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+  <!-- Main Generator Form -->
+  <div class="container">
+    <div class="main-content">
+      <h2 style="text-align: center; margin-bottom: 30px;">Generate Your vCard QR Code</h2>
+      
+      <div class="container mx-auto p-4 sm:p-6 lg:p-8">
         <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-            <header class="text-center mb-8">
-                <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">vCard QR Code Generator</h1>
-                <p class="mt-2 text-gray-600 dark:text-gray-400">Enter your contact details below to create a scannable QR code.</p>
-            </header>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <!-- Form Section -->
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Contact Information</h2>
-                        <div class="flex items-center space-x-2">
-                            <button id="fillSampleBtn" class="px-3 py-1 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-gray-700 rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition">Fill Sample</button>
-                            <button id="clearDataBtn" class="px-3 py-1 text-sm font-medium text-red-600 dark:text-red-400 bg-red-100 dark:bg-gray-700 rounded-md hover:bg-red-200 dark:hover:bg-gray-600 transition">Clear</button>
-                        </div>
-                    </div>
-                    <form id="vcard-form" class="space-y-4">
-                        <div>
-                            <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name (Required)</label>
-                            <input type="text" id="fullName" placeholder="John Doe" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
-                        </div>
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
-                            <input type="tel" id="phone" placeholder="+15551234567" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
-                            <input type="email" id="email" placeholder="john@example.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
-                        </div>
-                        <div>
-                            <label for="website" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website</label>
-                            <input type="url" id="website" placeholder="[https://example.com](https://example.com)" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
-                        </div>
-                        <div>
-                            <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company</label>
-                             <input type="text" id="company" placeholder="Acme Corporation" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
-                        </div>
-                         <div>
-                            <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job Title</label>
-                            <input type="text" id="title" placeholder="Software Engineer" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
-                        </div>
-                    </form>
-                    <div style="text-align:center; margin-top:30px;">
-      <a href="how-to-use.html" class="btn" style="background:#6366f1; margin-right:15px;">📖 How to Use</a>
-      <a href="#features" class="btn" style="background:#8b5cf6;">✨ See Features</a>
-    </div>
+          <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">vCard QR Code Generator</h1>
+            <p class="mt-2 text-gray-600 dark:text-gray-400">Enter your contact details below to create a scannable QR code.</p>
+          </header>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <!-- Form Section -->
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Contact Information</h2>
+                <div class="flex items-center space-x-2">
+                  <button id="fillSampleBtn" class="px-3 py-1 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-gray-700 rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition">Fill Sample</button>
+                  <button id="clearDataBtn" class="px-3 py-1 text-sm font-medium text-red-600 dark:text-red-400 bg-red-100 dark:bg-gray-700 rounded-md hover:bg-red-200 dark:hover:bg-gray-600 transition">Clear</button>
                 </div>
-
-                <!-- QR Code Section -->
-                <div class="flex flex-col items-center justify-center mt-6 md:mt-0">
-                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white w-full max-w-[250px] aspect-square flex items-center justify-center">
-                        <div id="qrcode"></div>
-                        <div id="qrPlaceholder" class="text-gray-400 dark:text-gray-500 text-center text-sm">Enter a name to generate QR code</div>
-                    </div>
-                    <div class="w-full max-w-[250px] mt-6 space-y-3">
-                        <a id="downloadBtn" href="#" download="vcard-qrcode.png" class="inline-flex items-center justify-center w-full px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition disabled:opacity-50 disabled:cursor-not-allowed" aria-disabled="true">
-                            Download QR Code
-                        </a>
-                        <button id="shareBtn" class="hidden w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                            Share
-                        </button>
-                        <a href="how-to-use.html" style="
-                        display: inline-block;
-                        background-color: #324a67;
-                        color: #fff;
-                        padding: 10px 18px;
-                        border-radius: 6px;
-                        text-decoration: none;
-                        font-weight: 600;
-                        margin: 12px 0;
-                        ">
-                          How to Use
-                        </a>
-                    </div>
+              </div>
+              <form id="vcard-form" class="space-y-4">
+                <div>
+                  <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name (Required)</label>
+                  <input type="text" id="fullName" placeholder="John Doe" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
                 </div>
+                <div>
+                  <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
+                  <input type="tel" id="phone" placeholder="+15551234567" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                  <input type="email" id="email" placeholder="john@example.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                </div>
+                <div>
+                  <label for="website" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website</label>
+                  <input type="url" id="website" placeholder="https://example.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                </div>
+                <div>
+                  <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company</label>
+                  <input type="text" id="company" placeholder="Acme Corporation" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                </div>
+                <div>
+                  <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job Title</label>
+                  <input type="text" id="title" placeholder="Software Engineer" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
+                </div>
+              </form>
             </div>
-        </div>
-    </div>
-<nav>
-  <a href="privacy-policy.html">Privacy Policy</a> |
-  <a href="contact.html">Contact</a>
-</nav>
-
-    <!-- Confirmation Modal -->
-    <div id="confirmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="fixed inset-0 transition-opacity" aria-hidden="true"></div>
-        <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
-            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Clear Form Data?</h3>
-            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Are you sure you want to clear all the data? This action cannot be undone.</p>
-            <div class="mt-6 flex justify-center space-x-4">
-                <button id="cancelClearBtn" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600">Cancel</button>
-                <button id="confirmClearBtn" class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">Confirm Clear</button>
+            
+            <!-- QR Code Section -->
+            <div class="flex flex-col items-center justify-center mt-6 md:mt-0">
+              <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white w-full max-w-[250px] aspect-square flex items-center justify-center">
+                <div id="qrcode"></div>
+                <div id="qrPlaceholder" class="text-gray-400 dark:text-gray-500 text-center text-sm">Enter a name to generate QR code</div>
+              </div>
+              <div class="w-full max-w-[250px] mt-6 space-y-3">
+                <a id="downloadBtn" href="#" download="vcard-qrcode.png" class="inline-flex items-center justify-center w-full px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition opacity-50 cursor-not-allowed" aria-disabled="true" disabled>
+                  Download QR Code
+                </a>
+                <button id="shareBtn" class="hidden w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition opacity-50 cursor-not-allowed" aria-disabled="true" disabled>
+                  Share
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('vcard-form');
-            const downloadBtn = document.getElementById('downloadBtn');
-            const shareBtn = document.getElementById('shareBtn');
-            const qrCodeElement = document.getElementById('qrcode');
-            const qrPlaceholder = document.getElementById('qrPlaceholder');
-            const fillSampleBtn = document.getElementById('fillSampleBtn');
-            const phoneInput = document.getElementById('phone');
-            const clearDataBtn = document.getElementById('clearDataBtn');
-            const confirmModal = document.getElementById('confirmModal');
-            const confirmClearBtn = document.getElementById('confirmClearBtn');
-            const cancelClearBtn = document.getElementById('cancelClearBtn');
-            
-            const qrcode = new QRCode(qrCodeElement, {
-                width: 218, 
-                height: 218,
-                colorDark: '#000000',
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.H
-            });
-
-            if (navigator.share) {
-                shareBtn.classList.remove('hidden');
-            }
-
-            const updateUIState = (hasContent) => {
-                const buttons = [downloadBtn, shareBtn];
-                if (hasContent) {
-                    qrPlaceholder.classList.add('hidden');
-                    qrCodeElement.classList.remove('hidden');
-                    buttons.forEach(btn => {
-                        btn.classList.remove('disabled:opacity-50', 'disabled:cursor-not-allowed');
-                        btn.removeAttribute('disabled');
-                    });
-                } else {
-                    qrPlaceholder.classList.remove('hidden');
-                    qrCodeElement.classList.add('hidden');
-                    buttons.forEach(btn => {
-                        btn.classList.add('disabled:opacity-50', 'disabled:cursor-not-allowed');
-                        btn.setAttribute('disabled', 'true');
-                    });
-                    downloadBtn.href = '#';
-                }
-            };
-
-            const generateQRCode = () => {
-                const fullName = document.getElementById('fullName').value.trim();
-
-                if (!fullName) {
-                    qrcode.clear();
-                    updateUIState(false);
-                    return;
-                }
-                
-                updateUIState(true);
-                
-                const phone = document.getElementById('phone').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const website = document.getElementById('website').value.trim();
-                const company = document.getElementById('company').value.trim();
-                const title = document.getElementById('title').value.trim();
-
-                const nameParts = fullName.split(' ');
-                const firstName = nameParts.shift() || '';
-                const lastName = nameParts.join(' ') || '';
-
-                const vCardString = `BEGIN:VCARD
-VERSION:3.0
-N:${lastName};${firstName};;;
-FN:${fullName}
-ORG:${company}
-TITLE:${title}
-TEL;TYPE=WORK,VOICE:${phone}
-EMAIL:${email}
-URL:${website}
-END:VCARD`;
-                
-                qrcode.makeCode(vCardString);
-
-                setTimeout(() => {
-                    const canvas = qrCodeElement.querySelector('canvas');
-                    if (canvas) {
-                        downloadBtn.href = canvas.toDataURL();
-                    }
-                }, 100);
-            };
-
-            const shareQRCode = async () => {
-                const canvas = qrCodeElement.querySelector('canvas');
-                if (!canvas || !navigator.share) return;
-
-                canvas.toBlob(async (blob) => {
-                    const file = new File([blob], 'vcard-qrcode.png', { type: 'image/png' });
-                    const shareData = {
-                        files: [file],
-                        title: 'My vCard QR Code',
-                    };
-                    try {
-                        await navigator.share(shareData);
-                    } catch (err) {
-                        console.error('Share failed:', err);
-                    }
-                }, 'image/png');
-            };
-
-            const fillSampleData = () => {
-                document.getElementById('fullName').value = 'Jane Appleseed';
-                document.getElementById('phone').value = '+18006927753';
-                document.getElementById('email').value = 'jane.appleseed@example.com';
-                document.getElementById('website').value = 'https://www.apple.com';
-                document.getElementById('company').value = 'Apple Inc.';
-                document.getElementById('title').value = 'Creative Director';
-                generateQRCode();
-            };
-            
-            const sanitizePhoneInput = () => {
-                phoneInput.value = phoneInput.value.replace(/[^0-9+]/g, '');
-            };
-
-            const handleClearData = () => {
-                form.reset();
-                generateQRCode();
-                confirmModal.classList.add('hidden');
-            };
-
-            // Event Listeners
-            form.addEventListener('input', generateQRCode);
-            fillSampleBtn.addEventListener('click', fillSampleData);
-            shareBtn.addEventListener('click', shareQRCode);
-            phoneInput.addEventListener('input', sanitizePhoneInput);
-            
-            // Modal Listeners
-            clearDataBtn.addEventListener('click', () => confirmModal.classList.remove('hidden'));
-            cancelClearBtn.addEventListener('click', () => confirmModal.classList.add('hidden'));
-            confirmClearBtn.addEventListener('click', handleClearData);
-            confirmModal.addEventListener('click', (e) => {
-                if (e.target === confirmModal) {
-                    confirmModal.classList.add('hidden');
-                }
-            });
-
-
-            // Initial UI State
-            updateUIState(false);
-            qrcode.clear();
-        });
-    </script>
-<!-- BEGIN: Features -->
-<div class="features-grid container" id="features">
-  <div class="feature">
-    <div style="font-size:2rem; margin-bottom:15px;">🎯</div>
-    <h3>Professional Networking</h3>
-    <p>Make lasting impressions at conferences, meetings, and networking events with modern digital business cards.</p>
-  </div>
-  <div class="feature">
-    <div style="font-size:2rem; margin-bottom:15px;">💼</div>
-    <h3>No App Required</h3>
-    <p>Recipients can save your contact info instantly using their phone's built-in camera — no special apps needed.</p>
-  </div>
-  <div class="feature">
-    <div style="font-size:2rem; margin-bottom:15px;">🌱</div>
-    <h3>Eco-Friendly</h3>
-    <p>Go paperless and reduce waste while looking tech-savvy. Perfect for environmentally conscious professionals.</p>
-  </div>
-  <div class="feature">
-    <div style="font-size:2rem; margin-bottom:15px;">⚡</div>
-    <h3>Instant Contact Saving</h3>
-    <p>Contacts are saved directly to phone address books with one tap — no manual typing required.</p>
-  </div>
-  <div class="feature">
-    <div style="font-size:2rem; margin-bottom:15px;">🎨</div>
-    <h3>Customizable Design</h3>
-    <p>Create QR codes that match your brand with custom colors, logos, and professional styling options.</p>
-  </div>
-  <div class="feature">
-    <div style="font-size:2rem; margin-bottom:15px;">🔒</div>
-    <h3>Secure & Private</h3>
-    <p>Everything runs in your browser. We don’t store your personal information or track your QR usage.</p>
-  </div>
-</div>
-<!-- END: Features -->
-
-<!-- BEGIN: How It Works -->
-<div class="how-it-works">
-  <div class="container">
-    <h2>How It Works — In 3 Simple Steps</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-number">1</div>
-        <h3>Enter Details</h3>
-        <p>Fill in your contact information: name, phone, email, company, and job title.</p>
       </div>
-      <div class="step">
-        <div class="step-number">2</div>
-        <h3>Generate QR Code</h3>
-        <p>Click generate and instantly create your professional vCard QR code.</p>
-      </div>
-      <div class="step">
-        <div class="step-number">3</div>
-        <h3>Share & Network</h3>
-        <p>Download your QR code and add it to business cards, email signatures, or share digitally.</p>
+      
+      <!-- CTA for features (no How to Use buttons) -->
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="#features" class="btn" style="background: #8b5cf6;">✨ See Features</a>
       </div>
     </div>
   </div>
-</div>
-<!-- END: How It Works -->
+  <!-- End Main Generator Form -->
 
-<!-- BEGIN: CTA -->
-<div class="cta-section">
-  <div class="container">
-    <h2>Ready to Transform Your Networking?</h2>
-    <p style="font-size:1.2rem; margin:20px 0 40px; opacity:0.9;">
-      Join thousands of professionals who've upgraded to digital business cards
-    </p>
-    <a href="#top" class="btn" style="font-size:1.2rem; padding:18px 40px;">🚀 Create Your QR Code Now</a>
-    <div style="margin-top:40px; opacity:0.8;">
-      <p>✅ Completely Free • ✅ No Registration Required • ✅ Instant Download</p>
+  <!-- Features Section -->
+  <div class="features-grid container" id="features">
+    <div class="feature">
+      <div style="font-size: 2rem; margin-bottom: 15px;">🎯</div>
+      <h3>Professional Networking</h3>
+      <p>Make lasting impressions at conferences, meetings, and networking events with modern digital business cards.</p>
+    </div>
+    <div class="feature">
+      <div style="font-size: 2rem; margin-bottom: 15px;">💼</div>
+      <h3>No App Required</h3>
+      <p>Recipients can save your contact info instantly using their phone's built-in camera — no special apps needed.</p>
+    </div>
+    <div class="feature">
+      <div style="font-size: 2rem; margin-bottom: 15px;">🌱</div>
+      <h3>Eco-Friendly</h3>
+      <p>Go paperless and reduce waste while looking tech-savvy. Perfect for environmentally conscious professionals.</p>
+    </div>
+    <div class="feature">
+      <div style="font-size: 2rem; margin-bottom: 15px;">⚡</div>
+      <h3>Instant Contact Saving</h3>
+      <p>Contacts are saved directly to phone address books with one tap — no manual typing required.</p>
+    </div>
+    <div class="feature">
+      <div style="font-size: 2rem; margin-bottom: 15px;">🎨</div>
+      <h3>Customizable Design</h3>
+      <p>Create QR codes that match your brand with custom colors, logos, and professional styling options.</p>
+    </div>
+    <div class="feature">
+      <div style="font-size: 2rem; margin-bottom: 15px;">🔒</div>
+      <h3>Secure & Private</h3>
+      <p>Everything runs in your browser. We don’t store your personal information or track your QR usage.</p>
     </div>
   </div>
-</div>
-<!-- END: CTA -->
+  <!-- End Features Section -->
 
-<!-- BEGIN: Footer -->
-<div style="background:#111827; color:white; text-align:center; padding:40px 20px;">
-  <div class="container">
-    <p>&copy; 2025 vCard QR Code Generator. Made with ❤️ for modern professionals.</p>
-    <p style="margin-top:15px;">
-      <a href="privacy-policy.html" style="color:#9ca3af; text-decoration:none; margin:0 15px;">Privacy Policy</a>
-      <a href="contact.html" style="color:#9ca3af; text-decoration:none; margin:0 15px;">Contact</a>
-      <a href="how-to-use.html" style="color:#9ca3af; text-decoration:none; margin:0 15px;">How to Use</a>
-    </p>
+  <!-- How It Works Section -->
+  <div class="how-it-works">
+    <div class="container">
+      <h2>How It Works — In 3 Simple Steps</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Enter Details</h3>
+          <p>Fill in your contact information: name, phone, email, company, and job title.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Generate QR Code</h3>
+          <p>Click generate and instantly create your professional vCard QR code.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Share & Network</h3>
+          <p>Download your QR code and add it to business cards, email signatures, or share digitally.</p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<!-- END: Footer -->
+  <!-- End How It Works Section -->
 
-  </body>
+  <!-- Call to Action Section -->
+  <div class="cta-section">
+    <div class="container">
+      <h2>Ready to Transform Your Networking?</h2>
+      <p style="font-size: 1.2rem; margin: 20px 0 40px; opacity: 0.9;">Join thousands of professionals who've upgraded to digital business cards</p>
+      <a href="#top" class="btn" style="font-size: 1.2rem; padding: 18px 40px;">🚀 Create Your QR Code Now</a>
+      
+      <div style="margin-top: 40px; opacity: 0.8;">
+        <p>✅ Completely Free • ✅ No Registration Required • ✅ Instant Download</p>
+      </div>
+    </div>
+  </div>
+  <!-- End CTA Section -->
+
+  <!-- Footer Section -->
+  <div style="background: #111827; color: white; text-align: center; padding: 40px 20px;">
+    <div class="container">
+      <p>&copy; 2025 vCard QR Code Generator. Made with ❤️ for modern professionals.</p>
+      <p style="margin-top: 15px;">
+        <a href="privacy-policy.html" style="color: #9ca3af; text-decoration: none; margin: 0 15px;">Privacy Policy</a>
+        <a href="contact.html" style="color: #9ca3af; text-decoration: none; margin: 0 15px;">Contact</a>
+        <a href="how-to-use.html" style="color: #9ca3af; text-decoration: none; margin: 0 15px;">How to Use</a>
+      </p>
+    </div>
+  </div>
+  <!-- End Footer Section -->
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true"></div>
+    <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
+      <h3 class="text-lg font-medium text-gray-900 dark:text-white">Clear Form Data?</h3>
+      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Are you sure you want to clear all the data? This action cannot be undone.</p>
+      <div class="mt-6 flex justify-center space-x-4">
+        <button id="cancelClearBtn" class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600">Cancel</button>
+        <button id="confirmClearBtn" class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">Confirm Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('vcard-form');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const shareBtn = document.getElementById('shareBtn');
+      const qrCodeElement = document.getElementById('qrcode');
+      const qrPlaceholder = document.getElementById('qrPlaceholder');
+      const fillSampleBtn = document.getElementById('fillSampleBtn');
+      const phoneInput = document.getElementById('phone');
+      const clearDataBtn = document.getElementById('clearDataBtn');
+      const confirmModal = document.getElementById('confirmModal');
+      const confirmClearBtn = document.getElementById('confirmClearBtn');
+      const cancelClearBtn = document.getElementById('cancelClearBtn');
+      
+      // Instantiate QRCode object
+      const qrcode = new QRCode(qrCodeElement, {
+        width: 218,
+        height: 218,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      
+      // Show share button if Web Share API available
+      if (navigator.share) {
+        shareBtn.classList.remove('hidden');
+      }
+      
+      // Update UI state (enable/disable buttons and show/hide placeholder)
+      const updateUIState = (hasContent) => {
+        const buttons = [downloadBtn, shareBtn];
+        if (hasContent) {
+          qrPlaceholder.classList.add('hidden');
+          qrCodeElement.classList.remove('hidden');
+          buttons.forEach(btn => {
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            btn.removeAttribute('disabled');
+          });
+        } else {
+          qrPlaceholder.classList.remove('hidden');
+          qrCodeElement.classList.add('hidden');
+          buttons.forEach(btn => {
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btn.setAttribute('disabled', 'true');
+          });
+          downloadBtn.href = '#';
+        }
+      };
+      
+      // Generate QR Code from form values
+      const generateQRCode = () => {
+        const fullName = document.getElementById('fullName').value.trim();
+        if (!fullName) {
+          qrcode.clear();
+          updateUIState(false);
+          return;
+        }
+        updateUIState(true);
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const website = document.getElementById('website').value.trim();
+        const company = document.getElementById('company').value.trim();
+        const title = document.getElementById('title').value.trim();
+        const nameParts = fullName.split(' ');
+        const firstName = nameParts.shift() || '';
+        const lastName = nameParts.join(' ') || '';
+        
+        const vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
+        qrcode.makeCode(vCardString);
+        setTimeout(() => {
+          const canvas = qrCodeElement.querySelector('canvas');
+          if (canvas) {
+            downloadBtn.href = canvas.toDataURL();
+          }
+        }, 100);
+      };
+      
+      // Share QR Code using Web Share API
+      const shareQRCode = async () => {
+        const canvas = qrCodeElement.querySelector('canvas');
+        if (!canvas || !navigator.share) return;
+        canvas.toBlob(async (blob) => {
+          const file = new File([blob], 'vcard-qrcode.png', { type: 'image/png' });
+          const shareData = {
+            files: [file],
+            title: 'My vCard QR Code',
+          };
+          try {
+            await navigator.share(shareData);
+          } catch (err) {
+            console.error('Share failed:', err);
+          }
+        }, 'image/png');
+      };
+      
+      // Fill sample data for testing
+      const fillSampleData = () => {
+        document.getElementById('fullName').value = 'Jane Appleseed';
+        document.getElementById('phone').value = '+18006927753';
+        document.getElementById('email').value = 'jane.appleseed@example.com';
+        document.getElementById('website').value = 'https://www.apple.com';
+        document.getElementById('company').value = 'Apple Inc.';
+        document.getElementById('title').value = 'Creative Director';
+        generateQRCode();
+      };
+      
+      // Sanitize phone number input
+      const sanitizePhoneInput = () => {
+        phoneInput.value = phoneInput.value.replace(/[^0-9+]/g, '');
+      };
+      
+      // Clear form data
+      const handleClearData = () => {
+        form.reset();
+        generateQRCode();
+        confirmModal.classList.add('hidden');
+      };
+      
+      // Event listeners
+      form.addEventListener('input', generateQRCode);
+      fillSampleBtn.addEventListener('click', fillSampleData);
+      shareBtn.addEventListener('click', shareQRCode);
+      phoneInput.addEventListener('input', sanitizePhoneInput);
+      clearDataBtn.addEventListener('click', () => confirmModal.classList.remove('hidden'));
+      cancelClearBtn.addEventListener('click', () => confirmModal.classList.add('hidden'));
+      confirmClearBtn.addEventListener('click', handleClearData);
+      confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) {
+          confirmModal.classList.add('hidden');
+        }
+      });
+      
+      // Initialize UI state
+      updateUIState(false);
+      qrcode.clear();
+    });
+  </script>
+</body>
 </html>
-
