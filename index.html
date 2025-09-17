@@ -42,8 +42,112 @@
         .hidden { display: none; }
         #confirmModal { background-color: rgba(0, 0, 0, 0.5); }
     </style>
+    <!-- BEGIN: layout styles (non-destructive) -->
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+  }
+  .hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .hero h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+  }
+  .hero .subtitle {
+    font-size: 1.4rem;
+    font-weight: 300;
+    margin: 0 0 40px 0;
+    opacity: 0.9;
+  }
+  .benefits {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+  }
+  .benefit { text-align: center; max-width: 200px; }
+  .benefit-icon { font-size: 2.5rem; margin-bottom: 15px; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  .main-content {
+    background: white;
+    margin: -80px auto 0;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    padding: 40px;
+    max-width: 800px;
+    position: relative;
+    z-index: 10;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin: 60px 0;
+    background: #f8fafc;
+    padding: 40px 20px;
+  }
+  .feature { text-align: center; padding: 20px; }
+  .feature h3 { color: #4f46e5; font-size: 1.2rem; margin: 15px 0 10px 0; }
+  .cta-section { background: #1f2937; color: white; text-align: center; padding: 60px 20px; }
+  .btn {
+    background: #10b981; color: white; padding: 15px 30px; border: none; border-radius: 8px;
+    font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .btn:hover { background: #059669; transform: translateY(-2px); }
+  .how-it-works { padding: 60px 20px; text-align: center; }
+  .steps {
+    display: flex; justify-content: center; gap: 40px; margin: 40px 0; flex-wrap: wrap;
+  }
+  .step { max-width: 200px; text-align: center; }
+  .step-number {
+    background: #4f46e5; color: white; width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-weight: 700;
+  }
+  /* keep your existing form/QR styles; this only adds layout */
+</style>
+<!-- END: layout styles -->
+
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+<!-- BEGIN: Hero -->
+<div class="hero">
+  <div class="container">
+    <h1>Create Professional vCard QR Codes in Seconds</h1>
+    <p class="subtitle">Transform your networking with instant digital business cards. No app required — just scan and save!</p>
+
+    <div class="benefits">
+      <div class="benefit">
+        <div class="benefit-icon">⚡</div>
+        <strong>Instant Sharing</strong><br>Share contacts with one scan
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">💚</div>
+        <strong>100% Free</strong><br>No hidden fees or limits
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">📱</div>
+        <strong>Works Everywhere</strong><br>iOS, Android, any QR reader
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: Hero -->
+
+<!-- BEGIN: Main container + card -->
+<div class="container">
+  <div class="main-content">
+    <h2 style="text-align:center; margin-bottom:30px;">Generate Your vCard QR Code</h2>
 
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
         <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
@@ -88,6 +192,10 @@
                             <input type="text" id="title" placeholder="Software Engineer" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400">
                         </div>
                     </form>
+                    <div style="text-align:center; margin-top:30px;">
+      <a href="how-to-use.html" class="btn" style="background:#6366f1; margin-right:15px;">📖 How to Use</a>
+      <a href="#features" class="btn" style="background:#8b5cf6;">✨ See Features</a>
+    </div>
                 </div>
 
                 <!-- QR Code Section -->
@@ -287,6 +395,94 @@ END:VCARD`;
             qrcode.clear();
         });
     </script>
-</body>
+<!-- BEGIN: Features -->
+<div class="features-grid container" id="features">
+  <div class="feature">
+    <div style="font-size:2rem; margin-bottom:15px;">🎯</div>
+    <h3>Professional Networking</h3>
+    <p>Make lasting impressions at conferences, meetings, and networking events with modern digital business cards.</p>
+  </div>
+  <div class="feature">
+    <div style="font-size:2rem; margin-bottom:15px;">💼</div>
+    <h3>No App Required</h3>
+    <p>Recipients can save your contact info instantly using their phone's built-in camera — no special apps needed.</p>
+  </div>
+  <div class="feature">
+    <div style="font-size:2rem; margin-bottom:15px;">🌱</div>
+    <h3>Eco-Friendly</h3>
+    <p>Go paperless and reduce waste while looking tech-savvy. Perfect for environmentally conscious professionals.</p>
+  </div>
+  <div class="feature">
+    <div style="font-size:2rem; margin-bottom:15px;">⚡</div>
+    <h3>Instant Contact Saving</h3>
+    <p>Contacts are saved directly to phone address books with one tap — no manual typing required.</p>
+  </div>
+  <div class="feature">
+    <div style="font-size:2rem; margin-bottom:15px;">🎨</div>
+    <h3>Customizable Design</h3>
+    <p>Create QR codes that match your brand with custom colors, logos, and professional styling options.</p>
+  </div>
+  <div class="feature">
+    <div style="font-size:2rem; margin-bottom:15px;">🔒</div>
+    <h3>Secure & Private</h3>
+    <p>Everything runs in your browser. We don’t store your personal information or track your QR usage.</p>
+  </div>
+</div>
+<!-- END: Features -->
+
+<!-- BEGIN: How It Works -->
+<div class="how-it-works">
+  <div class="container">
+    <h2>How It Works — In 3 Simple Steps</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Enter Details</h3>
+        <p>Fill in your contact information: name, phone, email, company, and job title.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Generate QR Code</h3>
+        <p>Click generate and instantly create your professional vCard QR code.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Share & Network</h3>
+        <p>Download your QR code and add it to business cards, email signatures, or share digitally.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: How It Works -->
+
+<!-- BEGIN: CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Ready to Transform Your Networking?</h2>
+    <p style="font-size:1.2rem; margin:20px 0 40px; opacity:0.9;">
+      Join thousands of professionals who've upgraded to digital business cards
+    </p>
+    <a href="#top" class="btn" style="font-size:1.2rem; padding:18px 40px;">🚀 Create Your QR Code Now</a>
+    <div style="margin-top:40px; opacity:0.8;">
+      <p>✅ Completely Free • ✅ No Registration Required • ✅ Instant Download</p>
+    </div>
+  </div>
+</div>
+<!-- END: CTA -->
+
+<!-- BEGIN: Footer -->
+<div style="background:#111827; color:white; text-align:center; padding:40px 20px;">
+  <div class="container">
+    <p>&copy; 2025 vCard QR Code Generator. Made with ❤️ for modern professionals.</p>
+    <p style="margin-top:15px;">
+      <a href="privacy-policy.html" style="color:#9ca3af; text-decoration:none; margin:0 15px;">Privacy Policy</a>
+      <a href="contact.html" style="color:#9ca3af; text-decoration:none; margin:0 15px;">Contact</a>
+      <a href="how-to-use.html" style="color:#9ca3af; text-decoration:none; margin:0 15px;">How to Use</a>
+    </p>
+  </div>
+</div>
+<!-- END: Footer -->
+
+  </body>
 </html>
 
