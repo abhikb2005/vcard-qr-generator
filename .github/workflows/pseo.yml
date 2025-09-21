@@ -3,8 +3,15 @@ name: pSEO Pages
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 18 * * *"
+    - cron: "0 18 * * *"    # 18:00 UTC == 23:30 IST daily
 
+permissions:
+  contents: write          # required for git push with GITHUB_TOKEN
+
+concurrency:
+  group: pseo-pages-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false   # don't kill a run that's already generating pages
+  
 jobs:
   build:
     runs-on: ubuntu-latest
