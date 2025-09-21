@@ -1,0 +1,31 @@
+name: pSEO Pages
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 18 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pandas scikit-learn jinja2 numpy
+      - name: Generate pages
+        run: python scripts/pseo/build_pages.py
+        env:
+          PSEO_EPS: "0.6"
+          PSEO_MIN_SAMPLES: "2"
+          PSEO_DRY_RUN: "0"
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            git add -A
+            git commit -m "chore(pseo): generate blog pages [skip ci]"
+            git push
+          fi
