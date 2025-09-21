@@ -1,5 +1,103 @@
 [
   {
+    "slug": "address-qr-code-business-card",
+    "title": "Address QR Code Business Card — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a address qr code business card safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/address-qr-code-business-card/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "business-card-qr-code-generator",
+    "title": "Business Card QR Code Generator — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a business card qr code generator safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/business-card-qr-code-generator/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "business-qr-code-contactless-card",
+    "title": "Business QR Code Contactless Card — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a business qr code contactless card safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/business-qr-code-contactless-card/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "contact-qr-code-generator",
+    "title": "Contact QR Code Generator — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a contact qr code generator safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/contact-qr-code-generator/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "contact-qr-code-printing-guide",
+    "title": "Contact QR Code Printing Guide — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a contact qr code printing guide safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/contact-qr-code-printing-guide/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "email-vcard-qr-code-generator",
+    "title": "Email vCard QR Code Generator — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a email vcard qr code generator safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/email-vcard-qr-code-generator/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "phone-contact-qr-code-how-to",
+    "title": "Phone Contact QR Code How To — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a phone contact qr code how to safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/phone-contact-qr-code-how-to/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "qr-code-business-contact-tips",
+    "title": "QR Code Business Contact Tips — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a qr code business contact tips safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/qr-code-business-contact-tips/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "qr-code-contact-card",
+    "title": "QR Code Contact Card — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a qr code contact card safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/qr-code-contact-card/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "qr-code-vcf-contact-file",
+    "title": "QR Code VCF Contact File — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a qr code vcf contact file safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/qr-code-vcf-contact-file/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "qr-vcard-for-networking-events",
+    "title": "QR vCard For Networking Events — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a qr vcard for networking events safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/qr-vcard-for-networking-events/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "vcard-qr-code",
+    "title": "vCard QR Code — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a vcard qr code safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/vcard-qr-code/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "vcard-qr-code-best-practices",
+    "title": "vCard QR Code Best Practices — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a vcard qr code best practices safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/vcard-qr-code-best-practices/",
+    "date": "2025-09-21"
+  },
+  {
+    "slug": "vcard-qr-code-download-guide",
+    "title": "vCard QR Code Download Guide — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a vcard qr code download guide safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
+    "url": "/blog/vcard-qr-code-download-guide/",
+    "date": "2025-09-21"
+  },
+  {
     "slug": "contact-management-workflows",
     "title": "Contact Management Workflows After a QR Code Scan",
     "description": "Organize new connections captured via QR codes and vCards.",
@@ -64,8 +162,8 @@
   },
   {
     "slug": "vcard-qr-code-generator",
-    "title": "Ultimate Guide to the vCard QR Code Generator",
-    "description": "Learn how to craft, customize, and share vCard QR codes for better networking.",
+    "title": "vCard QR Code Generator — Free vCard QR Code Guide",
+    "description": "Learn how to create and share a vcard qr code generator safely with free tools, troubleshooting tips, printing advice, and privacy best practices.",
     "url": "/blog/vcard-qr-code-generator/",
     "date": "2025-09-20"
   }
