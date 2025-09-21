@@ -219,6 +219,9 @@
           iOS, Android, any QR reader
         </div>
       </div>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="/blogs/" class="inline-flex items-center px-4 py-2 rounded-md font-semibold bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Blogs</a>
+      </div>
     </div>
   </div>
   <!-- End Hero -->
@@ -381,7 +384,7 @@
       <p style="margin-top: 15px;">
         <a href="privacy-policy.html" style="color: #9ca3af; text-decoration: none; margin: 0 15px;">Privacy Policy</a>
         <a href="contact.html" style="color: #9ca3af; text-decoration: none; margin: 0 15px;">Contact</a>
-        <a href="how-to-use.html" style="color: #9ca3af; text-decoration: none; margin: 0 15px;">How to Use</a>
+        <a id="footer-how-to-link" href="/blog/vcard-qr-code-generator/" style="color: #9ca3af; text-decoration: none; margin: 0 15px;">How to Use</a>
       </p>
     </div>
   </div>
@@ -537,6 +540,71 @@
       updateUIState(false);
       qrcode.clear();
     });
+  </script>
+  <script>
+    (function () {
+      const footerLink = document.getElementById('footer-how-to-link');
+      if (!footerLink) return;
+
+      const defaultHref = '/blog/vcard-qr-code-generator/';
+      footerLink.href = defaultHref;
+
+      const keywordOrder = [
+        'vcard qr code generator',
+        'guide',
+        'how to',
+        'qr code',
+        'vcard',
+      ];
+
+      fetch('/blog_index.json', { cache: 'no-store' })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Manifest unavailable');
+          }
+          return response.json();
+        })
+        .then((entries) => {
+          if (!Array.isArray(entries)) {
+            return;
+          }
+
+          const normalized = entries
+            .filter((entry) => entry && typeof entry === 'object')
+            .map((entry) => {
+              const slug = typeof entry.slug === 'string' ? entry.slug : '';
+              const title = typeof entry.title === 'string' ? entry.title : '';
+              const url = typeof entry.url === 'string' ? entry.url : '';
+              return { slug, title, url };
+            });
+
+          if (!normalized.length) {
+            return;
+          }
+
+          const firstMatch = normalized.find((entry) => entry.slug.toLowerCase().startsWith('vcard-qr-code-generator'));
+          if (firstMatch) {
+            footerLink.href = firstMatch.url || `/blog/${firstMatch.slug}/`;
+            return;
+          }
+
+          const lowerKeywords = keywordOrder.map((keyword) => keyword.toLowerCase());
+          for (const keyword of lowerKeywords) {
+            const candidate = normalized.find((entry) => {
+              const slug = entry.slug.toLowerCase();
+              const title = entry.title.toLowerCase();
+              return slug.includes(keyword) || title.includes(keyword);
+            });
+            if (candidate) {
+              footerLink.href = candidate.url || `/blog/${candidate.slug}/`;
+              return;
+            }
+          }
+        })
+        .catch(() => {
+          footerLink.href = defaultHref;
+        });
+    })();
   </script>
 </body>
 </html>
