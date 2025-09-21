@@ -14,6 +14,33 @@ TEMPLATE_DIR = ROOT / "templates"
 
 DOMAIN_TOKENS = ("vcard", "contact", "business", "phone", "email", "address", "vcf")
 
+
+def article_for(phrase: str) -> str:
+    """Return the indefinite article ("a"/"an") for the given phrase."""
+    cleaned = phrase.strip().lower()
+    if not cleaned:
+        return "a"
+
+    # take the first alphanumeric chunk as the word to evaluate
+    match = re.match(r"[a-z0-9]+", cleaned)
+    if not match:
+        return "a"
+
+    word = match.group(0)
+
+    special_an = {"honest", "honor", "honour", "hour", "heir", "heirloom"}
+    if word in special_an:
+        return "an"
+
+    special_a_prefixes = ("uni", "use", "ufo", "ewe", "one", "once", "eu")
+    if any(word.startswith(prefix) for prefix in special_a_prefixes):
+        return "a"
+
+    if word[0] in "aeiou":
+        return "an"
+
+    return "a"
+
 FALLBACK = [
     "vcard qr code generator",
     "vcard qr code",
@@ -141,17 +168,18 @@ def render_page(template_path: Path, context: dict) -> str:
 
 def make_faq(seed: str) -> list[dict[str, str]]:
     cleaned = seed.strip()
+    article = article_for(cleaned)
     faq = [
         {
-            "q": f"How do I create a {cleaned}?",
+            "q": f"How do I create {article} {cleaned}?",
             "a": "Enter your contact details into the generator, click Generate, and download the PNG right away.",
         },
         {
-            "q": f"Can I print a {cleaned} on my business card?",
+            "q": f"Can I print {article} {cleaned} on my business card?",
             "a": "Yes. Print it at 300 DPI with a clear quiet zone and test with both iOS and Android devices.",
         },
         {
-            "q": f"Is using a {cleaned} secure?",
+            "q": f"Is using {article} {cleaned} secure?",
             "a": "Our vCard QR generator works entirely in your browser, so your contact data never leaves your device.",
         },
     ]

@@ -11,7 +11,7 @@ from typing import Dict, List, Optional
 from sklearn.cluster import DBSCAN
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from utils import faq_json_ld, load_seeds, make_faq, render_page, slugify
+from utils import article_for, faq_json_ld, load_seeds, make_faq, render_page, slugify
 
 # Paths
 ROOT = Path(__file__).resolve().parents[2]
@@ -58,12 +58,13 @@ def format_seed_heading(seed: str) -> str:
 def build_context(seed: str, slug: str) -> dict:
     heading = format_seed_heading(seed)
     title = f"{heading} — Free vCard QR Code Guide"
+    article = article_for(seed)
     description = (
-        f"Learn how to create and share a {seed} safely with free tools, troubleshooting tips, printing advice, and privacy best practices."
+        f"Learn how to create and share {article} {seed} safely with free tools, troubleshooting tips, printing advice, and privacy best practices."
     )
     intro = " ".join(
         [
-            f"This page walks you through building a {seed} in minutes so every scan delivers the right contact details.",
+            f"This page walks you through building {article} {seed} in minutes so every scan delivers the right contact details.",
             "Follow our preparation checklist, testing advice, and sharing ideas to make the QR easy to use online or offline.",
             "You will also get printing and privacy tips so your contact card keeps working long after the first scan.",
         ]
