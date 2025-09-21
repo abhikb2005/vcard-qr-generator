@@ -27,6 +27,8 @@ jobs:
           PSEO_EPS: "0.6"
           PSEO_MIN_SAMPLES: "2"
           PSEO_DRY_RUN: "0"
+      - name: Generate sitemap & robots
+        run: python scripts/pseo/update_sitemap.py
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
