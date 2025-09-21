@@ -1,0 +1,72 @@
+[
+  {
+    "slug": "contact-management-workflows",
+    "title": "Contact Management Workflows After a QR Code Scan",
+    "description": "Organize new connections captured via QR codes and vCards.",
+    "url": "/blog/contact-management-workflows/",
+    "date": "2025-09-20"
+  },
+  {
+    "slug": "customize-qr-codes",
+    "title": "How to Customize Your vCard QR Codes",
+    "description": "Brand your QR codes with colors, logos, and layouts that match your identity.",
+    "url": "/blog/customize-qr-codes/",
+    "date": "2025-09-20"
+  },
+  {
+    "slug": "digital-business-card-strategies",
+    "title": "Digital Business Card Strategies for Modern Networking",
+    "description": "Practical tactics for using QR-powered digital business cards to make lasting connections.",
+    "url": "/blog/digital-business-card-strategies/",
+    "date": "2025-09-20"
+  },
+  {
+    "slug": "event-networking-playbook",
+    "title": "Event Networking Playbook with QR Codes",
+    "description": "Prepare for conferences with a QR-powered workflow for effortless introductions.",
+    "url": "/blog/event-networking-playbook/",
+    "date": "2025-09-20"
+  },
+  {
+    "slug": "qr-code-follow-up-ideas",
+    "title": "Smart Follow-Up Ideas Using QR Codes",
+    "description": "Creative follow-up workflows triggered by QR code scans.",
+    "url": "/blog/qr-code-follow-up-ideas/",
+    "date": "2025-09-20"
+  },
+  {
+    "slug": "qr-code-marketing-ideas",
+    "title": "QR Code Marketing Ideas That Work",
+    "description": "Campaign ideas and best practices for using QR codes in marketing materials.",
+    "url": "/blog/qr-code-marketing-ideas/",
+    "date": "2025-09-20"
+  },
+  {
+    "slug": "qr-code-networking-tips",
+    "title": "QR Code Networking Tips for Busy Professionals",
+    "description": "Discover quick wins for sharing your contact details with QR codes at events.",
+    "url": "/blog/qr-code-networking-tips/",
+    "date": "2025-09-20"
+  },
+  {
+    "slug": "secure-qr-code-sharing",
+    "title": "Keeping QR Code Contact Sharing Secure",
+    "description": "Privacy-minded tips to safely share your contact info via QR codes.",
+    "url": "/blog/secure-qr-code-sharing/",
+    "date": "2025-09-20"
+  },
+  {
+    "slug": "vcard-export-guide",
+    "title": "How to Export and Share Your vCard QR Code",
+    "description": "Step-by-step instructions for exporting, downloading, and sharing your generated code.",
+    "url": "/blog/vcard-export-guide/",
+    "date": "2025-09-20"
+  },
+  {
+    "slug": "vcard-qr-code-generator",
+    "title": "Ultimate Guide to the vCard QR Code Generator",
+    "description": "Learn how to craft, customize, and share vCard QR codes for better networking.",
+    "url": "/blog/vcard-qr-code-generator/",
+    "date": "2025-09-20"
+  }
+]

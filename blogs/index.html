@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard QR Generator Blog Posts</title>
+  <meta name="description" content="Browse the latest articles and guides about vCard QR codes, contactless networking, and digital business cards.">
+  <link rel="canonical" href="https://vcardqrcodegenerator.com/blogs/">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950/5 text-slate-900">
+  <header class="bg-indigo-600 text-white">
+    <div class="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-12 sm:py-16">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <a href="/" class="text-sm font-semibold tracking-wide text-indigo-100 hover:text-white">&larr; Back to generator</a>
+        <span id="last-updated" class="text-sm text-indigo-100">Last updated: --</span>
+      </div>
+      <div class="space-y-4">
+        <p class="text-sm uppercase tracking-[0.3em] text-indigo-200">Blog hub</p>
+        <h1 class="text-3xl font-bold leading-tight sm:text-4xl">Explore our latest vCard &amp; QR code resources</h1>
+        <p class="max-w-2xl text-indigo-100/90">Stay up to date with networking tactics, QR customization ideas, and contact management workflows powered by our free vCard QR code generator.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-5xl px-6 py-12 sm:py-16">
+    <div id="status-message" class="mb-6 hidden rounded-lg border border-indigo-100 bg-indigo-50 px-4 py-3 text-sm text-indigo-700" role="status" aria-live="polite" aria-hidden="true"></div>
+
+    <section aria-labelledby="latest-heading" class="space-y-6">
+      <div>
+        <h2 id="latest-heading" class="text-2xl font-semibold text-slate-900">Latest posts</h2>
+        <p class="text-sm text-slate-500">Fresh insights from our team, sorted by publish date.</p>
+      </div>
+      <div id="latest-posts" class="grid gap-4 md:grid-cols-2"></div>
+    </section>
+
+    <section aria-labelledby="all-posts-heading" class="mt-16 space-y-6">
+      <div>
+        <h2 id="all-posts-heading" class="text-2xl font-semibold text-slate-900">All posts</h2>
+        <p class="text-sm text-slate-500">Browse every tutorial and playbook in our library.</p>
+      </div>
+      <div id="all-posts" class="grid gap-4 md:grid-cols-2"></div>
+    </section>
+  </main>
+
+  <footer class="bg-white">
+    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-10 text-sm text-slate-500">
+      <span>&copy; 2025 vCard QR Code Generator</span>
+      <nav class="flex gap-4">
+        <a href="/" class="text-indigo-600 hover:text-indigo-500 font-medium">Home</a>
+        <a href="/contact.html" class="hover:text-slate-700">Contact</a>
+        <a href="/privacy-policy.html" class="hover:text-slate-700">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const latestContainer = document.getElementById('latest-posts');
+    const allContainer = document.getElementById('all-posts');
+    const statusMessage = document.getElementById('status-message');
+    const lastUpdatedEl = document.getElementById('last-updated');
+
+    function formatDate(value) {
+      if (!value) return '';
+      const parsed = new Date(value);
+      if (Number.isNaN(parsed.getTime())) return '';
+      return parsed.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function createCard(post, showDate) {
+      const card = document.createElement('article');
+      card.className = 'rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md focus-within:ring-2 focus-within:ring-indigo-500';
+
+      const titleLink = document.createElement('a');
+      titleLink.href = post.url || `/blog/${post.slug || ''}/`;
+      titleLink.className = 'text-lg font-semibold text-indigo-600 hover:text-indigo-500 focus:outline-none';
+      titleLink.textContent = post.title || (post.slug ? post.slug.replace(/-/g, ' ') : 'Untitled post');
+      titleLink.setAttribute('aria-describedby', `${post.slug || 'post'}-description`);
+
+      const description = document.createElement('p');
+      description.id = `${post.slug || 'post'}-description`;
+      description.className = 'mt-3 text-sm text-slate-600';
+      description.textContent = post.description || 'Tap to read the full article.';
+
+      card.appendChild(titleLink);
+      card.appendChild(description);
+
+      if (showDate && post.date) {
+        const dateText = formatDate(post.date);
+        if (dateText) {
+          const timeEl = document.createElement('time');
+          timeEl.className = 'mt-3 block text-xs font-medium uppercase tracking-wide text-slate-400';
+          timeEl.dateTime = post.date;
+          timeEl.textContent = `Published ${dateText}`;
+          card.appendChild(timeEl);
+        }
+      }
+
+      const urlEl = document.createElement('p');
+      urlEl.className = 'mt-4 text-xs text-slate-400 break-all';
+      urlEl.textContent = post.url || `/blog/${post.slug || ''}/`;
+      card.appendChild(urlEl);
+
+      return card;
+    }
+
+    function renderPosts(posts, options) {
+      const usedManifest = Boolean(options && options.usedManifest);
+      const items = Array.isArray(posts) ? posts.slice() : [];
+
+      if (usedManifest) {
+        items.sort((a, b) => {
+          const first = new Date(a.date || 0).getTime();
+          const second = new Date(b.date || 0).getTime();
+          return Number.isNaN(second - first) ? 0 : (second - first);
+        });
+      } else {
+        items.sort((a, b) => {
+          return (a.slug || '').localeCompare(b.slug || '');
+        });
+      }
+
+      latestContainer.innerHTML = '';
+      allContainer.innerHTML = '';
+
+      if (!items.length) {
+        showStatus('No blog posts available yet. Please check back soon.');
+        lastUpdatedEl.textContent = `Last updated: ${new Date().toLocaleString()}`;
+        return;
+      }
+
+      const latest = items.slice(0, Math.min(20, items.length));
+      latest.forEach((post) => {
+        latestContainer.appendChild(createCard(post, usedManifest));
+      });
+      items.forEach((post) => {
+        allContainer.appendChild(createCard(post, usedManifest));
+      });
+
+      if (usedManifest) {
+        showStatus('Loaded from local blog_index.json manifest.');
+      } else {
+        showStatus('Manifest not found. Showing alphabetical list from GitHub directory data.');
+      }
+
+      if (usedManifest) {
+        const newestWithDate = items.find((entry) => entry.date);
+        if (newestWithDate) {
+          const formatted = formatDate(newestWithDate.date);
+          if (formatted) {
+            lastUpdatedEl.textContent = `Last updated: ${formatted}`;
+            return;
+          }
+        }
+      }
+      lastUpdatedEl.textContent = `Last updated: ${new Date().toLocaleString()}`;
+    }
+
+    async function loadIndex() {
+      try {
+        const manifestResponse = await fetch('/blog_index.json', { cache: 'no-store' });
+        if (manifestResponse.ok) {
+          const manifestPosts = await manifestResponse.json();
+          renderPosts(manifestPosts, { usedManifest: true });
+          return;
+        }
+      } catch (error) {
+        console.warn('Unable to load blog_index.json', error);
+      }
+
+      try {
+        const apiResponse = await fetch('https://api.github.com/repos/abhikb2005/vcard-qr-generator/contents/blog');
+        const payload = await apiResponse.json();
+        const posts = Array.isArray(payload) ? payload.filter((entry) => entry && entry.type === 'dir') : [];
+        const mapped = posts.map((entry) => {
+          const slug = entry.name || '';
+          const readableTitle = slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+          return {
+            slug,
+            title: readableTitle,
+            description: '',
+            url: `/blog/${slug}/`,
+          };
+        });
+        renderPosts(mapped, { usedManifest: false });
+      } catch (error) {
+        console.error('Unable to load blog list from GitHub', error);
+        showStatus('Unable to load posts right now. Please try again later.');
+        lastUpdatedEl.textContent = `Last updated: ${new Date().toLocaleString()}`;
+      }
+    }
+
+    loadIndex();
+
+    function showStatus(message) {
+      statusMessage.textContent = message;
+      statusMessage.classList.remove('hidden');
+      statusMessage.setAttribute('aria-hidden', 'false');
+    }
+  </script>
+</body>
+</html>
