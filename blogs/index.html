@@ -161,12 +161,22 @@
 
     async function loadIndex() {
       try {
-        const manifestResponse = await fetch('/blog_index.json', { cache: 'no-store' });
-        if (manifestResponse.ok) {
-          const manifestPosts = await manifestResponse.json();
-          renderPosts(manifestPosts, { usedManifest: true });
-          return;
-        }
+        await fetch('/blog_index.json', { cache: 'no-store' })
+          .then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.json();
+          })
+          .then(data => {
+            renderPosts(data, { usedManifest: true });
+          })
+          .catch(err => {
+            console.error('Failed to load blog_index.json:', err);
+            if (typeof showEmptyState === 'function') {
+              showEmptyState(); // if such a function exists; otherwise no-op
+            }
+            throw err;
+          });
+        return;
       } catch (error) {
         console.warn('Unable to load blog_index.json', error);
       }
