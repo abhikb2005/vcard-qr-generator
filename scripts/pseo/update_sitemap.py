@@ -1,10 +1,12 @@
 from __future__ import annotations
-import json, re, subprocess
+import json
+import re
+import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional
-from xml.etree.ElementTree import Element, SubElement, tostring
+from xml.etree.ElementTree import Element, SubElement, ElementTree
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = "https://vcardqrcodegenerator.com"
@@ -143,10 +145,8 @@ def _write_sitemap(posts: List[Post]) -> None:
         lastmod = _git_last_commit_iso(idx)
         _add_url(urlset, f"{SITE}{p.url}", lastmod)
 
-    xml = "<!-- GENERATED: do not edit by hand -->\n" + \
-          '<?xml version="1.0" encoding="UTF-8"?>\n' + \
-          tostring(urlset, encoding="unicode")
-    SITEMAP.write_text(xml, encoding="utf-8")
+    tree = ElementTree(urlset)
+    tree.write(SITEMAP, encoding="utf-8", xml_declaration=True)
 
 def _ensure_robots():
     line = f"Sitemap: {SITE}/sitemap.xml"
