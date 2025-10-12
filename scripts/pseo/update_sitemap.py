@@ -5,11 +5,13 @@ import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional
-from xml.etree.ElementTree import Element, SubElement, ElementTree
+from typing import Dict, Iterable, List
+from xml.etree.ElementTree import Element, SubElement, tostring
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = "https://vcardqrcodegenerator.com"
+CANONICAL_HOST = "vcardqrcodegenerator.com"
+CANONICAL_SCHEME = "https"
 MANIFEST = ROOT / "blog_index.json"
 SITEMAP = ROOT / "sitemap.xml"
 ROBOTS  = ROOT / "robots.txt"
@@ -115,6 +117,43 @@ def _write_manifest(posts: Iterable[Post]) -> None:
         encoding="utf-8",
     )
 
+def file_lastmod_iso(path: Path) -> str:
+    try:
+        timestamp = path.stat().st_mtime
+    except FileNotFoundError:
+        return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+    return dt.isoformat(timespec="seconds")
+
+
+def normalize_url(path: Path) -> str:
+    rel = path.resolve().relative_to(ROOT)
+
+    if rel == Path("index.html"):
+        url_path = "/"
+    elif rel == Path("blogs/index.html"):
+        url_path = "/blogs/"
+    elif len(rel.parts) >= 3 and rel.parts[0] == "blog" and rel.name == "index.html":
+        slug = rel.parts[1]
+        url_path = f"/blog/{slug}/"
+    elif len(rel.parts) == 1 and rel.suffix == ".html":
+        url_path = f"/{rel.name}"
+    else:
+        parts = list(rel.parts)
+        if parts and parts[-1] == "index.html":
+            parts = parts[:-1]
+            url_path = "/" + "/".join(parts) + "/" if parts else "/"
+        else:
+            url_path = "/" + "/".join(parts)
+
+    if not url_path.startswith("/"):
+        url_path = f"/{url_path}"
+
+    if url_path == "/":
+        return f"{CANONICAL_SCHEME}://{CANONICAL_HOST}/"
+    return f"{CANONICAL_SCHEME}://{CANONICAL_HOST}{url_path}"
+
+
 def _add_url(urlset: Element, loc: str, lastmod_iso: str):
     el = SubElement(urlset, "url")
     SubElement(el, "loc").text = loc
@@ -124,29 +163,41 @@ def _write_sitemap(posts: List[Post]) -> None:
     urlset = Element("urlset")
     urlset.set("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9")
 
-    # Core pages (derive lastmod from git)
-    core = [
-        (f"{SITE}/", ROOT / "index.html"),
-        (f"{SITE}/privacy-policy.html", ROOT / "privacy-policy.html"),
-        (f"{SITE}/contact.html", ROOT / "contact.html"),
-    ]
-    # Include /blogs/ if it exists
+    seen: set[str] = set()
+
+    def include(path: Path) -> None:
+        if not path.exists():
+            return
+        loc = normalize_url(path)
+        if loc in seen:
+            return
+        seen.add(loc)
+        _add_url(urlset, loc, file_lastmod_iso(path))
+
+    include(ROOT / "index.html")
+    include(ROOT / "privacy-policy.html")
+    include(ROOT / "contact.html")
+
     blogs_index = ROOT / "blogs" / "index.html"
     if blogs_index.exists():
-        core.append((f"{SITE}/blogs/", blogs_index))
+        include(blogs_index)
 
-    for loc, path in core:
-        _add_url(urlset, loc, _git_last_commit_iso(path))
+    for post in posts:
+        slug = post.slug
+        candidate_paths = [
+            ROOT / "blog" / slug / "index.html",
+            ROOT / "blogs" / slug / "index.html",
+        ]
+        for candidate in candidate_paths:
+            if candidate.exists():
+                include(candidate)
+                break
 
-    # Blog posts
-    for p in posts:
-        # lastmod as full ISO datetime based on git of that index.html
-        idx = ROOT / p.url.strip("/").split("/")[0] / p.slug / "index.html"
-        lastmod = _git_last_commit_iso(idx)
-        _add_url(urlset, f"{SITE}{p.url}", lastmod)
-
-    tree = ElementTree(urlset)
-    tree.write(SITEMAP, encoding="utf-8", xml_declaration=True)
+    xml_body = tostring(urlset, encoding="utf-8").decode("utf-8")
+    SITEMAP.write_text(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + xml_body + "\n",
+        encoding="utf-8",
+    )
 
 def _ensure_robots():
     line = f"Sitemap: {SITE}/sitemap.xml"
