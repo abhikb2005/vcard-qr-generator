@@ -428,7 +428,33 @@
       const confirmModal = document.getElementById('confirmModal');
       const confirmClearBtn = document.getElementById('confirmClearBtn');
       const cancelClearBtn = document.getElementById('cancelClearBtn');
-      
+
+        // ---- GA4 event helpers ----
+function gaTrack(name, params) {
+  if (typeof gtag === 'function') {
+    gtag('event', name, params || {});
+  }
+}
+
+// 1) Download QR
+downloadBtn?.addEventListener('click', () => {
+  // Optionally include field completeness to see quality of downloads
+  const hasName = (document.getElementById('fullName')?.value.trim().length || 0) > 0;
+  gaTrack('download_qr', {
+    event_category: 'engagement',
+    event_label: 'download_button',
+    has_name: hasName ? 'yes' : 'no'
+  });
+});
+
+// 2) “Ultimate vCard QR code guide” link (treat as Pro CTA for now)
+document.getElementById('guideLink')?.addEventListener('click', () => {
+  gaTrack('pro_cta_click', {
+    event_category: 'engagement',
+    event_label: 'footer_guide_link'
+  });
+});
+        
       // Instantiate QRCode object
       const qrcode = new QRCode(qrCodeElement, {
         width: 218,
