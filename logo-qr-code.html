@@ -121,7 +121,29 @@ document.addEventListener('DOMContentLoaded', () => {
             margin: 10
         }
     });
+// ---- GA4 event helpers ----
+function gaTrack(name, params) {
+  if (typeof gtag === 'function') {
+    gtag('event', name, params || {});
+  }
+}
 
+// 3) (Optional) Pro Features button (if/when added)
+document.getElementById('proFeaturesBtn')?.addEventListener('click', () => {
+  gaTrack('pro_cta_click', {
+    event_category: 'engagement',
+    event_label: 'pro_features_btn'
+  });
+});
+
+// 4) (Optional) Fire when a logo is successfully applied (call this where your logo overlay completes)
+function trackLogoApplied(sizePct) {
+  gaTrack('logo_applied', {
+    event_category: 'feature_use',
+    event_label: 'logo_overlay',
+    size_pct: String(sizePct || '')
+  });
+}
     qrCode.append(qrContainer);
 
     const generateVCardString = () => {
