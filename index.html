@@ -201,7 +201,15 @@
     <div class="container">
       <h1>Create Professional vCard QR Codes in Seconds</h1>
       <p class="subtitle">Transform your networking with instant digital business cards. No app required — just scan and save!</p>
-      
+
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-sm text-indigo-100">
+        <span class="tracking-[0.3em] text-xs uppercase text-indigo-200">Featured Guide</span>
+        <a href="https://vcardqrcodegenerator.com/blog/qr-code-and-vcard-guide/" class="inline-flex items-center gap-1 font-semibold text-white hover:underline">
+          Ultimate vCard QR code guide
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
       <div class="benefits">
         <div class="benefit">
           <div class="benefit-icon">⚡</div>
@@ -387,7 +395,7 @@
         <a href="./privacy-policy.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Privacy Policy</a>
         <a href="./terms-of-service.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Terms of Service</a>
         <a href="./contact.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Contact</a>
-        <a href="./vcard-qr-code-guide.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Complete Guide to vCard QR Codes</a>
+        <a id="footer-how-to-link" href="https://vcardqrcodegenerator.com/blog/qr-code-and-vcard-guide/" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Ultimate vCard QR code guide</a>
     </p>
     </div>
   </div>
@@ -549,16 +557,27 @@
       const footerLink = document.getElementById('footer-how-to-link');
       if (!footerLink) return;
 
-      const defaultHref = '/blog/vcard-qr-code-generator/';
-      footerLink.href = defaultHref;
+      const canonicalHost = 'vcardqrcodegenerator.com';
+      const canonicalGuideSlug = 'qr-code-and-vcard-guide';
+      const canonicalGuide = `https://${canonicalHost}/blog/${canonicalGuideSlug}/`;
 
-      const keywordOrder = [
-        'vcard qr code generator',
-        'guide',
-        'how to',
-        'qr code',
-        'vcard',
-      ];
+      const ensureCanonical = (value) => {
+        try {
+          const url = new URL(value, canonicalGuide);
+          url.protocol = 'https:';
+          url.hostname = canonicalHost;
+          url.hash = '';
+          url.search = '';
+          if (/^\/blog\/[^/]+$/.test(url.pathname) && !url.pathname.endsWith('/')) {
+            url.pathname = `${url.pathname}/`;
+          }
+          return url.toString();
+        } catch (error) {
+          return canonicalGuide;
+        }
+      };
+
+      footerLink.href = canonicalGuide;
 
       fetch('/blog_index.json', { cache: 'no-store' })
         .then((response) => {
@@ -576,36 +595,20 @@
             .filter((entry) => entry && typeof entry === 'object')
             .map((entry) => {
               const slug = typeof entry.slug === 'string' ? entry.slug : '';
-              const title = typeof entry.title === 'string' ? entry.title : '';
               const url = typeof entry.url === 'string' ? entry.url : '';
-              return { slug, title, url };
+              return { slug, url };
             });
 
-          if (!normalized.length) {
+          const guideEntry = normalized.find((entry) => entry.slug.toLowerCase() === canonicalGuideSlug);
+          if (!guideEntry) {
             return;
           }
 
-          const firstMatch = normalized.find((entry) => entry.slug.toLowerCase().startsWith('vcard-qr-code-generator'));
-          if (firstMatch) {
-            footerLink.href = firstMatch.url || `/blog/${firstMatch.slug}/`;
-            return;
-          }
-
-          const lowerKeywords = keywordOrder.map((keyword) => keyword.toLowerCase());
-          for (const keyword of lowerKeywords) {
-            const candidate = normalized.find((entry) => {
-              const slug = entry.slug.toLowerCase();
-              const title = entry.title.toLowerCase();
-              return slug.includes(keyword) || title.includes(keyword);
-            });
-            if (candidate) {
-              footerLink.href = candidate.url || `/blog/${candidate.slug}/`;
-              return;
-            }
-          }
+          const href = guideEntry.url || `/blog/${guideEntry.slug}/`;
+          footerLink.href = ensureCanonical(href);
         })
         .catch(() => {
-          footerLink.href = defaultHref;
+          footerLink.href = canonicalGuide;
         });
     })();
   </script>
