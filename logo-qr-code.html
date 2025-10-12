@@ -65,7 +65,7 @@
                     <div class="space-y-4">
                          <!-- This button's text and action will be controlled by JavaScript -->
                         <button id="main-action-btn" class="w-full px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
-                            Pay $0.99 to Add Your Logo
+                            Pay $4.99 to Add Your Logo
                         </button>
                         <input type="file" id="logo-upload" class="hidden" accept="image/png, image/jpeg, image/svg+xml">
                         
@@ -234,11 +234,11 @@ END:VCARD`;
                 mainActionBtn.textContent = 'Upload Your Logo';
                 mainActionBtn.classList.remove('locked');
             } else {
-                 mainActionBtn.textContent = 'Pay $0.99 to Add Your Logo';
+                 mainActionBtn.textContent = 'Pay $4.99 to Add Your Logo';
             }
         } catch (error) {
             console.error('Validation failed:', error);
-            mainActionBtn.textContent = 'Pay $0.99 to Add Your Logo';
+            mainActionBtn.textContent = 'Pay $4.99 to Add Your Logo';
         } finally {
             loadingText.classList.add('hidden');
         }
