@@ -185,7 +185,7 @@ END:VCARD`;
 
     const handlePayment = () => {
         // This will be replaced with your real Stripe/PayPal link
-        window.location.href = 'YOUR_PAYMENT_LINK_HERE'; 
+        window.location.href = 'https://www.paypal.com/ncp/payment/NZ88M4TZT35B6'; 
     };
 
     const handleLogoUpload = () => {
@@ -225,7 +225,7 @@ END:VCARD`;
 
         try {
             // We will replace this with your real Cloudflare Worker URL
-            const validatorUrl = 'YOUR_VALIDATOR_WORKER_URL_HERE'; 
+            const validatorUrl = 'https://token-validator.abhikb2005.workers.dev/'; 
             const response = await fetch(`${validatorUrl}?token=${token}`);
             const result = await response.json();
 
