@@ -7,7 +7,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Iterable, List
 from xml.etree.ElementTree import Element, SubElement, tostring
-import xml.dom.minidom
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = "https://vcardqrcodegenerator.com"
@@ -194,14 +193,9 @@ def _write_sitemap(posts: List[Post]) -> None:
                 include(candidate)
                 break
 
-    xml_string = tostring(urlset, 'utf-8')
-    dom = xml.dom.minidom.parseString(xml_string)
-    pretty_xml = dom.toprettyxml(indent="  ")
-    # Remove the extra XML declaration from minidom
-    pretty_xml = "\n".join(pretty_xml.split("\n")[1:])
-
+    xml_body = tostring(urlset, encoding="utf-8").decode("utf-8")
     SITEMAP.write_text(
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + pretty_xml,
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + xml_body + "\n",
         encoding="utf-8",
     )
 
