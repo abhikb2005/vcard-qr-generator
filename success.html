@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thanks — Unlocking Pro…</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    body {font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; margin:0; padding:3rem; color:#111;}
+    .card {max-width:560px; margin:0 auto; border:1px solid #e5e7eb; border-radius:12px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.06)}
+    h1 {font-size:1.5rem; margin:0 0 .5rem}
+    p {margin:.25rem 0}
+    .muted {color:#6b7280; font-size:.95rem}
+  </style>
+</head>
+<body>
+  <!-- Dodo payment success page re-applies the Pro unlock flow -->
+  <div class="card">
+    <h1>Payment complete ✅</h1>
+    <p>We’re unlocking Pro features for this browser.</p>
+    <p class="muted">You’ll be redirected in a moment…</p>
+  </div>
+
+  <script>
+    (function () {
+      try {
+        // Persist a short-lived “paid this session” flag for this browser.
+        sessionStorage.setItem('pro_token_ok', '1');
+
+        // Optional GA event (will no-op if gtag isn’t present)
+        if (typeof gtag === 'function') {
+          gtag('event', 'purchase_complete', { method: 'dodo' });
+        }
+      } catch (e) {}
+
+      // Clean URL (drop any query params) then go to Pro page
+      setTimeout(function () {
+        window.location.replace('/logo-qr-code.html');
+      }, 800);
+    })();
+  </script>
+</body>
+</html>

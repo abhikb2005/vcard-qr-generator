@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style>
+      /* Hide Pro app until gate passes to avoid FOUC */
+      html:not(.pro-ok) body { visibility: hidden; }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Logo to QR Code - Professional vCard QR Generator</title>
     <meta name="description" content="Create a custom QR code with your logo. Our professional generator lets you easily add an image to your vCard QR code for a branded, unique look.">
@@ -18,6 +22,35 @@
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <script>
+    // Gate access so only confirmed Pro sessions reach the uploader.
+    (function () {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var qsToken = params.get('access');          // Optional: allow single-use tokens if you ever need them
+        var EXPECTED = '';                           // Leave empty unless you want a specific token match
+
+        if (qsToken && (!EXPECTED || qsToken === EXPECTED)) {
+          sessionStorage.setItem('pro_token_ok', '1');
+          // Clean the URL to avoid leaking tokens
+          var clean = window.location.pathname + window.location.hash;
+          history.replaceState({}, '', clean);
+        }
+
+        var ok = sessionStorage.getItem('pro_token_ok') === '1';
+        if (ok) {
+          // Allow page to render
+          document.documentElement.classList.add('pro-ok');
+        } else {
+          // Not unlocked → send to purchase CTA on landing
+          window.location.replace('/#pro'); // if your CTA anchor differs, update it here
+        }
+      } catch (e) {
+        // On unexpected error, be safe and route to the public flow
+        window.location.replace('/#pro');
+      }
+    })();
+    </script>
 
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
         <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
