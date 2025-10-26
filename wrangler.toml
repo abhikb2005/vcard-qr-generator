@@ -1,0 +1,20 @@
+name = "vcard-qr-generator-api"
+main = "workers/router.js"
+compatibility_date = "2024-06-20"
+
+routes = [
+  { pattern = "api.vcardqrcodegenerator.com/*", zone_name = "vcardqrcodegenerator.com" }
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vcard_qr_generator"
+database_id = "<YOUR_D1_DATABASE_ID>"
+
+[vars]
+DODO_LICENSE_PRODUCT_ID = "pdt_ROmfPNXoSRQ16tKgZWURT"
+
+# Secrets (set via `wrangler secret put ...`):
+# - DODO_WEBHOOK_SECRET
+# - DODO_API_KEY
+# - JWT_PRIVATE_KEY

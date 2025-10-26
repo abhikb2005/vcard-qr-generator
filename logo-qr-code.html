@@ -23,32 +23,53 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
     <script>
-    // Gate access so only confirmed Pro sessions reach the uploader.
     (function () {
-      try {
-        var params = new URLSearchParams(window.location.search);
-        var qsToken = params.get('access');          // Optional: allow single-use tokens if you ever need them
-        var EXPECTED = '';                           // Leave empty unless you want a specific token match
+      var PURCHASE_URL = 'https://checkout.dodopayments.com/buy/pdt_ROmfPNXoSRQ16tKgZWURT?quantity=1&redirect_url=' + encodeURIComponent('https://vcardqrcodegenerator.com/thank-you.html');
 
-        if (qsToken && (!EXPECTED || qsToken === EXPECTED)) {
-          sessionStorage.setItem('pro_token_ok', '1');
-          // Clean the URL to avoid leaking tokens
-          var clean = window.location.pathname + window.location.hash;
-          history.replaceState({}, '', clean);
-        }
-
-        var ok = sessionStorage.getItem('pro_token_ok') === '1';
-        if (ok) {
-          // Allow page to render
-          document.documentElement.classList.add('pro-ok');
-        } else {
-          // Not unlocked → send to purchase CTA on landing
-          window.location.replace('/#pro'); // if your CTA anchor differs, update it here
-        }
-      } catch (e) {
-        // On unexpected error, be safe and route to the public flow
-        window.location.replace('/#pro');
+      function allowRender() {
+        document.documentElement.classList.add('pro-ok');
       }
+
+      function decodePayload(token) {
+        try {
+          var parts = token.split('.');
+          if (parts.length !== 3) return null;
+          var base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+          var padded = base64 + '==='.slice((base64.length + 3) % 4);
+          var json = atob(padded);
+          return JSON.parse(json);
+        } catch (err) {
+          console.warn('Failed to decode token', err);
+          return null;
+        }
+      }
+
+      var storedToken = localStorage.getItem('pro_token');
+      var payload = storedToken ? decodePayload(storedToken) : null;
+
+      var hasValidToken = false;
+      if (storedToken && payload) {
+        var hasFeature = Array.isArray(payload.features) && payload.features.includes('logo_overlay');
+        var isExpired = typeof payload.exp === 'number' && payload.exp * 1000 <= Date.now();
+        if (hasFeature && !isExpired) {
+          hasValidToken = true;
+          window.__PRO_PAYLOAD__ = payload;
+          window.__PRO_TOKEN__ = storedToken;
+        } else if (storedToken) {
+          localStorage.removeItem('pro_token');
+        }
+      }
+
+      window.__PURCHASE_URL__ = PURCHASE_URL;
+      window.__PRO_FEATURE_ACTIVE__ = hasValidToken;
+      allowRender();
+
+      window.addEventListener('storage', function (event) {
+        if (event.key === 'pro_token') {
+          window.__PRO_FEATURE_ACTIVE__ = !!event.newValue;
+          window.location.reload();
+        }
+      });
     })();
     </script>
 
@@ -97,7 +118,7 @@
                     
                     <div class="space-y-4">
                          <!-- This button's text and action will be controlled by JavaScript -->
-                        <button id="main-action-btn" class="w-full px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+                        <button id="main-action-btn" type="button" class="w-full px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
                             Pay $0.99 to Add Your Logo
                         </button>
                         <input type="file" id="logo-upload" class="hidden" accept="image/png, image/jpeg, image/svg+xml">
@@ -128,12 +149,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('vcard-form');
     const mainActionBtn = document.getElementById('main-action-btn');
-    const downloadBtn = document.getElementById('download-btn');
+    const downloadBtn = document.getElementById('proFeaturesBtn');
     const logoUploadInput = document.getElementById('logo-upload');
     const qrContainer = document.getElementById('qr-code-container');
     const loadingText = document.getElementById('loading-text');
 
-    let featureUnlocked = false;
+    const purchaseUrl = window.__PURCHASE_URL__ || ('https://checkout.dodopayments.com/buy/pdt_ROmfPNXoSRQ16tKgZWURT?quantity=1&redirect_url=' + encodeURIComponent('https://vcardqrcodegenerator.com/thank-you.html'));
+    const proPayload = window.__PRO_PAYLOAD__ || null;
+
+    let featureUnlocked = window.__PRO_FEATURE_ACTIVE__ === true && !!(proPayload && Array.isArray(proPayload.features) && proPayload.features.includes('logo_overlay'));
     let logoImage = null;
 
     const qrCode = new QRCodeStyling({
@@ -179,6 +203,54 @@ function trackLogoApplied(sizePct) {
 }
     qrCode.append(qrContainer);
 
+    if (featureUnlocked) {
+        logoUploadInput.classList.remove('hidden');
+        if (downloadBtn) {
+            downloadBtn.classList.remove('hidden');
+            downloadBtn.setAttribute('href', '#');
+        }
+        mainActionBtn.textContent = 'Upload Your Logo';
+        mainActionBtn.classList.remove('locked');
+        if (loadingText) {
+            loadingText.classList.add('hidden');
+        }
+
+        if (loadingText && proPayload?.exp) {
+            const remainingMs = proPayload.exp * 1000 - Date.now();
+            if (remainingMs > 0) {
+                const remainingHours = Math.floor(remainingMs / (1000 * 60 * 60));
+                loadingText.textContent = remainingHours >= 1
+                    ? `Premium access active · expires in about ${remainingHours}h`
+                    : 'Premium access active';
+                loadingText.classList.remove('hidden');
+            }
+        }
+    } else {
+        logoUploadInput.classList.add('hidden');
+        if (downloadBtn) {
+            downloadBtn.classList.add('hidden');
+            downloadBtn.setAttribute('href', purchaseUrl);
+        }
+        mainActionBtn.textContent = 'Go Premium to Add Your Logo';
+        mainActionBtn.classList.remove('locked');
+        if (loadingText) {
+            loadingText.classList.remove('hidden');
+        }
+        if (loadingText) {
+            loadingText.textContent = proPayload ? 'Your premium session expired. Reactivate with your license key.' : 'Upgrade to unlock logo overlays';
+        }
+    }
+
+    if (featureUnlocked && proPayload?.exp) {
+        const expiryDelay = proPayload.exp * 1000 - Date.now();
+        if (expiryDelay > 0) {
+            setTimeout(() => {
+                localStorage.removeItem('pro_token');
+                window.location.href = purchaseUrl;
+            }, expiryDelay);
+        }
+    }
+
     const generateVCardString = () => {
         const fullName = document.getElementById('fullName').value.trim();
         const phone = document.getElementById('phone').value.trim().replace(/[^0-9+]/g, '');
@@ -211,18 +283,21 @@ END:VCARD`;
             data: vCardString,
             image: logoImage || ''
         });
-        if (featureUnlocked) {
-           downloadBtn.classList.remove('hidden');
+        if (downloadBtn) {
+            if (featureUnlocked) {
+                downloadBtn.classList.remove('hidden');
+            } else {
+                downloadBtn.classList.add('hidden');
+            }
         }
-    };
-
-    const handlePayment = () => {
-        // This will be replaced with your real Stripe/PayPal link
-        window.location.href = 'https://checkout.dodopayments.com/buy/pdt_ROmfPNXoSRQ16tKgZWURT?quantity=1&redirect_url=https://vcardqrcodegenerator.com%2Flogo-qr-code.html'; 
     };
 
     const handleLogoUpload = () => {
         logoUploadInput.click();
+    };
+
+    const handleCheckout = () => {
+        window.location.href = purchaseUrl;
     };
     
     logoUploadInput.addEventListener('change', (event) => {
@@ -237,53 +312,28 @@ END:VCARD`;
         }
     });
 
-    mainActionBtn.addEventListener('click', () => {
+    mainActionBtn.addEventListener('click', (event) => {
+        event.preventDefault();
         if (featureUnlocked) {
             handleLogoUpload();
         } else {
-            handlePayment();
+            handleCheckout();
         }
     });
-    
-    downloadBtn.addEventListener('click', () => {
-        qrCode.download({ name: 'branded-vcard-qr', extension: 'png' });
-    });
+
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', (event) => {
+            if (!featureUnlocked) {
+                event.preventDefault();
+                handleCheckout();
+                return;
+            }
+            qrCode.download({ name: 'branded-vcard-qr', extension: 'png' });
+        });
+    }
 
     form.addEventListener('input', updateQRCode);
 
-    // --- Secure Validation Logic ---
-    const validateSession = async (token) => {
-        loadingText.classList.remove('hidden');
-        mainActionBtn.classList.add('locked');
-
-        try {
-            // We will replace this with your real Cloudflare Worker URL
-            const validatorUrl = 'https://token-validator.abhikb2005.workers.dev/'; 
-            const response = await fetch(`${validatorUrl}?token=${token}`);
-            const result = await response.json();
-
-            if (result.status === 'success') {
-                featureUnlocked = true;
-                mainActionBtn.textContent = 'Upload Your Logo';
-                mainActionBtn.classList.remove('locked');
-            } else {
-                 mainActionBtn.textContent = 'Pay $0.99 to Add Your Logo';
-            }
-        } catch (error) {
-            console.error('Validation failed:', error);
-            mainActionBtn.textContent = 'Pay $0.99 to Add Your Logo';
-        } finally {
-            loadingText.classList.add('hidden');
-        }
-    };
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const sessionToken = urlParams.get('session_token');
-
-    if (sessionToken) {
-        validateSession(sessionToken);
-    }
-    
     updateQRCode(); // Initial QR code generation
 });
 </script>
