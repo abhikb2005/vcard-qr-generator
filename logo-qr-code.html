@@ -1,251 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <style>
-      /* Hide Pro app until gate passes to avoid FOUC */
-      html:not(.pro-ok) body { visibility: hidden; }
-    </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Logo to QR Code - Professional vCard QR Generator</title>
-    <meta name="description" content="Create a custom QR code with your logo. Our professional generator lets you easily add an image to your vCard QR code for a branded, unique look.">
-    <meta name="keywords" content="qr code with logo, add logo to qr code, branded qr code, custom qr code generator, image qr code">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- New, advanced QR code library that supports logos -->
-    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .hidden { display: none; }
-        .locked { cursor: not-allowed; opacity: 0.6; }
-    </style>
+  <meta charset="UTF-8" />
+  <style>
+    /* Hide Pro app until gate passes to avoid FOUC */
+    html:not(.pro-ok) body { visibility: hidden; }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Logo to QR Code - Professional vCard QR Generator</title>
+  <meta name="description" content="Create a custom QR code with your logo. Our professional generator lets you easily add an image to your vCard QR code for a branded, unique look." />
+  <meta name="keywords" content="qr code with logo, add logo to qr code, branded qr code, custom qr code generator, image qr code" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- New, advanced QR code library that supports logos -->
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .hidden { display: none; }
+    .locked { cursor: not-allowed; opacity: 0.6; }
+  </style>
 </head>
+
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-    <script>
-(function () {
-  // 1) Your two Worker URLs
-  window.__CHECKOUT_API__ = "https://dodo-create-checkout.abhikb2005.workers.dev/";
-  window.__TOKEN_VALIDATOR__ = "https://token-validator.abhikb2005.workers.dev/";
+  <script>
+    (function () {
+      // Worker URLs
+      window.__CHECKOUT_API__ = "https://dodo-create-checkout.abhikb2005.workers.dev/";
+      window.__TOKEN_VALIDATOR__ = "https://token-validator.abhikb2005.workers.dev/";
 
-  // 2) Simple “unlock flag” stored in the browser (24h)
-  var until = parseInt(localStorage.getItem("pro_unlocked_until") || "0", 10);
-  window.__PRO_FEATURE_ACTIVE__ = until > Date.now();
+      // Allow page to render
+      document.documentElement.classList.add("pro-ok");
+    })();
+  </script>
 
-  // 3) Allow page to render (removes the “hidden until validated” effect)
-  document.documentElement.classList.add("pro-ok");
-})();
-</script>
+  <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+      <header class="text-center mb-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+          Create a QR Code with Your Logo
+        </h1>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">
+          Stand out with a professional, branded vCard QR code.
+        </p>
+      </header>
 
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-            <header class="text-center mb-8">
-                <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Create a QR Code with Your Logo</h1>
-                <p class="mt-2 text-gray-600 dark:text-gray-400">Stand out with a professional, branded vCard QR code.</p>
-            </header>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <!-- Form Section -->
+        <form id="vcard-form" class="space-y-4">
+          <div>
+            <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+            <input type="text" id="fullName" placeholder="John Doe"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+15551234567"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+            <input type="email" id="email" placeholder="john@example.com"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
+          </div>
+          <div>
+            <label for="website" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website</label>
+            <input type="url" id="website" placeholder="https://example.com"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
+          </div>
+          <div>
+            <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company</label>
+            <input type="text" id="company" placeholder="Acme Corporation"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
+          </div>
+          <div>
+            <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job Title</label>
+            <input type="text" id="title" placeholder="Software Engineer"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
+          </div>
+        </form>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <!-- Form Section -->
-                <form id="vcard-form" class="space-y-4">
-                    <div>
-                        <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
-                        <input type="text" id="fullName" placeholder="John Doe" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
-                        <input type="tel" id="phone" placeholder="+15551234567" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
-                        <input type="email" id="email" placeholder="john@example.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
-                    </div>
-                     <div>
-                        <label for="website" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website</label>
-                        <input type="url" id="website" placeholder="https://example.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
-                    </div>
-                    <div>
-                        <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company</label>
-                         <input type="text" id="company" placeholder="Acme Corporation" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
-                    </div>
-                     <div>
-                        <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job Title</label>
-                        <input type="text" id="title" placeholder="Software Engineer" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
-                    </div>
-                </form>
+        <!-- QR Code & Pro Features Section -->
+        <div class="space-y-6">
+          <div class="flex flex-col items-center">
+            <div id="qr-code-container"
+              class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white w-full max-w-[250px] aspect-square"></div>
+            <p id="loading-text" class="text-sm text-gray-500 mt-2 hidden">Validating payment...</p>
+          </div>
 
-                <!-- QR Code & Pro Features Section -->
-                <div class="space-y-6">
-                    <div class="flex flex-col items-center">
-                        <div id="qr-code-container" class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white w-full max-w-[250px] aspect-square"></div>
-                        <p id="loading-text" class="text-sm text-gray-500 mt-2 hidden">Validating session...</p>
-                    </div>
-                    
-                    <div class="space-y-4">
-                         <!-- This button's text and action will be controlled by JavaScript -->
-                        <button id="main-action-btn" type="button" class="w-full px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
-                            Pay $0.99 to Add Your Logo
-                        </button>
-                        <input type="file" id="logo-upload" class="hidden" accept="image/png, image/jpeg, image/svg+xml">
-                        
-                        <a id="proFeaturesBtn" href="#" download="branded-vcard-qrcode.png" class="hidden w-full text-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            Download Branded QR Code
-                        </a>
-                    </div>
+          <div class="space-y-4">
+            <button id="main-action-btn" type="button"
+              class="w-full px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+              Go Premium to Add Your Logo
+            </button>
 
-                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">
-                        <h3 class="font-semibold text-gray-900 dark:text-white">Logo Best Practices</h3>
-                        <ul class="mt-2 text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
-                            <li>**Format:** PNG with transparent background is best.</li>
-                            <li>**Aspect Ratio:** A square (1:1) logo works best.</li>
-                            <li>**Resolution:** Minimum 200x200 pixels.</li>
-                            <li>**File Size:** Keep it under 1MB for fast processing.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-             <footer class="text-center mt-12 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <a href="/" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">← Back to Free Generator</a>
-            </footer>
+            <input type="file" id="logo-upload" class="hidden" accept="image/png, image/jpeg, image/svg+xml" />
+
+            <a id="proFeaturesBtn" href="#" download="branded-vcard-qrcode.png"
+              class="hidden w-full text-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              Download Branded QR Code
+            </a>
+          </div>
+
+          <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">
+            <h3 class="font-semibold text-gray-900 dark:text-white">Logo Best Practices</h3>
+            <ul class="mt-2 text-sm text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
+              <li><strong>Format:</strong> PNG with transparent background is best.</li>
+              <li><strong>Aspect Ratio:</strong> A square (1:1) logo works best.</li>
+              <li><strong>Resolution:</strong> Minimum 200x200 pixels.</li>
+              <li><strong>File Size:</strong> Keep it under 1MB for fast processing.</li>
+            </ul>
+          </div>
         </div>
+      </div>
+
+      <footer class="text-center mt-12 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <a href="/" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">← Back to Free Generator</a>
+      </footer>
     </div>
+  </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-    const form = document.getElementById('vcard-form');
-    const mainActionBtn = document.getElementById('main-action-btn');
-    const downloadBtn = document.getElementById('proFeaturesBtn');
-    const logoUploadInput = document.getElementById('logo-upload');
-    const qrContainer = document.getElementById('qr-code-container');
-    const loadingText = document.getElementById('loading-text');
-    async function consumeTokenFromUrlIfPresent() {
-  const url = new URL(window.location.href);
-  const token = url.searchParams.get('token');
-  if (!token) return false;
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const form = document.getElementById('vcard-form');
+      const mainActionBtn = document.getElementById('main-action-btn');
+      const downloadBtn = document.getElementById('proFeaturesBtn');
+      const logoUploadInput = document.getElementById('logo-upload');
+      const qrContainer = document.getElementById('qr-code-container');
+      const loadingText = document.getElementById('loading-text');
 
-  if (loadingText) {
-    loadingText.classList.remove('hidden');
-    loadingText.textContent = 'Validating payment...';
-  }
+      const checkoutApiUrl = window.__CHECKOUT_API__;
+      const tokenValidatorUrl = window.__TOKEN_VALIDATOR__;
 
-  try {
-    const res = await fetch(`${tokenValidatorUrl}?token=${encodeURIComponent(token)}`);
-    const json = await res.json();
+      // 1) If we returned from Dodo with ?token=..., validate it
+      async function consumeTokenFromUrlIfPresent() {
+        const url = new URL(window.location.href);
+        const token = url.searchParams.get('token');
+        if (!token) return "none";
 
-    if (json.status === 'success') {
-      // Unlock for 24 hours
-      localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
+        if (loadingText) {
+          loadingText.classList.remove('hidden');
+          loadingText.textContent = 'Validating payment...';
+        }
 
-      // Remove token from URL
-      url.searchParams.delete('token');
-      history.replaceState({}, '', url.toString());
+        try {
+          const res = await fetch(`${tokenValidatorUrl}?token=${encodeURIComponent(token)}`);
+          const json = await res.json();
 
-      // Reload to show Upload button
-      window.location.reload();
-      return true;
-    } else {
-      if (loadingText) {
-        loadingText.textContent = 'Payment not confirmed yet. Please wait a few seconds and refresh.';
+          if (json.status === 'success') {
+            // Unlock for 24 hours
+            localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
+
+            // Remove token from URL
+            url.searchParams.delete('token');
+            history.replaceState({}, '', url.toString());
+
+            // Reload to show Upload button
+            window.location.reload();
+            return "success";
+          } else {
+            if (loadingText) {
+              loadingText.textContent = 'Payment not confirmed yet. Please wait a few seconds and refresh.';
+              loadingText.classList.remove('hidden');
+            }
+            return "pending";
+          }
+        } catch (e) {
+          if (loadingText) {
+            loadingText.textContent = 'Could not validate payment. Please refresh.';
+            loadingText.classList.remove('hidden');
+          }
+          return "pending";
+        }
       }
-      return true; // token was present, we handled the UX
-    }
-  } catch (e) {
-    if (loadingText) loadingText.textContent = 'Could not validate payment. Please refresh.';
-    return true;
-  }
-}
 
-// IMPORTANT: run this before rendering UI state
-const tokenHandled = await consumeTokenFromUrlIfPresent();
-if (tokenHandled) return;
+      const tokenStatus = await consumeTokenFromUrlIfPresent();
+      if (tokenStatus === "pending") return; // don't overwrite the message
 
-    const checkoutApiUrl = window.__CHECKOUT_API__;
-const tokenValidatorUrl = window.__TOKEN_VALIDATOR__;
+      // 2) Feature gate (24h)
+      const featureUnlocked =
+        parseInt(localStorage.getItem("pro_unlocked_until") || "0", 10) > Date.now();
 
-let featureUnlocked = window.__PRO_FEATURE_ACTIVE__ === true;
-    let logoImage = null;
+      let logoImage = null;
 
-    const qrCode = new QRCodeStyling({
+      const qrCode = new QRCodeStyling({
         width: 218,
         height: 218,
         type: 'svg',
         data: 'Welcome to vCard QR Code Generator Pro!',
         image: '',
         dotsOptions: {
-            color: '#000000',
-            type: 'rounded'
+          color: '#000000',
+          type: 'rounded'
         },
         backgroundOptions: {
-            color: '#ffffff',
+          color: '#ffffff',
         },
         imageOptions: {
-            crossOrigin: 'anonymous',
-            margin: 10
+          crossOrigin: 'anonymous',
+          margin: 10
         }
-    });
-// ---- GA4 event helpers ----
-function gaTrack(name, params) {
-  if (typeof gtag === 'function') {
-    gtag('event', name, params || {});
-  }
-}
+      });
 
-// 3) (Optional) Pro Features button (if/when added)
-document.getElementById('proFeaturesBtn')?.addEventListener('click', () => {
-  gaTrack('pro_cta_click', {
-    event_category: 'engagement',
-    event_label: 'pro_features_btn'
-  });
-});
+      qrCode.append(qrContainer);
 
-// 4) (Optional) Fire when a logo is successfully applied (call this where your logo overlay completes)
-function trackLogoApplied(sizePct) {
-  gaTrack('logo_applied', {
-    event_category: 'feature_use',
-    event_label: 'logo_overlay',
-    size_pct: String(sizePct || '')
-  });
-}
-    qrCode.append(qrContainer);
-
-    if (featureUnlocked) {
+      // UI state
+      if (featureUnlocked) {
         logoUploadInput.classList.remove('hidden');
-        if (downloadBtn) {
-            downloadBtn.classList.remove('hidden');
-            downloadBtn.setAttribute('href', '#');
-        }
+        downloadBtn.classList.remove('hidden');
+        downloadBtn.setAttribute('href', '#');
+
         mainActionBtn.textContent = 'Upload Your Logo';
-        mainActionBtn.classList.remove('locked');
-        if (loadingText) {
-            loadingText.classList.add('hidden');
-        }
-
-        if (loadingText && proPayload?.exp) {
-            const remainingMs = proPayload.exp * 1000 - Date.now();
-            if (remainingMs > 0) {
-                const remainingHours = Math.floor(remainingMs / (1000 * 60 * 60));
-                loadingText.textContent = remainingHours >= 1
-                    ? `Premium access active · expires in about ${remainingHours}h`
-                    : 'Premium access active';
-                loadingText.classList.remove('hidden');
-            }
-        }
-    } else {
+        if (loadingText) loadingText.classList.add('hidden');
+      } else {
         logoUploadInput.classList.add('hidden');
-        if (downloadBtn) {
-            downloadBtn.classList.add('hidden');
-            downloadBtn.setAttribute('href', '#');
-        }
-        mainActionBtn.textContent = 'Go Premium to Add Your Logo';
-        mainActionBtn.classList.remove('locked');
-        if (loadingText) {
-            loadingText.classList.remove('hidden');
-        }
-        if (loadingText) {
-            loadingText.textContent = 'Upgrade to unlock logo overlays';
-        }
-    }
+        downloadBtn.classList.add('hidden');
+        downloadBtn.setAttribute('href', '#');
 
-        const generateVCardString = () => {
+        mainActionBtn.textContent = 'Go Premium to Add Your Logo';
+        if (loadingText) {
+          loadingText.classList.remove('hidden');
+          loadingText.textContent = 'Upgrade to unlock logo overlays';
+        }
+      }
+
+      const generateVCardString = () => {
         const fullName = document.getElementById('fullName').value.trim();
         const phone = document.getElementById('phone').value.trim().replace(/[^0-9+]/g, '');
         const email = document.getElementById('email').value.trim();
@@ -269,90 +248,86 @@ TEL;TYPE=WORK,VOICE:${phone}
 EMAIL:${email}
 URL:${website}
 END:VCARD`;
-    };
+      };
 
-    const updateQRCode = () => {
+      const updateQRCode = () => {
         const vCardString = generateVCardString();
         qrCode.update({
-            data: vCardString,
-            image: logoImage || ''
+          data: vCardString,
+          image: logoImage || ''
         });
-        if (downloadBtn) {
-            if (featureUnlocked) {
-                downloadBtn.classList.remove('hidden');
-            } else {
-                downloadBtn.classList.add('hidden');
-            }
+
+        if (featureUnlocked) {
+          downloadBtn.classList.remove('hidden');
+        } else {
+          downloadBtn.classList.add('hidden');
         }
-    };
+      };
 
-    const handleLogoUpload = () => {
+      const handleLogoUpload = () => {
         logoUploadInput.click();
-    };
+      };
 
-   const handleCheckout = async () => {
-  try {
-    if (loadingText) {
-      loadingText.classList.remove('hidden');
-      loadingText.textContent = 'Redirecting to secure checkout...';
-    }
+      const handleCheckout = async () => {
+        try {
+          if (loadingText) {
+            loadingText.classList.remove('hidden');
+            loadingText.textContent = 'Redirecting to secure checkout...';
+          }
 
-    const email = document.getElementById('email').value.trim();
-    const name = document.getElementById('fullName').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const name = document.getElementById('fullName').value.trim();
 
-    const res = await fetch(checkoutApiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, name }),
-    });
+          const res = await fetch(checkoutApiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, name }),
+          });
 
-    const data = await res.json();
-    if (!data.checkout_url) throw new Error('No checkout_url returned');
+          const data = await res.json();
+          if (!data.checkout_url) throw new Error('No checkout_url returned');
 
-    window.location.href = data.checkout_url;
-  } catch (e) {
-    alert('Could not start checkout. Please try again.');
-    if (loadingText) loadingText.textContent = 'Upgrade to unlock logo overlays';
-  }
-};
-    
-    logoUploadInput.addEventListener('change', (event) => {
+          window.location.href = data.checkout_url;
+        } catch (e) {
+          alert('Could not start checkout. Please try again.');
+          if (loadingText) loadingText.textContent = 'Upgrade to unlock logo overlays';
+        }
+      };
+
+      logoUploadInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                logoImage = e.target.result;
-                updateQRCode();
-            };
-            reader.readAsDataURL(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            logoImage = e.target.result;
+            updateQRCode();
+          };
+          reader.readAsDataURL(file);
         }
-    });
+      });
 
-    mainActionBtn.addEventListener('click', (event) => {
+      mainActionBtn.addEventListener('click', (event) => {
         event.preventDefault();
         if (featureUnlocked) {
-            handleLogoUpload();
+          handleLogoUpload();
         } else {
-            handleCheckout();
+          handleCheckout();
         }
+      });
+
+      downloadBtn.addEventListener('click', (event) => {
+        if (!featureUnlocked) {
+          event.preventDefault();
+          handleCheckout();
+          return;
+        }
+        qrCode.download({ name: 'branded-vcard-qr', extension: 'png' });
+      });
+
+      form.addEventListener('input', updateQRCode);
+
+      updateQRCode(); // initial QR code
     });
-
-    if (downloadBtn) {
-        downloadBtn.addEventListener('click', (event) => {
-            if (!featureUnlocked) {
-                event.preventDefault();
-                handleCheckout();
-                return;
-            }
-            qrCode.download({ name: 'branded-vcard-qr', extension: 'png' });
-        });
-    }
-
-    form.addEventListener('input', updateQRCode);
-
-    updateQRCode(); // Initial QR code generation
-});
-</script>
-
+  </script>
 </body>
 </html>
