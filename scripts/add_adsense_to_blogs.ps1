@@ -1,31 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{ title }}</title>
-  <meta name="description" content="{{ description }}" />
-  <link rel="canonical" href="https://vcardqrcodegenerator.com/blog/{{ slug }}/" />
-  <script type="application/ld+json">
-  {{ faq_json }}
-  </script>
-  <script src="https://cdn.tailwindcss.com"></script>
+# Add AdSense to all blog posts
+# Run from project root: .\scripts\add_adsense_to_blogs.ps1
+
+$ADSENSE_HEAD = @'
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206702185649949"
     crossorigin="anonymous"></script>
   <style>
     .adsbygoogle-container { min-height: 100px; margin: 1.5rem 0; }
   </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
-  <header class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
-    <div class="max-w-5xl mx-auto px-4 py-10">
-      <a href="/" class="text-white/90 underline">← Home</a>
-      <h1 class="text-3xl md:text-4xl font-bold mt-4">{{ h1 }}</h1>
-      <p class="mt-3 text-white/90">{{ intro }}</p>
-    </div>
-  </header>
-  <main class="max-w-3xl mx-auto px-4 py-10 space-y-6">
+'@
+
+$AD_UNIT_TOP = @'
+
     <!-- Ad Unit: Top of Content -->
     <div class="adsbygoogle-container">
       <ins class="adsbygoogle"
@@ -36,14 +22,9 @@
         data-full-width-responsive="true"></ins>
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
+'@
 
-    {% for p in paragraphs %}
-      <p>{{ p }}</p>
-    {% endfor %}
-    <section class="mt-8 p-4 rounded-lg bg-white shadow border">
-      <h2 class="text-xl font-semibold">Why this page</h2>
-      <p>This page targets the query: <strong>{{ seed }}</strong>. It explains how to create and use vCard QR codes for that specific intent.</p>
-    </section>
+$AD_UNIT_BOTTOM = @'
 
     <!-- Ad Unit: End of Content -->
     <div class="adsbygoogle-container">
@@ -59,13 +40,54 @@
     <!-- Pro CTA -->
     <section class="mt-8 p-6 rounded-xl bg-indigo-50 border border-indigo-200">
       <h2 class="text-xl font-semibold text-indigo-900">Create Your vCard QR Code</h2>
-      <p class="mt-2 text-indigo-800">Generate a professional digital business card in seconds — free and instant.</p>
+      <p class="mt-2 text-indigo-800">Generate a professional digital business card in seconds - free and instant.</p>
       <div class="mt-4 flex flex-wrap gap-3">
         <a href="/" class="inline-flex items-center justify-center rounded-full bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Try Free Generator</a>
         <a href="/logo-qr-code.html" class="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-indigo-600 border border-indigo-300 hover:bg-indigo-50">Add Your Logo (Pro)</a>
       </div>
     </section>
-  </main>
-  <footer class="text-center text-sm text-gray-500 py-10">© 2025 vCard QR Code Generator</footer>
-</body>
-</html>
+'@
+
+$blogDir = Join-Path $PSScriptRoot "..\blog"
+$updated = 0
+$skipped = 0
+
+Get-ChildItem -Path $blogDir -Filter "*.html" -Recurse | ForEach-Object {
+    $file = $_
+    $content = Get-Content -Path $file.FullName -Raw -Encoding UTF8
+    
+    # Skip if already has AdSense
+    if ($content -match "adsbygoogle") {
+        Write-Host "  Skipping (already has AdSense): $($file.FullName)"
+        $skipped++
+        return
+    }
+    
+    $modified = $false
+    
+    # 1. Add AdSense script to <head>
+    if ($content -match "</head>") {
+        $content = $content -replace "</head>", "$ADSENSE_HEAD`n</head>"
+        $modified = $true
+    }
+    
+    # 2. Add top ad unit after </header>
+    if ($content -match "</header>") {
+        $content = $content -replace "</header>", "</header>$AD_UNIT_TOP"
+        $modified = $true
+    }
+    
+    # 3. Add bottom ad unit before </main>
+    if ($content -match "</main>") {
+        $content = $content -replace "</main>", "$AD_UNIT_BOTTOM`n  </main>"
+        $modified = $true
+    }
+    
+    if ($modified) {
+        Set-Content -Path $file.FullName -Value $content -Encoding UTF8 -NoNewline
+        Write-Host "  Updated: $($file.FullName)"
+        $updated++
+    }
+}
+
+Write-Host "`nDone! Updated: $updated, Skipped: $skipped"
