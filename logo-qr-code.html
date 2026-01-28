@@ -2,6 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) for Pro funnel tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-E90B41BNEH');
+    
+    // GA4 Pro funnel event helper
+    function gaTrackPro(name, params) {
+      if (typeof gtag === 'function') {
+        gtag('event', name, params || {});
+      }
+    }
+  </script>
   <style>
     /* Hide Pro app until gate passes to avoid FOUC */
     html:not(.pro-ok) body { visibility: hidden; }
@@ -132,6 +147,9 @@
       const checkoutApiUrl = window.__CHECKOUT_API__;
       const tokenValidatorUrl = window.__TOKEN_VALIDATOR__;
 
+      // Track Pro page view
+      gaTrackPro('pro_page_view', { event_category: 'pro_funnel', event_label: 'page_load' });
+
       // 1) If we returned from Dodo with ?token=..., validate it
       async function consumeTokenFromUrlIfPresent() {
         const url = new URL(window.location.href);
@@ -148,6 +166,9 @@
           const json = await res.json();
 
           if (json.status === 'success') {
+            // Track successful payment - THIS IS A CONVERSION
+            gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
+            
             // Unlock for 24 hours
             localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
 
@@ -269,6 +290,9 @@ END:VCARD`;
       };
 
       const handleCheckout = async () => {
+        // Track checkout initiation
+        gaTrackPro('pro_checkout_start', { event_category: 'pro_funnel', event_label: 'checkout_initiated' });
+        
         try {
           if (loadingText) {
             loadingText.classList.remove('hidden');
@@ -297,6 +321,9 @@ END:VCARD`;
       logoUploadInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
+          // Track logo upload
+          gaTrackPro('pro_logo_upload', { event_category: 'pro_funnel', event_label: 'logo_selected' });
+          
           const reader = new FileReader();
           reader.onload = (e) => {
             logoImage = e.target.result;
@@ -321,6 +348,8 @@ END:VCARD`;
           handleCheckout();
           return;
         }
+        // Track branded QR download
+        gaTrackPro('pro_download_branded_qr', { event_category: 'pro_funnel', event_label: 'branded_qr_downloaded' });
         qrCode.download({ name: 'branded-vcard-qr', extension: 'png' });
       });
 
