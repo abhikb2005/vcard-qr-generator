@@ -109,12 +109,29 @@
               Go Premium to Add Your Logo
             </button>
 
+            <!-- Pricing info (shown when locked) -->
+            <div id="pricing-info" class="text-center text-sm text-gray-600 dark:text-gray-400">
+              <p class="font-medium">One-time payment • Instant access</p>
+              <p class="mt-1">Create unlimited branded QR codes for 24 hours</p>
+            </div>
+
             <input type="file" id="logo-upload" class="hidden" accept="image/png, image/jpeg, image/svg+xml" />
 
             <a id="proFeaturesBtn" href="#" download="branded-vcard-qrcode.png"
               class="hidden w-full text-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               Download Branded QR Code
             </a>
+          </div>
+
+          <!-- What you get (shown when locked) -->
+          <div id="benefits-box" class="p-4 border border-blue-200 dark:border-blue-800 rounded-lg bg-blue-50 dark:bg-blue-900/30">
+            <h3 class="font-semibold text-blue-900 dark:text-blue-100">What you get:</h3>
+            <ul class="mt-2 text-sm text-blue-800 dark:text-blue-200 space-y-1">
+              <li>✓ Add your logo to any QR code</li>
+              <li>✓ Unlimited downloads for 24 hours</li>
+              <li>✓ High-resolution PNG export</li>
+              <li>✓ Works on this device/browser</li>
+            </ul>
           </div>
 
           <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">
@@ -226,6 +243,9 @@
       qrCode.append(qrContainer);
 
       // UI state
+      const pricingInfo = document.getElementById('pricing-info');
+      const benefitsBox = document.getElementById('benefits-box');
+      
       if (featureUnlocked) {
         logoUploadInput.classList.remove('hidden');
         downloadBtn.classList.remove('hidden');
@@ -233,6 +253,8 @@
 
         mainActionBtn.textContent = 'Upload Your Logo';
         if (loadingText) loadingText.classList.add('hidden');
+        if (pricingInfo) pricingInfo.classList.add('hidden');
+        if (benefitsBox) benefitsBox.classList.add('hidden');
       } else {
         logoUploadInput.classList.add('hidden');
         downloadBtn.classList.add('hidden');
@@ -243,6 +265,8 @@
           loadingText.classList.remove('hidden');
           loadingText.textContent = 'Upgrade to unlock logo overlays';
         }
+        if (pricingInfo) pricingInfo.classList.remove('hidden');
+        if (benefitsBox) benefitsBox.classList.remove('hidden');
       }
 
       const generateVCardString = () => {

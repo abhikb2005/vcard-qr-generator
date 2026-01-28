@@ -19,11 +19,12 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://vcardqrcodegenerator.com"
-          PAGES=("index.html" "how-to-use.html" "privacy-policy.html" "contact.html")
+          PAGES=("index.html" "contact.html" "privacy-policy.html" "terms-of-service.html" "logo-qr-code.html" "vcard-qr-code-guide.html")
 
           echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
 
+          # Static Pages
           for f in "${PAGES[@]}"; do
             if [ -f "$f" ]; then
               if [ "$f" = "index.html" ]; then
@@ -32,6 +33,16 @@ jobs:
                 URL="$BASE/$f"
               fi
               LASTMOD=$(git log -1 --format=%cI -- "$f" || date -u +%Y-%m-%dT%H:%M:%SZ)
+              echo "  <url><loc>${URL}</loc><lastmod>${LASTMOD}</lastmod></url>" >> sitemap.xml
+            fi
+          done
+
+          # Blog Posts
+          for d in blog/*/; do
+            if [ -f "${d}index.html" ]; then
+              slug=$(basename "$d")
+              URL="$BASE/blog/$slug/"
+              LASTMOD=$(git log -1 --format=%cI -- "${d}index.html" || date -u +%Y-%m-%dT%H:%M:%SZ)
               echo "  <url><loc>${URL}</loc><lastmod>${LASTMOD}</lastmod></url>" >> sitemap.xml
             fi
           done
