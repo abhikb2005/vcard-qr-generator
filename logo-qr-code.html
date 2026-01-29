@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <!-- Google tag (gtag.js) for Pro funnel tracking -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-E90B41BNEH');
-    
+
     // GA4 Pro funnel event helper
     function gaTrackPro(name, params) {
       if (typeof gtag === 'function') {
@@ -19,21 +20,44 @@
   </script>
   <style>
     /* Hide Pro app until gate passes to avoid FOUC */
-    html:not(.pro-ok) body { visibility: hidden; }
+    html:not(.pro-ok) body {
+      visibility: hidden;
+    }
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Add Logo to QR Code - Professional vCard QR Generator</title>
-  <meta name="description" content="Create a custom QR code with your logo. Our professional generator lets you easily add an image to your vCard QR code for a branded, unique look." />
-  <meta name="keywords" content="qr code with logo, add logo to qr code, branded qr code, custom qr code generator, image qr code" />
+  <meta name="description"
+    content="Create a custom QR code with your logo. Our professional generator lets you easily add an image to your vCard QR code for a branded, unique look." />
+  <meta name="keywords"
+    content="qr code with logo, add logo to qr code, branded qr code, custom qr code generator, image qr code" />
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206702185649949"
+    crossorigin="anonymous"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- New, advanced QR code library that supports logos -->
   <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .hidden { display: none; }
-    .locked { cursor: not-allowed; opacity: 0.6; }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .locked {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .ad-container {
+      margin: 2rem 0;
+      min-height: 100px;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -50,7 +74,8 @@
   </script>
 
   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-    <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+    <div
+      class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
       <header class="text-center mb-8">
         <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
           Create a QR Code with Your Logo
@@ -60,21 +85,31 @@
         </p>
       </header>
 
+      <!-- Ad Unit: Top -->
+      <div class="ad-container">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949"
+          data-ad-slot="7438060059" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <!-- Form Section -->
         <form id="vcard-form" class="space-y-4">
           <div>
-            <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+            <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full
+              Name</label>
             <input type="text" id="fullName" placeholder="John Doe"
               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
           </div>
           <div>
-            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
+            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone
+              Number</label>
             <input type="tel" id="phone" placeholder="+15551234567"
               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email
+              Address</label>
             <input type="email" id="email" placeholder="john@example.com"
               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
           </div>
@@ -99,7 +134,8 @@
         <div class="space-y-6">
           <div class="flex flex-col items-center">
             <div id="qr-code-container"
-              class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white w-full max-w-[250px] aspect-square"></div>
+              class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white w-full max-w-[250px] aspect-square">
+            </div>
             <p id="loading-text" class="text-sm text-gray-500 mt-2 hidden">Validating payment...</p>
           </div>
 
@@ -124,7 +160,8 @@
           </div>
 
           <!-- What you get (shown when locked) -->
-          <div id="benefits-box" class="p-4 border border-blue-200 dark:border-blue-800 rounded-lg bg-blue-50 dark:bg-blue-900/30">
+          <div id="benefits-box"
+            class="p-4 border border-blue-200 dark:border-blue-800 rounded-lg bg-blue-50 dark:bg-blue-900/30">
             <h3 class="font-semibold text-blue-900 dark:text-blue-100">What you get:</h3>
             <ul class="mt-2 text-sm text-blue-800 dark:text-blue-200 space-y-1">
               <li>✓ Add your logo to any QR code</li>
@@ -144,6 +181,13 @@
             </ul>
           </div>
         </div>
+      </div>
+
+      <div class="mt-12 mb-6 ad-container">
+        <!-- Ad Unit: Bottom -->
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949"
+          data-ad-slot="4811896719" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
 
       <footer class="text-center mt-12 pt-6 border-t border-gray-200 dark:border-gray-700">
@@ -185,7 +229,7 @@
           if (json.status === 'success') {
             // Track successful payment - THIS IS A CONVERSION
             gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
-            
+
             // Unlock for 24 hours
             localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
 
@@ -236,7 +280,11 @@
         },
         imageOptions: {
           crossOrigin: 'anonymous',
-          margin: 10
+          imageSize: 0.4,      // Logo covers 40% of QR code (safe with high error correction)
+          margin: 5            // Reduced margin around logo
+        },
+        qrOptions: {
+          errorCorrectionLevel: 'H'  // Highest error correction (30% data recovery)
         }
       });
 
@@ -245,7 +293,7 @@
       // UI state
       const pricingInfo = document.getElementById('pricing-info');
       const benefitsBox = document.getElementById('benefits-box');
-      
+
       if (featureUnlocked) {
         logoUploadInput.classList.remove('hidden');
         downloadBtn.classList.remove('hidden');
@@ -316,7 +364,7 @@ END:VCARD`;
       const handleCheckout = async () => {
         // Track checkout initiation
         gaTrackPro('pro_checkout_start', { event_category: 'pro_funnel', event_label: 'checkout_initiated' });
-        
+
         try {
           if (loadingText) {
             loadingText.classList.remove('hidden');
@@ -347,7 +395,7 @@ END:VCARD`;
         if (file) {
           // Track logo upload
           gaTrackPro('pro_logo_upload', { event_category: 'pro_funnel', event_label: 'logo_selected' });
-          
+
           const reader = new FileReader();
           reader.onload = (e) => {
             logoImage = e.target.result;
@@ -383,4 +431,5 @@ END:VCARD`;
     });
   </script>
 </body>
+
 </html>
