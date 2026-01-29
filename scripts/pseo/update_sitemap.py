@@ -178,6 +178,9 @@ def _write_sitemap(posts: List[Post]) -> None:
     include(ROOT / "index.html")
     include(ROOT / "privacy-policy.html")
     include(ROOT / "contact.html")
+    include(ROOT / "terms-of-service.html")
+    include(ROOT / "logo-qr-code.html")
+    include(ROOT / "bulk-qr-code.html")
 
     blogs_index = ROOT / "blogs" / "index.html"
     if blogs_index.exists():

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bulk vCard QR Code Generator from Excel/CSV</title>
+    <meta name="description"
+        content="Generate hundreds of vCard QR codes instantly from an Excel or CSV file. Secure, browser-based bulk generator for teams and businesses." />
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206702185649949"
+        crossorigin="anonymous"></script>
+
+    <!-- Tailwind & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .step-active {
+            border-color: #4f46e5;
+            background-color: #eef2ff;
+        }
+
+        .step-inactive {
+            border-color: #e5e7eb;
+            background-color: #f9fafb;
+            opacity: 0.6;
+        }
+
+        .drag-active {
+            border-color: #4f46e5;
+            background-color: #eef2ff;
+        }
+    </style>
+
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-E90B41BNEH');
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <a href="/" class="flex-shrink-0 flex items-center text-indigo-600 font-bold text-xl">
+                        ← Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Bulk vCard QR Code Generator</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Upload your Excel or CSV file and generate strictly
+                private, professional vCard QR codes for your entire team in seconds.</p>
+        </div>
+
+        <!-- Ad Unit: Top -->
+        <div class="my-6 text-center min-h-[100px]">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949"
+                data-ad-slot="7438060059" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left Column: Controls -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- Step 1: Upload -->
+                <div id="step1" class="bg-white rounded-xl shadow-sm border-2 border-indigo-600 p-6 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-semibold flex items-center gap-2">
+                            <span
+                                class="bg-indigo-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm">1</span>
+                            Upload CSV File
+                        </h2>
+                        <a href="#" id="downloadSample" class="text-sm text-indigo-600 hover:underline">Download Sample
+                            CSV</a>
+                    </div>
+
+                    <div id="dropZone"
+                        class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-indigo-400 transition-colors">
+                        <input type="file" id="csvInput" accept=".csv" class="hidden" />
+                        <div class="space-y-2">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
+                                viewBox="0 0 48 48">
+                                <path d="M24 8l-8 8h6v16h4V16h6l-8-8z" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <div class="text-sm text-gray-600">
+                                <span class="font-medium text-indigo-600 hover:text-indigo-500">Click to upload</span>
+                                or drag and drop
+                            </div>
+                            <p class="text-xs text-gray-500">CSV files only (Max 5MB)</p>
+                        </div>
+                    </div>
+                    <p id="fileStats" class="mt-2 text-sm text-green-600 font-medium hidden"></p>
+                </div>
+
+                <!-- Step 2: Map Columns -->
+                <div id="step2"
+                    class="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-6 opacity-50 pointer-events-none transition-all">
+                    <h2 class="text-lg font-semibold flex items-center gap-2 mb-4">
+                        <span
+                            class="bg-gray-400 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm">2</span>
+                        Map Columns
+                    </h2>
+                    <p class="text-sm text-gray-500 mb-4">Match columns from your CSV to vCard fields.</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="mappingGrid">
+                        <!-- Mappings injected here -->
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <button id="generateBtn"
+                            class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md font-semibold transition shadow-lg shadow-indigo-200">
+                            Generate Preview
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Preview & Action -->
+            <div class="lg:col-span-1 space-y-6">
+
+                <!-- Preview Box -->
+                <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 sticky top-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Preview (First Entry)</h3>
+
+                    <div id="previewContainer"
+                        class="flex flex-col items-center justify-center min-h-[200px] bg-gray-50 rounded-lg border border-gray-100">
+                        <p class="text-gray-400 text-sm">Upload data to see preview</p>
+                    </div>
+
+                    <div class="mt-4 space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Total Contacts:</span>
+                            <span class="font-medium" id="totalCount">-</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Est. File Size:</span>
+                            <span class="font-medium" id="estSize">-</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 border-t pt-6" id="actionArea">
+                        <div id="paywall" class="hidden text-center">
+                            <p class="text-sm text-gray-600 mb-3">Bulk generation is a Pro feature.</p>
+                            <div class="mb-4">
+                                <span class="text-3xl font-bold text-gray-900">$9</span>
+                                <span class="text-gray-500 text-sm">/ batch</span>
+                            </div>
+                            <button id="checkoutBtn"
+                                class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transform transition hover:-translate-y-1">
+                                Download All QR Codes
+                            </button>
+                            <p class="text-xs text-gray-400 mt-2">Secure payment via Stripe</p>
+                        </div>
+
+                        <div id="downloadArea" class="hidden">
+                            <button id="downloadZipBtn"
+                                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md flex items-center justify-center gap-2">
+                                <span>Download .ZIP</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust Signals -->
+                <div class="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                    <h4 class="font-semibold text-blue-900 text-sm mb-2">🔒 Privacy First</h4>
+                    <p class="text-xs text-blue-800">Processing happens entirely in your browser. Your employee data is
+                        never uploaded to our servers.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Ad Unit: Bottom -->
+        <div class="mt-12 text-center min-h-[100px]">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949"
+                data-ad-slot="4811896719" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+    </div>
+
+    <script>
+        // Configuration
+        const WORKER_URL = "https://dodo-create-checkout.abhikb2005.workers.dev/";
+        const VALIDATOR_URL = "https://token-validator.abhikb2005.workers.dev/";
+        const PRODUCT_ID = "pdt_ROmfPNXoSRQ16tKgZWURT"; // Reusing existing Pro product for now, or create new pricing
+
+        let parsedData = [];
+        let headers = [];
+        let qrCodesBlob = null;
+        let isPaid = false;
+
+        // DOM Elements
+        const dropZone = document.getElementById('dropZone');
+        const csvInput = document.getElementById('csvInput');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const fileStats = document.getElementById('fileStats');
+        const mappingGrid = document.getElementById('mappingGrid');
+        const previewContainer = document.getElementById('previewContainer');
+        const totalCountEl = document.getElementById('totalCount');
+        const estSizeEl = document.getElementById('estSize');
+        const generateBtn = document.getElementById('generateBtn');
+        const paywall = document.getElementById('paywall');
+        const downloadArea = document.getElementById('downloadArea');
+        const downloadZipBtn = document.getElementById('downloadZipBtn');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const downloadSample = document.getElementById('downloadSample');
+
+        // Sample CSV Download
+        downloadSample.addEventListener('click', (e) => {
+            e.preventDefault();
+            const csvContent = "data:text/csv;charset=utf-8,Full Name,Phone,Email,Company,Job Title,Website\nJohn Doe,+15550001,john@example.com,Acme Inc,Manager,https://acme.com";
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "vcard_sample.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // Check Payment Status (Token in URL)
+        async function checkPayment() {
+            const url = new URL(window.location.href);
+            const token = url.searchParams.get('token');
+            if (token) {
+                try {
+                    // Verify token
+                    const res = await fetch(`${VALIDATOR_URL}?token=${encodeURIComponent(token)}`);
+                    const json = await res.json();
+                    if (json.status === 'success') {
+                        isPaid = true;
+                        localStorage.setItem('bulk_paid_until', Date.now() + 1000 * 60 * 60); // 1 hour access
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    }
+                } catch (e) { console.error(e); }
+            }
+
+            // Check local storage
+            const paidUntil = localStorage.getItem('bulk_paid_until');
+            if (paidUntil && parseInt(paidUntil) > Date.now()) {
+                isPaid = true;
+            }
+
+            updateActionArea();
+        }
+
+        function updateActionArea() {
+            if (!parsedData.length) return;
+
+            if (isPaid) {
+                paywall.classList.add('hidden');
+                downloadArea.classList.remove('hidden');
+            } else {
+                paywall.classList.remove('hidden');
+                downloadArea.classList.add('hidden');
+            }
+        }
+
+        // Drag & Drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-active'), false);
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-active'), false);
+        });
+        dropZone.addEventListener('drop', handleDrop, false);
+        dropZone.addEventListener('click', () => csvInput.click());
+        csvInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            handleFiles(dt.files);
+        }
+
+        function handleFiles(files) {
+            const file = files[0];
+            if (file && file.type === "text/csv" || file.name.endsWith('.csv')) {
+                parseCSV(file);
+                fileStats.textContent = `Loaded: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                fileStats.classList.remove('hidden');
+            } else {
+                alert("Please upload a valid CSV file.");
+            }
+        }
+
+        function parseCSV(file) {
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function (results) {
+                    parsedData = results.data;
+                    headers = results.meta.fields;
+                    if (parsedData.length > 0) {
+                        enableStep2();
+                        totalCountEl.textContent = parsedData.length;
+                        estSizeEl.textContent = `~${(parsedData.length * 0.05).toFixed(1)} MB`; // rough est
+                    } else {
+                        alert("CSV appears empty.");
+                    }
+                }
+            });
+        }
+
+        function enableStep2() {
+            step2.classList.remove('opacity-50', 'pointer-events-none');
+            step2.classList.add('border-indigo-600');
+            step1.classList.remove('border-indigo-600');
+            step1.classList.add('border-gray-200');
+
+            // Generate Selects
+            const vCardFields = [
+                { key: 'fn', label: 'Full Name' },
+                { key: 'tel', label: 'Phone Number' },
+                { key: 'email', label: 'Email' },
+                { key: 'org', label: 'Company' },
+                { key: 'title', label: 'Job Title' },
+                { key: 'url', label: 'Website' }
+            ];
+
+            mappingGrid.innerHTML = '';
+            vCardFields.forEach(field => {
+                const div = document.createElement('div');
+                div.className = "flex flex-col";
+
+                let options = `<option value="">-- Ignore --</option>`;
+                headers.forEach(h => {
+                    // Auto-match logic
+                    const selected = h.toLowerCase().includes(field.key) || h.toLowerCase().includes(field.label.toLowerCase().split(' ')[0]) ? 'selected' : '';
+                    options += `<option value="${h}" ${selected}>${h}</option>`;
+                });
+
+                div.innerHTML = `
+          <label class="text-xs font-semibold uppercase text-gray-500 mb-1">${field.label}</label>
+          <select id="map-${field.key}" class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500">
+            ${options}
+          </select>
+        `;
+                mappingGrid.appendChild(div);
+            });
+        }
+
+        // Logic to build vCard string from a row and mapping
+        function buildVCard(row) {
+            const getVal = (key) => {
+                const header = document.getElementById(`map-${key}`).value;
+                return header ? (row[header] || '').trim() : '';
+            };
+
+            const fn = getVal('fn');
+            if (!fn) return null; // Name is required
+
+            const tel = getVal('tel');
+            const email = getVal('email');
+            const org = getVal('org');
+            const title = getVal('title');
+            const url = getVal('url');
+
+            const parts = fn.split(' ');
+            const firstName = parts.shift() || '';
+            const lastName = parts.join(' ') || '';
+
+            return `BEGIN:VCARD
+VERSION:3.0
+N:${lastName};${firstName};;;
+FN:${fn}
+ORG:${org}
+TITLE:${title}
+TEL;TYPE=WORK,VOICE:${tel}
+EMAIL:${email}
+URL:${url}
+END:VCARD`;
+        }
+
+        generateBtn.addEventListener('click', async () => {
+            // Show loading in preview
+            previewContainer.innerHTML = `<div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>`;
+
+            // 1. Generate first QR for Preview
+            const firstRow = parsedData[0];
+            const vCardData = buildVCard(firstRow);
+
+            if (!vCardData) {
+                alert("Could not generate vCard. Ensure 'Full Name' is mapped correctly.");
+                return;
+            }
+
+            const qr = new QRCodeStyling({
+                width: 200, height: 200, type: 'svg', data: vCardData,
+                imageOptions: { crossOrigin: 'anonymous', margin: 5 },
+                dotsOptions: { color: '#000000', type: 'rounded' }
+            });
+
+            previewContainer.innerHTML = '';
+            qr.append(previewContainer);
+
+            updateActionArea();
+        });
+
+        checkoutBtn.addEventListener('click', async () => {
+            checkoutBtn.disabled = true;
+            checkoutBtn.textContent = "Processing...";
+
+            try {
+                // Just take the first valid email from CSV as customer email for now, or prompt user
+                const customerEmail = parsedData[0]['Email'] || parsedData[0]['email'] || "customer@example.com";
+
+                const res = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: customerEmail, name: "Bulk User" }) // We can improve this
+                });
+                const data = await res.json();
+                if (data.checkout_url) window.location.href = data.checkout_url;
+            } catch (e) {
+                alert("Payment error. Please try again.");
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = "Download All QR Codes";
+            }
+        });
+
+        downloadZipBtn.addEventListener('click', async () => {
+            downloadZipBtn.disabled = true;
+            downloadZipBtn.textContent = "Generating ZIP...";
+
+            const zip = new JSZip();
+            let count = 0;
+
+            for (const row of parsedData) {
+                const vCardData = buildVCard(row);
+                if (vCardData) {
+                    const qr = new QRCodeStyling({
+                        width: 512, height: 512, type: 'canvas', data: vCardData, // High res for download
+                        dotsOptions: { color: '#000000', type: 'rounded' }
+                    });
+
+                    // We need to wait for the blob
+                    const blob = await qr.getRawData('png');
+                    if (blob) {
+                        const name = row[document.getElementById('map-fn').value] || `contact_${count}`;
+                        const safeName = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                        zip.file(`${safeName}.png`, blob);
+                        count++;
+                    }
+                }
+            }
+
+            const content = await zip.generateAsync({ type: "blob" });
+            saveAs(content, "bulk_vcard_qrcodes.zip");
+
+            downloadZipBtn.textContent = "Download .ZIP";
+            downloadZipBtn.disabled = false;
+        });
+
+        // Init
+        checkPayment();
+
+    </script>
+</body>
+
+</html>
