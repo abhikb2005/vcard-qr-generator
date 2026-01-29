@@ -6,10 +6,10 @@ routes = [
   { pattern = "api.vcardqrcodegenerator.com/*", zone_name = "vcardqrcodegenerator.com" }
 ]
 
-[[d1_databases]]
-binding = "DB"
-database_name = "vcard_qr_generator"
-database_id = "<YOUR_D1_DATABASE_ID>"
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "vcard_qr_generator"
+# database_id = "<YOUR_D1_DATABASE_ID>"
 
 [vars]
 DODO_LICENSE_PRODUCT_ID = "pdt_ROmfPNXoSRQ16tKgZWURT"
