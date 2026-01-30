@@ -116,7 +116,13 @@ export default {
 
       const token = await createJwt(env.JWT_PRIVATE_KEY, payload);
 
-      return new Response(JSON.stringify({ valid: true, token }), {
+      // Return product_id so frontend knows the limit
+      return new Response(JSON.stringify({
+        valid: true,
+        token,
+        status: 'success', // match frontend expect
+        product_id: validation.product_id || validation.data?.product_id
+      }), {
         status: 200,
         headers,
       });

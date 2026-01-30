@@ -168,20 +168,62 @@
                     </div>
 
                     <div class="mt-6 border-t pt-6" id="actionArea">
-                        <div id="paywall" class="hidden text-center">
-                            <p class="text-sm text-gray-600 mb-3">Bulk generation is a Pro feature.</p>
-                            <div class="mb-4">
-                                <span class="text-3xl font-bold text-gray-900">$9</span>
-                                <span class="text-gray-500 text-sm">/ batch</span>
+                        <div id="paywall" class="hidden">
+                            <p class="text-sm text-center text-gray-600 mb-4">Select a plan to download your <span
+                                    id="countDisplay" class="font-bold">0</span> QR codes:</p>
+
+                            <div class="space-y-3">
+                                <!-- Tier 1: 0-50 -->
+                                <div class="border rounded-lg p-3 hover:border-indigo-500 cursor-pointer transition flex justify-between items-center"
+                                    id="tier1-card">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">Starter Batch</h4>
+                                        <p class="text-xs text-gray-500">Up to 50 codes</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="block font-bold text-gray-900">$9</span>
+                                        <button onclick="initiateCheckout('pdt_0NXPxlipsCiIWgeLUcl6M')"
+                                            class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Buy</button>
+                                    </div>
+                                </div>
+
+                                <!-- Tier 2: 51-500 -->
+                                <div class="border rounded-lg p-3 hover:border-indigo-500 cursor-pointer transition flex justify-between items-center"
+                                    id="tier2-card">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">Growth Batch</h4>
+                                        <p class="text-xs text-gray-500">Up to 500 codes</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="block font-bold text-gray-900">$19</span>
+                                        <button onclick="initiateCheckout('pdt_0NXPxyJkVPTIFnQ2bS5xM')"
+                                            class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Buy</button>
+                                    </div>
+                                </div>
+
+                                <!-- Tier 3: Unlimited -->
+                                <div class="border rounded-lg p-3 hover:border-indigo-500 cursor-pointer transition flex justify-between items-center"
+                                    id="tier3-card">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">Enterprise</h4>
+                                        <p class="text-xs text-gray-500">Unlimited codes</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="block font-bold text-gray-900">$29</span>
+                                        <button onclick="initiateCheckout('pdt_0NXPy4nZegDt6mQKDzlkX')"
+                                            class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Buy</button>
+                                    </div>
+                                </div>
                             </div>
-                            <button id="checkoutBtn"
-                                class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transform transition hover:-translate-y-1">
-                                Download All QR Codes
-                            </button>
-                            <p class="text-xs text-gray-400 mt-2">Secure payment via Stripe</p>
+
+                            <p class="text-xs text-gray-400 mt-4 text-center">Secure payment via Dodo/Stripe</p>
                         </div>
 
                         <div id="downloadArea" class="hidden">
+                            <div class="bg-green-50 text-green-800 p-3 rounded-lg mb-4 text-sm text-center">
+                                Payment Verified! <br>
+                                <span class="text-xs text-green-600" id="limitMsg"></span>
+                            </div>
                             <button id="downloadZipBtn"
                                 class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md flex items-center justify-center gap-2">
                                 <span>Download .ZIP</span>
@@ -217,12 +259,18 @@
         // Configuration
         const WORKER_URL = "https://dodo-create-checkout.abhikb2005.workers.dev/";
         const VALIDATOR_URL = "https://token-validator.abhikb2005.workers.dev/";
-        const PRODUCT_ID = "pdt_ROmfPNXoSRQ16tKgZWURT"; // Reusing existing Pro product for now, or create new pricing
+
+        // Products
+        const PRODUCTS = {
+            'pdt_0NXPxlipsCiIWgeLUcl6M': { limit: 50 },
+            'pdt_0NXPxyJkVPTIFnQ2bS5xM': { limit: 500 },
+            'pdt_0NXPy4nZegDt6mQKDzlkX': { limit: Infinity }
+        };
 
         let parsedData = [];
         let headers = [];
-        let qrCodesBlob = null;
         let isPaid = false;
+        let purchasedLimit = 0;
 
         // DOM Elements
         const dropZone = document.getElementById('dropZone');
@@ -236,9 +284,10 @@
         const estSizeEl = document.getElementById('estSize');
         const generateBtn = document.getElementById('generateBtn');
         const paywall = document.getElementById('paywall');
+        const countDisplay = document.getElementById('countDisplay');
         const downloadArea = document.getElementById('downloadArea');
         const downloadZipBtn = document.getElementById('downloadZipBtn');
-        const checkoutBtn = document.getElementById('checkoutBtn');
+        const limitMsg = document.getElementById('limitMsg');
         const downloadSample = document.getElementById('downloadSample');
 
         // Sample CSV Download
@@ -258,23 +307,42 @@
         async function checkPayment() {
             const url = new URL(window.location.href);
             const token = url.searchParams.get('token');
+
             if (token) {
                 try {
-                    // Verify token
                     const res = await fetch(`${VALIDATOR_URL}?token=${encodeURIComponent(token)}`);
                     const json = await res.json();
                     if (json.status === 'success') {
-                        isPaid = true;
-                        localStorage.setItem('bulk_paid_until', Date.now() + 1000 * 60 * 60); // 1 hour access
+                        // START NEW LOGIC: Using product_id from validation response
+                        // Fallback for now until backend is updated: we set highest limit if success
+                        // In future, json should return { status: 'success', product_id: '...' }
+
+                        const pid = json.product_id;
+                        if (pid && PRODUCTS[pid]) {
+                            purchasedLimit = PRODUCTS[pid].limit;
+                            isPaid = true;
+                        } else {
+                            // Fallback if backend doesn't send product_id yet: assume Unlimited for safety/UX
+                            purchasedLimit = Infinity;
+                            isPaid = true;
+                        }
+
+                        // Persist session
+                        localStorage.setItem('bulk_session', JSON.stringify({
+                            expires: Date.now() + 1000 * 60 * 60,
+                            limit: purchasedLimit
+                        }));
+
                         window.history.replaceState({}, document.title, window.location.pathname);
                     }
                 } catch (e) { console.error(e); }
             }
 
             // Check local storage
-            const paidUntil = localStorage.getItem('bulk_paid_until');
-            if (paidUntil && parseInt(paidUntil) > Date.now()) {
+            const session = JSON.parse(localStorage.getItem('bulk_session') || '{}');
+            if (session && session.expires && session.expires > Date.now()) {
                 isPaid = true;
+                purchasedLimit = session.limit;
             }
 
             updateActionArea();
@@ -282,10 +350,27 @@
 
         function updateActionArea() {
             if (!parsedData.length) return;
+            countDisplay.textContent = parsedData.length;
 
-            if (isPaid) {
+            const count = parsedData.length;
+
+            // Auto-highlight best plan
+            document.getElementById('tier1-card').classList.remove('ring-2', 'ring-indigo-500', 'bg-indigo-50');
+            document.getElementById('tier2-card').classList.remove('ring-2', 'ring-indigo-500', 'bg-indigo-50');
+            document.getElementById('tier3-card').classList.remove('ring-2', 'ring-indigo-500', 'bg-indigo-50');
+
+            if (count <= 50) {
+                document.getElementById('tier1-card').classList.add('ring-2', 'ring-indigo-500', 'bg-indigo-50');
+            } else if (count <= 500) {
+                document.getElementById('tier2-card').classList.add('ring-2', 'ring-indigo-500', 'bg-indigo-50');
+            } else {
+                document.getElementById('tier3-card').classList.add('ring-2', 'ring-indigo-500', 'bg-indigo-50');
+            }
+
+            if (isPaid && purchasedLimit >= count) {
                 paywall.classList.add('hidden');
                 downloadArea.classList.remove('hidden');
+                limitMsg.textContent = `Limit: ${purchasedLimit === Infinity ? 'Unlimited' : purchasedLimit} codes`;
             } else {
                 paywall.classList.remove('hidden');
                 downloadArea.classList.add('hidden');
@@ -436,27 +521,29 @@ END:VCARD`;
             updateActionArea();
         });
 
-        checkoutBtn.addEventListener('click', async () => {
-            checkoutBtn.disabled = true;
-            checkoutBtn.textContent = "Processing...";
+        // Global Checkout Function
+        window.initiateCheckout = async (productId) => {
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = "...";
 
             try {
-                // Just take the first valid email from CSV as customer email for now, or prompt user
-                const customerEmail = parsedData[0]['Email'] || parsedData[0]['email'] || "customer@example.com";
-
+                const email = (parsedData[0] && (parsedData[0]['Email'] || parsedData[0]['email'])) || "customer@example.com";
                 const res = await fetch(WORKER_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: customerEmail, name: "Bulk User" }) // We can improve this
+                    body: JSON.stringify({ email, product_id: productId }) // Send specific product ID
                 });
                 const data = await res.json();
                 if (data.checkout_url) window.location.href = data.checkout_url;
+                else throw new Error("No URL");
             } catch (e) {
                 alert("Payment error. Please try again.");
-                checkoutBtn.disabled = false;
-                checkoutBtn.textContent = "Download All QR Codes";
+                btn.disabled = false;
+                btn.textContent = originalText;
             }
-        });
+        };
 
         downloadZipBtn.addEventListener('click', async () => {
             downloadZipBtn.disabled = true;

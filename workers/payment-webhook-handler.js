@@ -81,8 +81,15 @@ export default {
         });
       }
 
+      const allowedProducts = [
+        'pdt_ROmfPNXoSRQ16tKgZWURT', // Original Pro
+        'pdt_0NXPxlipsCiIWgeLUcl6M', // 50
+        'pdt_0NXPxyJkVPTIFnQ2bS5xM', // 500
+        'pdt_0NXPy4nZegDt6mQKDzlkX'  // Unlimited
+      ];
+
       const productId = payload.product_id || payload.data?.product_id || payload.data?.line_items?.[0]?.product_id;
-      if (productId !== 'pdt_ROmfPNXoSRQ16tKgZWURT') {
+      if (!allowedProducts.includes(productId)) {
         return new Response(JSON.stringify({ ignored: true }), {
           status: 200,
           headers: { 'Content-Type': 'application/json', ...corsHeaders(origin) },
@@ -101,12 +108,14 @@ export default {
         });
       }
 
-      await env.DB.prepare(
-        `INSERT OR IGNORE INTO purchases (payment_id, license_key, customer_email, status)
-         VALUES (?1, ?2, ?3, ?4)`
-      )
-        .bind(paymentId, licenseKey, customerEmail || '', status)
-        .run();
+      if (env.DB) {
+        await env.DB.prepare(
+          `INSERT OR IGNORE INTO purchases (payment_id, license_key, customer_email, status)
+           VALUES (?1, ?2, ?3, ?4)`
+        )
+          .bind(paymentId, licenseKey, customerEmail || '', status)
+          .run();
+      }
 
       return new Response(JSON.stringify({ success: true }), {
         status: 200,
