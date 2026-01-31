@@ -55,7 +55,7 @@
 
     <!-- PPP (Purchase Power Parity) Detection -->
     <script>
-        (function() {
+        (function () {
             // Country code -> discount percentage mapping based on PPP index
             const PPP_DISCOUNTS = {
                 // 60% off - PPP index 0.2-0.3
@@ -64,7 +64,7 @@
                 'MG': 60, 'MW': 60, 'ML': 60, 'MR': 60, 'MZ': 60, 'NP': 60, 'NE': 60, 'RW': 60,
                 'SN': 60, 'SL': 60, 'SO': 60, 'SS': 60, 'SD': 60, 'SY': 60, 'TJ': 60, 'TZ': 60,
                 'TG': 60, 'UG': 60, 'YE': 60, 'ZM': 60, 'ZW': 60, 'MM': 60, 'LA': 60, 'KH': 60,
-                
+
                 // 50% off - PPP index 0.3-0.5
                 'DZ': 50, 'AO': 50, 'AM': 50, 'AZ': 50, 'BJ': 50, 'BT': 50, 'BO': 50, 'BW': 50,
                 'CM': 50, 'CV': 50, 'CG': 50, 'CI': 50, 'DJ': 50, 'EG': 50, 'SV': 50, 'GQ': 50,
@@ -73,25 +73,25 @@
                 'LS': 50, 'LY': 50, 'MN': 50, 'MA': 50, 'NA': 50, 'NI': 50, 'NG': 50, 'PK': 50,
                 'PY': 50, 'PH': 50, 'MD': 50, 'LK': 50, 'SR': 50, 'SZ': 50, 'TN': 50, 'TM': 50,
                 'UA': 50, 'UZ': 50, 'VN': 50, 'PS': 50,
-                
+
                 // 40% off - PPP index 0.5-0.6
                 'AL': 40, 'AR': 40, 'BY': 40, 'BA': 40, 'BR': 40, 'BG': 40, 'CL': 40, 'CN': 40,
                 'CO': 40, 'CR': 40, 'HR': 40, 'DO': 40, 'EC': 40, 'MK': 40, 'HU': 40, 'IR': 40,
                 'MY': 40, 'MU': 40, 'MX': 40, 'ME': 40, 'PA': 40, 'PE': 40, 'RO': 40, 'RU': 40,
                 'RS': 40, 'ZA': 40, 'TH': 40, 'TR': 40, 'VE': 40,
-                
+
                 // 30% off - PPP index 0.6-0.7
                 'BH': 30, 'CZ': 30, 'EE': 30, 'GR': 30, 'LV': 30, 'LT': 30, 'MT': 30, 'OM': 30,
                 'PL': 30, 'PT': 30, 'QA': 30, 'SA': 30, 'SK': 30, 'SI': 30, 'TW': 30, 'AE': 30,
                 'UY': 30, 'CY': 30, 'KW': 30,
-                
+
                 // 20% off - PPP index 0.7-0.8
                 'BE': 20, 'FR': 20, 'DE': 20, 'HK': 20, 'IE': 20, 'IL': 20, 'IT': 20, 'JP': 20,
                 'KR': 20, 'NL': 20, 'NZ': 20, 'SG': 20, 'ES': 20, 'SE': 20, 'AT': 20, 'FI': 20
-                
+
                 // No discount (0.8+): US, UK, AU, CA, CH, NO, DK, LU, IS
             };
-            
+
             const COUNTRY_NAMES = {
                 'IN': 'India', 'PK': 'Pakistan', 'BD': 'Bangladesh', 'NG': 'Nigeria', 'EG': 'Egypt',
                 'VN': 'Vietnam', 'PH': 'Philippines', 'ID': 'Indonesia', 'BR': 'Brazil', 'MX': 'Mexico',
@@ -120,7 +120,7 @@
                 'BE': 'Belgium', 'NL': 'Netherlands', 'FR': 'France', 'DE': 'Germany', 'AT': 'Austria',
                 'SE': 'Sweden', 'FI': 'Finland', 'IE': 'Ireland', 'IL': 'Israel', 'NZ': 'New Zealand'
             };
-            
+
             const COUPON_CODES = {
                 60: 'GLOBAL60',
                 50: 'GLOBAL50',
@@ -128,26 +128,26 @@
                 30: 'GLOBAL30',
                 20: 'GLOBAL20'
             };
-            
+
             async function detectAndShowPPP() {
                 // Check if already dismissed this session
                 if (sessionStorage.getItem('ppp_dismissed')) return;
-                
+
                 try {
                     const res = await fetch('https://ipapi.co/json/', { cache: 'default' });
                     const data = await res.json();
                     const countryCode = data.country_code;
                     const discount = PPP_DISCOUNTS[countryCode];
-                    
+
                     if (discount) {
                         const countryName = COUNTRY_NAMES[countryCode] || data.country_name || countryCode;
                         const coupon = COUPON_CODES[discount];
                         const banner = document.getElementById('ppp-banner');
                         const message = document.getElementById('ppp-message');
-                        
+
                         message.innerHTML = `🌍 Hey! It looks like you're in <strong>${countryName}</strong>. Use code <strong class="bg-white/20 px-2 py-0.5 rounded font-mono">${coupon}</strong> for <strong>${discount}% off</strong> at checkout!`;
                         banner.classList.remove('hidden');
-                        
+
                         // Track PPP banner view
                         if (typeof gtag === 'function') {
                             gtag('event', 'ppp_banner_shown', {
@@ -161,7 +161,7 @@
                     console.log('PPP detection skipped');
                 }
             }
-            
+
             // Run after page loads
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', detectAndShowPPP);
@@ -175,9 +175,12 @@
 <body class="bg-gray-50 text-gray-900">
 
     <!-- PPP Discount Banner (hidden by default) -->
-    <div id="ppp-banner" class="hidden bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-4 text-center text-sm">
+    <div id="ppp-banner"
+        class="hidden bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-4 text-center text-sm">
         <span id="ppp-message"></span>
-        <button onclick="sessionStorage.setItem('ppp_dismissed','1');document.getElementById('ppp-banner').classList.add('hidden')" class="ml-4 text-white/80 hover:text-white">✕</button>
+        <button
+            onclick="sessionStorage.setItem('ppp_dismissed','1');document.getElementById('ppp-banner').classList.add('hidden')"
+            class="ml-4 text-white/80 hover:text-white">✕</button>
     </div>
 
     <!-- Navigation -->
@@ -197,7 +200,8 @@
 
         <div class="text-center mb-10">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Bulk vCard QR Code Generator</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Upload your Excel or CSV file and generate strictly
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Upload your CSV file (exported from Excel) and generate
+                strictly
                 private, professional vCard QR codes for your entire team in seconds.</p>
         </div>
 
@@ -238,7 +242,7 @@
                                 <span class="font-medium text-indigo-600 hover:text-indigo-500">Click to upload</span>
                                 or drag and drop
                             </div>
-                            <p class="text-xs text-gray-500">CSV files only (Max 5MB)</p>
+                            <p class="text-xs text-gray-500">CSV files only (File > Save As > CSV in Excel)</p>
                         </div>
                     </div>
                     <p id="fileStats" class="mt-2 text-sm text-green-600 font-medium hidden"></p>
