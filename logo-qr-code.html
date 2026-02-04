@@ -130,6 +130,17 @@
             <input type="text" id="title" placeholder="Software Engineer"
               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" />
           </div>
+          <div>
+            <label for="qr-style" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">QR
+              Style</label>
+            <select id="qr-style"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+              <option value="rounded">Rounded</option>
+              <option value="dots">Dots</option>
+              <option value="square">Classic</option>
+              <option value="classy">Classy</option>
+            </select>
+          </div>
         </form>
 
         <!-- QR Code & Pro Features Section -->
@@ -347,9 +358,14 @@ END:VCARD`;
 
       const updateQRCode = () => {
         const vCardString = generateVCardString();
+        const selectedStyle = document.getElementById('qr-style').value;
         qrCode.update({
           data: vCardString,
-          image: logoImage || ''
+          image: logoImage || '',
+          dotsOptions: {
+            color: '#000000',
+            type: selectedStyle
+          }
         });
 
         if (featureUnlocked) {
@@ -358,6 +374,9 @@ END:VCARD`;
           downloadBtn.classList.add('hidden');
         }
       };
+
+      // Listen for style changes
+      document.getElementById('qr-style').addEventListener('change', updateQRCode);
 
       const handleLogoUpload = () => {
         logoUploadInput.click();
