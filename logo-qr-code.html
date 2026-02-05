@@ -163,6 +163,38 @@
               <option value="extra-rounded">Extra Rounded</option>
             </select>
           </div>
+          <div>
+            <label for="bg-color" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Background
+              Color</label>
+            <div class="flex gap-2">
+              <input type="color" id="bg-color" value="#FFFFFF"
+                class="w-12 h-10 border border-gray-300 dark:border-gray-600 rounded-md cursor-pointer" />
+              <input type="text" id="bg-color-hex" value="#FFFFFF" placeholder="#FFFFFF"
+                class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-mono text-sm" />
+            </div>
+          </div>
+          <div>
+            <label for="frame-template" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Frame
+              Template</label>
+            <select id="frame-template"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+              <option value="none">No Frame</option>
+              <option value="scan-me">Scan Me</option>
+              <option value="connect">Connect With Me</option>
+              <option value="save-contact">Save My Contact</option>
+              <option value="business-card">Business Card</option>
+            </select>
+          </div>
+          <div>
+            <label for="download-format"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Download
+              Format</label>
+            <select id="download-format"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+              <option value="png">PNG (Standard)</option>
+              <option value="svg">SVG (Hi-Res, Scalable)</option>
+            </select>
+          </div>
         </form>
 
         <!-- QR Code & Pro Features Section -->
@@ -383,10 +415,14 @@ END:VCARD`;
         const selectedStyle = document.getElementById('qr-style').value;
         const selectedColor = document.getElementById('qr-color').value;
         const cornerStyle = document.getElementById('corner-style').value;
+        const bgColor = document.getElementById('bg-color').value;
 
         qrCode.update({
           data: vCardString,
           image: logoImage || '',
+          backgroundOptions: {
+            color: bgColor
+          },
           dotsOptions: {
             color: selectedColor,
             type: selectedStyle
@@ -422,6 +458,21 @@ END:VCARD`;
         }
       });
       document.getElementById('corner-style').addEventListener('change', updateQRCode);
+
+      // Background color sync
+      document.getElementById('bg-color').addEventListener('input', (e) => {
+        document.getElementById('bg-color-hex').value = e.target.value;
+        updateQRCode();
+      });
+      document.getElementById('bg-color-hex').addEventListener('input', (e) => {
+        const hex = e.target.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(hex)) {
+          document.getElementById('bg-color').value = hex;
+          updateQRCode();
+        }
+      });
+
+      document.getElementById('frame-template').addEventListener('change', updateQRCode);
 
       const handleLogoUpload = () => {
         logoUploadInput.click();
@@ -488,7 +539,8 @@ END:VCARD`;
         }
         // Track branded QR download
         gaTrackPro('pro_download_branded_qr', { event_category: 'pro_funnel', event_label: 'branded_qr_downloaded' });
-        qrCode.download({ name: 'branded-vcard-qr', extension: 'png' });
+        const downloadFormat = document.getElementById('download-format').value;
+        qrCode.download({ name: 'branded-vcard-qr', extension: downloadFormat });
       });
 
       form.addEventListener('input', updateQRCode);

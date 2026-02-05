@@ -17,6 +17,9 @@
 
 ### Feb 5
 - [x] Add more Pro features (color picker, corner styles)
+- [x] Background color picker
+- [x] SVG/Hi-Res download option
+- [x] Frame templates (Scan Me, Connect With Me, etc.)
 
 ### Feb 6
 - [ ] SEO: Internal linking between blog posts
