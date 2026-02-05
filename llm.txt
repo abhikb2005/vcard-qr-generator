@@ -1,0 +1,33 @@
+# vCard QR Code Generator
+> Free, privacy-first QR code generator for digital business cards. All processing happens in your browser — your data never leaves your device.
+
+## Main Tools
+- Free vCard QR Code Generator: /
+- Pro Features (logos, colors, frames, SVG): /logo-qr-code.html
+- Bulk Generator (CSV → ZIP): /bulk-qr-code.html
+
+## Pro Features (Premium)
+- Custom logo overlay on QR codes
+- QR dot color picker with 6 style patterns
+- Background color customization
+- Corner style options (Square, Rounded, Extra Rounded)
+- Frame templates (Scan Me, Connect With Me, Save My Contact, Business Card)
+- SVG/Hi-Res download for print-quality output
+
+## Documentation & Guides
+- Complete vCard QR Guide: /blog/qr-code-and-vcard-guide/
+- Dynamic vs Static QR Codes: /blog/dynamic-vs-static-vcard-qr-codes/
+- NFC vs QR Code Business Cards: /blog/nfc-vs-qr-code-business-cards/
+- QR Code on Resume Guide: /blog/qr-code-on-resume/
+- MeCard vs vCard: /blog/mecard-vs-vcard-qr-code/
+- Bulk Generation from Excel: /blog/generate-bulk-vcard-qr-codes-from-excel/
+
+## Technical Details
+- Works offline (static vCard encoded in QR)
+- No account required
+- No tracking of generated QR codes
+- vCard 3.0 format compatible with all phones
+
+## Contact
+- Website: https://vcardqrcodegenerator.com
+- Sitemap: https://vcardqrcodegenerator.com/sitemap.xml
