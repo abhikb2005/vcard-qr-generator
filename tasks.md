@@ -10,7 +10,8 @@
 |------|-------|--------|
 | Feb 3 | QR Code on Resume | ✅ Done |
 | Feb 4 | NFC vs QR Code Business Cards | ✅ Done |
-| Feb 5 | Dynamic vs Static vCard QR Codes Explained | Scheduled |
+| Feb 5 | Dynamic vs Static vCard QR Codes | ✅ Done |
+| Feb 6 | (Research new keyword) | Scheduled |
 
 ## Scheduled Feature Tasks
 
