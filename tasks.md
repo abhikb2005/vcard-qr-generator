@@ -16,7 +16,7 @@
 ## Scheduled Feature Tasks
 
 ### Feb 5
-- [ ] Add more Pro features (color picker, corner styles)
+- [x] Add more Pro features (color picker, corner styles)
 
 ### Feb 6
 - [ ] SEO: Internal linking between blog posts
