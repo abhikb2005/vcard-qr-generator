@@ -48,5 +48,5 @@ jobs:
           # Show installed wrangler version for debugging
           wrangler --version || true
           
-          # Always pass account-id explicitly
-          wrangler deploy --account-id "$CLOUDFLARE_ACCOUNT_ID"
+          # CLOUDFLARE_ACCOUNT_ID env var is read automatically by wrangler
+          wrangler deploy
