@@ -370,6 +370,8 @@
         }
       });
 
+      qrCode.append(qrContainer);
+
       // UI state
       const pricingInfo = document.getElementById('pricing-info');
       const benefitsBox = document.getElementById('benefits-box');
@@ -450,8 +452,10 @@ END:VCARD`;
           }
         });
 
-        qrContainer.innerHTML = '';
-        qrCode.append(qrContainer);
+        // Remove duplicate SVG/canvas elements left by update()
+        while (qrContainer.children.length > 1) {
+          qrContainer.removeChild(qrContainer.firstChild);
+        }
 
         if (featureUnlocked) {
           downloadBtn.classList.remove('hidden');
