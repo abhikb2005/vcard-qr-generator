@@ -548,8 +548,8 @@ END:VCARD`;
       });
 
       downloadBtn.addEventListener('click', (event) => {
+        event.preventDefault();
         if (!featureUnlocked) {
-          event.preventDefault();
           handleCheckout();
           return;
         }
