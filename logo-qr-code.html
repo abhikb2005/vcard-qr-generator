@@ -280,53 +280,66 @@
       // Track Pro page view
       gaTrackPro('pro_page_view', { event_category: 'pro_funnel', event_label: 'page_load' });
 
-      // 1) If we returned from Dodo with ?token=..., validate it
-      async function consumeTokenFromUrlIfPresent() {
+      // 1) If we returned from Dodo with ?payment_id=...&status=succeeded, or legacy ?token=..., validate it
+      async function consumePaymentFromUrl() {
         const url = new URL(window.location.href);
+        const paymentId = url.searchParams.get('payment_id');
+        const status = url.searchParams.get('status');
         const token = url.searchParams.get('token');
-        if (!token) return "none";
+
+        if (!token && !paymentId) return "none";
 
         if (loadingText) {
           loadingText.classList.remove('hidden');
           loadingText.textContent = 'Validating payment...';
         }
 
-        try {
-          const res = await fetch(`${tokenValidatorUrl}?token=${encodeURIComponent(token)}`);
-          const json = await res.json();
+        // Dodo redirects with ?payment_id=...&status=succeeded
+        if (paymentId && status === 'succeeded') {
+          gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
 
-          if (json.status === 'success') {
-            // Track successful payment - THIS IS A CONVERSION
-            gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
+          localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
 
-            // Unlock for 24 hours
-            localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
+          url.searchParams.delete('payment_id');
+          url.searchParams.delete('status');
+          url.searchParams.delete('token');
+          history.replaceState({}, '', url.toString());
 
-            // Remove token from URL
-            url.searchParams.delete('token');
-            history.replaceState({}, '', url.toString());
-
-            // Reload to show Upload button
-            window.location.reload();
-            return "success";
-          } else {
-            if (loadingText) {
-              loadingText.textContent = 'Payment not confirmed yet. Please wait a few seconds and refresh.';
-              loadingText.classList.remove('hidden');
-            }
-            return "pending";
-          }
-        } catch (e) {
-          if (loadingText) {
-            loadingText.textContent = 'Could not validate payment. Please refresh.';
-            loadingText.classList.remove('hidden');
-          }
-          return "pending";
+          window.location.reload();
+          return "success";
         }
+
+        // Legacy: try token-validator worker
+        if (token) {
+          try {
+            const res = await fetch(`${tokenValidatorUrl}?token=${encodeURIComponent(token)}`);
+            const json = await res.json();
+
+            if (json.status === 'success') {
+              gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
+
+              localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
+
+              url.searchParams.delete('token');
+              url.searchParams.delete('payment_id');
+              url.searchParams.delete('status');
+              history.replaceState({}, '', url.toString());
+
+              window.location.reload();
+              return "success";
+            }
+          } catch (e) { /* fall through */ }
+        }
+
+        if (loadingText) {
+          loadingText.textContent = 'Payment not confirmed yet. Please wait a few seconds and refresh.';
+          loadingText.classList.remove('hidden');
+        }
+        return "pending";
       }
 
-      const tokenStatus = await consumeTokenFromUrlIfPresent();
-      if (tokenStatus === "pending") return; // don't overwrite the message
+      const tokenStatus = await consumePaymentFromUrl();
+      if (tokenStatus === "pending") return;
 
       // 2) Feature gate (24h)
       const featureUnlocked =
