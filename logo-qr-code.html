@@ -357,8 +357,6 @@
         }
       });
 
-      qrCode.append(qrContainer);
-
       // UI state
       const pricingInfo = document.getElementById('pricing-info');
       const benefitsBox = document.getElementById('benefits-box');
@@ -438,6 +436,9 @@ END:VCARD`;
             type: cornerStyle === 'extra-rounded' ? 'dot' : cornerStyle
           }
         });
+
+        qrContainer.innerHTML = '';
+        qrCode.append(qrContainer);
 
         if (featureUnlocked) {
           downloadBtn.classList.remove('hidden');
