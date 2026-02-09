@@ -213,10 +213,10 @@
 
             <input type="file" id="logo-upload" class="hidden" accept="image/png, image/jpeg, image/svg+xml" />
 
-            <a id="proFeaturesBtn" href="#" download="branded-vcard-qrcode.png"
+            <button id="proFeaturesBtn" type="button"
               class="hidden w-full text-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               Download Branded QR Code
-            </a>
+            </button>
           </div>
 
           <!-- What you get (shown when locked) -->
@@ -370,7 +370,6 @@
       if (featureUnlocked) {
         logoUploadInput.classList.remove('hidden');
         downloadBtn.classList.remove('hidden');
-        downloadBtn.setAttribute('href', '#');
 
         mainActionBtn.textContent = 'Upload Your Logo';
         if (loadingText) loadingText.classList.add('hidden');
@@ -379,7 +378,6 @@
       } else {
         logoUploadInput.classList.add('hidden');
         downloadBtn.classList.add('hidden');
-        downloadBtn.setAttribute('href', '#');
 
         mainActionBtn.textContent = 'Go Premium to Add Your Logo';
         if (loadingText) {
