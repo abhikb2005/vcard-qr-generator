@@ -194,7 +194,6 @@
             <select id="download-format"
               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
               <option value="png">PNG (Standard)</option>
-              <option value="svg">SVG (Hi-Res, Scalable)</option>
             </select>
           </div>
         </form>
@@ -234,7 +233,7 @@
             <h3 class="font-semibold text-blue-900 dark:text-blue-100">What you get:</h3>
             <ul class="mt-2 text-sm text-blue-800 dark:text-blue-200 space-y-1">
               <li>✓ Add your logo to any QR code</li>
-              <li>✓ Unlimited downloads for 24 hours</li>
+              <li>✓ One branded QR code download</li>
               <li>✓ High-resolution PNG export</li>
               <li>✓ Works on this device/browser</li>
             </ul>
@@ -342,7 +341,7 @@
       if (tokenStatus === "pending") return;
 
       // 2) Feature gate (24h)
-      const featureUnlocked =
+      let featureUnlocked =
         parseInt(localStorage.getItem("pro_unlocked_until") || "0", 10) > Date.now();
 
       let logoImage = null;
@@ -557,10 +556,21 @@ END:VCARD`;
           handleCheckout();
           return;
         }
-        // Track branded QR download
         gaTrackPro('pro_download_branded_qr', { event_category: 'pro_funnel', event_label: 'branded_qr_downloaded' });
-        const downloadFormat = document.getElementById('download-format').value;
-        qrCode.download({ name: 'branded-vcard-qr', extension: downloadFormat });
+        qrCode.download({ name: 'branded-vcard-qr', extension: 'png' });
+
+        // One-time use: revoke access after download
+        localStorage.removeItem('pro_unlocked_until');
+        featureUnlocked = false;
+        logoUploadInput.classList.add('hidden');
+        downloadBtn.classList.add('hidden');
+        mainActionBtn.textContent = 'Go Premium to Add Your Logo';
+        if (pricingInfo) pricingInfo.classList.remove('hidden');
+        if (benefitsBox) benefitsBox.classList.remove('hidden');
+        if (loadingText) {
+          loadingText.textContent = 'Download complete. Pay again for another branded QR code.';
+          loadingText.classList.remove('hidden');
+        }
       });
 
       form.addEventListener('input', updateQRCode);
