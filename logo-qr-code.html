@@ -341,7 +341,7 @@
       const qrCode = new QRCodeStyling({
         width: 218,
         height: 218,
-        type: 'svg',
+        type: 'canvas',
         data: 'Welcome to vCard QR Code Generator Pro!',
         image: '',
         dotsOptions: {
@@ -440,11 +440,6 @@ END:VCARD`;
             type: cornerStyle === 'extra-rounded' ? 'dot' : cornerStyle
           }
         });
-
-        // Remove duplicate SVG/canvas elements left by update()
-        while (qrContainer.children.length > 1) {
-          qrContainer.removeChild(qrContainer.firstChild);
-        }
 
         if (featureUnlocked) {
           downloadBtn.classList.remove('hidden');
