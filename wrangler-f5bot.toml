@@ -1,0 +1,12 @@
+name = "f5bot-monitor"
+main = "workers/f5bot-monitor.js"
+compatibility_date = "2024-06-20"
+
+[[kv_namespaces]]
+binding = "PROCESSED_URLS"
+id = "635f63196e834de9a4047d09eadffbbb"
+
+# Secrets (set via `wrangler secret put <NAME> --config wrangler-f5bot.toml`):
+# - GROQ_API_KEY
+# - TELEGRAM_BOT_TOKEN
+# - TELEGRAM_CHAT_ID
