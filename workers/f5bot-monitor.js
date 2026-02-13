@@ -1,7 +1,8 @@
 const GROQ_CHAT_COMPLETIONS_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const TELEGRAM_API_BASE = 'https://api.telegram.org';
 const RELEVANCE_THRESHOLD = 0.5;
-const DEDUPE_TTL_SECONDS = 60 * 60 * 24 * 180;
+const DEFAULT_NOTIFY_THRESHOLD = 0.25;
+const DEFAULT_DEDUPE_TTL_DAYS = 30;
 
 const PRODUCT_CONTEXT = [
   'Product: vcardqrcodegenerator.com',
@@ -29,6 +30,10 @@ const ANALYSIS_SYSTEM_PROMPT = [
 export default {
   async email(message, env, ctx) {
     const processedUrlStore = env.PROCESSED_URLS;
+    const notifyThreshold = resolveNotifyThreshold(env);
+    const forceNotifyAll = isTruthy(env.FORCE_NOTIFY_ALL);
+    const dedupeTtlSeconds = resolveDedupeTtlSeconds(env);
+    const subject = message.headers?.get('subject') || '';
     let rawEmail = '';
     let alert = null;
     let parsingIssues = [];
@@ -36,6 +41,7 @@ export default {
     let shouldMarkProcessed = false;
 
     try {
+      console.log('Incoming email', { from: message.from, to: message.to, subject });
       rawEmail = await new Response(message.raw).text();
       const parsed = parseF5BotAlert(rawEmail, message);
       alert = parsed.alert;
@@ -43,7 +49,9 @@ export default {
 
       const dedupeUrl = normalizePostUrl(alert.url);
       if (processedUrlStore && dedupeUrl) {
-        dedupeKey = `url:${await sha256Hex(dedupeUrl)}`;
+        const keywordForDedupe = normalizeForDedupeKey(alert.keyword);
+        const dedupeBasis = keywordForDedupe ? `${dedupeUrl}::${keywordForDedupe}` : dedupeUrl;
+        dedupeKey = `url:${await sha256Hex(dedupeBasis)}`;
         const alreadySeen = await processedUrlStore.get(dedupeKey);
         if (alreadySeen) {
           console.log('Duplicate F5Bot URL, skipping notification:', dedupeUrl);
@@ -61,8 +69,30 @@ export default {
       }
 
       const relevanceScore = Number(analysis?.relevance_score ?? 0);
+      const modelAction = String(analysis?.action || '').toLowerCase();
+      const modelCategory = String(analysis?.category || '').toLowerCase();
       const parseFailed = parsingIssues.length > 0;
-      const shouldNotify = parseFailed || Boolean(analysisError) || relevanceScore >= RELEVANCE_THRESHOLD;
+      const shouldNotify =
+        forceNotifyAll ||
+        parseFailed ||
+        Boolean(analysisError) ||
+        relevanceScore >= notifyThreshold ||
+        modelAction === 'reply' ||
+        modelAction === 'monitor' ||
+        modelCategory === 'mentioning-competitor' ||
+        modelCategory === 'comparing-tools';
+      console.log('Alert decision', {
+        url: alert?.url || '',
+        keyword: alert?.keyword || '',
+        relevanceScore,
+        modelAction,
+        modelCategory,
+        parseFailed,
+        analysisFailed: Boolean(analysisError),
+        forceNotifyAll,
+        notifyThreshold,
+        shouldNotify,
+      });
 
       if (shouldNotify) {
         await sendTelegramAlert({
@@ -74,7 +104,8 @@ export default {
         });
         shouldMarkProcessed = true;
       } else {
-        shouldMarkProcessed = true;
+        // Keep low-confidence misses eligible for future alerts instead of suppressing forever.
+        shouldMarkProcessed = false;
       }
     } catch (err) {
       console.error('Email handling failed:', err);
@@ -99,7 +130,7 @@ export default {
           title: alert?.title || null,
           keyword: alert?.keyword || null,
         });
-        await processedUrlStore.put(dedupeKey, value, { expirationTtl: DEDUPE_TTL_SECONDS });
+        await processedUrlStore.put(dedupeKey, value, { expirationTtl: dedupeTtlSeconds });
       }
     }
   },
@@ -429,39 +460,179 @@ function extractSnippet(lines, title, keyword, source, url) {
 }
 
 function extractPostUrl(text, html, subject) {
-  const urlCandidates = new Set();
+  const rawCandidates = new Set();
 
   for (const url of extractUrls(text || '')) {
-    urlCandidates.add(url);
+    rawCandidates.add(url);
   }
   for (const url of extractUrls(subject || '')) {
-    urlCandidates.add(url);
+    rawCandidates.add(url);
   }
   for (const url of extractUrlsFromHtml(html || '')) {
-    urlCandidates.add(url);
+    rawCandidates.add(url);
   }
 
-  const candidates = Array.from(urlCandidates)
+  const candidates = Array.from(rawCandidates)
+    .flatMap((url) => expandUrlCandidates(url))
     .map((url) => normalizePostUrl(url))
     .filter(Boolean)
     .filter((url) => !isIgnoredUrl(url));
 
-  if (candidates.length === 0) {
+  const uniqueCandidates = Array.from(new Set(candidates));
+
+  if (uniqueCandidates.length === 0) {
     return '';
   }
 
-  const preferred = candidates.find((url) => isPlatformUrl(url));
-  return preferred || candidates[0];
+  const preferred = uniqueCandidates.find((url) => isPlatformUrl(url));
+  if (preferred) return preferred;
+
+  const f5botRedirect = uniqueCandidates.find((url) => isF5BotRoutableUrl(url));
+  if (f5botRedirect) return f5botRedirect;
+
+  return uniqueCandidates[0];
+}
+
+function resolveNotifyThreshold(env) {
+  const raw = Number(env?.MIN_RELEVANCE_SCORE);
+  if (!Number.isFinite(raw)) return DEFAULT_NOTIFY_THRESHOLD;
+  return clamp(raw, 0, 1);
+}
+
+function isTruthy(value) {
+  return /^(1|true|yes|on)$/i.test(String(value || '').trim());
+}
+
+function resolveDedupeTtlSeconds(env) {
+  const rawDays = Number(env?.DEDUPE_TTL_DAYS);
+  const days = Number.isFinite(rawDays) ? clamp(rawDays, 1, 365) : DEFAULT_DEDUPE_TTL_DAYS;
+  return Math.round(days * 24 * 60 * 60);
+}
+
+function normalizeForDedupeKey(value) {
+  return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
 }
 
 function isIgnoredUrl(url) {
-  const lower = url.toLowerCase();
-  return lower.includes('f5bot.com') || lower.includes('unsubscribe') || lower.includes('/account');
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+    const path = parsed.pathname.toLowerCase();
+    const whole = `${host}${path}${parsed.search.toLowerCase()}`;
+    if (whole.includes('unsubscribe')) return true;
+    if (isAssetUrl(path)) return true;
+    if ((host === 'f5bot.com' || host.endsWith('.f5bot.com')) && isF5BotManagementPath(path)) {
+      return true;
+    }
+    return false;
+  } catch {
+    const lower = String(url || '').toLowerCase();
+    return lower.includes('unsubscribe');
+  }
 }
 
 function isPlatformUrl(url) {
   const lower = url.toLowerCase();
   return lower.includes('reddit.com') || lower.includes('news.ycombinator.com') || lower.includes('lobste.rs');
+}
+
+function isF5BotRoutableUrl(url) {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+    const path = parsed.pathname.toLowerCase();
+    return (host === 'f5bot.com' || host.endsWith('.f5bot.com')) && !isF5BotManagementPath(path);
+  } catch {
+    return false;
+  }
+}
+
+function isF5BotManagementPath(path) {
+  const value = String(path || '').toLowerCase();
+  if (!value || value === '/') return true;
+  return (
+    value.startsWith('/account') ||
+    value.startsWith('/alerts') ||
+    value.startsWith('/settings') ||
+    value.startsWith('/unsubscribe') ||
+    value.startsWith('/login') ||
+    value.startsWith('/help') ||
+    value.startsWith('/privacy') ||
+    value.startsWith('/terms')
+  );
+}
+
+function isAssetUrl(path) {
+  return /\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|woff2?|ttf)$/i.test(String(path || ''));
+}
+
+function expandUrlCandidates(rawUrl) {
+  const candidates = new Set();
+  const seed = cleanExtractedUrl(rawUrl);
+  if (!seed) return [];
+  candidates.add(seed);
+
+  const decodedSeed = decodeMaybeUrl(seed);
+  if (decodedSeed) {
+    candidates.add(decodedSeed);
+  }
+
+  try {
+    const parsed = new URL(seed);
+    const paramNames = ['url', 'u', 'target', 'dest', 'destination', 'redirect', 'redir', 'to', 'link', 'out'];
+    for (const param of paramNames) {
+      const value = parsed.searchParams.get(param);
+      const expanded = decodeMaybeUrl(value);
+      if (expanded) {
+        candidates.add(expanded);
+      }
+    }
+
+    const allValues = Array.from(parsed.searchParams.values());
+    for (const value of allValues) {
+      const embedded = extractFirstUrl(decodeURIComponentSafe(value));
+      if (embedded) {
+        candidates.add(embedded);
+      }
+    }
+
+    const fromFragment = extractFirstUrl(decodeURIComponentSafe(parsed.hash || ''));
+    if (fromFragment) {
+      candidates.add(fromFragment);
+    }
+  } catch {
+    const embedded = extractFirstUrl(decodeURIComponentSafe(seed));
+    if (embedded) {
+      candidates.add(embedded);
+    }
+  }
+
+  return Array.from(candidates);
+}
+
+function decodeMaybeUrl(input) {
+  if (!input) return '';
+  let value = String(input).trim();
+  if (!value) return '';
+
+  for (let i = 0; i < 3; i += 1) {
+    const decoded = decodeURIComponentSafe(value);
+    if (decoded === value) break;
+    value = decoded;
+  }
+
+  if (/^https?:\/\//i.test(value)) {
+    return cleanExtractedUrl(value);
+  }
+  return '';
+}
+
+function decodeURIComponentSafe(value) {
+  try {
+    return decodeURIComponent(String(value || ''));
+  } catch {
+    return String(value || '');
+  }
 }
 
 function parseMimeMessage(rawEmail) {

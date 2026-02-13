@@ -2,6 +2,11 @@ name = "f5bot-monitor"
 main = "workers/f5bot-monitor.js"
 compatibility_date = "2024-06-20"
 
+[vars]
+MIN_RELEVANCE_SCORE = "0.25"
+FORCE_NOTIFY_ALL = "true"
+DEDUPE_TTL_DAYS = "30"
+
 [[kv_namespaces]]
 binding = "PROCESSED_URLS"
 id = "635f63196e834de9a4047d09eadffbbb"
