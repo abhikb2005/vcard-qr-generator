@@ -1,0 +1,693 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "Don’t miss the limited-time deals! Explore":
+          - /url: "#pricing"
+          - generic [ref=e6] [cursor=pointer]:
+            - generic [ref=e8]: Don’t miss the limited-time deals!
+            - generic [ref=e9]: Explore
+      - navigation [ref=e10]:
+        - link "homepage link" [ref=e12] [cursor=pointer]:
+          - /url: /in/
+          - img [ref=e13]
+        - generic [ref=e20]:
+          - generic [ref=e22]:
+            - link "Pricing" [ref=e24] [cursor=pointer]:
+              - /url: /in/pricing
+            - generic "Services" [ref=e25] [cursor=pointer]:
+              - text: Services
+              - img [ref=e27]
+            - generic "Explore" [ref=e29] [cursor=pointer]:
+              - text: Explore
+              - img [ref=e31]
+            - generic "Support" [ref=e33] [cursor=pointer]:
+              - text: Support
+              - img [ref=e35]
+            - link "1-Click OpenClaw" [ref=e38] [cursor=pointer]:
+              - /url: /in/vps/docker/openclaw
+          - generic [ref=e39]:
+            - generic "English" [ref=e42] [cursor=pointer]:
+              - generic:
+                - img "IN"
+              - generic [ref=e43]: English
+            - link "My account" [ref=e45] [cursor=pointer]:
+              - /url: https://auth.hostinger.com/in/login
+              - generic [ref=e46]: My account
+      - main [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e49]:
+            - generic [ref=e50]:
+              - generic [ref=e52]:
+                - heading "Search for and claim your domain name" [level=1] [ref=e54]
+                - heading "Choose a domain with .ai, .io, .net, or .org for 2 years or longer and get 1 year of free email." [level=2] [ref=e55]
+                - generic [ref=e58]:
+                  - generic [ref=e60] [cursor=pointer]: Domain search
+                  - generic [ref=e61] [cursor=pointer]:
+                    - img [ref=e62]
+                    - generic [ref=e65]: AI domain generator
+                - generic [ref=e70]:
+                  - img [ref=e72]
+                  - textbox [ref=e74]:
+                    - /placeholder: Type in that perfect domain name
+                  - link "Search" [ref=e77] [cursor=pointer]:
+                    - /url: /in/domain-name-results?from=domain-name-search&domain=
+                    - generic [ref=e78]: Search
+                - generic [ref=e80]:
+                  - generic [ref=e81] [cursor=pointer]:
+                    - generic [ref=e82]: .in
+                    - generic [ref=e84]:
+                      - generic [ref=e85]: ₹
+                      - generic [ref=e86]: "899.00"
+                    - generic [ref=e88]:
+                      - generic [ref=e89]: ₹
+                      - generic [ref=e90]: "1.00"
+                  - generic [ref=e91] [cursor=pointer]:
+                    - generic [ref=e92]: .com
+                    - generic [ref=e94]:
+                      - generic [ref=e95]: ₹
+                      - generic [ref=e96]: 1,299.00
+                    - generic [ref=e98]:
+                      - generic [ref=e99]: ₹
+                      - generic [ref=e100]: "199.00"
+                  - generic [ref=e101] [cursor=pointer]:
+                    - generic [ref=e102]: .online
+                    - generic [ref=e104]:
+                      - generic [ref=e105]: ₹
+                      - generic [ref=e106]: 3,139.00
+                    - generic [ref=e108]:
+                      - generic [ref=e109]: ₹
+                      - generic [ref=e110]: "89.00"
+                  - generic [ref=e111] [cursor=pointer]:
+                    - generic [ref=e112]: .shop
+                    - generic [ref=e114]:
+                      - generic [ref=e115]: ₹
+                      - generic [ref=e116]: 2,859.00
+                    - generic [ref=e118]:
+                      - generic [ref=e119]: ₹
+                      - generic [ref=e120]: "89.00"
+                  - generic [ref=e121] [cursor=pointer]:
+                    - generic [ref=e122]: .org
+                    - img [ref=e124]
+                    - generic [ref=e127]:
+                      - generic [ref=e128]: ₹
+                      - generic [ref=e129]: 1,299.00
+                    - generic [ref=e131]:
+                      - generic [ref=e132]: ₹
+                      - generic [ref=e133]: "699.00"
+                  - generic [ref=e134] [cursor=pointer]:
+                    - generic [ref=e135]: .xyz
+                    - generic [ref=e137]:
+                      - generic [ref=e138]: ₹
+                      - generic [ref=e139]: 1,229.00
+                    - generic [ref=e141]:
+                      - generic [ref=e142]: ₹
+                      - generic [ref=e143]: "179.00"
+              - generic [ref=e144]:
+                - generic [ref=e145]: Free WHOIS privacy protection is included with every eligible domain registration.
+                - img [ref=e147] [cursor=pointer]
+            - generic [ref=e150]:
+              - paragraph [ref=e151]: Already have a domain?
+              - link "Transfer it" [ref=e152] [cursor=pointer]:
+                - /url: /in/domain-transfer
+                - text: Transfer it
+                - img [ref=e153]
+          - generic [ref=e155]:
+            - heading "Choose from the most popular domains" [level=2] [ref=e158]
+            - generic [ref=e159]:
+              - generic [ref=e161]:
+                - generic [ref=e162]:
+                  - generic:
+                    - img ".in"
+                - paragraph [ref=e163]: .in is a unique symbol of India.
+                - generic [ref=e164]:
+                  - generic [ref=e165]:
+                    - generic [ref=e167]:
+                      - generic [ref=e168]: ₹
+                      - generic [ref=e169]: "899.00"
+                    - generic [ref=e170]: SAVE 99%
+                  - generic [ref=e171]:
+                    - generic [ref=e173]:
+                      - generic [ref=e174]: ₹
+                      - generic [ref=e175]: "1.00"
+                      - generic [ref=e176]: /year
+                    - img [ref=e178] [cursor=pointer]
+                - button "Register" [ref=e181] [cursor=pointer]:
+                  - generic [ref=e182]: Register
+              - generic [ref=e184]:
+                - generic [ref=e185]:
+                  - generic:
+                    - img ".com"
+                - paragraph [ref=e186]: Build trust with this best-known domain.
+                - generic [ref=e187]:
+                  - generic [ref=e188]:
+                    - generic [ref=e190]:
+                      - generic [ref=e191]: ₹
+                      - generic [ref=e192]: 1,299.00
+                    - generic [ref=e193]: SAVE 85%
+                  - generic [ref=e194]:
+                    - generic [ref=e196]:
+                      - generic [ref=e197]: ₹
+                      - generic [ref=e198]: "199.00"
+                      - generic [ref=e199]: /year
+                    - img [ref=e201] [cursor=pointer]
+                - button "Register" [ref=e204] [cursor=pointer]:
+                  - generic [ref=e205]: Register
+              - generic [ref=e207]:
+                - generic [ref=e208]:
+                  - generic:
+                    - img ".online"
+                - paragraph [ref=e209]: It’s a broad and universal alternative to .com.
+                - generic [ref=e210]:
+                  - generic [ref=e211]:
+                    - generic [ref=e213]:
+                      - generic [ref=e214]: ₹
+                      - generic [ref=e215]: 3,139.00
+                    - generic [ref=e216]: SAVE 97%
+                  - generic [ref=e219]:
+                    - generic [ref=e220]: ₹
+                    - generic [ref=e221]: "89.00"
+                    - generic [ref=e222]: /year
+                - button "Register" [ref=e223] [cursor=pointer]:
+                  - generic [ref=e224]: Register
+              - generic [ref=e226]:
+                - generic [ref=e227]:
+                  - generic:
+                    - img ".io"
+                - paragraph [ref=e228]: Perfect for tech startups.
+                - generic [ref=e229]:
+                  - generic [ref=e230]:
+                    - generic [ref=e232]:
+                      - generic [ref=e233]: ₹
+                      - generic [ref=e234]: 5,939.00
+                    - generic [ref=e235]: SAVE 53%
+                  - generic [ref=e238]:
+                    - generic [ref=e239]: ₹
+                    - generic [ref=e240]: 2,799.00
+                    - generic [ref=e241]: /year
+                - button "Register" [ref=e242] [cursor=pointer]:
+                  - generic [ref=e243]: Register
+              - generic [ref=e245]:
+                - generic [ref=e246]:
+                  - generic:
+                    - img ".icu"
+                - paragraph [ref=e247]: Show your clients you are open for business.
+                - generic [ref=e248]:
+                  - generic [ref=e249]:
+                    - generic [ref=e251]:
+                      - generic [ref=e252]: ₹
+                      - generic [ref=e253]: 1,399.00
+                    - generic [ref=e254]: SAVE 87%
+                  - generic [ref=e257]:
+                    - generic [ref=e258]: ₹
+                    - generic [ref=e259]: "179.00"
+                    - generic [ref=e260]: /year
+                - button "Register" [ref=e261] [cursor=pointer]:
+                  - generic [ref=e262]: Register
+              - generic [ref=e264]:
+                - generic [ref=e265]:
+                  - generic:
+                    - img ".xyz"
+                - paragraph [ref=e266]: Unique and trending domain for your successful business.
+                - generic [ref=e267]:
+                  - generic [ref=e268]:
+                    - generic [ref=e270]:
+                      - generic [ref=e271]: ₹
+                      - generic [ref=e272]: 1,229.00
+                    - generic [ref=e273]: SAVE 85%
+                  - generic [ref=e276]:
+                    - generic [ref=e277]: ₹
+                    - generic [ref=e278]: "179.00"
+                    - generic [ref=e279]: /year
+                - button "Register" [ref=e280] [cursor=pointer]:
+                  - generic [ref=e281]: Register
+              - generic [ref=e283]:
+                - generic [ref=e284]:
+                  - generic:
+                    - img ".pro"
+                - paragraph [ref=e285]: Demonstrate your proficiency through a .pro domain.
+                - generic [ref=e286]:
+                  - generic [ref=e287]:
+                    - generic [ref=e289]:
+                      - generic [ref=e290]: ₹
+                      - generic [ref=e291]: 2,529.00
+                    - generic [ref=e292]: SAVE 89%
+                  - generic [ref=e295]:
+                    - generic [ref=e296]: ₹
+                    - generic [ref=e297]: "269.00"
+                    - generic [ref=e298]: /year
+                - button "Register" [ref=e299] [cursor=pointer]:
+                  - generic [ref=e300]: Register
+              - generic [ref=e302]:
+                - generic [ref=e303]:
+                  - generic:
+                    - img ".cloud"
+                - paragraph [ref=e304]: Promote your cloud-based service.
+                - generic [ref=e305]:
+                  - generic [ref=e306]:
+                    - generic [ref=e308]:
+                      - generic [ref=e309]: ₹
+                      - generic [ref=e310]: 2,269.00
+                    - generic [ref=e311]: SAVE 92%
+                  - generic [ref=e314]:
+                    - generic [ref=e315]: ₹
+                    - generic [ref=e316]: "179.00"
+                    - generic [ref=e317]: /year
+                - button "Register" [ref=e318] [cursor=pointer]:
+                  - generic [ref=e319]: Register
+          - generic [ref=e320]:
+            - generic [ref=e322]:
+              - heading "Why buy domain names at Hostinger?" [level=2] [ref=e323]
+              - generic [ref=e324]: Hostinger offers reliable domain registration services with instant activation, dedicated live support, and full DNS management.
+            - generic [ref=e325]:
+              - generic [ref=e327]:
+                - img [ref=e331]
+                - paragraph [ref=e335]: 24/7 support
+                - paragraph [ref=e336]: Need help? Reach out to our Customer Success team anytime.
+              - generic [ref=e338]:
+                - img [ref=e342]
+                - paragraph [ref=e346]: Trusted domain registrar
+                - paragraph [ref=e347]: Hostinger is ICANN-accredited and offers 300 domain extensions.
+              - generic [ref=e349]:
+                - img [ref=e353]
+                - paragraph [ref=e356]: Instant setup and easy controls
+                - paragraph [ref=e357]: Register your domain in just a few clicks – no technical skills needed.
+          - generic [ref=e361]:
+            - generic [ref=e362]:
+              - heading "Protect your privacy – for free" [level=2] [ref=e363]
+              - generic [ref=e364]: When you register a domain, your personal information is usually available on public databases such as RDAP (previously known as WHOIS).
+              - generic [ref=e365]: But it doesn’t have to be that way.
+              - generic [ref=e366]: At Hostinger, privacy protection is included with every eligible domain registration. This keeps your personal information hidden from third parties.
+              - generic [ref=e368] [cursor=pointer]:
+                - text: Search domains
+                - img [ref=e369]
+            - generic [ref=e371]:
+              - generic:
+                - img "Protect your privacy – for free"
+          - generic [ref=e375]:
+            - generic [ref=e376]:
+              - heading "Purchased a domain already? Transfer it to Hostinger today" [level=2] [ref=e377]
+              - generic [ref=e378]: Manage your website domain at Hostinger by quickly transferring it from your current registrar – it only takes a few clicks.
+              - link "Transfer your domain" [ref=e380] [cursor=pointer]:
+                - /url: /in/domain-transfer
+                - text: Transfer your domain
+                - img [ref=e381]
+            - generic [ref=e383]:
+              - generic:
+                - img "Purchased a domain already? Transfer it to Hostinger today"
+          - generic [ref=e387]:
+            - generic [ref=e388]:
+              - heading "Register a domain name for free" [level=2] [ref=e389]
+              - generic [ref=e390]: Most of Hostinger’s web hosting packages come with free domains. You can get popular generic top-level domain names like .com, .net, .org, and other extensions for free.
+              - generic [ref=e392] [cursor=pointer]:
+                - text: Search domains
+                - img [ref=e393]
+            - generic [ref=e395]:
+              - generic:
+                - img "Register a domain name for free"
+          - generic [ref=e396]:
+            - heading "6 things to remember before you buy domains" [level=2] [ref=e399]
+            - generic [ref=e400]:
+              - generic [ref=e402]:
+                - generic:
+                  - img "Keep it short"
+                - heading "Keep it short" [level=3] [ref=e403]
+                - paragraph [ref=e404]: Long website names are hard to read and remember – try to keep it under three words.
+              - generic [ref=e406]:
+                - generic:
+                  - img "Less is more"
+                - heading "Less is more" [level=3] [ref=e407]
+                - paragraph [ref=e408]: Keep it simple – avoid hyphens, numbers, slang, and easily misspelled word.
+              - generic [ref=e410]:
+                - generic:
+                  - img "Include your brand name"
+                - heading "Include your brand name" [level=3] [ref=e411]
+                - paragraph [ref=e412]: Try to include your brand name or the target keywords for your niche in your site URL.
+              - generic [ref=e414]:
+                - generic:
+                  - img "Check availability"
+                - heading "Check availability" [level=3] [ref=e415]
+                - paragraph [ref=e416]: Do a search to see if a name is available – then, make sure it hasn’t been trademarked.
+              - generic [ref=e418]:
+                - generic:
+                  - img "Think locally"
+                - heading "Think locally" [level=3] [ref=e419]
+                - paragraph [ref=e420]: .com TLDs can often be unavailable. Consider a country-specific extension like .co.uk, .us, or .pk.
+              - generic [ref=e422]:
+                - generic:
+                  - img "Act fast"
+                - heading "Act fast" [level=3] [ref=e423]
+                - paragraph [ref=e424]: The best website names are quickly taken. Don’t miss out – buy your domain names today.
+          - generic [ref=e426]:
+            - heading "Explore the possibilities from our TLD list" [level=2] [ref=e429]
+            - generic [ref=e430]:
+              - link ".ai" [ref=e431] [cursor=pointer]:
+                - /url: /in/tld/ai-domain
+                - generic [ref=e432]:
+                  - paragraph [ref=e434]: .ai
+                  - img [ref=e435]
+              - link ".blog" [ref=e437] [cursor=pointer]:
+                - /url: /in/tld/blog-domain
+                - generic [ref=e438]:
+                  - paragraph [ref=e440]: .blog
+                  - img [ref=e441]
+              - link ".cc" [ref=e443] [cursor=pointer]:
+                - /url: /in/tld/cc-domain
+                - generic [ref=e444]:
+                  - paragraph [ref=e446]: .cc
+                  - img [ref=e447]
+              - link ".cloud" [ref=e449] [cursor=pointer]:
+                - /url: /in/tld/cloud-domain
+                - generic [ref=e450]:
+                  - paragraph [ref=e452]: .cloud
+                  - img [ref=e453]
+              - link ".co" [ref=e455] [cursor=pointer]:
+                - /url: /in/tld/co-domain
+                - generic [ref=e456]:
+                  - paragraph [ref=e458]: .co
+                  - img [ref=e459]
+              - link ".co.in" [ref=e461] [cursor=pointer]:
+                - /url: /in/tld/co-in-domain
+                - generic [ref=e462]:
+                  - paragraph [ref=e464]: .co.in
+                  - img [ref=e465]
+              - link ".com" [ref=e467] [cursor=pointer]:
+                - /url: /in/tld/com-domain
+                - generic [ref=e468]:
+                  - paragraph [ref=e470]: .com
+                  - img [ref=e471]
+              - link ".fun" [ref=e473] [cursor=pointer]:
+                - /url: /in/tld/fun-domain
+                - generic [ref=e474]:
+                  - paragraph [ref=e476]: .fun
+                  - img [ref=e477]
+              - link ".in" [ref=e479] [cursor=pointer]:
+                - /url: /in/tld/in-domain
+                - generic [ref=e480]:
+                  - paragraph [ref=e482]: .in
+                  - img [ref=e483]
+              - link ".io" [ref=e485] [cursor=pointer]:
+                - /url: /in/tld/io-domain
+                - generic [ref=e486]:
+                  - paragraph [ref=e488]: .io
+                  - img [ref=e489]
+              - link ".net" [ref=e491] [cursor=pointer]:
+                - /url: /in/tld/net-domain
+                - generic [ref=e492]:
+                  - paragraph [ref=e494]: .net
+                  - img [ref=e495]
+              - link ".online" [ref=e497] [cursor=pointer]:
+                - /url: /in/tld/online-domain
+                - generic [ref=e498]:
+                  - paragraph [ref=e500]: .online
+                  - img [ref=e501]
+              - link ".org" [ref=e503] [cursor=pointer]:
+                - /url: /in/tld/org-domain
+                - generic [ref=e504]:
+                  - paragraph [ref=e506]: .org
+                  - img [ref=e507]
+              - link ".pro" [ref=e509] [cursor=pointer]:
+                - /url: /in/tld/pro-domain
+                - generic [ref=e510]:
+                  - paragraph [ref=e512]: .pro
+                  - img [ref=e513]
+              - link ".sbs" [ref=e515] [cursor=pointer]:
+                - /url: /in/tld/sbs-domain
+                - generic [ref=e516]:
+                  - paragraph [ref=e518]: .sbs
+                  - img [ref=e519]
+              - link ".shop" [ref=e521] [cursor=pointer]:
+                - /url: /in/tld/shop-domain
+                - generic [ref=e522]:
+                  - paragraph [ref=e524]: .shop
+                  - img [ref=e525]
+              - link ".space" [ref=e527] [cursor=pointer]:
+                - /url: /in/tld/space-domain
+                - generic [ref=e528]:
+                  - paragraph [ref=e530]: .space
+                  - img [ref=e531]
+              - link ".store" [ref=e533] [cursor=pointer]:
+                - /url: /in/tld/store-domain
+                - generic [ref=e534]:
+                  - paragraph [ref=e536]: .store
+                  - img [ref=e537]
+              - link ".tech" [ref=e539] [cursor=pointer]:
+                - /url: /in/tld/tech-domain
+                - generic [ref=e540]:
+                  - paragraph [ref=e542]: .tech
+                  - img [ref=e543]
+              - link ".academy" [ref=e545] [cursor=pointer]:
+                - /url: /in/tld/academy-domain
+                - generic [ref=e546]:
+                  - paragraph [ref=e548]: .academy
+                  - img [ref=e549]
+            - generic "View more" [ref=e551] [cursor=pointer]:
+              - generic [ref=e552]: View more
+          - generic [ref=e556]:
+            - generic [ref=e558]:
+              - heading "Domain name search FAQs" [level=2] [ref=e559]
+              - generic [ref=e560]: Find answers to frequently asked questions about our domain checker and domain registration process.
+            - generic [ref=e562] [cursor=pointer]:
+              - heading "What is a domain name?" [level=3] [ref=e564]
+              - img [ref=e566]
+            - generic [ref=e569] [cursor=pointer]:
+              - heading "Why do I need to buy a domain name?" [level=3] [ref=e571]
+              - img [ref=e573]
+            - generic [ref=e576] [cursor=pointer]:
+              - heading "What is a subdomain, and how does it work?" [level=3] [ref=e578]
+              - img [ref=e580]
+            - generic [ref=e583] [cursor=pointer]:
+              - heading "How to pick the right website name?" [level=3] [ref=e585]
+              - img [ref=e587]
+            - generic [ref=e590] [cursor=pointer]:
+              - heading "Once I register a domain, can I change it later?" [level=3] [ref=e592]
+              - img [ref=e594]
+            - generic [ref=e597] [cursor=pointer]:
+              - heading "How long does a domain name registration last?" [level=3] [ref=e599]
+              - img [ref=e601]
+            - generic [ref=e604] [cursor=pointer]:
+              - heading "What are the requirements to buy domain names at Hostinger?" [level=3] [ref=e606]
+              - img [ref=e608]
+            - generic [ref=e611] [cursor=pointer]:
+              - heading "I already purchased a domain name. Can I transfer it to Hostinger?" [level=3] [ref=e613]
+              - img [ref=e615]
+            - generic [ref=e618] [cursor=pointer]:
+              - heading "What are TLDs, ccTLDs, and gTLDs?" [level=3] [ref=e620]
+              - img [ref=e622]
+            - generic [ref=e625] [cursor=pointer]:
+              - heading "How long does it take to register a domain name?" [level=3] [ref=e627]
+              - img [ref=e629]
+            - generic [ref=e632] [cursor=pointer]:
+              - heading "How do I get a free domain?" [level=3] [ref=e634]
+              - img [ref=e636]
+            - generic [ref=e639] [cursor=pointer]:
+              - heading "Can I sell my domain name?" [level=3] [ref=e641]
+              - img [ref=e643]
+            - generic [ref=e646] [cursor=pointer]:
+              - heading "What if the website name is unavailable on the domain checker?" [level=3] [ref=e648]
+              - img [ref=e650]
+            - generic [ref=e653] [cursor=pointer]:
+              - heading "What is domain privacy protection?" [level=3] [ref=e655]
+              - img [ref=e657]
+            - generic [ref=e660] [cursor=pointer]:
+              - heading "What’s the difference between .com, .net, .org, and .info?" [level=3] [ref=e662]
+              - img [ref=e664]
+            - generic [ref=e667] [cursor=pointer]:
+              - heading "What else can I do with a domain name besides building a website?" [level=3] [ref=e669]
+              - img [ref=e671]
+            - generic [ref=e674] [cursor=pointer]:
+              - heading "What’s the difference between a domain name and web hosting?" [level=3] [ref=e676]
+              - img [ref=e678]
+            - generic [ref=e681] [cursor=pointer]:
+              - heading "What are premium domain names and why are they more expensive?" [level=3] [ref=e683]
+              - img [ref=e685]
+      - contentinfo [ref=e687]:
+        - generic [ref=e689]:
+          - generic [ref=e691]:
+            - link "Hostinger" [ref=e692] [cursor=pointer]:
+              - /url: /in/
+            - img [ref=e693]
+            - generic [ref=e695]: Domain name search
+          - generic [ref=e697]:
+            - generic [ref=e699]:
+              - generic [ref=e700]: Hosting
+              - link "Web hosting" [ref=e701] [cursor=pointer]:
+                - /url: /in/web-hosting
+              - link "WordPress Hosting" [ref=e702] [cursor=pointer]:
+                - /url: /in/wordpress-hosting
+              - link "VPS hosting" [ref=e703] [cursor=pointer]:
+                - /url: /in/vps-hosting
+              - link "Self-hosted n8n" [ref=e704] [cursor=pointer]:
+                - /url: /in/self-hosted-n8n
+              - link "Business email" [ref=e705] [cursor=pointer]:
+                - /url: /in/business-email
+              - link "Cloud hosting" [ref=e706] [cursor=pointer]:
+                - /url: /in/cloud-hosting
+              - link "Hosting for WooCommerce" [ref=e707] [cursor=pointer]:
+                - /url: /in/woocommerce-hosting
+              - link "Hosting for agencies" [ref=e708] [cursor=pointer]:
+                - /url: /in/pro
+              - link "Hytale server hosting" [ref=e709] [cursor=pointer]:
+                - /url: /in/vps/hytale-hosting
+              - link "Minecraft hosting" [ref=e710] [cursor=pointer]:
+                - /url: /in/vps/minecraft-hosting
+              - link "Game server hosting" [ref=e711] [cursor=pointer]:
+                - /url: /in/vps/game-server-hosting
+              - link "OpenClaw" [ref=e712] [cursor=pointer]:
+                - /url: /in/vps/docker/openclaw
+              - link "Google Workspace" [ref=e713] [cursor=pointer]:
+                - /url: /in/google-workspace
+            - generic [ref=e715]:
+              - generic [ref=e716]: Domain
+              - link "Domains" [ref=e717] [cursor=pointer]:
+                - /url: /in/domain-name-search
+              - link "Cheap domains" [ref=e718] [cursor=pointer]:
+                - /url: /in/cheap-domain
+              - link "Free Domain Name" [ref=e719] [cursor=pointer]:
+                - /url: /in/free-domain
+              - link "WHOIS Lookup" [ref=e720] [cursor=pointer]:
+                - /url: /in/whois
+              - link "Free SSL certificate" [ref=e721] [cursor=pointer]:
+                - /url: /in/free-ssl-certificate
+              - link "Domain transfer" [ref=e722] [cursor=pointer]:
+                - /url: /in/domain-transfer
+              - link "Domain Extensions" [ref=e723] [cursor=pointer]:
+                - /url: /in/tld
+              - link "Personal domain name" [ref=e724] [cursor=pointer]:
+                - /url: /in/personal-domain-name
+              - link "Premium domains" [ref=e725] [cursor=pointer]:
+                - /url: /in/premium-domains
+            - generic [ref=e727]:
+              - generic [ref=e728]: Tools
+              - link "Hostinger Horizons" [ref=e729] [cursor=pointer]:
+                - /url: /in/horizons
+              - link "Website Builder" [ref=e730] [cursor=pointer]:
+                - /url: /in/website-builder
+              - link "AI Website Builder" [ref=e731] [cursor=pointer]:
+                - /url: /in/ai-website-builder
+              - link "Ecommerce Website Builder" [ref=e732] [cursor=pointer]:
+                - /url: /in/ecommerce-website
+              - link "Domain Name Generator" [ref=e733] [cursor=pointer]:
+                - /url: /in/domain-name-generator
+              - link "Print on Demand" [ref=e734] [cursor=pointer]:
+                - /url: /in/print-on-demand
+              - link "Link in bio" [ref=e735] [cursor=pointer]:
+                - /url: /in/link-in-bio
+              - link "Business Name Generator" [ref=e736] [cursor=pointer]:
+                - /url: /in/business-name-generator
+              - link "AI Logo Generator" [ref=e737] [cursor=pointer]:
+                - /url: /in/logo-maker
+              - link "Migrate to Hostinger" [ref=e738] [cursor=pointer]:
+                - /url: /in/website-migration
+              - link "Hostinger API" [ref=e739] [cursor=pointer]:
+                - /url: https://developers.hostinger.com/
+            - generic [ref=e741]:
+              - generic [ref=e742]: Information
+              - link "Pricing" [ref=e743] [cursor=pointer]:
+                - /url: /in/pricing
+              - link "Hostinger Reviews" [ref=e744] [cursor=pointer]:
+                - /url: /in/reviews
+              - link "Affiliate program" [ref=e745] [cursor=pointer]:
+                - /url: /in/affiliates
+              - link "Referral program" [ref=e746] [cursor=pointer]:
+                - /url: /in/referral-program
+              - link "Roadmap" [ref=e747] [cursor=pointer]:
+                - /url: https://roadmap.hostinger.com/
+              - link "Rewards" [ref=e748] [cursor=pointer]:
+                - /url: /in/rewards
+              - link "System status" [ref=e749] [cursor=pointer]:
+                - /url: https://statuspage.hostinger.com/
+              - link "Sitemap" [ref=e750] [cursor=pointer]:
+                - /url: /in/sitemap
+            - generic [ref=e752]:
+              - generic [ref=e753]: Company
+              - link "About Hostinger" [ref=e754] [cursor=pointer]:
+                - /url: /in/about
+              - link "Our technology" [ref=e755] [cursor=pointer]:
+                - /url: /in/technology
+              - link "Blog" [ref=e756] [cursor=pointer]:
+                - /url: https://www.hostinger.com/blog/
+              - link "Student discount" [ref=e757] [cursor=pointer]:
+                - /url: /in/student-discount
+            - generic [ref=e759]:
+              - generic [ref=e760]: Support
+              - link "Tutorials" [ref=e761] [cursor=pointer]:
+                - /url: https://www.hostinger.com/in/tutorials/
+              - link "Knowledge Base" [ref=e762] [cursor=pointer]:
+                - /url: https://www.hostinger.com/support
+              - link "Hostinger Academy" [ref=e763] [cursor=pointer]:
+                - /url: https://www.youtube.com/HostingerIndia
+              - link "Contact us" [ref=e764] [cursor=pointer]:
+                - /url: /in/contacts
+              - link "Report Online Abuse" [ref=e765] [cursor=pointer]:
+                - /url: /in/report-abuse
+          - generic [ref=e766]:
+            - generic [ref=e767]:
+              - link "SvgoLinkedin24" [ref=e768] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/hostinger
+                - img [ref=e769]
+              - link "SvgoFacebook24" [ref=e771] [cursor=pointer]:
+                - /url: https://www.facebook.com/Hostinger
+                - img [ref=e772]
+              - link "SvgoInstagram24" [ref=e774] [cursor=pointer]:
+                - /url: https://www.instagram.com/hostinger_global
+                - img [ref=e775]
+              - link "SvgoTwitter24" [ref=e778] [cursor=pointer]:
+                - /url: https://x.com/Hostinger
+                - img [ref=e779]
+              - link "SvgoYoutube24" [ref=e782] [cursor=pointer]:
+                - /url: https://www.youtube.com/@Hostinger
+                - img [ref=e783]
+              - link "SvgoReddit24" [ref=e786] [cursor=pointer]:
+                - /url: https://www.reddit.com/r/Hostinger/
+                - img [ref=e787]
+              - link "SvgoTiktok24" [ref=e789] [cursor=pointer]:
+                - /url: https://www.tiktok.com/@hostingeracademy
+                - img [ref=e790]
+            - link "homepage link" [ref=e792] [cursor=pointer]:
+              - /url: ""
+              - img [ref=e793]
+            - generic [ref=e801]:
+              - link "NPRD request policy" [ref=e802] [cursor=pointer]:
+                - /url: /in/legal/non-public-registrant-data-request-policy
+              - link "Privacy policy" [ref=e803] [cursor=pointer]:
+                - /url: /in/legal/privacy-policy
+              - link "Refund policy" [ref=e804] [cursor=pointer]:
+                - /url: /in/legal/refund-policy
+              - link "Terms of service" [ref=e805] [cursor=pointer]:
+                - /url: /in/legal/universal-terms-of-service-agreement
+            - generic [ref=e806]:
+              - generic:
+                - img "visa"
+              - generic:
+                - img "mastercard"
+              - generic:
+                - img "discover"
+              - generic:
+                - img "dinersclub"
+              - generic:
+                - img "rupay"
+              - link "and more" [ref=e807] [cursor=pointer]:
+                - /url: /in/payment-methods
+          - generic [ref=e808]:
+            - generic [ref=e809]: © 2004-2026 Hostinger - Premium Web Hosting, Cloud, VPS, AI Website Builder & Domain Registration Services.
+            - paragraph [ref=e810]: Prices are listed without GST
+    - generic [ref=e812]:
+      - heading "We care about your privacy" [level=3] [ref=e813]
+      - paragraph [ref=e814]:
+        - generic [ref=e815]:
+          - text: This website uses cookies that are needed for the site to work properly and to get data on how you interact with it, as well as for marketing purposes. By accepting, you agree to store cookies on your device for ad targeting, personalization, and analytics as described in our
+          - link "Cookie policy" [ref=e816] [cursor=pointer]:
+            - /url: /in/legal/cookie-policy
+          - text: .
+      - generic [ref=e817]:
+        - button "Accept all" [ref=e818] [cursor=pointer]:
+          - generic [ref=e819]: Accept all
+        - button "Reject all" [ref=e820] [cursor=pointer]:
+          - generic [ref=e821]: Reject all
+        - button "Cookie settings" [ref=e822] [cursor=pointer]:
+          - generic [ref=e823]: Cookie settings
+    - generic [ref=e825] [cursor=pointer]:
+      - img [ref=e826]
+      - generic [ref=e828]: Ask Kodee
+  - img

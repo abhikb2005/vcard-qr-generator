@@ -1,0 +1,233 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e9]: Don’t miss the limited-time deals!
+      - navigation [ref=e10]:
+        - link "homepage link" [ref=e12] [cursor=pointer]:
+          - /url: /in/
+          - img [ref=e13]
+        - generic [ref=e20]:
+          - generic [ref=e22]:
+            - link "Pricing" [ref=e24] [cursor=pointer]:
+              - /url: /in/pricing
+            - generic "Services" [ref=e25] [cursor=pointer]:
+              - text: Services
+              - img [ref=e27]
+            - generic "Explore" [ref=e29] [cursor=pointer]:
+              - text: Explore
+              - img [ref=e31]
+            - generic "Support" [ref=e33] [cursor=pointer]:
+              - text: Support
+              - img [ref=e35]
+            - link "1-Click OpenClaw" [ref=e38] [cursor=pointer]:
+              - /url: /in/vps/docker/openclaw
+          - generic [ref=e39]:
+            - generic "English" [ref=e42] [cursor=pointer]:
+              - generic:
+                - img "IN"
+              - generic [ref=e43]: English
+            - link "My account" [ref=e45] [cursor=pointer]:
+              - /url: https://auth.hostinger.com/in/login
+              - generic [ref=e46]: My account
+      - main [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e53]:
+            - heading "Looking for available domains? Use our domain checker" [level=1] [ref=e55]
+            - generic [ref=e58]:
+              - generic [ref=e60] [cursor=pointer]: Domain search
+              - generic [ref=e61] [cursor=pointer]:
+                - img [ref=e62]
+                - generic [ref=e65]: AI domain generator
+            - generic [ref=e70]:
+              - textbox [ref=e71]:
+                - /placeholder: Type in that perfect domain name
+                - text: seoaeogeoaudit.com
+              - button "Search" [disabled] [ref=e74]:
+                - img [ref=e75]
+          - generic [ref=e77]:
+            - status [ref=e82]
+            - generic [ref=e84]:
+              - generic [ref=e86]:
+                - 'heading "Limited-time deal: get free professional email" [level=3] [ref=e87]'
+                - paragraph [ref=e88]: Choose a domain with .ai, .io, .net, or .org for 2 years or longer and get 1 year of free email.
+              - generic [ref=e89]:
+                - generic:
+                  - 'img "Limited-time deal: get free professional email"'
+              - img [ref=e90]
+            - status [ref=e97]
+            - status [ref=e102]
+      - contentinfo [ref=e103]:
+        - generic [ref=e105]:
+          - generic [ref=e107]:
+            - link "Hostinger" [ref=e108] [cursor=pointer]:
+              - /url: /in/
+            - img [ref=e109]
+            - generic [ref=e111]: Domain name results
+          - generic [ref=e113]:
+            - generic [ref=e115]:
+              - generic [ref=e116]: Hosting
+              - link "Web hosting" [ref=e117] [cursor=pointer]:
+                - /url: /in/web-hosting
+              - link "WordPress Hosting" [ref=e118] [cursor=pointer]:
+                - /url: /in/wordpress-hosting
+              - link "VPS hosting" [ref=e119] [cursor=pointer]:
+                - /url: /in/vps-hosting
+              - link "Self-hosted n8n" [ref=e120] [cursor=pointer]:
+                - /url: /in/self-hosted-n8n
+              - link "Business email" [ref=e121] [cursor=pointer]:
+                - /url: /in/business-email
+              - link "Cloud hosting" [ref=e122] [cursor=pointer]:
+                - /url: /in/cloud-hosting
+              - link "Hosting for WooCommerce" [ref=e123] [cursor=pointer]:
+                - /url: /in/woocommerce-hosting
+              - link "Hosting for agencies" [ref=e124] [cursor=pointer]:
+                - /url: /in/pro
+              - link "Hytale server hosting" [ref=e125] [cursor=pointer]:
+                - /url: /in/vps/hytale-hosting
+              - link "Minecraft hosting" [ref=e126] [cursor=pointer]:
+                - /url: /in/vps/minecraft-hosting
+              - link "Game server hosting" [ref=e127] [cursor=pointer]:
+                - /url: /in/vps/game-server-hosting
+              - link "OpenClaw" [ref=e128] [cursor=pointer]:
+                - /url: /in/vps/docker/openclaw
+              - link "Google Workspace" [ref=e129] [cursor=pointer]:
+                - /url: /in/google-workspace
+            - generic [ref=e131]:
+              - generic [ref=e132]: Domain
+              - link "Domains" [ref=e133] [cursor=pointer]:
+                - /url: /in/domain-name-search
+              - link "Cheap domains" [ref=e134] [cursor=pointer]:
+                - /url: /in/cheap-domain
+              - link "Free Domain Name" [ref=e135] [cursor=pointer]:
+                - /url: /in/free-domain
+              - link "WHOIS Lookup" [ref=e136] [cursor=pointer]:
+                - /url: /in/whois
+              - link "Free SSL certificate" [ref=e137] [cursor=pointer]:
+                - /url: /in/free-ssl-certificate
+              - link "Domain transfer" [ref=e138] [cursor=pointer]:
+                - /url: /in/domain-transfer
+              - link "Domain Extensions" [ref=e139] [cursor=pointer]:
+                - /url: /in/tld
+              - link "Personal domain name" [ref=e140] [cursor=pointer]:
+                - /url: /in/personal-domain-name
+              - link "Premium domains" [ref=e141] [cursor=pointer]:
+                - /url: /in/premium-domains
+            - generic [ref=e143]:
+              - generic [ref=e144]: Tools
+              - link "Hostinger Horizons" [ref=e145] [cursor=pointer]:
+                - /url: /in/horizons
+              - link "Website Builder" [ref=e146] [cursor=pointer]:
+                - /url: /in/website-builder
+              - link "AI Website Builder" [ref=e147] [cursor=pointer]:
+                - /url: /in/ai-website-builder
+              - link "Ecommerce Website Builder" [ref=e148] [cursor=pointer]:
+                - /url: /in/ecommerce-website
+              - link "Domain Name Generator" [ref=e149] [cursor=pointer]:
+                - /url: /in/domain-name-generator
+              - link "Print on Demand" [ref=e150] [cursor=pointer]:
+                - /url: /in/print-on-demand
+              - link "Link in bio" [ref=e151] [cursor=pointer]:
+                - /url: /in/link-in-bio
+              - link "Business Name Generator" [ref=e152] [cursor=pointer]:
+                - /url: /in/business-name-generator
+              - link "AI Logo Generator" [ref=e153] [cursor=pointer]:
+                - /url: /in/logo-maker
+              - link "Migrate to Hostinger" [ref=e154] [cursor=pointer]:
+                - /url: /in/website-migration
+              - link "Hostinger API" [ref=e155] [cursor=pointer]:
+                - /url: https://developers.hostinger.com/
+            - generic [ref=e157]:
+              - generic [ref=e158]: Information
+              - link "Pricing" [ref=e159] [cursor=pointer]:
+                - /url: /in/pricing
+              - link "Hostinger Reviews" [ref=e160] [cursor=pointer]:
+                - /url: /in/reviews
+              - link "Affiliate program" [ref=e161] [cursor=pointer]:
+                - /url: /in/affiliates
+              - link "Referral program" [ref=e162] [cursor=pointer]:
+                - /url: /in/referral-program
+              - link "Roadmap" [ref=e163] [cursor=pointer]:
+                - /url: https://roadmap.hostinger.com/
+              - link "Rewards" [ref=e164] [cursor=pointer]:
+                - /url: /in/rewards
+              - link "System status" [ref=e165] [cursor=pointer]:
+                - /url: https://statuspage.hostinger.com/
+              - link "Sitemap" [ref=e166] [cursor=pointer]:
+                - /url: /in/sitemap
+            - generic [ref=e168]:
+              - generic [ref=e169]: Company
+              - link "About Hostinger" [ref=e170] [cursor=pointer]:
+                - /url: /in/about
+              - link "Our technology" [ref=e171] [cursor=pointer]:
+                - /url: /in/technology
+              - link "Blog" [ref=e172] [cursor=pointer]:
+                - /url: https://www.hostinger.com/blog/
+              - link "Student discount" [ref=e173] [cursor=pointer]:
+                - /url: /in/student-discount
+            - generic [ref=e175]:
+              - generic [ref=e176]: Support
+              - link "Tutorials" [ref=e177] [cursor=pointer]:
+                - /url: https://www.hostinger.com/in/tutorials/
+              - link "Knowledge Base" [ref=e178] [cursor=pointer]:
+                - /url: https://www.hostinger.com/support
+              - link "Hostinger Academy" [ref=e179] [cursor=pointer]:
+                - /url: https://www.youtube.com/HostingerIndia
+              - link "Contact us" [ref=e180] [cursor=pointer]:
+                - /url: /in/contacts
+              - link "Report Online Abuse" [ref=e181] [cursor=pointer]:
+                - /url: /in/report-abuse
+          - generic [ref=e182]:
+            - generic [ref=e183]:
+              - link "SvgoLinkedin24" [ref=e184] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/hostinger
+                - img [ref=e185]
+              - link "SvgoFacebook24" [ref=e187] [cursor=pointer]:
+                - /url: https://www.facebook.com/Hostinger
+                - img [ref=e188]
+              - link "SvgoInstagram24" [ref=e190] [cursor=pointer]:
+                - /url: https://www.instagram.com/hostinger_global
+                - img [ref=e191]
+              - link "SvgoTwitter24" [ref=e194] [cursor=pointer]:
+                - /url: https://x.com/Hostinger
+                - img [ref=e195]
+              - link "SvgoYoutube24" [ref=e198] [cursor=pointer]:
+                - /url: https://www.youtube.com/@Hostinger
+                - img [ref=e199]
+              - link "SvgoReddit24" [ref=e202] [cursor=pointer]:
+                - /url: https://www.reddit.com/r/Hostinger/
+                - img [ref=e203]
+              - link "SvgoTiktok24" [ref=e205] [cursor=pointer]:
+                - /url: https://www.tiktok.com/@hostingeracademy
+                - img [ref=e206]
+            - link "homepage link" [ref=e208] [cursor=pointer]:
+              - /url: ""
+              - img [ref=e209]
+            - generic [ref=e217]:
+              - link "NPRD request policy" [ref=e218] [cursor=pointer]:
+                - /url: /in/legal/non-public-registrant-data-request-policy
+              - link "Privacy policy" [ref=e219] [cursor=pointer]:
+                - /url: /in/legal/privacy-policy
+              - link "Refund policy" [ref=e220] [cursor=pointer]:
+                - /url: /in/legal/refund-policy
+              - link "Terms of service" [ref=e221] [cursor=pointer]:
+                - /url: /in/legal/universal-terms-of-service-agreement
+            - generic [ref=e222]:
+              - generic:
+                - img "visa"
+              - generic:
+                - img "mastercard"
+              - generic:
+                - img "discover"
+              - generic:
+                - img "dinersclub"
+              - generic:
+                - img "rupay"
+              - link "and more" [ref=e223] [cursor=pointer]:
+                - /url: /in/payment-methods
+          - generic [ref=e224]:
+            - generic [ref=e225]: © 2004-2026 Hostinger - Premium Web Hosting, Cloud, VPS, AI Website Builder & Domain Registration Services.
+            - paragraph [ref=e226]: Prices are listed without GST
+    - generic [ref=e228] [cursor=pointer]:
+      - img [ref=e229]
+      - generic [ref=e231]: Ask Kodee
+  - img

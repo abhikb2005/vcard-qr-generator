@@ -1,0 +1,304 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Cloudflare Registrar" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]:
+          - img [ref=e7]
+          - generic [ref=e10]: Cloudflare Registrar
+      - navigation [ref=e11]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Home" [ref=e14] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e15]:
+            - link "TLDs" [ref=e16] [cursor=pointer]:
+              - /url: /tlds
+          - listitem [ref=e17]:
+            - link "TLD Policies" [ref=e18] [cursor=pointer]:
+              - /url: /tld-policies
+          - listitem [ref=e19]:
+            - link "Login" [ref=e20] [cursor=pointer]:
+              - /url: https://dash.cloudflare.com/login
+        - button "Toggle language switcher (English)" [ref=e22] [cursor=pointer]:
+          - img [ref=e23]
+  - main [ref=e25]:
+    - generic [ref=e26]:
+      - generic [ref=e28]:
+        - generic [ref=e29]: Search for a domain name
+        - img
+        - textbox "Search for a domain name" [disabled] [ref=e30]: seoaeogeoaudit.com
+        - button "••• Search" [disabled] [ref=e31]:
+          - generic [ref=e32]: •••
+          - text: Search
+      - paragraph [ref=e33]:
+        - generic [ref=e34]: New
+        - text: .ca domains now available
+    - generic [ref=e133]:
+      - generic [ref=e134]:
+        - heading "Why register a domain name with Cloudflare?" [level=2] [ref=e135]
+        - paragraph [ref=e136]:
+          - text: Cloudflare Registrar offers a reliable, cost-effective, and secure way to register your domain. With transparent pricing, you pay only the wholesale cost without hidden fees or markups. Additionally, Cloudflare prioritizes security, providing free features like DNSSEC to protect against domain hijacking. Combined with easy integration into Cloudflare’s suite of performance and security tools, Registrar is the best choice for managing and securing your domains. Get started by registering a new domain or
+          - link "transferring a current domain" [ref=e137] [cursor=pointer]:
+            - /url: https://developers.cloudflare.com/registrar/get-started/transfer-domain-to-cloudflare
+            - text: transferring a current domain
+            - img [ref=e138]
+          - text: .
+      - img "Why register a domain name with Cloudflare?" [ref=e141]
+    - generic [ref=e143]:
+      - heading "Key features of Cloudflare Registrar" [level=2] [ref=e146]
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - heading "At-cost pricing" [level=3] [ref=e149]
+          - paragraph [ref=e150]: Cloudflare Registrar offers domain registrations and renewals at wholesale prices without any additional markups, ensuring you pay only the base cost set by the registries.
+        - generic [ref=e151]:
+          - heading "Enhanced security" [level=3] [ref=e152]
+          - paragraph [ref=e153]: Domains come with built-in security features, such as free one-click DNSSEC activation, two-factor authentication, and domain lock enabled by default, protecting your domain from unauthorized changes or transfers.
+        - generic [ref=e154]:
+          - heading "WHOIS privacy protection" [level=3] [ref=e155]
+          - paragraph [ref=e156]: Cloudflare provides free WHOIS redaction to safeguard your personal contact details from spam and potential threats, complying with ICANN guidelines.
+        - generic [ref=e157]:
+          - heading "No upsells or hidden fees" [level=3] [ref=e158]
+          - paragraph [ref=e159]: Unlike many other registrars, Cloudflare eliminates upsells and unnecessary add-ons, offering transparent pricing without surprise costs.
+    - generic [ref=e160]:
+      - generic [ref=e163]:
+        - heading "Extensive TLD support" [level=2] [ref=e164]
+        - paragraph [ref=e165]:
+          - text: Cloudflare Registrar supports over 400 of the most popular top-level domains (TLDs), including .com, .org, .net, .co, .us, and more. View the
+          - link "full list" [ref=e166] [cursor=pointer]:
+            - /url: /tlds
+          - text: of supported extensions.
+      - generic [ref=e167]:
+        - generic [ref=e168]:
+          - generic [ref=e169]: ab.ca
+          - generic [ref=e170]: ac
+          - generic [ref=e171]: academy
+          - generic [ref=e172]: accountant
+          - generic [ref=e173]: accountants
+          - generic [ref=e174]: actor
+          - generic [ref=e175]: adult
+          - generic [ref=e176]: agency
+          - generic [ref=e177]: ai
+          - generic [ref=e178]: airforce
+          - generic [ref=e179]: apartments
+          - generic [ref=e180]: app
+          - generic [ref=e181]: army
+          - generic [ref=e182]: associates
+          - generic [ref=e183]: attorney
+          - generic [ref=e184]: auction
+          - generic [ref=e185]: audio
+          - generic [ref=e186]: baby
+          - generic [ref=e187]: band
+          - generic [ref=e188]: bar
+          - generic [ref=e189]: bargains
+          - generic [ref=e190]: bc.ca
+          - generic [ref=e191]: beer
+          - generic [ref=e192]: bet
+          - generic [ref=e193]: bid
+          - generic [ref=e194]: bike
+          - generic [ref=e195]: bingo
+          - generic [ref=e196]: biz
+          - generic [ref=e197]: black
+          - generic [ref=e198]: blog
+          - generic [ref=e199]: blue
+          - generic [ref=e200]: boo
+          - generic [ref=e201]: boston
+          - generic [ref=e202]: boutique
+          - generic [ref=e203]: broker
+          - generic [ref=e204]: build
+          - generic [ref=e205]: builders
+          - generic [ref=e206]: business
+          - generic [ref=e207]: ca
+          - generic [ref=e208]: cab
+          - generic [ref=e209]: cafe
+          - generic [ref=e210]: cam
+          - generic [ref=e211]: camera
+          - generic [ref=e212]: camp
+          - generic [ref=e213]: capital
+          - generic [ref=e214]: cards
+          - generic [ref=e215]: care
+          - generic [ref=e216]: careers
+          - generic [ref=e217]: casa
+          - generic [ref=e218]: cash
+        - generic [ref=e219]:
+          - generic [ref=e220]: casino
+          - generic [ref=e221]: catering
+          - generic [ref=e222]: cc
+          - generic [ref=e223]: center
+          - generic [ref=e224]: ceo
+          - generic [ref=e225]: charity
+          - generic [ref=e226]: chat
+          - generic [ref=e227]: cheap
+          - generic [ref=e228]: christmas
+          - generic [ref=e229]: church
+          - generic [ref=e230]: city
+          - generic [ref=e231]: claims
+          - generic [ref=e232]: cleaning
+          - generic [ref=e233]: clinic
+          - generic [ref=e234]: clothing
+          - generic [ref=e235]: cloud
+          - generic [ref=e236]: club
+          - generic [ref=e237]: co
+          - generic [ref=e238]: co.nz
+          - generic [ref=e239]: co.uk
+          - generic [ref=e240]: coach
+          - generic [ref=e241]: codes
+          - generic [ref=e242]: coffee
+          - generic [ref=e243]: college
+          - generic [ref=e244]: com
+          - generic [ref=e245]: com.ai
+          - generic [ref=e246]: com.co
+          - generic [ref=e247]: com.mx
+          - generic [ref=e248]: community
+          - generic [ref=e249]: company
+          - generic [ref=e250]: compare
+          - generic [ref=e251]: computer
+          - generic [ref=e252]: condos
+          - generic [ref=e253]: construction
+          - generic [ref=e254]: consulting
+          - generic [ref=e255]: contact
+          - generic [ref=e256]: contractors
+          - generic [ref=e257]: cooking
+          - generic [ref=e258]: cool
+          - generic [ref=e259]: coupons
+          - generic [ref=e260]: credit
+          - generic [ref=e261]: creditcard
+          - generic [ref=e262]: cricket
+          - generic [ref=e263]: cruises
+          - generic [ref=e264]: dad
+          - generic [ref=e265]: dance
+          - generic [ref=e266]: date
+          - generic [ref=e267]: dating
+          - generic [ref=e268]: day
+          - generic [ref=e269]: dealer
+        - generic [ref=e270]:
+          - generic [ref=e271]: deals
+          - generic [ref=e272]: degree
+          - generic [ref=e273]: delivery
+          - generic [ref=e274]: democrat
+          - generic [ref=e275]: dental
+          - generic [ref=e276]: dentist
+          - generic [ref=e277]: design
+          - generic [ref=e278]: dev
+          - generic [ref=e279]: diamonds
+          - generic [ref=e280]: diet
+          - generic [ref=e281]: digital
+          - generic [ref=e282]: direct
+          - generic [ref=e283]: directory
+          - generic [ref=e284]: discount
+          - generic [ref=e285]: doctor
+          - generic [ref=e286]: dog
+          - generic [ref=e287]: domains
+          - generic [ref=e288]: download
+          - generic [ref=e289]: education
+          - generic [ref=e290]: email
+          - generic [ref=e291]: energy
+          - generic [ref=e292]: engineer
+          - generic [ref=e293]: engineering
+          - generic [ref=e294]: enterprises
+          - generic [ref=e295]: equipment
+          - generic [ref=e296]: esq
+          - generic [ref=e297]: estate
+          - generic [ref=e298]: events
+          - generic [ref=e299]: exchange
+          - generic [ref=e300]: expert
+          - generic [ref=e301]: exposed
+          - generic [ref=e302]: express
+          - generic [ref=e303]: fail
+          - generic [ref=e304]: faith
+          - generic [ref=e305]: family
+          - generic [ref=e306]: fan
+          - generic [ref=e307]: fans
+          - generic [ref=e308]: farm
+          - generic [ref=e309]: fashion
+          - generic [ref=e310]: feedback
+          - generic [ref=e311]: finance
+          - generic [ref=e312]: financial
+          - generic [ref=e313]: fish
+          - generic [ref=e314]: fishing
+          - generic [ref=e315]: fit
+          - generic [ref=e316]: fitness
+          - generic [ref=e317]: flights
+          - generic [ref=e318]: florist
+          - generic [ref=e319]: flowers
+          - generic [ref=e320]: fm
+        - generic [ref=e321]:
+          - generic [ref=e322]: foo
+          - generic [ref=e323]: football
+          - generic [ref=e324]: forex
+          - generic [ref=e325]: forsale
+          - generic [ref=e326]: forum
+          - generic [ref=e327]: foundation
+          - generic [ref=e328]: fun
+          - generic [ref=e329]: fund
+          - generic [ref=e330]: furniture
+          - generic [ref=e331]: futbol
+          - generic [ref=e332]: fyi
+          - generic [ref=e333]: gallery
+          - generic [ref=e334]: game
+          - generic [ref=e335]: games
+          - generic [ref=e336]: garden
+          - generic [ref=e337]: geek.nz
+          - generic [ref=e338]: gifts
+          - generic [ref=e339]: gives
+          - generic [ref=e340]: giving
+          - generic [ref=e341]: glass
+          - generic [ref=e342]: global
+          - generic [ref=e343]: gmbh
+          - generic [ref=e344]: gold
+          - generic [ref=e345]: golf
+          - generic [ref=e346]: graphics
+          - generic [ref=e347]: gratis
+          - generic [ref=e348]: green
+          - generic [ref=e349]: gripe
+          - generic [ref=e350]: group
+          - generic [ref=e351]: guide
+          - generic [ref=e352]: guitars
+          - generic [ref=e353]: guru
+          - generic [ref=e354]: haus
+          - generic [ref=e355]: health
+          - generic [ref=e356]: healthcare
+          - generic [ref=e357]: help
+          - generic [ref=e358]: hockey
+          - generic [ref=e359]: holdings
+          - generic [ref=e360]: holiday
+          - generic [ref=e361]: horse
+          - generic [ref=e362]: hospital
+          - generic [ref=e363]: host
+          - generic [ref=e364]: hosting
+          - generic [ref=e365]: house
+          - generic [ref=e366]: how
+          - generic [ref=e367]: icu
+          - generic [ref=e368]: immo
+          - generic [ref=e369]: immobilien
+          - generic [ref=e370]: inc
+          - generic [ref=e371]: industries
+    - generic [ref=e374]:
+      - generic [ref=e375]:
+        - heading "Integrated with all Cloudflare services" [level=2] [ref=e376]
+        - paragraph [ref=e377]:
+          - text: After registering or transferring your domain name, it is time to protect and optimize your website. Cloudflare protects and accelerates any site. Once your website is on Cloudflare, its web traffic is routed through our intelligent global network. We automatically optimize content delivery so your visitors get the fastest page load times. We block threats and limit abusive bots.
+          - text: Cloudflare also makes it easy for anyone to spin up a website or application quickly. Build a static website and deploy it in seconds. Run serverless code on the Cloudflare global edge network, or integrate popular AI models with Cloudflare Workers AI.
+          - link "See all available Cloudflare plans" [ref=e378] [cursor=pointer]:
+            - /url: https://www.cloudflare.com/plans
+            - text: See all available Cloudflare plans
+            - img [ref=e379]
+      - img "Integrated with all Cloudflare services" [ref=e382]
+  - contentinfo [ref=e383]:
+    - paragraph [ref=e384]: © 2026 Cloudflare, Inc.|
+    - list [ref=e385]:
+      - listitem [ref=e386]:
+        - link "Privacy" [ref=e387] [cursor=pointer]:
+          - /url: https://www.cloudflare.com/privacypolicy
+      - listitem [ref=e388]:
+        - text: "|"
+        - link "Terms of Use" [ref=e389] [cursor=pointer]:
+          - /url: https://www.cloudflare.com/website-terms
+      - listitem [ref=e390]:
+        - text: "|"
+        - link "Report Security Issues" [ref=e391] [cursor=pointer]:
+          - /url: https://www.cloudflare.com/disclosure
+      - listitem [ref=e392]:
+        - text: "|"
+        - link "Support" [ref=e393] [cursor=pointer]:
+          - /url: https://support.cloudflare.com

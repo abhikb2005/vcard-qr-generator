@@ -1,0 +1,498 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Cloudflare Registrar" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]:
+          - img [ref=e7]
+          - generic [ref=e10]: Cloudflare Registrar
+      - navigation [ref=e11]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Home" [ref=e14] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e15]:
+            - link "TLDs" [ref=e16] [cursor=pointer]:
+              - /url: /tlds
+          - listitem [ref=e17]:
+            - link "TLD Policies" [ref=e18] [cursor=pointer]:
+              - /url: /tld-policies
+          - listitem [ref=e19]:
+            - link "Login" [ref=e20] [cursor=pointer]:
+              - /url: https://dash.cloudflare.com/login
+        - button "Toggle language switcher (English)" [ref=e22] [cursor=pointer]:
+          - img [ref=e23]
+  - main [ref=e25]:
+    - generic [ref=e26]:
+      - generic [ref=e28]:
+        - generic [ref=e29]: Search for a domain name
+        - img
+        - textbox "Search for a domain name" [ref=e30]: seoaeogeoaudit.com
+        - button "••• Search" [ref=e31] [cursor=pointer]:
+          - generic [ref=e32]: •••
+          - text: Search
+      - paragraph [ref=e33]:
+        - generic [ref=e34]: New
+        - text: .ca domains now available
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - img [ref=e394]
+          - paragraph [ref=e397]: seoaeogeoaudit.com
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - generic [ref=e398]: $10.46
+            - generic [ref=e399]: Renews at $10.46
+          - button "Purchase" [ref=e400] [cursor=pointer]
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - generic [ref=e47]:
+            - paragraph [ref=e401]: Suggested domain names
+            - paragraph [ref=e402]: The following is a list of suggestions that may also be available.
+          - generic [ref=e403]:
+            - generic [ref=e404]: Sort by
+            - combobox "Sort by" [ref=e405]:
+              - option "Relevance" [selected]
+              - option "Price (low to high)"
+              - option "Price (high to low)"
+        - generic [ref=e406]:
+          - paragraph [ref=e409]: seoaeogeoaudits.com
+          - generic [ref=e410]:
+            - generic [ref=e411]:
+              - generic [ref=e412]: $10.46
+              - generic [ref=e413]: Renews at $10.46
+            - button "Confirm" [ref=e414] [cursor=pointer]
+        - generic [ref=e415]:
+          - paragraph [ref=e418]: seoaeogeoaudit.net
+          - generic [ref=e419]:
+            - generic [ref=e420]:
+              - generic [ref=e421]: $11.86
+              - generic [ref=e422]: Renews at $11.86
+            - button "Confirm" [ref=e423] [cursor=pointer]
+        - generic [ref=e424]:
+          - paragraph [ref=e427]: seoaeogeoaudit.org
+          - generic [ref=e428]:
+            - generic [ref=e429]:
+              - generic [ref=e430]: $7.50
+              - generic [ref=e431]: Renews at $10.13
+            - button "Confirm" [ref=e432] [cursor=pointer]
+        - generic [ref=e433]:
+          - paragraph [ref=e436]: seoaeogeoaudit.uk
+          - generic [ref=e437]:
+            - generic [ref=e438]:
+              - generic [ref=e439]: $5.22
+              - generic [ref=e440]: Renews at $5.22
+            - button "Confirm" [ref=e441] [cursor=pointer]
+        - generic [ref=e442]:
+          - paragraph [ref=e445]: seoaeogeoaudit.info
+          - generic [ref=e446]:
+            - generic [ref=e447]:
+              - generic [ref=e448]: $19.20
+              - generic [ref=e449]: Renews at $19.20
+            - button "Confirm" [ref=e450] [cursor=pointer]
+        - generic [ref=e451]:
+          - paragraph [ref=e454]: seoaeogeoaudit.co
+          - generic [ref=e455]:
+            - generic [ref=e456]:
+              - generic [ref=e457]: $26.00
+              - generic [ref=e458]: Renews at $26.00
+            - button "Confirm" [ref=e459] [cursor=pointer]
+        - generic [ref=e460]:
+          - paragraph [ref=e463]: seoaeogeoaudit.xyz
+          - generic [ref=e464]:
+            - generic [ref=e465]:
+              - generic [ref=e466]: $12.30
+              - generic [ref=e467]: Renews at $11.20
+            - button "Confirm" [ref=e468] [cursor=pointer]
+        - generic [ref=e469]:
+          - paragraph [ref=e472]: seoaeogeoaudit.biz
+          - generic [ref=e473]:
+            - generic [ref=e474]:
+              - generic [ref=e475]: $15.20
+              - generic [ref=e476]: Renews at $15.20
+            - button "Confirm" [ref=e477] [cursor=pointer]
+        - generic [ref=e478]:
+          - paragraph [ref=e481]: seoaeogeoaudit.icu
+          - generic [ref=e482]:
+            - generic [ref=e483]:
+              - generic [ref=e484]: $12.20
+              - generic [ref=e485]: Renews at $12.20
+            - button "Confirm" [ref=e486] [cursor=pointer]
+        - generic [ref=e487]:
+          - paragraph [ref=e490]: seoaeogeoaudit.site
+          - generic [ref=e491]:
+            - generic [ref=e492]:
+              - generic [ref=e493]: $27.70
+              - generic [ref=e494]: Renews at $27.70
+            - button "Confirm" [ref=e495] [cursor=pointer]
+        - generic [ref=e496]:
+          - paragraph [ref=e499]: seoaeogeoaudit.vip
+          - generic [ref=e500]:
+            - generic [ref=e501]:
+              - generic [ref=e502]: $12.20
+              - generic [ref=e503]: Renews at $12.20
+            - button "Confirm" [ref=e504] [cursor=pointer]
+        - generic [ref=e505]:
+          - paragraph [ref=e508]: seoaeogeoaudit.consulting
+          - generic [ref=e509]:
+            - generic [ref=e510]:
+              - generic [ref=e511]: $42.20
+              - generic [ref=e512]: Renews at $42.20
+            - button "Confirm" [ref=e513] [cursor=pointer]
+        - generic [ref=e514]:
+          - paragraph [ref=e517]: seoaeogeoaudit.cc
+          - generic [ref=e518]:
+            - generic [ref=e519]:
+              - generic [ref=e520]: $8.00
+              - generic [ref=e521]: Renews at $8.00
+            - button "Confirm" [ref=e522] [cursor=pointer]
+        - generic [ref=e523]:
+          - paragraph [ref=e526]: seoaeogeoaudit.mobi
+          - generic [ref=e527]:
+            - generic [ref=e528]:
+              - generic [ref=e529]: $30.20
+              - generic [ref=e530]: Renews at $30.20
+            - button "Confirm" [ref=e531] [cursor=pointer]
+        - generic [ref=e532]:
+          - paragraph [ref=e535]: seoaeogeoaudit.esq
+          - generic [ref=e536]:
+            - generic [ref=e537]:
+              - generic [ref=e538]: $20.20
+              - generic [ref=e539]: Renews at $20.20
+            - button "Confirm" [ref=e540] [cursor=pointer]
+        - generic [ref=e541]:
+          - paragraph [ref=e544]: seoaeogeoaudit.shop
+          - generic [ref=e545]:
+            - generic [ref=e546]:
+              - generic [ref=e547]: $30.20
+              - generic [ref=e548]: Renews at $30.20
+            - button "Confirm" [ref=e549] [cursor=pointer]
+        - generic [ref=e550]:
+          - paragraph [ref=e553]: seoaeogeoaudit.studio
+          - generic [ref=e554]:
+            - generic [ref=e555]:
+              - generic [ref=e556]: $31.20
+              - generic [ref=e557]: Renews at $31.20
+            - button "Confirm" [ref=e558] [cursor=pointer]
+        - generic [ref=e559]:
+          - paragraph [ref=e562]: seoaeogeoaudit.clothing
+          - generic [ref=e563]:
+            - generic [ref=e564]:
+              - generic [ref=e565]: $25.20
+              - generic [ref=e566]: Renews at $25.20
+            - button "Confirm" [ref=e567] [cursor=pointer]
+        - generic [ref=e568]:
+          - paragraph [ref=e571]: seoaeogeoaudit.app
+          - generic [ref=e572]:
+            - generic [ref=e573]:
+              - generic [ref=e574]: $14.20
+              - generic [ref=e575]: Renews at $14.20
+            - button "Confirm" [ref=e576] [cursor=pointer]
+        - generic [ref=e577]:
+          - paragraph [ref=e580]: seoaeogeoaudit.live
+          - generic [ref=e581]:
+            - generic [ref=e582]:
+              - generic [ref=e583]: $25.20
+              - generic [ref=e584]: Renews at $25.20
+            - button "Confirm" [ref=e585] [cursor=pointer]
+        - generic [ref=e586]:
+          - paragraph [ref=e589]: seoaeogeoaudit.online
+          - generic [ref=e590]:
+            - generic [ref=e591]:
+              - generic [ref=e592]: $27.70
+              - generic [ref=e593]: Renews at $27.70
+            - button "Confirm" [ref=e594] [cursor=pointer]
+        - generic [ref=e595]:
+          - paragraph [ref=e598]: seoaeogeoaudit.work
+          - generic [ref=e599]:
+            - generic [ref=e600]:
+              - generic [ref=e601]: $7.20
+              - generic [ref=e602]: Renews at $7.20
+            - button "Confirm" [ref=e603] [cursor=pointer]
+        - generic [ref=e604]:
+          - paragraph [ref=e607]: seoaeogeoaudit.club
+          - generic [ref=e608]:
+            - generic [ref=e609]:
+              - generic [ref=e610]: $12.20
+              - generic [ref=e611]: Renews at $12.20
+            - button "Confirm" [ref=e612] [cursor=pointer]
+        - generic [ref=e613]:
+          - paragraph [ref=e616]: seoaeogeoaudit.media
+          - generic [ref=e617]:
+            - generic [ref=e618]:
+              - generic [ref=e619]: $35.20
+              - generic [ref=e620]: Renews at $35.20
+            - button "Confirm" [ref=e621] [cursor=pointer]
+    - generic [ref=e133]:
+      - generic [ref=e134]:
+        - heading "Why register a domain name with Cloudflare?" [level=2] [ref=e135]
+        - paragraph [ref=e136]:
+          - text: Cloudflare Registrar offers a reliable, cost-effective, and secure way to register your domain. With transparent pricing, you pay only the wholesale cost without hidden fees or markups. Additionally, Cloudflare prioritizes security, providing free features like DNSSEC to protect against domain hijacking. Combined with easy integration into Cloudflare’s suite of performance and security tools, Registrar is the best choice for managing and securing your domains. Get started by registering a new domain or
+          - link "transferring a current domain" [ref=e137] [cursor=pointer]:
+            - /url: https://developers.cloudflare.com/registrar/get-started/transfer-domain-to-cloudflare
+            - text: transferring a current domain
+            - img [ref=e138]
+          - text: .
+      - img "Why register a domain name with Cloudflare?" [ref=e141]
+    - generic [ref=e143]:
+      - heading "Key features of Cloudflare Registrar" [level=2] [ref=e146]
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - heading "At-cost pricing" [level=3] [ref=e149]
+          - paragraph [ref=e150]: Cloudflare Registrar offers domain registrations and renewals at wholesale prices without any additional markups, ensuring you pay only the base cost set by the registries.
+        - generic [ref=e151]:
+          - heading "Enhanced security" [level=3] [ref=e152]
+          - paragraph [ref=e153]: Domains come with built-in security features, such as free one-click DNSSEC activation, two-factor authentication, and domain lock enabled by default, protecting your domain from unauthorized changes or transfers.
+        - generic [ref=e154]:
+          - heading "WHOIS privacy protection" [level=3] [ref=e155]
+          - paragraph [ref=e156]: Cloudflare provides free WHOIS redaction to safeguard your personal contact details from spam and potential threats, complying with ICANN guidelines.
+        - generic [ref=e157]:
+          - heading "No upsells or hidden fees" [level=3] [ref=e158]
+          - paragraph [ref=e159]: Unlike many other registrars, Cloudflare eliminates upsells and unnecessary add-ons, offering transparent pricing without surprise costs.
+    - generic [ref=e160]:
+      - generic [ref=e163]:
+        - heading "Extensive TLD support" [level=2] [ref=e164]
+        - paragraph [ref=e165]:
+          - text: Cloudflare Registrar supports over 400 of the most popular top-level domains (TLDs), including .com, .org, .net, .co, .us, and more. View the
+          - link "full list" [ref=e166] [cursor=pointer]:
+            - /url: /tlds
+          - text: of supported extensions.
+      - generic [ref=e167]:
+        - generic [ref=e168]:
+          - generic [ref=e169]: ab.ca
+          - generic [ref=e170]: ac
+          - generic [ref=e171]: academy
+          - generic [ref=e172]: accountant
+          - generic [ref=e173]: accountants
+          - generic [ref=e174]: actor
+          - generic [ref=e175]: adult
+          - generic [ref=e176]: agency
+          - generic [ref=e177]: ai
+          - generic [ref=e178]: airforce
+          - generic [ref=e179]: apartments
+          - generic [ref=e180]: app
+          - generic [ref=e181]: army
+          - generic [ref=e182]: associates
+          - generic [ref=e183]: attorney
+          - generic [ref=e184]: auction
+          - generic [ref=e185]: audio
+          - generic [ref=e186]: baby
+          - generic [ref=e187]: band
+          - generic [ref=e188]: bar
+          - generic [ref=e189]: bargains
+          - generic [ref=e190]: bc.ca
+          - generic [ref=e191]: beer
+          - generic [ref=e192]: bet
+          - generic [ref=e193]: bid
+          - generic [ref=e194]: bike
+          - generic [ref=e195]: bingo
+          - generic [ref=e196]: biz
+          - generic [ref=e197]: black
+          - generic [ref=e198]: blog
+          - generic [ref=e199]: blue
+          - generic [ref=e200]: boo
+          - generic [ref=e201]: boston
+          - generic [ref=e202]: boutique
+          - generic [ref=e203]: broker
+          - generic [ref=e204]: build
+          - generic [ref=e205]: builders
+          - generic [ref=e206]: business
+          - generic [ref=e207]: ca
+          - generic [ref=e208]: cab
+          - generic [ref=e209]: cafe
+          - generic [ref=e210]: cam
+          - generic [ref=e211]: camera
+          - generic [ref=e212]: camp
+          - generic [ref=e213]: capital
+          - generic [ref=e214]: cards
+          - generic [ref=e215]: care
+          - generic [ref=e216]: careers
+          - generic [ref=e217]: casa
+          - generic [ref=e218]: cash
+        - generic [ref=e219]:
+          - generic [ref=e220]: casino
+          - generic [ref=e221]: catering
+          - generic [ref=e222]: cc
+          - generic [ref=e223]: center
+          - generic [ref=e224]: ceo
+          - generic [ref=e225]: charity
+          - generic [ref=e226]: chat
+          - generic [ref=e227]: cheap
+          - generic [ref=e228]: christmas
+          - generic [ref=e229]: church
+          - generic [ref=e230]: city
+          - generic [ref=e231]: claims
+          - generic [ref=e232]: cleaning
+          - generic [ref=e233]: clinic
+          - generic [ref=e234]: clothing
+          - generic [ref=e235]: cloud
+          - generic [ref=e236]: club
+          - generic [ref=e237]: co
+          - generic [ref=e238]: co.nz
+          - generic [ref=e239]: co.uk
+          - generic [ref=e240]: coach
+          - generic [ref=e241]: codes
+          - generic [ref=e242]: coffee
+          - generic [ref=e243]: college
+          - generic [ref=e244]: com
+          - generic [ref=e245]: com.ai
+          - generic [ref=e246]: com.co
+          - generic [ref=e247]: com.mx
+          - generic [ref=e248]: community
+          - generic [ref=e249]: company
+          - generic [ref=e250]: compare
+          - generic [ref=e251]: computer
+          - generic [ref=e252]: condos
+          - generic [ref=e253]: construction
+          - generic [ref=e254]: consulting
+          - generic [ref=e255]: contact
+          - generic [ref=e256]: contractors
+          - generic [ref=e257]: cooking
+          - generic [ref=e258]: cool
+          - generic [ref=e259]: coupons
+          - generic [ref=e260]: credit
+          - generic [ref=e261]: creditcard
+          - generic [ref=e262]: cricket
+          - generic [ref=e263]: cruises
+          - generic [ref=e264]: dad
+          - generic [ref=e265]: dance
+          - generic [ref=e266]: date
+          - generic [ref=e267]: dating
+          - generic [ref=e268]: day
+          - generic [ref=e269]: dealer
+        - generic [ref=e270]:
+          - generic [ref=e271]: deals
+          - generic [ref=e272]: degree
+          - generic [ref=e273]: delivery
+          - generic [ref=e274]: democrat
+          - generic [ref=e275]: dental
+          - generic [ref=e276]: dentist
+          - generic [ref=e277]: design
+          - generic [ref=e278]: dev
+          - generic [ref=e279]: diamonds
+          - generic [ref=e280]: diet
+          - generic [ref=e281]: digital
+          - generic [ref=e282]: direct
+          - generic [ref=e283]: directory
+          - generic [ref=e284]: discount
+          - generic [ref=e285]: doctor
+          - generic [ref=e286]: dog
+          - generic [ref=e287]: domains
+          - generic [ref=e288]: download
+          - generic [ref=e289]: education
+          - generic [ref=e290]: email
+          - generic [ref=e291]: energy
+          - generic [ref=e292]: engineer
+          - generic [ref=e293]: engineering
+          - generic [ref=e294]: enterprises
+          - generic [ref=e295]: equipment
+          - generic [ref=e296]: esq
+          - generic [ref=e297]: estate
+          - generic [ref=e298]: events
+          - generic [ref=e299]: exchange
+          - generic [ref=e300]: expert
+          - generic [ref=e301]: exposed
+          - generic [ref=e302]: express
+          - generic [ref=e303]: fail
+          - generic [ref=e304]: faith
+          - generic [ref=e305]: family
+          - generic [ref=e306]: fan
+          - generic [ref=e307]: fans
+          - generic [ref=e308]: farm
+          - generic [ref=e309]: fashion
+          - generic [ref=e310]: feedback
+          - generic [ref=e311]: finance
+          - generic [ref=e312]: financial
+          - generic [ref=e313]: fish
+          - generic [ref=e314]: fishing
+          - generic [ref=e315]: fit
+          - generic [ref=e316]: fitness
+          - generic [ref=e317]: flights
+          - generic [ref=e318]: florist
+          - generic [ref=e319]: flowers
+          - generic [ref=e320]: fm
+        - generic [ref=e321]:
+          - generic [ref=e322]: foo
+          - generic [ref=e323]: football
+          - generic [ref=e324]: forex
+          - generic [ref=e325]: forsale
+          - generic [ref=e326]: forum
+          - generic [ref=e327]: foundation
+          - generic [ref=e328]: fun
+          - generic [ref=e329]: fund
+          - generic [ref=e330]: furniture
+          - generic [ref=e331]: futbol
+          - generic [ref=e332]: fyi
+          - generic [ref=e333]: gallery
+          - generic [ref=e334]: game
+          - generic [ref=e335]: games
+          - generic [ref=e336]: garden
+          - generic [ref=e337]: geek.nz
+          - generic [ref=e338]: gifts
+          - generic [ref=e339]: gives
+          - generic [ref=e340]: giving
+          - generic [ref=e341]: glass
+          - generic [ref=e342]: global
+          - generic [ref=e343]: gmbh
+          - generic [ref=e344]: gold
+          - generic [ref=e345]: golf
+          - generic [ref=e346]: graphics
+          - generic [ref=e347]: gratis
+          - generic [ref=e348]: green
+          - generic [ref=e349]: gripe
+          - generic [ref=e350]: group
+          - generic [ref=e351]: guide
+          - generic [ref=e352]: guitars
+          - generic [ref=e353]: guru
+          - generic [ref=e354]: haus
+          - generic [ref=e355]: health
+          - generic [ref=e356]: healthcare
+          - generic [ref=e357]: help
+          - generic [ref=e358]: hockey
+          - generic [ref=e359]: holdings
+          - generic [ref=e360]: holiday
+          - generic [ref=e361]: horse
+          - generic [ref=e362]: hospital
+          - generic [ref=e363]: host
+          - generic [ref=e364]: hosting
+          - generic [ref=e365]: house
+          - generic [ref=e366]: how
+          - generic [ref=e367]: icu
+          - generic [ref=e368]: immo
+          - generic [ref=e369]: immobilien
+          - generic [ref=e370]: inc
+          - generic [ref=e371]: industries
+    - generic [ref=e374]:
+      - generic [ref=e375]:
+        - heading "Integrated with all Cloudflare services" [level=2] [ref=e376]
+        - paragraph [ref=e377]:
+          - text: After registering or transferring your domain name, it is time to protect and optimize your website. Cloudflare protects and accelerates any site. Once your website is on Cloudflare, its web traffic is routed through our intelligent global network. We automatically optimize content delivery so your visitors get the fastest page load times. We block threats and limit abusive bots.
+          - text: Cloudflare also makes it easy for anyone to spin up a website or application quickly. Build a static website and deploy it in seconds. Run serverless code on the Cloudflare global edge network, or integrate popular AI models with Cloudflare Workers AI.
+          - link "See all available Cloudflare plans" [ref=e378] [cursor=pointer]:
+            - /url: https://www.cloudflare.com/plans
+            - text: See all available Cloudflare plans
+            - img [ref=e379]
+      - img "Integrated with all Cloudflare services" [ref=e382]
+  - contentinfo [ref=e383]:
+    - paragraph [ref=e384]: © 2026 Cloudflare, Inc.|
+    - list [ref=e385]:
+      - listitem [ref=e386]:
+        - link "Privacy" [ref=e387] [cursor=pointer]:
+          - /url: https://www.cloudflare.com/privacypolicy
+      - listitem [ref=e388]:
+        - text: "|"
+        - link "Terms of Use" [ref=e389] [cursor=pointer]:
+          - /url: https://www.cloudflare.com/website-terms
+      - listitem [ref=e390]:
+        - text: "|"
+        - link "Report Security Issues" [ref=e391] [cursor=pointer]:
+          - /url: https://www.cloudflare.com/disclosure
+      - listitem [ref=e392]:
+        - text: "|"
+        - link "Support" [ref=e393] [cursor=pointer]:
+          - /url: https://support.cloudflare.com
+      - listitem [ref=e622]:
+        - text: "|"
+        - button "Cookie Preferences" [ref=e623] [cursor=pointer]:
+          - generic [ref=e624]:
+            - img [ref=e625]
+            - text: Cookie Preferences

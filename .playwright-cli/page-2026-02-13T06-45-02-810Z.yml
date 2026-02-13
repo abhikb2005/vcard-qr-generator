@@ -1,0 +1,808 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e9]: Don’t miss the limited-time deals!
+      - navigation [ref=e10]:
+        - link "homepage link" [ref=e12] [cursor=pointer]:
+          - /url: /in/
+          - img [ref=e13]
+        - generic [ref=e20]:
+          - generic [ref=e22]:
+            - link "Pricing" [ref=e24] [cursor=pointer]:
+              - /url: /in/pricing
+            - generic "Services" [ref=e25] [cursor=pointer]:
+              - text: Services
+              - img [ref=e27]
+            - generic "Explore" [ref=e29] [cursor=pointer]:
+              - text: Explore
+              - img [ref=e31]
+            - generic "Support" [ref=e33] [cursor=pointer]:
+              - text: Support
+              - img [ref=e35]
+            - link "1-Click OpenClaw" [ref=e38] [cursor=pointer]:
+              - /url: /in/vps/docker/openclaw
+          - generic [ref=e39]:
+            - generic "English" [ref=e42] [cursor=pointer]:
+              - generic:
+                - img "IN"
+              - generic [ref=e43]: English
+            - link "My account" [ref=e45] [cursor=pointer]:
+              - /url: https://auth.hostinger.com/in/login
+              - generic [ref=e46]: My account
+      - main [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e53]:
+            - heading "Looking for available domains? Use our domain checker" [level=1] [ref=e55]
+            - generic [ref=e58]:
+              - generic [ref=e60] [cursor=pointer]: Domain search
+              - generic [ref=e61] [cursor=pointer]:
+                - img [ref=e62]
+                - generic [ref=e65]: AI domain generator
+            - generic [ref=e70]:
+              - textbox [ref=e71]:
+                - /placeholder: Type in that perfect domain name
+                - text: seoaeogeoaudit.com
+              - button "Search" [ref=e74] [cursor=pointer]:
+                - img [ref=e75]
+          - generic [ref=e77]:
+            - generic [ref=e86]:
+              - generic [ref=e88]:
+                - generic [ref=e89]:
+                  - generic [ref=e90]:
+                    - generic [ref=e92]: Exact match
+                    - heading "seoaeogeoaudit.com Save 85%" [level=4] [ref=e94]:
+                      - generic [ref=e95]:
+                        - generic [ref=e96]:
+                          - generic [ref=e97]: seoaeogeoaudit.com
+                          - img [ref=e99] [cursor=pointer]
+                        - generic [ref=e104]: Save 85%
+                  - generic [ref=e105]:
+                    - generic [ref=e106]:
+                      - generic [ref=e107]:
+                        - img [ref=e109] [cursor=pointer]
+                        - text: Best value for 3 year term
+                      - generic [ref=e112]:
+                        - generic [ref=e114]:
+                          - generic [ref=e115]: ₹
+                          - generic [ref=e116]: "199.00"
+                          - generic [ref=e117]: /1st yr
+                        - generic [ref=e119]:
+                          - generic [ref=e120]: ₹
+                          - generic [ref=e121]: 1,299.00
+                    - button "Make it yours" [ref=e122] [cursor=pointer]:
+                      - generic [ref=e123]: Make it yours
+                - generic [ref=e124]:
+                  - generic [ref=e126]:
+                    - img [ref=e128]
+                    - text: .com domains are very popular and have usually already been snapped up.
+                  - generic [ref=e131]:
+                    - img [ref=e133]
+                    - generic [ref=e135]:
+                      - text: This domain is suitable for SEO audit services. It reflects expertise in search engine optimization.
+                      - img [ref=e137] [cursor=pointer]
+              - generic [ref=e141]:
+                - generic [ref=e142]:
+                  - generic [ref=e143]:
+                    - generic [ref=e145]: Bundle & save
+                    - heading "seoaeogeoaudit.com+.in+.xyz Save 56%" [level=4] [ref=e147]:
+                      - generic [ref=e148]:
+                        - generic [ref=e149]:
+                          - text: seoaeogeoaudit
+                          - generic [ref=e150]: .com
+                          - generic [ref=e151]: +.in
+                          - generic [ref=e152]: +.xyz
+                        - generic [ref=e154]: Save 56%
+                  - generic [ref=e155]:
+                    - generic [ref=e156]:
+                      - generic [ref=e157]:
+                        - img [ref=e159] [cursor=pointer]
+                        - text: For first year
+                      - generic [ref=e162]:
+                        - generic [ref=e164]:
+                          - generic [ref=e165]: ₹
+                          - generic [ref=e166]: 1,477.00
+                          - generic [ref=e167]: /1st yr
+                        - generic [ref=e169]:
+                          - generic [ref=e170]: ₹
+                          - generic [ref=e171]: 3,427.00
+                    - button "Make it yours" [ref=e172] [cursor=pointer]:
+                      - generic [ref=e173]: Make it yours
+                - generic [ref=e174]:
+                  - generic [ref=e176]:
+                    - img [ref=e178]
+                    - text: Save money and enjoy more brand visibility with a domain bundle.
+                  - generic [ref=e181]:
+                    - img [ref=e183]
+                    - generic [ref=e185]: Manage all your domains securely under one account.
+            - generic [ref=e187]:
+              - generic [ref=e189]:
+                - 'heading "Limited-time deal: get free professional email" [level=3] [ref=e190]'
+                - paragraph [ref=e191]: Choose a domain with .ai, .io, .net, or .org for 2 years or longer and get 1 year of free email.
+              - generic [ref=e192]:
+                - generic:
+                  - 'img "Limited-time deal: get free professional email"'
+              - img [ref=e193]
+            - generic [ref=e198]:
+              - generic [ref=e199]:
+                - heading "More options" [level=3] [ref=e201]
+                - generic [ref=e202]:
+                  - generic [ref=e204]:
+                    - img [ref=e205]
+                    - generic [ref=e207]: Popular
+                  - generic [ref=e209]:
+                    - img [ref=e210]
+                    - generic [ref=e213]: Business
+                  - generic [ref=e215]:
+                    - img [ref=e216]
+                    - generic [ref=e218]: Education
+                  - generic [ref=e220]:
+                    - img [ref=e221]
+                    - generic [ref=e223]: International
+                  - generic [ref=e225]:
+                    - img [ref=e226]
+                    - generic [ref=e228]: Technology
+                  - generic [ref=e230]:
+                    - img [ref=e231]
+                    - generic [ref=e233]: Social
+                  - generic [ref=e235]:
+                    - img [ref=e236]
+                    - generic [ref=e239]: Professional
+                  - generic [ref=e241]:
+                    - img [ref=e242]
+                    - generic [ref=e244]: Entertainment
+                  - generic [ref=e245]:
+                    - img [ref=e246]
+                    - generic [ref=e248]: All
+              - generic [ref=e254]:
+                - generic [ref=e258]:
+                  - heading "seoaeogeoaudit.in" [level=4] [ref=e259]:
+                    - generic [ref=e261]:
+                      - text: seoaeogeoaudit
+                      - text: .in
+                    - img [ref=e263] [cursor=pointer]
+                  - generic [ref=e268]: Save 99%
+                - generic [ref=e269]:
+                  - generic [ref=e271]:
+                    - generic [ref=e272]:
+                      - generic [ref=e274]:
+                        - generic [ref=e275]: ₹
+                        - generic [ref=e276]: "899.00"
+                      - img [ref=e279] [cursor=pointer]
+                    - generic [ref=e284]:
+                      - generic [ref=e285]: ₹
+                      - generic [ref=e286]: "1.00"
+                      - generic [ref=e287]: /1st yr
+                  - button "Buy now" [ref=e288] [cursor=pointer]:
+                    - generic [ref=e289]: Buy now
+              - generic [ref=e295]:
+                - generic [ref=e299]:
+                  - heading "seoaeogeoaudit.tech" [level=4] [ref=e300]:
+                    - generic [ref=e302]:
+                      - text: seoaeogeoaudit
+                      - text: .tech
+                  - generic [ref=e305]: Save 89%
+                - generic [ref=e306]:
+                  - generic [ref=e308]:
+                    - generic [ref=e309]:
+                      - generic [ref=e311]:
+                        - generic [ref=e312]: ₹
+                        - generic [ref=e313]: 5,589.00
+                      - img [ref=e316] [cursor=pointer]
+                    - generic [ref=e321]:
+                      - generic [ref=e322]: ₹
+                      - generic [ref=e323]: "609.00"
+                      - generic [ref=e324]: /1st yr
+                  - button "Buy now" [ref=e325] [cursor=pointer]:
+                    - generic [ref=e326]: Buy now
+              - generic [ref=e332]:
+                - generic [ref=e336]:
+                  - heading "seoaeogeoaudit.social" [level=4] [ref=e337]:
+                    - generic [ref=e339]:
+                      - text: seoaeogeoaudit
+                      - text: .social
+                  - generic [ref=e342]: Save 85%
+                - generic [ref=e343]:
+                  - generic [ref=e345]:
+                    - generic [ref=e346]:
+                      - generic [ref=e348]:
+                        - generic [ref=e349]: ₹
+                        - generic [ref=e350]: 4,189.00
+                      - img [ref=e353] [cursor=pointer]
+                    - generic [ref=e358]:
+                      - generic [ref=e359]: ₹
+                      - generic [ref=e360]: "609.00"
+                      - generic [ref=e361]: /1st yr
+                  - button "Buy now" [ref=e362] [cursor=pointer]:
+                    - generic [ref=e363]: Buy now
+              - generic [ref=e369]:
+                - generic [ref=e373]:
+                  - heading "seoaeogeoaudit.co.in" [level=4] [ref=e374]:
+                    - generic [ref=e376]:
+                      - text: seoaeogeoaudit
+                      - text: .co.in
+                  - generic [ref=e379]: Save 38%
+                - generic [ref=e380]:
+                  - generic [ref=e382]:
+                    - generic [ref=e383]:
+                      - generic [ref=e385]:
+                        - generic [ref=e386]: ₹
+                        - generic [ref=e387]: "799.00"
+                      - img [ref=e390] [cursor=pointer]
+                    - generic [ref=e395]:
+                      - generic [ref=e396]: ₹
+                      - generic [ref=e397]: "499.00"
+                      - generic [ref=e398]: /1st yr
+                  - button "Buy now" [ref=e399] [cursor=pointer]:
+                    - generic [ref=e400]: Buy now
+              - generic [ref=e406]:
+                - generic [ref=e410]:
+                  - heading "seoaeogeoaudit.org" [level=4] [ref=e411]:
+                    - generic [ref=e413]:
+                      - text: seoaeogeoaudit
+                      - text: .org
+                  - generic [ref=e414]:
+                    - generic [ref=e416]: Save 46%
+                    - generic [ref=e417] [cursor=pointer]:
+                      - img [ref=e418]
+                      - paragraph [ref=e420]: Free email
+                - generic [ref=e421]:
+                  - generic [ref=e423]:
+                    - generic [ref=e424]:
+                      - generic [ref=e426]:
+                        - generic [ref=e427]: ₹
+                        - generic [ref=e428]: 1,299.00
+                      - img [ref=e431] [cursor=pointer]
+                    - generic [ref=e436]:
+                      - generic [ref=e437]: ₹
+                      - generic [ref=e438]: "699.00"
+                      - generic [ref=e439]: /1st yr
+                  - button "Buy now" [ref=e440] [cursor=pointer]:
+                    - generic [ref=e441]: Buy now
+              - generic [ref=e447]:
+                - generic [ref=e451]:
+                  - heading "seoaeogeoaudit.shop" [level=4] [ref=e452]:
+                    - generic [ref=e454]:
+                      - text: seoaeogeoaudit
+                      - text: .shop
+                  - generic [ref=e457]: Save 97%
+                - generic [ref=e458]:
+                  - generic [ref=e460]:
+                    - generic [ref=e461]:
+                      - generic [ref=e463]:
+                        - generic [ref=e464]: ₹
+                        - generic [ref=e465]: 2,859.00
+                      - img [ref=e468] [cursor=pointer]
+                    - generic [ref=e473]:
+                      - generic [ref=e474]: ₹
+                      - generic [ref=e475]: "89.00"
+                      - generic [ref=e476]: /1st yr
+                  - button "Buy now" [ref=e477] [cursor=pointer]:
+                    - generic [ref=e478]: Buy now
+              - generic [ref=e484]:
+                - generic [ref=e488]:
+                  - heading "seoaeogeoaudit.store" [level=4] [ref=e489]:
+                    - generic [ref=e491]:
+                      - text: seoaeogeoaudit
+                      - text: .store
+                  - generic [ref=e494]: Save 98%
+                - generic [ref=e495]:
+                  - generic [ref=e497]:
+                    - generic [ref=e498]:
+                      - generic [ref=e500]:
+                        - generic [ref=e501]: ₹
+                        - generic [ref=e502]: 4,799.00
+                      - img [ref=e505] [cursor=pointer]
+                    - generic [ref=e510]:
+                      - generic [ref=e511]: ₹
+                      - generic [ref=e512]: "89.00"
+                      - generic [ref=e513]: /1st yr
+                  - button "Buy now" [ref=e514] [cursor=pointer]:
+                    - generic [ref=e515]: Buy now
+              - generic [ref=e521]:
+                - generic [ref=e525]:
+                  - heading "seoaeogeoaudit.online" [level=4] [ref=e526]:
+                    - generic [ref=e528]:
+                      - text: seoaeogeoaudit
+                      - text: .online
+                  - generic [ref=e531]: Save 97%
+                - generic [ref=e532]:
+                  - generic [ref=e534]:
+                    - generic [ref=e535]:
+                      - generic [ref=e537]:
+                        - generic [ref=e538]: ₹
+                        - generic [ref=e539]: 3,139.00
+                      - img [ref=e542] [cursor=pointer]
+                    - generic [ref=e547]:
+                      - generic [ref=e548]: ₹
+                      - generic [ref=e549]: "89.00"
+                      - generic [ref=e550]: /1st yr
+                  - button "Buy now" [ref=e551] [cursor=pointer]:
+                    - generic [ref=e552]: Buy now
+              - generic [ref=e558]:
+                - generic [ref=e562]:
+                  - heading "seoaeogeoaudit.net" [level=4] [ref=e563]:
+                    - generic [ref=e565]:
+                      - text: seoaeogeoaudit
+                      - text: .net
+                    - img [ref=e567] [cursor=pointer]
+                  - generic [ref=e570]:
+                    - generic [ref=e572]: Save 36%
+                    - generic [ref=e573] [cursor=pointer]:
+                      - img [ref=e574]
+                      - paragraph [ref=e576]: Free email
+                - generic [ref=e577]:
+                  - generic [ref=e579]:
+                    - generic [ref=e580]:
+                      - generic [ref=e582]:
+                        - generic [ref=e583]: ₹
+                        - generic [ref=e584]: 1,569.00
+                      - img [ref=e587] [cursor=pointer]
+                    - generic [ref=e592]:
+                      - generic [ref=e593]: ₹
+                      - generic [ref=e594]: "999.00"
+                      - generic [ref=e595]: /1st yr
+                  - button "Buy now" [ref=e596] [cursor=pointer]:
+                    - generic [ref=e597]: Buy now
+              - generic [ref=e603]:
+                - generic [ref=e607]:
+                  - heading "seoaeogeoaudit.io" [level=4] [ref=e608]:
+                    - generic [ref=e610]:
+                      - text: seoaeogeoaudit
+                      - text: .io
+                  - generic [ref=e611]:
+                    - generic [ref=e613]: Save 53%
+                    - generic [ref=e614] [cursor=pointer]:
+                      - img [ref=e615]
+                      - paragraph [ref=e617]: Free email
+                - generic [ref=e618]:
+                  - generic [ref=e620]:
+                    - generic [ref=e621]:
+                      - generic [ref=e623]:
+                        - generic [ref=e624]: ₹
+                        - generic [ref=e625]: 5,939.00
+                      - img [ref=e628] [cursor=pointer]
+                    - generic [ref=e633]:
+                      - generic [ref=e634]: ₹
+                      - generic [ref=e635]: 2,799.00
+                      - generic [ref=e636]: /1st yr
+                  - button "Buy now" [ref=e637] [cursor=pointer]:
+                    - generic [ref=e638]: Buy now
+              - generic [ref=e644]:
+                - generic [ref=e648]:
+                  - heading "seoaeogeoaudit.space" [level=4] [ref=e649]:
+                    - generic [ref=e651]:
+                      - text: seoaeogeoaudit
+                      - text: .space
+                  - generic [ref=e654]: Save 97%
+                - generic [ref=e655]:
+                  - generic [ref=e657]:
+                    - generic [ref=e658]:
+                      - generic [ref=e660]:
+                        - generic [ref=e661]: ₹
+                        - generic [ref=e662]: 2,879.00
+                      - img [ref=e665] [cursor=pointer]
+                    - generic [ref=e670]:
+                      - generic [ref=e671]: ₹
+                      - generic [ref=e672]: "89.00"
+                      - generic [ref=e673]: /1st yr
+                  - button "Buy now" [ref=e674] [cursor=pointer]:
+                    - generic [ref=e675]: Buy now
+              - generic [ref=e681]:
+                - generic [ref=e685]:
+                  - heading "seoaeogeoaudit.cloud" [level=4] [ref=e686]:
+                    - generic [ref=e688]:
+                      - text: seoaeogeoaudit
+                      - text: .cloud
+                  - generic [ref=e691]: Save 92%
+                - generic [ref=e692]:
+                  - generic [ref=e694]:
+                    - generic [ref=e695]:
+                      - generic [ref=e697]:
+                        - generic [ref=e698]: ₹
+                        - generic [ref=e699]: 2,269.00
+                      - img [ref=e702] [cursor=pointer]
+                    - generic [ref=e707]:
+                      - generic [ref=e708]: ₹
+                      - generic [ref=e709]: "179.00"
+                      - generic [ref=e710]: /1st yr
+                  - button "Buy now" [ref=e711] [cursor=pointer]:
+                    - generic [ref=e712]: Buy now
+              - generic [ref=e718]:
+                - generic [ref=e722]:
+                  - heading "seoaeogeoaudit.blog" [level=4] [ref=e723]:
+                    - generic [ref=e725]:
+                      - text: seoaeogeoaudit
+                      - text: .blog
+                  - generic [ref=e728]: Save 93%
+                - generic [ref=e729]:
+                  - generic [ref=e731]:
+                    - generic [ref=e732]:
+                      - generic [ref=e734]:
+                        - generic [ref=e735]: ₹
+                        - generic [ref=e736]: 2,619.00
+                      - img [ref=e739] [cursor=pointer]
+                    - generic [ref=e744]:
+                      - generic [ref=e745]: ₹
+                      - generic [ref=e746]: "179.00"
+                      - generic [ref=e747]: /1st yr
+                  - button "Buy now" [ref=e748] [cursor=pointer]:
+                    - generic [ref=e749]: Buy now
+              - generic [ref=e755]:
+                - generic [ref=e759]:
+                  - heading "seoaeogeoaudit.fun" [level=4] [ref=e760]:
+                    - generic [ref=e762]:
+                      - text: seoaeogeoaudit
+                      - text: .fun
+                  - generic [ref=e765]: Save 97%
+                - generic [ref=e766]:
+                  - generic [ref=e768]:
+                    - generic [ref=e769]:
+                      - generic [ref=e771]:
+                        - generic [ref=e772]: ₹
+                        - generic [ref=e773]: 3,409.00
+                      - img [ref=e776] [cursor=pointer]
+                    - generic [ref=e781]:
+                      - generic [ref=e782]: ₹
+                      - generic [ref=e783]: "89.00"
+                      - generic [ref=e784]: /1st yr
+                  - button "Buy now" [ref=e785] [cursor=pointer]:
+                    - generic [ref=e786]: Buy now
+              - generic [ref=e792]:
+                - generic [ref=e796]:
+                  - heading "seoaeogeoaudit.ai" [level=4] [ref=e797]:
+                    - generic [ref=e799]:
+                      - text: seoaeogeoaudit
+                      - text: .ai
+                    - img [ref=e801] [cursor=pointer]
+                  - generic [ref=e804]:
+                    - generic [ref=e806]: Save 20%
+                    - generic [ref=e807] [cursor=pointer]:
+                      - img [ref=e808]
+                      - paragraph [ref=e810]: Free email
+                - generic [ref=e811]:
+                  - generic [ref=e813]:
+                    - generic [ref=e814]:
+                      - generic [ref=e816]:
+                        - generic [ref=e817]: ₹
+                        - generic [ref=e818]: 8,729.00
+                      - img [ref=e821] [cursor=pointer]
+                    - generic [ref=e826]:
+                      - generic [ref=e827]: ₹
+                      - generic [ref=e828]: 6,978.00
+                      - generic [ref=e829]: /1st yr
+                  - button "Buy now" [ref=e830] [cursor=pointer]:
+                    - generic [ref=e831]: Buy now
+              - generic [ref=e837]:
+                - generic [ref=e841]:
+                  - heading "seoaeogeoaudit.cc" [level=4] [ref=e842]:
+                    - generic [ref=e844]:
+                      - text: seoaeogeoaudit
+                      - text: .cc
+                  - generic [ref=e847]: Save 64%
+                - generic [ref=e848]:
+                  - generic [ref=e850]:
+                    - generic [ref=e851]:
+                      - generic [ref=e853]:
+                        - generic [ref=e854]: ₹
+                        - generic [ref=e855]: "959.00"
+                      - img [ref=e858] [cursor=pointer]
+                    - generic [ref=e863]:
+                      - generic [ref=e864]: ₹
+                      - generic [ref=e865]: "349.00"
+                      - generic [ref=e866]: /1st yr
+                  - button "Buy now" [ref=e867] [cursor=pointer]:
+                    - generic [ref=e868]: Buy now
+              - generic [ref=e874]:
+                - generic [ref=e878]:
+                  - heading "seoaeogeoaudit.sbs" [level=4] [ref=e879]:
+                    - generic [ref=e881]:
+                      - text: seoaeogeoaudit
+                      - text: .sbs
+                  - generic [ref=e884]: Save 94%
+                - generic [ref=e885]:
+                  - generic [ref=e887]:
+                    - generic [ref=e888]:
+                      - generic [ref=e890]:
+                        - generic [ref=e891]: ₹
+                        - generic [ref=e892]: 1,399.00
+                      - img [ref=e895] [cursor=pointer]
+                    - generic [ref=e900]:
+                      - generic [ref=e901]: ₹
+                      - generic [ref=e902]: "89.00"
+                      - generic [ref=e903]: /1st yr
+                  - button "Buy now" [ref=e904] [cursor=pointer]:
+                    - generic [ref=e905]: Buy now
+              - generic [ref=e911]:
+                - generic [ref=e915]:
+                  - heading "seoaeogeoaudit.pro" [level=4] [ref=e916]:
+                    - generic [ref=e918]:
+                      - text: seoaeogeoaudit
+                      - text: .pro
+                  - generic [ref=e921]: Save 89%
+                - generic [ref=e922]:
+                  - generic [ref=e924]:
+                    - generic [ref=e925]:
+                      - generic [ref=e927]:
+                        - generic [ref=e928]: ₹
+                        - generic [ref=e929]: 2,529.00
+                      - img [ref=e932] [cursor=pointer]
+                    - generic [ref=e937]:
+                      - generic [ref=e938]: ₹
+                      - generic [ref=e939]: "269.00"
+                      - generic [ref=e940]: /1st yr
+                  - button "Buy now" [ref=e941] [cursor=pointer]:
+                    - generic [ref=e942]: Buy now
+              - generic [ref=e948]:
+                - generic [ref=e952]:
+                  - heading "seoaeogeoaudit.co" [level=4] [ref=e953]:
+                    - generic [ref=e955]:
+                      - text: seoaeogeoaudit
+                      - text: .co
+                  - generic [ref=e958]: Save 20%
+                - generic [ref=e959]:
+                  - generic [ref=e961]:
+                    - generic [ref=e962]:
+                      - generic [ref=e964]:
+                        - generic [ref=e965]: ₹
+                        - generic [ref=e966]: 3,059.00
+                      - img [ref=e969] [cursor=pointer]
+                    - generic [ref=e974]:
+                      - generic [ref=e975]: ₹
+                      - generic [ref=e976]: 2,449.00
+                      - generic [ref=e977]: /1st yr
+                  - button "Buy now" [ref=e978] [cursor=pointer]:
+                    - generic [ref=e979]: Buy now
+            - generic [ref=e982]:
+              - heading "AI generated alternatives" [level=3] [ref=e984]:
+                - text: AI generated alternatives
+                - img [ref=e986] [cursor=pointer]
+              - generic [ref=e994]:
+                - generic [ref=e998]:
+                  - heading "seoinsight.dev" [level=4] [ref=e999]:
+                    - generic [ref=e1000]:
+                      - img [ref=e1001]
+                      - generic [ref=e1003]:
+                        - text: seoinsight
+                        - text: .dev
+                  - generic [ref=e1006]: Save 12%
+                - generic [ref=e1007]:
+                  - generic [ref=e1009]:
+                    - generic [ref=e1010]:
+                      - generic [ref=e1012]:
+                        - generic [ref=e1013]: ₹
+                        - generic [ref=e1014]: 1,399.00
+                      - img [ref=e1017] [cursor=pointer]
+                    - generic [ref=e1022]:
+                      - generic [ref=e1023]: ₹
+                      - generic [ref=e1024]: 1,229.00
+                      - generic [ref=e1025]: /1st yr
+                  - button "Buy now" [ref=e1026] [cursor=pointer]:
+                    - generic [ref=e1027]: Buy now
+              - generic [ref=e1033]:
+                - generic [ref=e1037]:
+                  - heading "auditseokey.com" [level=4] [ref=e1038]:
+                    - generic [ref=e1039]:
+                      - img [ref=e1040]
+                      - generic [ref=e1042]:
+                        - text: auditseokey
+                        - text: .com
+                    - img [ref=e1044] [cursor=pointer]
+                  - generic [ref=e1049]: Save 85%
+                - generic [ref=e1050]:
+                  - generic [ref=e1052]:
+                    - generic [ref=e1053]:
+                      - generic [ref=e1055]:
+                        - generic [ref=e1056]: ₹
+                        - generic [ref=e1057]: 1,299.00
+                      - img [ref=e1060] [cursor=pointer]
+                    - generic [ref=e1065]:
+                      - generic [ref=e1066]: ₹
+                      - generic [ref=e1067]: "199.00"
+                      - generic [ref=e1068]: /1st yr
+                  - button "Buy now" [ref=e1069] [cursor=pointer]:
+                    - generic [ref=e1070]: Buy now
+      - contentinfo [ref=e1071]:
+        - generic [ref=e1073]:
+          - generic [ref=e1075]:
+            - link "Hostinger" [ref=e1076] [cursor=pointer]:
+              - /url: /in/
+            - img [ref=e1077]
+            - generic [ref=e1079]: Domain name results
+          - generic [ref=e1081]:
+            - generic [ref=e1083]:
+              - generic [ref=e1084]: Hosting
+              - link "Web hosting" [ref=e1085] [cursor=pointer]:
+                - /url: /in/web-hosting
+              - link "WordPress Hosting" [ref=e1086] [cursor=pointer]:
+                - /url: /in/wordpress-hosting
+              - link "VPS hosting" [ref=e1087] [cursor=pointer]:
+                - /url: /in/vps-hosting
+              - link "Self-hosted n8n" [ref=e1088] [cursor=pointer]:
+                - /url: /in/self-hosted-n8n
+              - link "Business email" [ref=e1089] [cursor=pointer]:
+                - /url: /in/business-email
+              - link "Cloud hosting" [ref=e1090] [cursor=pointer]:
+                - /url: /in/cloud-hosting
+              - link "Hosting for WooCommerce" [ref=e1091] [cursor=pointer]:
+                - /url: /in/woocommerce-hosting
+              - link "Hosting for agencies" [ref=e1092] [cursor=pointer]:
+                - /url: /in/pro
+              - link "Hytale server hosting" [ref=e1093] [cursor=pointer]:
+                - /url: /in/vps/hytale-hosting
+              - link "Minecraft hosting" [ref=e1094] [cursor=pointer]:
+                - /url: /in/vps/minecraft-hosting
+              - link "Game server hosting" [ref=e1095] [cursor=pointer]:
+                - /url: /in/vps/game-server-hosting
+              - link "OpenClaw" [ref=e1096] [cursor=pointer]:
+                - /url: /in/vps/docker/openclaw
+              - link "Google Workspace" [ref=e1097] [cursor=pointer]:
+                - /url: /in/google-workspace
+            - generic [ref=e1099]:
+              - generic [ref=e1100]: Domain
+              - link "Domains" [ref=e1101] [cursor=pointer]:
+                - /url: /in/domain-name-search
+              - link "Cheap domains" [ref=e1102] [cursor=pointer]:
+                - /url: /in/cheap-domain
+              - link "Free Domain Name" [ref=e1103] [cursor=pointer]:
+                - /url: /in/free-domain
+              - link "WHOIS Lookup" [ref=e1104] [cursor=pointer]:
+                - /url: /in/whois
+              - link "Free SSL certificate" [ref=e1105] [cursor=pointer]:
+                - /url: /in/free-ssl-certificate
+              - link "Domain transfer" [ref=e1106] [cursor=pointer]:
+                - /url: /in/domain-transfer
+              - link "Domain Extensions" [ref=e1107] [cursor=pointer]:
+                - /url: /in/tld
+              - link "Personal domain name" [ref=e1108] [cursor=pointer]:
+                - /url: /in/personal-domain-name
+              - link "Premium domains" [ref=e1109] [cursor=pointer]:
+                - /url: /in/premium-domains
+            - generic [ref=e1111]:
+              - generic [ref=e1112]: Tools
+              - link "Hostinger Horizons" [ref=e1113] [cursor=pointer]:
+                - /url: /in/horizons
+              - link "Website Builder" [ref=e1114] [cursor=pointer]:
+                - /url: /in/website-builder
+              - link "AI Website Builder" [ref=e1115] [cursor=pointer]:
+                - /url: /in/ai-website-builder
+              - link "Ecommerce Website Builder" [ref=e1116] [cursor=pointer]:
+                - /url: /in/ecommerce-website
+              - link "Domain Name Generator" [ref=e1117] [cursor=pointer]:
+                - /url: /in/domain-name-generator
+              - link "Print on Demand" [ref=e1118] [cursor=pointer]:
+                - /url: /in/print-on-demand
+              - link "Link in bio" [ref=e1119] [cursor=pointer]:
+                - /url: /in/link-in-bio
+              - link "Business Name Generator" [ref=e1120] [cursor=pointer]:
+                - /url: /in/business-name-generator
+              - link "AI Logo Generator" [ref=e1121] [cursor=pointer]:
+                - /url: /in/logo-maker
+              - link "Migrate to Hostinger" [ref=e1122] [cursor=pointer]:
+                - /url: /in/website-migration
+              - link "Hostinger API" [ref=e1123] [cursor=pointer]:
+                - /url: https://developers.hostinger.com/
+            - generic [ref=e1125]:
+              - generic [ref=e1126]: Information
+              - link "Pricing" [ref=e1127] [cursor=pointer]:
+                - /url: /in/pricing
+              - link "Hostinger Reviews" [ref=e1128] [cursor=pointer]:
+                - /url: /in/reviews
+              - link "Affiliate program" [ref=e1129] [cursor=pointer]:
+                - /url: /in/affiliates
+              - link "Referral program" [ref=e1130] [cursor=pointer]:
+                - /url: /in/referral-program
+              - link "Roadmap" [ref=e1131] [cursor=pointer]:
+                - /url: https://roadmap.hostinger.com/
+              - link "Rewards" [ref=e1132] [cursor=pointer]:
+                - /url: /in/rewards
+              - link "System status" [ref=e1133] [cursor=pointer]:
+                - /url: https://statuspage.hostinger.com/
+              - link "Sitemap" [ref=e1134] [cursor=pointer]:
+                - /url: /in/sitemap
+            - generic [ref=e1136]:
+              - generic [ref=e1137]: Company
+              - link "About Hostinger" [ref=e1138] [cursor=pointer]:
+                - /url: /in/about
+              - link "Our technology" [ref=e1139] [cursor=pointer]:
+                - /url: /in/technology
+              - link "Blog" [ref=e1140] [cursor=pointer]:
+                - /url: https://www.hostinger.com/blog/
+              - link "Student discount" [ref=e1141] [cursor=pointer]:
+                - /url: /in/student-discount
+            - generic [ref=e1143]:
+              - generic [ref=e1144]: Support
+              - link "Tutorials" [ref=e1145] [cursor=pointer]:
+                - /url: https://www.hostinger.com/in/tutorials/
+              - link "Knowledge Base" [ref=e1146] [cursor=pointer]:
+                - /url: https://www.hostinger.com/support
+              - link "Hostinger Academy" [ref=e1147] [cursor=pointer]:
+                - /url: https://www.youtube.com/HostingerIndia
+              - link "Contact us" [ref=e1148] [cursor=pointer]:
+                - /url: /in/contacts
+              - link "Report Online Abuse" [ref=e1149] [cursor=pointer]:
+                - /url: /in/report-abuse
+          - generic [ref=e1150]:
+            - generic [ref=e1151]:
+              - link "SvgoLinkedin24" [ref=e1152] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/hostinger
+                - img [ref=e1153]
+              - link "SvgoFacebook24" [ref=e1155] [cursor=pointer]:
+                - /url: https://www.facebook.com/Hostinger
+                - img [ref=e1156]
+              - link "SvgoInstagram24" [ref=e1158] [cursor=pointer]:
+                - /url: https://www.instagram.com/hostinger_global
+                - img [ref=e1159]
+              - link "SvgoTwitter24" [ref=e1162] [cursor=pointer]:
+                - /url: https://x.com/Hostinger
+                - img [ref=e1163]
+              - link "SvgoYoutube24" [ref=e1166] [cursor=pointer]:
+                - /url: https://www.youtube.com/@Hostinger
+                - img [ref=e1167]
+              - link "SvgoReddit24" [ref=e1170] [cursor=pointer]:
+                - /url: https://www.reddit.com/r/Hostinger/
+                - img [ref=e1171]
+              - link "SvgoTiktok24" [ref=e1173] [cursor=pointer]:
+                - /url: https://www.tiktok.com/@hostingeracademy
+                - img [ref=e1174]
+            - link "homepage link" [ref=e1176] [cursor=pointer]:
+              - /url: ""
+              - img [ref=e1177]
+            - generic [ref=e1185]:
+              - link "NPRD request policy" [ref=e1186] [cursor=pointer]:
+                - /url: /in/legal/non-public-registrant-data-request-policy
+              - link "Privacy policy" [ref=e1187] [cursor=pointer]:
+                - /url: /in/legal/privacy-policy
+              - link "Refund policy" [ref=e1188] [cursor=pointer]:
+                - /url: /in/legal/refund-policy
+              - link "Terms of service" [ref=e1189] [cursor=pointer]:
+                - /url: /in/legal/universal-terms-of-service-agreement
+            - generic [ref=e1190]:
+              - generic:
+                - img "visa"
+              - generic:
+                - img "mastercard"
+              - generic:
+                - img "discover"
+              - generic:
+                - img "dinersclub"
+              - generic:
+                - img "rupay"
+              - link "and more" [ref=e1191] [cursor=pointer]:
+                - /url: /in/payment-methods
+          - generic [ref=e1192]:
+            - generic [ref=e1193]: © 2004-2026 Hostinger - Premium Web Hosting, Cloud, VPS, AI Website Builder & Domain Registration Services.
+            - paragraph [ref=e1194]: Prices are listed without GST
+    - generic [ref=e1195]:
+      - generic [ref=e1201]:
+        - generic [ref=e1202]:
+          - heading "Kodee" [level=4] [ref=e1203]
+          - button "Hide" [ref=e1205] [cursor=pointer]:
+            - img [ref=e1206]
+        - generic [ref=e1208]:
+          - generic [ref=e1209]:
+            - img [ref=e1210]
+            - heading "Hello 👋" [level=2] [ref=e1212]
+            - heading "How can I help you today?" [level=3] [ref=e1213]
+          - list [ref=e1215]:
+            - listitem [ref=e1216]:
+              - button "I want to migrate to Hostinger" [ref=e1217] [cursor=pointer]:
+                - img [ref=e1219]
+                - heading "I want to migrate to Hostinger" [level=4] [ref=e1222]
+            - listitem [ref=e1223]:
+              - button "I want to create a website" [ref=e1224] [cursor=pointer]:
+                - img [ref=e1226]
+                - heading "I want to create a website" [level=4] [ref=e1229]
+            - listitem [ref=e1230]:
+              - button "I need help choosing the right hosting plan" [ref=e1231] [cursor=pointer]:
+                - img [ref=e1233]
+                - heading "I need help choosing the right hosting plan" [level=4] [ref=e1236]
+        - generic [ref=e1237]:
+          - generic [ref=e1239]:
+            - textbox "Ask Kodee anything..." [active] [ref=e1240]
+            - button "Send" [disabled] [ref=e1243]:
+              - img [ref=e1244]
+          - generic [ref=e1246]: Kodee can make mistakes. Double-check replies.
+      - generic [ref=e1196] [cursor=pointer]:
+        - img [ref=e1197]
+        - generic [ref=e1199]: Ask Kodee
+  - img

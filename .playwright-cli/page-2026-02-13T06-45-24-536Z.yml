@@ -1,0 +1,8 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - img [ref=e7] [cursor=pointer]
+    - generic [ref=e15] [cursor=pointer]:
+      - img [ref=e16]
+      - generic [ref=e18]: Ask Kodee
+  - img
