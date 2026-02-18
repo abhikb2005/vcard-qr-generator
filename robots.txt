@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.vcardqrcodegenerator.com/sitemap.xml
+Sitemap: https://vcardqrcodegenerator.com/sitemap.xml
