@@ -1,0 +1,212 @@
+[
+    {
+        "job": "Real Estate Agent",
+        "city": "New York",
+        "slug": "real-estate-agent-new-york",
+        "searchVolume": "High",
+        "intent": "Transactional"
+    },
+    {
+        "job": "Real Estate Agent",
+        "city": "Los Angeles",
+        "slug": "real-estate-agent-los-angeles",
+        "searchVolume": "High",
+        "intent": "Transactional"
+    },
+    {
+        "job": "Real Estate Agent",
+        "city": "Chicago",
+        "slug": "real-estate-agent-chicago",
+        "searchVolume": "Medium",
+        "intent": "Transactional"
+    },
+    {
+        "job": "Real Estate Agent",
+        "city": "Houston",
+        "slug": "real-estate-agent-houston",
+        "searchVolume": "Medium",
+        "intent": "Transactional"
+    },
+    {
+        "job": "Real Estate Agent",
+        "city": "Miami",
+        "slug": "real-estate-agent-miami",
+        "searchVolume": "High",
+        "intent": "Transactional"
+    },
+    {
+        "job": "Sales Representative",
+        "city": "New York",
+        "slug": "sales-representative-new-york",
+        "searchVolume": "High",
+        "intent": "Lead Gen"
+    },
+    {
+        "job": "Sales Representative",
+        "city": "Los Angeles",
+        "slug": "sales-representative-los-angeles",
+        "searchVolume": "Medium",
+        "intent": "Lead Gen"
+    },
+    {
+        "job": "Recruiter",
+        "city": "New York",
+        "slug": "recruiter-new-york",
+        "searchVolume": "High",
+        "intent": "Networking"
+    },
+    {
+        "job": "Recruiter",
+        "city": "San Francisco",
+        "slug": "recruiter-san-francisco",
+        "searchVolume": "High",
+        "intent": "Networking"
+    },
+    {
+        "job": "Recruiter",
+        "city": "Austin",
+        "slug": "recruiter-austin",
+        "searchVolume": "Medium",
+        "intent": "Networking"
+    },
+    {
+        "job": "Event Planner",
+        "city": "Las Vegas",
+        "slug": "event-planner-las-vegas",
+        "searchVolume": "High",
+        "intent": "Service"
+    },
+    {
+        "job": "Event Planner",
+        "city": "New York",
+        "slug": "event-planner-new-york",
+        "searchVolume": "High",
+        "intent": "Service"
+    },
+    {
+        "job": "Wedding Planner",
+        "city": "Los Angeles",
+        "slug": "wedding-planner-los-angeles",
+        "searchVolume": "High",
+        "intent": "Service"
+    },
+    {
+        "job": "Photographer",
+        "city": "New York",
+        "slug": "photographer-new-york",
+        "searchVolume": "High",
+        "intent": "Portfolio"
+    },
+    {
+        "job": "Photographer",
+        "city": "Los Angeles",
+        "slug": "photographer-los-angeles",
+        "searchVolume": "High",
+        "intent": "Portfolio"
+    },
+    {
+        "job": "Independent Consultant",
+        "city": "Washington DC",
+        "slug": "independent-consultant-washington-dc",
+        "searchVolume": "Medium",
+        "intent": "B2B"
+    },
+    {
+        "job": "Financial Advisor",
+        "city": "New York",
+        "slug": "financial-advisor-new-york",
+        "searchVolume": "High",
+        "intent": "Trust"
+    },
+    {
+        "job": "Insurance Agent",
+        "city": "Dallas",
+        "slug": "insurance-agent-dallas",
+        "searchVolume": "Medium",
+        "intent": "Trust"
+    },
+    {
+        "job": "Personal Trainer",
+        "city": "Miami",
+        "slug": "personal-trainer-miami",
+        "searchVolume": "High",
+        "intent": "Local Service"
+    },
+    {
+        "job": "Personal Trainer",
+        "city": "Los Angeles",
+        "slug": "personal-trainer-los-angeles",
+        "searchVolume": "High",
+        "intent": "Local Service"
+    },
+    {
+        "job": "Hair Stylist",
+        "city": "New York",
+        "slug": "hair-stylist-new-york",
+        "searchVolume": "High",
+        "intent": "Local Service"
+    },
+    {
+        "job": "Makeup Artist",
+        "city": "Los Angeles",
+        "slug": "makeup-artist-los-angeles",
+        "searchVolume": "High",
+        "intent": "Local Service"
+    },
+    {
+        "job": "Yoga Instructor",
+        "city": "Austin",
+        "slug": "yoga-instructor-austin",
+        "searchVolume": "Medium",
+        "intent": "Local Service"
+    },
+    {
+        "job": "Psychologist",
+        "city": "New York",
+        "slug": "psychologist-new-york",
+        "searchVolume": "Medium",
+        "intent": "Healthcare"
+    },
+    {
+        "job": "Chiropractor",
+        "city": "Los Angeles",
+        "slug": "chiropractor-los-angeles",
+        "searchVolume": "Medium",
+        "intent": "Healthcare"
+    },
+    {
+        "job": "Plumber",
+        "city": "Chicago",
+        "slug": "plumber-chicago",
+        "searchVolume": "High",
+        "intent": "Emergency"
+    },
+    {
+        "job": "Electrician",
+        "city": "Houston",
+        "slug": "electrician-houston",
+        "searchVolume": "High",
+        "intent": "Emergency"
+    },
+    {
+        "job": "Landscaper",
+        "city": "Phoenix",
+        "slug": "landscaper-phoenix",
+        "searchVolume": "Medium",
+        "intent": "Local Service"
+    },
+    {
+        "job": "Interior Designer",
+        "city": "New York",
+        "slug": "interior-designer-new-york",
+        "searchVolume": "High",
+        "intent": "Portfolio"
+    },
+    {
+        "job": "Graphic Designer",
+        "city": "San Francisco",
+        "slug": "graphic-designer-san-francisco",
+        "searchVolume": "Medium",
+        "intent": "Portfolio"
+    }
+]
