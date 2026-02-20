@@ -54,7 +54,10 @@
 - [ ] A/B test pricing tiers ($9 vs $19)
 
 ### SEO
-- [ ] Internal linking between blog posts
+- [x] Internal linking between blog posts (Related Resources added to all 35 posts)
+- [x] Homepage SEO: title tag, meta description, H1 optimized for "free vcard qr code generator"
+- [x] Backlink strategy created (data/backlink-strategy.md)
+- [ ] Execute backlink strategy Tier 1 (tool directory submissions)
 - [ ] Glasp SEO backlink strategy (needs account setup, extension install, whitelisting)
 
 ### Marketing — Daily Promo Queue
