@@ -23,9 +23,40 @@ const staticPages = [
     '/privacy-policy.html',
     '/terms-of-service.html',
     '/contact.html',
-    // Blog posts if known, e.g.,
-    '/blog/qr-code-and-vcard-guide/'
+    '/blogs/',
 ];
+
+// Auto-discover blog posts from blog/ directory
+const blogDir = path.join(__dirname, 'blog');
+let blogPosts = [];
+try {
+    blogPosts = fs.readdirSync(blogDir)
+        .filter(entry => fs.statSync(path.join(blogDir, entry)).isDirectory())
+        .filter(entry => fs.existsSync(path.join(blogDir, entry, 'index.html')))
+        .map(entry => `/blog/${entry}/`);
+    console.log(`Found ${blogPosts.length} blog posts`);
+} catch (error) {
+    console.warn('Could not scan blog directory:', error.message);
+}
+
+// pSEO alternatives & industries pages
+const pSeoExtra = [];
+const altDir = path.join(__dirname, 'p', 'alternatives');
+const indDir = path.join(__dirname, 'p', 'industries');
+try {
+    if (fs.existsSync(altDir)) {
+        fs.readdirSync(altDir)
+            .filter(f => f.endsWith('.html'))
+            .forEach(f => pSeoExtra.push(`/p/alternatives/${f.replace('.html', '')}/`));
+    }
+    if (fs.existsSync(indDir)) {
+        fs.readdirSync(indDir)
+            .filter(f => f.endsWith('.html'))
+            .forEach(f => pSeoExtra.push(`/p/industries/${f.replace('.html', '')}/`));
+    }
+} catch (error) {
+    console.warn('Could not scan p/ subdirectories:', error.message);
+}
 
 let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
 xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
@@ -39,12 +70,34 @@ staticPages.forEach(page => {
     xml += '  </url>\n';
 });
 
-// pSEO pages
+// Blog posts
+if (blogPosts.length > 0) {
+    console.log(`Adding ${blogPosts.length} blog posts...`);
+    blogPosts.forEach(page => {
+        xml += '  <url>\n';
+        xml += `    <loc>${domain}${page}</loc>\n`;
+        xml += `    <lastmod>${lastmod}</lastmod>\n`;
+        xml += '  </url>\n';
+    });
+}
+
+// pSEO job+city pages
 if (keywords.length > 0) {
     console.log(`Adding ${keywords.length} pSEO pages...`);
     keywords.forEach(k => {
         xml += '  <url>\n';
         xml += `    <loc>${domain}/p/${k.slug}/</loc>\n`;
+        xml += `    <lastmod>${lastmod}</lastmod>\n`;
+        xml += '  </url>\n';
+    });
+}
+
+// pSEO alternatives & industries pages
+if (pSeoExtra.length > 0) {
+    console.log(`Adding ${pSeoExtra.length} pSEO extra pages...`);
+    pSeoExtra.forEach(page => {
+        xml += '  <url>\n';
+        xml += `    <loc>${domain}${page}</loc>\n`;
         xml += `    <lastmod>${lastmod}</lastmod>\n`;
         xml += '  </url>\n';
     });
