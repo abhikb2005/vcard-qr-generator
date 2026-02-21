@@ -1,0 +1,13 @@
+{
+  "servers": {
+    "gscServer": {
+      "command": "C:\\Users\\abhik\\OneDrive\\Documents\\GitHub\\vcard-qr-generator\\mcp-gsc\\.venv\\Scripts\\python.exe",
+      "args": [
+        "C:\\Users\\abhik\\OneDrive\\Documents\\GitHub\\vcard-qr-generator\\mcp-gsc\\gsc_server.py"
+      ],
+      "env": {
+        "GSC_OAUTH_CLIENT_SECRETS_FILE": "C:\\Users\\abhik\\Downloads\\vCard_GSC_client_secret_643279969936-4sfjl3q1fg5gt25uvvlsnanvkgk4srvj.apps.googleusercontent.com.json"
+      }
+    }
+  }
+}
