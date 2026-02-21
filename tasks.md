@@ -57,8 +57,25 @@
 - [x] Internal linking between blog posts (Related Resources added to all 35 posts)
 - [x] Homepage SEO: title tag, meta description, H1 optimized for "free vcard qr code generator"
 - [x] Backlink strategy created (data/backlink-strategy.md)
-- [ ] Execute backlink strategy Tier 1 (tool directory submissions)
+- [x] pSEO fixes: canonical tags on 30 pages, sitemap (75 URLs), hub page, footer links, localhost URL fixes
+- [ ] Execute backlink strategy Tier 1 (tool directory submissions — manual, user does this)
 - [ ] Glasp SEO backlink strategy (needs account setup, extension install, whitelisting)
+
+### SEO Sprint — Execute Sequentially (Next Thread)
+> **Instructions:** Execute these tasks IN ORDER, one at a time. Each builds on the previous.
+> Repo: C:\Users\abhik\OneDrive\Documents\GitHub\vcard-qr-generator
+> Site: https://www.vcardqrcodegenerator.com (Cloudflare Pages, static HTML/JS)
+> Other agents work on this repo — only commit files YOU change. Never use `git add -A`.
+
+1. [ ] **Add FAQ JSON-LD schema to pSEO pages** — The 30 job+city pages under `p/` have FAQ sections in the HTML but no structured data markup. Add `<script type="application/ld+json">` FAQ schema to each page (same pattern used in `blog/vcard-qr-code/index.html`). This enables rich snippets in Google. Files are minified single-line HTML.
+
+2. [ ] **Technical SEO audit & fixes** — Check robots.txt for issues. Check if pSEO pages load unnecessary Next.js JS bundles that hurt Core Web Vitals. Check for missing alt tags on images, broken internal links. Fix what you find.
+
+3. [ ] **Reddit post drafts** — Write ready-to-paste posts for 6 pending subreddits: r/SideProject, r/InternetIsBeautiful, r/Entrepreneur, r/freelance, r/realtors, r/sales. Save to `data/reddit-post-drafts.md`. Each post should be natural, value-first (not spammy), and tailored to the subreddit's culture. Include the URL naturally.
+
+4. [ ] **Content gap analysis via GSC** — Connect to GSC via the Python MCP server at `mcp-gsc/` (OAuth credentials and token.json already set up). Query for impressions by page and by query for the last 90 days. Identify queries getting impressions but no dedicated blog content. Suggest 5 new blog post topics with target keywords.
+
+5. [ ] **Execute backlink strategy Tier 1 prep** — For each of the 13 tool directories in `data/backlink-strategy.md`, prepare the submission info (site name, URL, description, category) in a copy-paste-ready format saved to `data/directory-submissions.md`. User will submit manually.
 
 ### Marketing — Daily Promo Queue
 - [ ] r/SideProject
