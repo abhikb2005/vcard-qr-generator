@@ -7,13 +7,13 @@ import ComparisonPage from '@/templates/ComparisonPage';
 // Define params type for Next.js 15 (which create-next-app likely installed)
 // Next.js 15 types params as a Promise
 type Props = {
-    params: Promise<{ category: string; slug: string }>;
+    params: Promise<{ category: string; categorySlug: string }>;
 };
 
 // 1. Generate Metadata dynamically
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { category, slug } = await params;
-    const page = await getPageBySlug(slug);
+    const { category, categorySlug } = await params;
+    const page = await getPageBySlug(categorySlug);
 
     if (!page || page.category !== category) {
         return {
@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // 2. Main Page Component
 export default async function Page({ params }: Props) {
-    const { category, slug } = await params;
-    const page = await getPageBySlug(slug);
+    const { category, categorySlug } = await params;
+    const page = await getPageBySlug(categorySlug);
 
     if (!page || page.category !== category) {
         notFound();
@@ -45,6 +45,6 @@ export async function generateStaticParams() {
     const pages = await getAllSlugs();
     return pages.map((page) => ({
         category: page.category,
-        slug: page.slug,
+        categorySlug: page.slug,
     }));
 }
