@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import CreateQrForm from '@/components/CreateQrForm'
 import LogoutButton from '@/components/LogoutButton'
@@ -17,11 +17,24 @@ const LIMITS = {
 }
 
 export default function DashboardPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center">
+                <ArrowPathIcon className="w-8 h-8 animate-spin text-indigo-600" />
+            </div>
+        }>
+            <Dashboard />
+        </Suspense>
+    )
+}
+
+function Dashboard() {
     const [user, setUser] = useState<any>(null)
     const [profile, setProfile] = useState<any>(null)
     const [qrCodes, setQrCodes] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const [verifyingPayment, setVerifyingPayment] = useState(false)
+    const [origin, setOrigin] = useState('')
 
     // Pricing Modal State
     const [showPricing, setShowPricing] = useState(false)
@@ -39,6 +52,7 @@ export default function DashboardPage() {
                 return
             }
             setUser(user)
+            setOrigin(window.location.origin)
 
             // Fetch Profile (Subscription)
             const { data: profileData } = await supabase
@@ -125,7 +139,11 @@ export default function DashboardPage() {
     const used = qrCodes.length
     const isLimitReached = used >= limit
 
-    if (loading) return <div className="min-h-screen flex items-center justify-center"><ArrowPathIcon className="w-8 h-8 animate-spin text-indigo-600" /></div>
+    if (loading) return (
+        <div className="min-h-screen flex items-center justify-center">
+            <ArrowPathIcon className="w-8 h-8 animate-spin text-indigo-600" />
+        </div>
+    )
 
     if (verifyingPayment) return (
         <div className="min-h-screen flex flex-col items-center justify-center space-y-4">
@@ -312,7 +330,7 @@ export default function DashboardPage() {
                                                 {/* QR Code Canvas */}
                                                 <div className="flex-shrink-0 bg-white p-2 border border-gray-100 rounded-lg">
                                                     <QRCodeCanvas
-                                                        value={`${window.location.origin}/u/${qr.short_code}`}
+                                                        value={`${origin}/u/${qr.short_code}`}
                                                         size={120}
                                                         level={"H"}
                                                         includeMargin={true}
@@ -343,7 +361,7 @@ export default function DashboardPage() {
 
                                                         <div className="flex items-center gap-2">
                                                             <div className="flex items-center text-xs text-indigo-600 font-mono bg-indigo-50 border border-indigo-100 px-2 py-1 rounded-md">
-                                                                <span className="select-all">{window.location.origin}/u/{qr.short_code}</span>
+                                                                <span className="select-all">{origin}/u/{qr.short_code}</span>
                                                             </div>
                                                             {qr.alias && (
                                                                 <div className="flex items-center text-xs text-purple-600 font-mono bg-purple-50 border border-purple-100 px-2 py-1 rounded-md" title="Custom Alias">
