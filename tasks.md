@@ -67,15 +67,15 @@
 > Site: https://www.vcardqrcodegenerator.com (Cloudflare Pages, static HTML/JS)
 > Other agents work on this repo — only commit files YOU change. Never use `git add -A`.
 
-1. [ ] **Add FAQ JSON-LD schema to pSEO pages** — The 30 job+city pages under `p/` have FAQ sections in the HTML but no structured data markup. Add `<script type="application/ld+json">` FAQ schema to each page (same pattern used in `blog/vcard-qr-code/index.html`). This enables rich snippets in Google. Files are minified single-line HTML.
+1. [x] **Add FAQ JSON-LD schema to pSEO pages** — Added FAQ structured data to all 30 job+city pages under `p/`. Each page now has 3 FAQ items in JSON-LD format for rich snippet eligibility.
 
-2. [ ] **Technical SEO audit & fixes** — Check robots.txt for issues. Check if pSEO pages load unnecessary Next.js JS bundles that hurt Core Web Vitals. Check for missing alt tags on images, broken internal links. Fix what you find.
+2. [x] **Technical SEO audit & fixes** — Fixed robots.txt (removed duplicate non-www sitemap). Stripped 9 unnecessary Next.js JS bundles from all 30 pSEO pages (saved 506 KB / 64% page weight reduction). No missing alt tags or localhost URLs in deployed pages.
 
-3. [ ] **Reddit post drafts** — Write ready-to-paste posts for 6 pending subreddits: r/SideProject, r/InternetIsBeautiful, r/Entrepreneur, r/freelance, r/realtors, r/sales. Save to `data/reddit-post-drafts.md`. Each post should be natural, value-first (not spammy), and tailored to the subreddit's culture. Include the URL naturally.
+3. [x] **Reddit post drafts** — Created ready-to-paste posts for 6 subreddits (r/SideProject, r/InternetIsBeautiful, r/Entrepreneur, r/freelance, r/realtors, r/sales). Saved to `data/reddit-post-drafts.md`.
 
-4. [ ] **Content gap analysis via GSC** — Connect to GSC via the Python MCP server at `mcp-gsc/` (OAuth credentials and token.json already set up). Query for impressions by page and by query for the last 90 days. Identify queries getting impressions but no dedicated blog content. Suggest 5 new blog post topics with target keywords.
+4. [x] **Content gap analysis via GSC** — Queried GSC for 90-day data. Top gap: "business card qr code generator" cluster (~400 impressions, no blog post). Recommended 5 new blog topics. Report saved to `data/content-gap-analysis.md`.
 
-5. [ ] **Execute backlink strategy Tier 1 prep** — For each of the 13 tool directories in `data/backlink-strategy.md`, prepare the submission info (site name, URL, description, category) in a copy-paste-ready format saved to `data/directory-submissions.md`. User will submit manually.
+5. [x] **Execute backlink strategy Tier 1 prep** — Prepared copy-paste submission info for all 13 tool directories with names, descriptions, categories, and checklist. Saved to `data/directory-submissions.md`.
 
 ### Marketing — Daily Promo Queue
 - [ ] r/SideProject
@@ -91,6 +91,13 @@
 - [ ] Daily: Research keywords and generate a blog post
   - Tools: Google Trends, AnswerThePublic, Ubersuggest, QuestionDB
   - Trigger: Say "blog" to start
+
+### Standing Instructions (Recurring)
+> **These tasks repeat on a schedule. Execute when triggered or when starting a new thread.**
+
+1. **Daily: Competitor "Alternative" Blog Post** — Create one competitor comparison blog post per day from the schedule at `data/competitor-blog-schedule.md`. Follow the template pattern in `blog/qr-io-alternative/index.html`. Add to sitemap.xml and blog_index.json. Mark the competitor as done in the schedule. Next up: Scanova (Feb 23).
+
+2. **Weekly (every Monday): GSC Performance Check** — Run `mcp-gsc/traffic_check.py` to pull the latest Google Search Console data. Compare impressions, clicks, position trends vs. prior week. Report findings and flag any ranking drops or new opportunities. Last checked: Feb 22, 2026.
 
 ### Infrastructure & Secrets
 - [ ] Rotate leaked API keys
