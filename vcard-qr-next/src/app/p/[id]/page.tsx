@@ -1,4 +1,7 @@
 import { notFound } from 'next/navigation'
+
+export const dynamic = 'force-dynamic'
+
 import { createClient } from '@/utils/supabase/server'
 import { UserCircleIcon, PhoneIcon, EnvelopeIcon, MapPinIcon, GlobeAltIcon, ArrowDownTrayIcon, ShareIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'

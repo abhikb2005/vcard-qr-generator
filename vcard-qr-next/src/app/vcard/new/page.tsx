@@ -1,4 +1,7 @@
 import { redirect } from 'next/navigation'
+
+export const dynamic = 'force-dynamic'
+
 import { createClient } from '@/utils/supabase/server'
 import VCardForm from '@/components/VCardForm'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
