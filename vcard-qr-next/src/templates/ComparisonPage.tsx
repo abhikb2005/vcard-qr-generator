@@ -62,7 +62,7 @@ export default function ComparisonPage({ page }: ComparisonPageProps) {
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {relatedSlugs.map((slug) => (
                             <li key={slug}>
-                                <Link href={`/${category}/${slug}`} className="text-blue-600 hover:underline block p-2 hover:bg-blue-50 rounded">
+                                <Link href={`/comparison/${slug}`} className="text-blue-600 hover:underline block p-2 hover:bg-blue-50 rounded">
                                     {slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                                 </Link>
                             </li>
