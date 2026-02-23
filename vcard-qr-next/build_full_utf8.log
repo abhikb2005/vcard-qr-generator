@@ -1,0 +1,41 @@
+﻿
+> vcard-qr-next@0.1.0 build
+> next build
+
+   Γû▓ Next.js 15.5.12
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 10.3s
+   Skipping validation of types
+   Skipping linting
+   Collecting page data ...
+   Generating static pages (0/8) ...
+   Generating static pages (2/8) 
+   Generating static pages (4/8) 
+   Generating static pages (6/8) 
+ Γ£ô Generating static pages (8/8)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+Γöî Γùï /                                    5.46 kB         108 kB
+Γö£ Γùï /_not-found                            994 B         103 kB
+Γö£ ╞Æ /api/subscription/checkout             132 B         102 kB
+Γö£ ╞Æ /api/subscription/verify               132 B         102 kB
+Γö£ ╞Æ /auth/callback                         132 B         102 kB
+Γö£ ╞Æ /comparison/[slug]                     165 B         106 kB
+Γö£ ╞Æ /dashboard                           12.4 kB         172 kB
+Γö£ Γùï /login                               2.28 kB         162 kB
+Γö£ ╞Æ /p/[id]                                165 B         106 kB
+Γö£ ╞Æ /u/[shortId]                           132 B         102 kB
+Γöö ╞Æ /vcard/new                           3.59 kB         163 kB
++ First Load JS shared by all             102 kB
+  Γö£ chunks/255-ebd51be49873d76c.js         46 kB
+  Γö£ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  Γöö other shared chunks (total)          1.99 kB
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+

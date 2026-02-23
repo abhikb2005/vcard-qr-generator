@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { UserIcon, PhoneIcon, EnvelopeIcon, BriefcaseIcon, MapPinIcon, GlobeAltIcon, ArrowPathIcon, CheckIcon } from '@heroicons/react/24/outline'
@@ -14,6 +14,13 @@ export default function VCardForm({ userId }: { userId: string }) {
     const supabase = createClient()
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
+    const [origin, setOrigin] = useState('')
+    const [host, setHost] = useState('')
+
+    useEffect(() => {
+        setOrigin(window.location.origin)
+        setHost(window.location.host)
+    }, [])
 
     // vCard Fields State
     const [formData, setFormData] = useState({
@@ -50,7 +57,7 @@ export default function VCardForm({ userId }: { userId: string }) {
         const shortId = generateShortId()
         // The "target_url" for a vCard QR code points to our own profile page
         // We'll use a placeholder for now, or the final public URL structure
-        const publicProfileUrl = `${window.location.origin}/p/${shortId}`
+        const publicProfileUrl = `${origin}/p/${shortId}`
 
         const { error } = await supabase.from('qr_codes').insert({
             user_id: userId,
@@ -93,7 +100,7 @@ export default function VCardForm({ userId }: { userId: string }) {
                         <label className="block text-xs font-medium text-indigo-700 mb-1">Custom Alias (Optional)</label>
                         <div className="relative rounded-md shadow-sm flex">
                             <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-indigo-200 bg-indigo-50 text-gray-500 sm:text-sm">
-                                {window.location.host}/p/
+                                {host || '...'}/p/
                             </span>
                             <input type="text" name="alias" value={formData.alias} onChange={handleInputChange}
                                 className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-indigo-200 text-gray-900 bg-white"
