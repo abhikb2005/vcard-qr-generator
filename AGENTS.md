@@ -13,12 +13,27 @@
 - **Ads:** Google AdSense (ca-pub-1206702185649949)
 - **Consent:** GDPR / Google Consent Mode v2 via `/consent.js` (must load before any tracking scripts)
 
+## ⚠️ FIRST THING: Read the Agent Coordination Board
+
+Before doing ANY work, read **`data/agent-board.md`**. This is a shared message board where agents:
+- Check territory ownership (who owns which files/directories)
+- Read messages from other agents
+- Claim tasks before starting them
+- Log completed work
+
+**You MUST update the board before committing:**
+1. Add your completed work to the "Work Log" table
+2. Post any messages for other agents in the "Messages" section
+3. Check "Active Conflict Alerts" to avoid duplicate effort
+4. Claim any new tasks in "Planned Work" before starting them
+
 ## Critical Rules
 
 ### 1. Git Hygiene — Multiple Agents May Be Working Simultaneously
 - **NEVER use `git add -A` or `git add .`** — other agents or the user may have uncommitted changes
 - Only stage files YOU personally created or modified
 - If you see unexpected changes in the worktree, **ignore them** — do not revert or modify them
+- **Always `git pull` before starting work** to get the latest agent-board.md and avoid conflicts
 
 ### 2. Purchase Power Parity (PPP) — Required on ALL Paid Features
 - Every page with a paid feature or checkout **MUST** include PPP pricing
@@ -71,6 +86,11 @@
 | `consent.js` | GDPR cookie consent script |
 | `workers/` | Cloudflare Workers (F5Bot monitor, etc.) |
 
-## For Humans
+## 🔌 Continuity Keywords
 
-If you're the repo owner: update this file whenever you add new rules, change the tech stack, or want to communicate something to AI agents. This file is automatically read by most AI coding tools.
+To ensure smooth handoffs between different AI agents (like Amp and Antigravity), use the following triggers:
+
+- **"Flipping the Switch"**: Refers to the process of migrating the live site from the static HTML root to the dynamic Next.js application in `vcard-qr-next/`. See `vcard-qr-next/data/pseo_engine_guide.md` for the technical checklist.
+- **"Run pSEO Engine"**: Refers to generating or updating the programmatic SEO pages (comparison pages, city/job landing pages) using the dynamic engine inside the Next.js app.
+
+Read `vcard-qr-next/data/pseo_engine_guide.md` for full technical details before executing these requests.
