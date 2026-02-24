@@ -99,6 +99,8 @@
 
 2. **Weekly (every Monday): GSC Performance Check** — Run `mcp-gsc/traffic_check.py` to pull the latest Google Search Console data. Compare impressions, clicks, position trends vs. prior week. Report findings and flag any ranking drops or new opportunities. Last checked: Feb 22, 2026.
 
+3. **PPP on ALL Paid Products** — Every page that has a paid feature or checkout MUST include Purchase Power Parity (PPP) pricing. Currently implemented on `bulk-qr-code.html` (custom ipapi.co script with coupon codes GLOBAL20–GLOBAL60) and `logo-qr-code.html` (Parity Deals CDN banner). When adding any new paid feature or page, include PPP using one of these approaches. Preferred: the custom ipapi.co script from bulk-qr-code.html (lines 96–210) since it gives full control over discount tiers.
+
 ### Infrastructure & Secrets
 - [ ] Rotate leaked API keys
 - [ ] Configure Cloudflare secrets (GROQ_API_KEY, TELEGRAM_BOT_TOKEN)
