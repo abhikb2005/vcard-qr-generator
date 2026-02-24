@@ -9,8 +9,8 @@
 | # | Day | Competitor | Slug | Status |
 |---|-----|-----------|------|--------|
 | 1 | Feb 22 | QR.io | qr-io-alternative | ✅ Done |
-| 2 | Feb 23 | Scanova | scanova-alternative | ☐ |
-| 3 | Feb 24 | QR Code Generator (generic) | qr-code-generator-alternative | ☐ |
+| 2 | Feb 23 | Scanova | scanova-alternative | ✅ Done |
+| 3 | Feb 24 | QR Code Generator (generic) | qr-code-generator-alternative | ✅ Done |
 | 4 | Feb 25 | Kaywa QR Code | kaywa-alternative | ☐ |
 | 5 | Feb 26 | QRFY | qrfy-alternative | ☐ |
 | 6 | Feb 27 | Yohn.io | yohn-io-alternative | ☐ |
@@ -28,6 +28,18 @@
 | 18 | Mar 11 | Midiacode | midiacode-alternative | ☐ |
 | 19 | Mar 12 | QRCodeFree | qrcodefree-alternative | ☐ |
 | 20 | Mar 13 | QR Studio PRO | qr-studio-pro-alternative | ☐ |
+| 21 | Mar 14 | Contact.et | contact-et-alternative | ☐ |
+| 22 | Mar 15 | QRvCards | qrvcards-alternative | ☐ |
+| 23 | Mar 16 | vCard Garden | vcard-garden-alternative | ☐ |
+| 24 | Mar 17 | Free QR Code Generator (QR Tiger) | qr-tiger-alternative | ☐ |
+| 25 | Mar 18 | free-qr-code-generator.com | free-qr-code-generator-com-alternative | ☐ |
+| 26 | Mar 19 | Free-QR-Code.com | free-qr-code-com-alternative | ☐ |
+| 27 | Mar 20 | Free QR Code Generator Online | free-qr-code-online-alternative | ☐ |
+| 28 | Mar 21 | Free vCard Generator | free-vcard-generator-alternative | ☐ |
+| 29 | Mar 22 | freeqrcode.fr | freeqrcode-fr-alternative | ☐ |
+| 30 | Mar 23 | Free-qr-code.net | free-qr-code-net-alternative | ☐ |
+| 31 | Mar 24 | Online QR Code Image Generator | online-qr-code-image-generator-alternative | ☐ |
+| 32 | Mar 25 | QR Code Generator (Compzets) | compzets-alternative | ☐ |
 
 ## Excluded (not relevant competitors)
 - ShareX, ScreenTray, qscreenshot — screenshot tools, not QR generators

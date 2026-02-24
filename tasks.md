@@ -95,7 +95,7 @@
 ### Standing Instructions (Recurring)
 > **These tasks repeat on a schedule. Execute when triggered or when starting a new thread.**
 
-1. **Daily: Competitor "Alternative" Blog Post** — Create one competitor comparison blog post per day from the schedule at `data/competitor-blog-schedule.md`. Follow the template pattern in `blog/qr-io-alternative/index.html`. Add to sitemap.xml and blog_index.json. Mark the competitor as done in the schedule. Next up: Scanova (Feb 23).
+1. **Daily: Competitor "Alternative" Blog Post** — Create one competitor comparison blog post per day from the schedule at `data/competitor-blog-schedule.md`. Follow the template pattern in `blog/qr-io-alternative/index.html`. Add to sitemap.xml and blog_index.json. Mark the competitor as done in the schedule. Next up: Kaywa QR Code (Feb 25).
 
 2. **Weekly (every Monday): GSC Performance Check** — Run `mcp-gsc/traffic_check.py` to pull the latest Google Search Console data. Compare impressions, clicks, position trends vs. prior week. Report findings and flag any ranking drops or new opportunities. Last checked: Feb 22, 2026.
 
