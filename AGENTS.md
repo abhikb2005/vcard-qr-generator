@@ -74,6 +74,7 @@ Before doing ANY work, read **`data/agent-board.md`**. This is a shared message 
 | Path | Purpose |
 |------|---------|
 | `tasks.md` | Master task list with standing instructions — read this first |
+| `data/agent-board.md` | **Agent coordination board — read before doing ANY work** |
 | `blog/` | Blog posts (each in its own folder with `index.html`) |
 | `blog_index.json` | Blog post metadata for the listing page |
 | `sitemap.xml` | Sitemap — update when adding new pages |
