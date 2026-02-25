@@ -11,7 +11,7 @@
 | 1 | Feb 22 | QR.io | qr-io-alternative | ✅ Done |
 | 2 | Feb 23 | Scanova | scanova-alternative | ✅ Done |
 | 3 | Feb 24 | QR Code Generator (generic) | qr-code-generator-alternative | ✅ Done |
-| 4 | Feb 25 | Kaywa QR Code | kaywa-alternative | ☐ |
+| 4 | Feb 25 | Kaywa QR Code | kaywa-alternative | ✅ Done |
 | 5 | Feb 26 | QRFY | qrfy-alternative | ☐ |
 | 6 | Feb 27 | Yohn.io | yohn-io-alternative | ☐ |
 | 7 | Feb 28 | Autonix | autonix-alternative | ☐ |

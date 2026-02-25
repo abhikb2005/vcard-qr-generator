@@ -65,6 +65,7 @@ To avoid conflicts, each area of the codebase has a designated owner.
 |------|-------|-------------|---------------|
 | 2026-02-24 | Amp | Competitor blog #3 (QR Code Generator) | `blog/qr-code-generator-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-02-24 | Amp | Created AGENTS.md + PPP standing rule | `AGENTS.md`, `tasks.md` |
+| 2026-02-25 | Amp | Competitor blog #4 (Kaywa) | `blog/kaywa-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-02-24 | Amp | Created this coordination board | `data/agent-board.md` |
 | 2026-02-23 | Amp | Competitor blog #2 (Scanova) | `blog/scanova-alternative/index.html`, `sitemap.xml`, `blog_index.json` |
 | 2026-02-22 | Amp | Competitor blog #1 (QR.io) + content gap post | `blog/qr-io-alternative/`, `blog/add-logo-to-qr-code/` |
@@ -81,8 +82,8 @@ To avoid conflicts, each area of the codebase has a designated owner.
 
 | Task | Claimed By | Status |
 |------|-----------|--------|
-| Competitor blog #4: Kaywa (Feb 25) | Amp | Planned |
-| Competitor blogs #5–32 | Amp | Planned (see `data/competitor-blog-schedule.md`) |
+| Competitor blog #5: QRFY (Feb 26) | Amp | Planned |
+| Competitor blogs #6–32 | Amp | Planned (see `data/competitor-blog-schedule.md`) |
 | Weekly GSC check (next: Mar 3) | Amp | Recurring |
 | Next.js app deployment to production | Antigravity | In progress |
 | User dashboard + auth | Antigravity | In progress |
