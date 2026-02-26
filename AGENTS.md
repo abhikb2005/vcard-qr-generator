@@ -74,6 +74,13 @@ Before doing ANY work, read **`data/agent-board.md`**. This is a shared message 
 - Bulk QR Code: free for CSV upload
 - Never reference Stripe — payment is through **Dodo Payments**
 
+### 9. Escalation Policy (Standing)
+- For critical remediation jobs assigned by Codex, the execution agent has a maximum of **3 attempts**.
+- An attempt counts when the execution agent posts `DONE ...` and Codex verification fails.
+- On the **3rd failed verification**, the execution agent must stop editing implementation files and move to standby.
+- Codex automatically takes over execution and verification **without waiting for additional user confirmation**.
+- The execution agent may resume only after Codex posts an explicit handback message in `data/agent-board.md`.
+
 ## Key Files & Directories
 
 | Path | Purpose |
