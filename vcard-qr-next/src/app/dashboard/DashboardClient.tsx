@@ -20,6 +20,7 @@ export default function DashboardClient() {
     const [user, setUser] = useState<any>(null)
     const [profile, setProfile] = useState<any>(null)
     const [qrCodes, setQrCodes] = useState<any[]>([])
+    const [recentScans, setRecentScans] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const [verifyingPayment, setVerifyingPayment] = useState(false)
     const [origin, setOrigin] = useState('')
@@ -59,6 +60,16 @@ export default function DashboardClient() {
                 .order('created_at', { ascending: false })
 
             setQrCodes(qrData || [])
+
+            // Fetch Recent Scans
+            const { data: scanData } = await supabase
+                .from('scans')
+                .select('*, qr_codes(name)')
+                .in('qr_id', qrData?.map(q => q.id) || [])
+                .order('scanned_at', { ascending: false })
+                .limit(5)
+
+            setRecentScans(scanData || [])
             setLoading(false)
 
             // Handle Payment Verification
@@ -285,6 +296,39 @@ export default function DashboardClient() {
                                     Dynamic QR codes allow you to change the target URL anytime.
                                 </p>
                             </div>
+
+                            {/* Recent Scans Activity */}
+                            {recentScans.length > 0 && (
+                                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                                    <div className="p-4 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+                                        <h4 className="text-xs font-bold text-gray-900 uppercase tracking-widest flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                            Recent Activity
+                                        </h4>
+                                    </div>
+                                    <div className="divide-y divide-gray-50">
+                                        {recentScans.map((scan, i) => (
+                                            <div key={scan.id} className="p-4 hover:bg-gray-50 transition-colors">
+                                                <div className="flex justify-between items-start mb-1">
+                                                    <p className="text-xs font-bold text-gray-900 truncate pr-2">
+                                                        {scan.qr_codes?.name || 'Scan Detected'}
+                                                    </p>
+                                                    <span className="text-[10px] text-gray-400 font-medium whitespace-nowrap">
+                                                        {new Date(scan.scanned_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-[10px] text-gray-500">
+                                                    <span className="bg-gray-100 px-1.5 py-0.5 rounded text-gray-600 font-semibold">
+                                                        {scan.country !== 'unknown' ? scan.country : 'Global'}
+                                                    </span>
+                                                    <span>•</span>
+                                                    <span className="truncate">{scan.device_type !== 'unknown' ? scan.device_type : 'Mobile/Web'}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Right Column: List */}
@@ -372,6 +416,14 @@ export default function DashboardClient() {
                                                         >
                                                             Test Link <ArrowTopRightOnSquareIcon className="w-4 h-4" />
                                                         </a>
+                                                        {qr.vcard_data && (
+                                                            <Link
+                                                                href={`/vcard/edit/${qr.id}`}
+                                                                className="inline-flex items-center gap-1 px-3 py-2 border border-indigo-200 shadow-sm text-sm font-medium rounded-lg text-indigo-700 bg-white hover:bg-indigo-50 focus:outline-none transition-colors"
+                                                            >
+                                                                Edit Card
+                                                            </Link>
+                                                        )}
                                                         <button
                                                             onClick={() => handleDelete(qr.id)}
                                                             className="inline-flex items-center gap-1 px-3 py-2 border border-red-200 shadow-sm text-sm font-medium rounded-lg text-red-600 bg-white hover:bg-red-50 focus:outline-none transition-colors"

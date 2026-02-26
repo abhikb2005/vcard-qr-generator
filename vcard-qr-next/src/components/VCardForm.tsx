@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
-import { UserIcon, PhoneIcon, EnvelopeIcon, BriefcaseIcon, MapPinIcon, GlobeAltIcon, ArrowPathIcon, CheckIcon } from '@heroicons/react/24/outline'
+import { UserIcon, PhoneIcon, EnvelopeIcon, BriefcaseIcon, MapPinIcon, GlobeAltIcon, ArrowPathIcon, CheckIcon, LinkIcon } from '@heroicons/react/24/outline'
 
 const generateShortId = (length: number = 6) => {
     return Math.random().toString(36).substring(2, 2 + length)
 }
 
-export default function VCardForm({ userId }: { userId: string }) {
+export default function VCardForm({ userId, initialData }: { userId: string, initialData?: any }) {
     const router = useRouter()
     const supabase = createClient()
     const [loading, setLoading] = useState(false)
@@ -24,17 +24,18 @@ export default function VCardForm({ userId }: { userId: string }) {
 
     // vCard Fields State
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        organization: '',
-        title: '',
-        email: '',
-        phone: '',
-        mobile: '',
-        website: '',
-        address: '',
-        alias: '', // Custom Alias
-        photoUrl: '' // For later, maybe link to gravatar or upload
+        firstName: initialData?.vcard_data?.firstName || '',
+        lastName: initialData?.vcard_data?.lastName || '',
+        organization: initialData?.vcard_data?.organization || '',
+        title: initialData?.vcard_data?.title || '',
+        email: initialData?.vcard_data?.email || '',
+        phone: initialData?.vcard_data?.phone || '',
+        mobile: initialData?.vcard_data?.mobile || '',
+        website: initialData?.vcard_data?.website || '',
+        address: initialData?.vcard_data?.address || '',
+        alias: initialData?.alias || '', // Custom Alias
+        photoUrl: initialData?.vcard_data?.photoUrl || '',
+        linkedin: initialData?.vcard_data?.linkedin || ''
     })
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,29 +55,41 @@ export default function VCardForm({ userId }: { userId: string }) {
             return
         }
 
-        const shortId = generateShortId()
-        // The "target_url" for a vCard QR code points to our own profile page
-        // We'll use a placeholder for now, or the final public URL structure
+        const shortId = initialData?.short_code || generateShortId()
         const publicProfileUrl = `${origin}/p/${shortId}`
 
-        const { error } = await supabase.from('qr_codes').insert({
+        const payload = {
             user_id: userId,
-            target_url: publicProfileUrl, // This is technically redundant if we check vcard_data first, but good fallback
+            target_url: publicProfileUrl,
             name: `${formData.firstName} ${formData.lastName} (vCard)`.trim() || formData.organization,
             short_code: shortId,
-            alias: formData.alias || null, // Optional alias
-            vcard_data: formData // Storing the JSON data
-        })
+            alias: formData.alias || null,
+            vcard_data: formData
+        }
+
+        let result;
+        if (initialData?.id) {
+            result = await supabase
+                .from('qr_codes')
+                .update(payload)
+                .eq('id', initialData.id)
+        } else {
+            result = await supabase
+                .from('qr_codes')
+                .insert(payload)
+        }
+
+        const { error } = result;
 
         if (error) {
             if (error.code === '23505') { // Unique violation
                 alert('That alias is already taken. Please try another one.')
             } else {
-                alert('Error creating vCard: ' + error.message)
+                alert('Error processing vCard: ' + error.message)
             }
         } else {
             setSuccess(true)
-            router.push('/dashboard') // Redirect to dashboard after success
+            router.push('/dashboard')
             router.refresh()
         }
         setLoading(false)
@@ -191,6 +204,16 @@ export default function VCardForm({ userId }: { userId: string }) {
                                 </div>
                                 <input type="url" name="website" value={formData.website} onChange={handleInputChange}
                                     className="block w-full rounded-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 px-3 border text-gray-900 bg-white" placeholder="https://yourwebsite.com" />
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-xs font-medium text-gray-700 mb-1">LinkedIn Profile</label>
+                            <div className="relative rounded-md shadow-sm">
+                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <LinkIcon className="h-4 w-4 text-gray-400" aria-hidden="true" />
+                                </div>
+                                <input type="url" name="linkedin" value={formData.linkedin} onChange={handleInputChange}
+                                    className="block w-full rounded-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 px-3 border text-gray-900 bg-white" placeholder="https://linkedin.com/in/username" />
                             </div>
                         </div>
                     </div>

@@ -1,36 +1,39 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getPageBySlug } from '@/data/dummy';
+import { getPageBySlug, getRelatedSlugs } from '@/data/dummy';
 import { constructMetadata } from '@/lib/seo/metadata';
 import SEOPage from '@/components/SEOPage';
 
 type Props = {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ id: string }>;
 };
 
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { slug } = await params;
-    const page = await getPageBySlug(slug);
+    const { id } = await params;
+    const page = await getPageBySlug(id);
 
     if (!page) {
         return {
-            title: 'Page Not Found',
+            title: 'Professional QR Codes',
         };
     }
 
-    return constructMetadata({ page, pathPrefix: 'comparison' });
+    return constructMetadata({ page, pathPrefix: 'guides' });
 }
 
 
 export default async function Page({ params }: Props) {
-    const { slug } = await params;
-    const page = await getPageBySlug(slug);
+    const { id } = await params;
+    const page = await getPageBySlug(id);
 
     if (!page) {
         notFound();
     }
+
+    // Enrich with related slugs for internal linking
+    page.relatedSlugs = await getRelatedSlugs(30);
 
     return <SEOPage page={page} />;
 }

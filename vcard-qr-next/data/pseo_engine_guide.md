@@ -9,7 +9,8 @@ The engine follows a standard **Data + Template + Route** pattern:
 2.  **Template**: The UI is controlled by `src/templates/ComparisonPage.tsx`. Changing this file updates thousands of pages instantly.
 3.  **Dynamic Routes**: 
     - `/comparison/[slug]` -> Handles competitor alternatives.
-    - `/p/[id]` -> Handles job+city or specific vCard profiles.
+    - `/guides/[id]` -> Handles job+city "Expert Guides" (Programmatic SEO).
+    - `/p/[id]` -> Reserved for personal vCard profiles (scanned by users).
 
 ## 🚀 Activation: "Flipping the Switch"
 
