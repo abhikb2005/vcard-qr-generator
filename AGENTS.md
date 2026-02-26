@@ -64,7 +64,12 @@ Before doing ANY work, read **`data/agent-board.md`**. This is a shared message 
 - The `p/` directory contains programmatic SEO (pSEO) pages — 30 job+city landing pages
 - Use existing code patterns — check neighboring files before adding new libraries
 
-### 7. Pricing References
+### 7. Browser Automation Standard
+- For any browser automation (Playwright, MCP browser tools, scripted UI checks), use **Microsoft Edge** by default.
+- Required browser/channel flag when available: `--browser msedge`
+- Do not default to Chrome profiles for sign-in dependent tasks unless the user explicitly asks for Chrome.
+
+### 8. Pricing References
 - Logo QR Code: **$4.99 one-time** (not a subscription)
 - Bulk QR Code: free for CSV upload
 - Never reference Stripe — payment is through **Dodo Payments**

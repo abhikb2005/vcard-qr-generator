@@ -1,0 +1,3 @@
+[  149021ms] [ERROR] Framing 'https://accounts.youtube.com/' violates the following report-only Content Security Policy directive: "frame-ancestors 'self'". The violation has been logged, but no further action has been taken.
+ @ :0
+[  214009ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://accounts.google.com/v3/signin/_/SpeedBumpPasskeyEnrollmentUi/data/batchexecute?rpcids=bxToCd&source-path=%2Fv3%2Fsignin%2Fspeedbump%2Fpasskeyenrollment&f.sid=279802161673604977&bl=boq_identityfrontendauthuiserver_20260222.08_p0&hl=en-US&TL=AHU8sQueXMzHHJlS_zzZT5BJSovaFamQJigBaJNElaOdf4O4Xqmd4iWBa2BKNF2w&_reqid=344971&rt=c:0

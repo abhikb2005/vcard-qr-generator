@@ -1,0 +1,144 @@
+- generic [ref=e1]:
+  - img [ref=e6]
+  - generic [ref=e14]:
+    - button "Skip to content" [ref=e16]:
+      - generic [ref=e18]: Skip to content
+    - generic [ref=e20]:
+      - banner [ref=e22]:
+        - generic [ref=e24]:
+          - button "Main menu" [ref=e26] [cursor=pointer]:
+            - img [ref=e29]: menu
+          - link "Google AdSense" [ref=e30] [cursor=pointer]:
+            - /url: /adsense/u/0/pub-1206702185649949/home
+        - heading "Home" [level=1] [ref=e33]
+        - generic [ref=e35]:
+          - button "Help" [ref=e37] [cursor=pointer]:
+            - img [ref=e40]: help
+          - button "Notifications" [ref=e44] [cursor=pointer]:
+            - img [ref=e49]: notifications
+          - button "Google account" [ref=e52] [cursor=pointer]:
+            - img "Google account (abhikb2005@gmail.com)" [ref=e54]
+      - generic:
+        - navigation:
+          - menu:
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Home":
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: home
+                      - generic: Home
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Ads":
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: picture_in_picture
+                      - generic: Ads
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Sites":
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: drive_site
+                      - generic: Sites
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Privacy & messaging":
+                    - generic:
+                      - generic:
+                        - img
+                      - generic: Privacy & messaging
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Brand safety":
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: arrow_right
+                      - generic:
+                        - generic:
+                          - img: not_interested
+                      - generic: Brand safety
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Reports":
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: assessment
+                      - generic: Reports
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Optimization" [disabled]:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: arrow_right
+                      - generic:
+                        - generic:
+                          - img: trending_up
+                      - generic: Optimization
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Policy center":
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: policy
+                      - generic: Policy center
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Payments":
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: arrow_right
+                      - generic:
+                        - img
+                      - generic: Payments
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Account":
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: arrow_right
+                      - generic:
+                        - generic:
+                          - img: settings
+                      - generic: Account
+            - generic:
+              - generic:
+                - generic:
+                  - menuitem "Feedback":
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img: feedback
+                      - generic: Feedback
+          - generic:
+            - generic:
+              - generic:
+                - link "Privacy":
+                  - /url: https://www.google.com/intl/en_US/policies/privacy
+                - link "Terms":
+                  - /url: https://adsense.google.com/adsense/terms?rc=IN&ce=19
+      - generic [ref=e55]:
+        - progressbar "loading" [ref=e57]
+        - generic:
+          - region "Notifications"
+        - main "Home" [active] [ref=e62]

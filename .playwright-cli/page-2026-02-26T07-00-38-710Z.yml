@@ -1,0 +1,299 @@
+- generic [ref=e4]:
+  - button "Skip to content" [ref=e6]:
+    - generic [ref=e8]: Skip to content
+  - generic [ref=e10]:
+    - banner [ref=e12]:
+      - generic [ref=e14]:
+        - button "Main menu" [ref=e16] [cursor=pointer]:
+          - img [ref=e19]: menu
+        - link "Google AdSense" [ref=e20] [cursor=pointer]:
+          - /url: /adsense/u/0/pub-1206702185649949/home
+      - heading "Home" [level=1] [ref=e23]
+      - generic [ref=e25]:
+        - button "Help" [ref=e27] [cursor=pointer]:
+          - img [ref=e30]: help
+        - button "Notifications" [ref=e34] [cursor=pointer]:
+          - img [ref=e39]: notifications
+        - button "Google account" [ref=e42] [cursor=pointer]:
+          - img "Google account (abhikb2005@gmail.com)" [ref=e44]
+    - generic:
+      - navigation:
+        - menu:
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Home":
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: home
+                    - generic: Home
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Ads":
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: picture_in_picture
+                    - generic: Ads
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Sites":
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: drive_site
+                    - generic: Sites
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Privacy & messaging":
+                  - generic:
+                    - generic:
+                      - img
+                    - generic: Privacy & messaging
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Brand safety":
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: arrow_right
+                    - generic:
+                      - generic:
+                        - img: not_interested
+                    - generic: Brand safety
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Reports":
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: assessment
+                    - generic: Reports
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Optimization" [disabled]:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: arrow_right
+                    - generic:
+                      - generic:
+                        - img: trending_up
+                    - generic: Optimization
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Policy center":
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: policy
+                    - generic: Policy center
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Payments":
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: arrow_right
+                    - generic:
+                      - img
+                    - generic: Payments
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Account":
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: arrow_right
+                    - generic:
+                      - generic:
+                        - img: settings
+                    - generic: Account
+          - generic:
+            - generic:
+              - generic:
+                - menuitem "Feedback":
+                  - generic:
+                    - generic:
+                      - generic:
+                        - img: feedback
+                    - generic: Feedback
+        - generic:
+          - generic:
+            - generic:
+              - link "Privacy":
+                - /url: https://www.google.com/intl/en_US/policies/privacy
+              - link "Terms":
+                - /url: https://adsense.google.com/adsense/terms?rc=IN&ce=19
+    - generic [ref=e45]:
+      - generic:
+        - region "Notifications"
+      - main "Home" [ref=e47]:
+        - generic [ref=e51]:
+          - generic [ref=e54]:
+            - generic [ref=e55]:
+              - button "Cancel" [active] [ref=e56] [cursor=pointer]:
+                - generic [ref=e58]: close
+              - heading "vcardqrcodegenerator.com" [level=2] [ref=e59]
+              - generic [ref=e60]:
+                - generic [ref=e61]: Needs attention
+                - button "Delete site" [ref=e62]:
+                  - img [ref=e66]: delete
+                  - generic [ref=e67]: Delete site
+            - generic [ref=e70]:
+              - generic [ref=e72]:
+                - img "Your site isn't ready to show ads" [ref=e73]
+                - heading "vcardqrcodegenerator.com Your site isn't ready to show ads" [level=3] [ref=e74]:
+                  - paragraph [ref=e75]: vcardqrcodegenerator.com
+                  - paragraph [ref=e78]: Your site isn't ready to show ads
+              - button "Verify site ownership" [ref=e83] [cursor=pointer]:
+                - generic [ref=e85]:
+                  - img [ref=e87]: check_circle_filled
+                  - heading [level=4] [ref=e88]: Verify site ownership
+                - img [ref=e89]: expand_less
+              - generic [ref=e93]:
+                - button "We found some policy violations" [expanded] [ref=e95] [cursor=pointer]:
+                  - generic [ref=e97]:
+                    - img [ref=e99]: error_outline
+                    - heading [level=4] [ref=e100]: We found some policy violations
+                  - img [ref=e101]: expand_less
+                - region "We found some policy violations" [ref=e102]:
+                  - generic [ref=e105]:
+                    - article [ref=e106]:
+                      - generic [ref=e108]:
+                        - text: Make sure your site follows the
+                        - link "AdSense Program Policies" [ref=e109] [cursor=pointer]:
+                          - /url: https://support.google.com/adsense/answer/9335564?hl=en_US
+                        - text: . After you've fixed the violation, you can request a review of your site.
+                      - generic [ref=e111]:
+                        - heading "Low value content" [level=4] [ref=e112]
+                        - paragraph [ref=e113]:
+                          - paragraph [ref=e114]: "Your site does not yet meet the criteria of use in the Google publisher network. For more information, review the following resources:"
+                          - list [ref=e115]:
+                            - listitem [ref=e116]:
+                              - link "Minimum content requirements" [ref=e117] [cursor=pointer]:
+                                - /url: https://support.google.com/adsense/answer/9335564#minimum_content_requirements
+                            - listitem [ref=e118]:
+                              - link "Make sure your site has unique high quality content and a good user experience" [ref=e119] [cursor=pointer]:
+                                - /url: https://support.google.com/adsense/answer/10015918
+                            - listitem [ref=e120]:
+                              - text: Webmaster quality guidelines for
+                              - link "thin content" [ref=e121] [cursor=pointer]:
+                                - /url: https://support.google.com/webmasters/answer/9044175#thin-content
+                            - listitem [ref=e122]:
+                              - link "Webmaster quality guidelines" [ref=e123] [cursor=pointer]:
+                                - /url: https://support.google.com/adsense/answer/1348737
+                    - generic [ref=e124]:
+                      - checkbox "I confirm I have fixed the issues" [ref=e126] [cursor=pointer]:
+                        - img [ref=e129]: check_box_outline_blank
+                        - generic [ref=e131]: I confirm I have fixed the issues
+                      - button "Request review" [ref=e132]:
+                        - generic [ref=e135]: Request review
+          - generic [ref=e136]:
+            - generic [ref=e137]:
+              - heading "Manage your sites" [level=1] [ref=e138]
+              - paragraph [ref=e139]:
+                - text: Add sites you want to monetize with AdSense.
+                - link "Learn more about monetizing your site, Opens in a new tab" [ref=e141] [cursor=pointer]:
+                  - /url: https://support.google.com/adsense/answer/9130898?hl=en_US
+                  - text: Learn more about monetizing your site
+            - img "Site management" [ref=e142]
+          - button "Add new site" [ref=e143]:
+            - img [ref=e147]: add
+            - generic [ref=e148]: New site
+          - generic [ref=e149]:
+            - generic [ref=e151]:
+              - generic:
+                - img: search
+              - generic: Search
+              - textbox "Search" [ref=e152]
+              - button "Open filter panel" [expanded] [ref=e154] [cursor=pointer]:
+                - generic [ref=e156]: filter_list
+            - region [ref=e159]:
+              - generic [ref=e163]:
+                - generic [ref=e164]: "Filters:"
+                - grid "Filters:" [ref=e165]:
+                  - row "Ready Getting ready Requires review Needs attention" [ref=e166]:
+                    - gridcell "Ready" [ref=e167] [cursor=pointer]:
+                      - generic [ref=e168]: Ready
+                    - gridcell "Getting ready" [ref=e169] [cursor=pointer]:
+                      - generic [ref=e170]: Getting ready
+                    - gridcell "Requires review" [ref=e171] [cursor=pointer]:
+                      - generic [ref=e172]: Requires review
+                    - gridcell "Needs attention" [ref=e173] [cursor=pointer]:
+                      - generic [ref=e174]: Needs attention
+            - grid [ref=e178]:
+              - row "Site URL Approval status Learn more about Approval status. Status details Ads.txt status Last updated Action" [ref=e179]:
+                - columnheader "Site URL" [ref=e180] [cursor=pointer]:
+                  - generic [ref=e181]: Site URL
+                - columnheader "Approval status Learn more about Approval status." [ref=e182] [cursor=pointer]:
+                  - generic [ref=e183]: Approval status
+                  - button "Learn more about Approval status." [ref=e184]:
+                    - img [ref=e186]: help_outline
+                - columnheader "Status details" [ref=e187] [cursor=pointer]
+                - columnheader "Ads.txt status" [ref=e188] [cursor=pointer]:
+                  - generic [ref=e189]: Ads.txt status
+                  - button "Learn more about Ads.txt status." [ref=e190]:
+                    - img [ref=e192]: help_outline
+                - columnheader "Last updated" [ref=e193] [cursor=pointer]:
+                  - generic [ref=e194]: Last updated
+                  - button "Learn more about Last updated." [ref=e195]:
+                    - img [ref=e197]: help_outline
+                - columnheader "Action" [ref=e198]:
+                  - generic [ref=e199]: Action
+              - row "vcardqrcodegenerator.com Needs attention Low value content Not found Feb 9, 2026 11:05 AM | IST Delete site" [ref=e200]:
+                - gridcell "vcardqrcodegenerator.com" [ref=e201]:
+                  - link "vcardqrcodegenerator.com" [ref=e203] [cursor=pointer]:
+                    - /url: /adsense/u/0/pub-1206702185649949/sites/detail/url=vcardqrcodegenerator.com
+                - gridcell "Needs attention" [ref=e204]:
+                  - generic [ref=e206]: Needs attention
+                - gridcell "Low value content" [ref=e207]:
+                  - generic [ref=e208]: Low value content
+                - gridcell "Not found" [ref=e209]:
+                  - generic [ref=e211]: Not found
+                - gridcell "Feb 9, 2026 11:05 AM | IST" [ref=e212]:
+                  - generic [ref=e213]:
+                    - generic [ref=e214]: Feb 9, 2026
+                    - generic [ref=e215]: 11:05 AM | IST
+                - gridcell "Delete site" [ref=e216]:
+                  - button "Delete site" [ref=e219] [cursor=pointer]:
+                    - img [ref=e222]: delete
+            - generic [ref=e225]:
+              - generic [ref=e226]:
+                - generic [ref=e227]: "Go to page:"
+                - combobox "Enter a page number to go to" [ref=e233]
+                - text: of 1
+              - generic [ref=e234]:
+                - generic [ref=e235]: "Show rows:"
+                - 'button "Show rows: 50 selected." [ref=e238] [cursor=pointer]':
+                  - generic [ref=e239]: "50"
+                  - img [ref=e241]: arrow_drop_down
+              - generic [ref=e242]:
+                - generic [ref=e244]: 1 - 1 of 1
+                - generic [ref=e245]:
+                  - button "Go to the first page" [disabled] [ref=e246]:
+                    - generic:
+                      - generic:
+                        - img: first_page
+                  - button "Go to the previous page" [disabled] [ref=e247]:
+                    - generic:
+                      - generic:
+                        - img: chevron_left
+                  - button "Go to the next page" [disabled] [ref=e248]:
+                    - generic:
+                      - generic:
+                        - img: chevron_right
+                  - button "Go to the last page" [disabled] [ref=e249]:
+                    - generic:
+                      - generic:
+                        - img: last_page
