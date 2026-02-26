@@ -1,26 +1,32 @@
 import { Metadata } from 'next';
 import { PSEOPage } from '@/types';
 
-export function constructMetadata({ page }: { page: PSEOPage }): Metadata {
-    const { title, description, slug, category, lastModified } = page;
+interface MetadataOptions {
+    page: PSEOPage;
+    pathPrefix?: string;
+}
 
-    // Can add conditional logic or site-wide defaults here
-    // e.g., siteName: 'QR Code Generator'
+export function constructMetadata({ page, pathPrefix = 'guides' }: MetadataOptions): Metadata {
+    const { title, description, slug, lastModified } = page;
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://vcard-qr-next.vercel.app';
+    const siteName = 'vCard QR Code Generator';
+    const fullPath = `/${pathPrefix}/${slug}`;
 
     return {
         title: {
             default: title,
-            template: `%s | Dynamic QR Generator`,
+            template: `%s | ${siteName}`,
         },
         description: description,
         openGraph: {
             title: title,
             description: description,
-            url: `https://vcard-qr-generator.com/${category}/${slug}`, // TODO: Update domain later
-            siteName: 'Dynamic QR Generator',
+            url: `${baseUrl}${fullPath}`,
+            siteName: siteName,
             images: [
                 {
-                    url: `/api/og?title=${encodeURIComponent(title)}`, // Future: Dynamic OG Image generation
+                    url: `/api/og?title=${encodeURIComponent(title)}`,
                     width: 1200,
                     height: 630,
                 },
@@ -32,10 +38,9 @@ export function constructMetadata({ page }: { page: PSEOPage }): Metadata {
             card: 'summary_large_image',
             title: title,
             description: description,
-            // creator: '@yourhandle',
         },
         alternates: {
-            canonical: `/${category}/${slug}`,
+            canonical: fullPath,
         },
         other: {
             'last-modified': lastModified,

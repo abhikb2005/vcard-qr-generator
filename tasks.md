@@ -50,6 +50,11 @@
 ## 🔲 Pending / To Do
 
 ### Product — High Priority
+- [x] #1 Fix SQL error: Create `seo_pages` table correctly
+- [x] #2 Status update to Dark Cave / Respond to Codex
+- [x] #x Enable Google Auth
+- [x] #4 Implement Public Demo (No sign-in required)
+- [x] #5 Integrate Supermemory API (Key provided)
 - [ ] B2B "Team/Bulk" contact CTA
 - [ ] A/B test pricing tiers ($9 vs $19)
 

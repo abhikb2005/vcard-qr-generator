@@ -1,30 +1,12 @@
 import Link from 'next/link'
-import { QrCodeIcon, UserPlusIcon, BoltIcon, ChartBarIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
+import { UserPlusIcon, BoltIcon, ChartBarIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
-      {/* Nav */}
-      <nav className="border-b border-gray-100 sticky top-0 bg-white/80 backdrop-blur-md z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="bg-indigo-600 p-1.5 rounded-lg">
-              <QrCodeIcon className="h-6 w-6 text-white" />
-            </div>
-            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-              vCard QR Pro
-            </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-gray-900">
-              Sign In
-            </Link>
-            <Link href="/login" className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition shadow-sm">
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero */}
       <header className="py-24 sm:py-32 relative overflow-hidden">
@@ -43,7 +25,7 @@ export default function LandingPage() {
             <Link href="/login" className="w-full sm:w-auto bg-indigo-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 flex items-center justify-center gap-2">
               Create Your Free vCard <ArrowRightIcon className="w-5 h-5" />
             </Link>
-            <Link href="/login" className="w-full sm:w-auto border border-gray-200 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition">
+            <Link href="/p/demo" className="w-full sm:w-auto border border-gray-200 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition">
               View Demo
             </Link>
           </div>
@@ -93,15 +75,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 border-t border-gray-100 text-center text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} vCard QR Pro. All rights reserved.</p>
-        <div className="mt-4 flex justify-center gap-6">
-          <Link href="/comparison/hovercode-alternative" className="hover:text-gray-900">Alternatives</Link>
-          <a href="#" className="hover:text-gray-900">Privacy</a>
-          <a href="#" className="hover:text-gray-900">Terms</a>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
