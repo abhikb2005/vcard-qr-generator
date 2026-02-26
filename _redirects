@@ -1,0 +1,6 @@
+# Exclude ads.txt from apex-to-www redirects (if handled by Pages)
+https://vcardqrcodegenerator.com/ads.txt /ads.txt 200
+http://vcardqrcodegenerator.com/ads.txt /ads.txt 200
+
+# Catch-all redirect to www (example)
+# https://vcardqrcodegenerator.com/* https://www.vcardqrcodegenerator.com/:splat 301

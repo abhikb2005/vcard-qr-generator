@@ -134,13 +134,14 @@ export default function SEOPage({ page }: { page: PSEOPage }) {
                             </div>
 
                             {/* Section 2: Comparison (Blog Style Cards) */}
+                            {/* Section 2: Comparison (Blog Style Cards) */}
                             <div className="mt-16 pt-16 border-t border-gray-100">
-                                <h2 className="text-3xl font-bold text-gray-900 mb-8 tracking-tight">How it Compares</h2>
+                                <h2 className="text-3xl font-bold text-gray-900 mb-8 tracking-tight">Standard vs. Pro Digital Cards</h2>
                                 <div className="space-y-4">
                                     {[
-                                        { label: "Updates", old: "Fixed on paper", new: "Dynamic & Remote" },
-                                        { label: "Data", old: "None", new: "Full Analytics" },
-                                        { label: "Cost", old: "Per printing run", new: "Free/Subscription" }
+                                        { label: "Logo & Branding", old: "Generic Black & White", new: "Custom Colors & Logo" },
+                                        { label: "Contact Management", old: "Static Info", new: "Dynamic & Updatable" },
+                                        { label: "Networking Impact", old: "Easily Forgotten", new: "Professional & Memorable" }
                                     ].map((item, i) => (
                                         <div key={i} className="flex items-center justify-between p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:border-indigo-100 transition group">
                                             <div>
@@ -154,6 +155,59 @@ export default function SEOPage({ page }: { page: PSEOPage }) {
                                             <ChevronRightIcon className="w-5 h-5 text-gray-200 group-hover:text-indigo-400 transition" />
                                         </div>
                                     ))}
+                                </div>
+                            </div>
+
+                            {/* Section: Quality Gate - City & Job Context */}
+                            <div className="mt-16 pt-16 border-t border-gray-100 space-y-12">
+                                <div>
+                                    <h2 className="text-3xl font-bold text-gray-900 tracking-tight mb-6">Business Networking in Your Local City</h2>
+                                    <p className="text-gray-600 leading-relaxed text-lg pb-4">
+                                        Success in professional networking often comes down to friction—how easy you make it for others to remember and contact you. In busy urban markets, carrying a stack of paper cards is no longer enough.
+                                    </p>
+                                    <div className="p-8 rounded-2xl bg-indigo-50 border border-indigo-100">
+                                        <h3 className="text-xl font-bold text-indigo-900 mb-4">Why Digital Cards Win Locally</h3>
+                                        <ul className="space-y-4">
+                                            <li className="flex items-start gap-3">
+                                                <CheckCircleIcon className="w-6 h-6 text-indigo-600 flex-shrink-0 mt-0.5" />
+                                                <span className="text-indigo-800"><strong>Instant Follow-up:</strong> No one likes manual data entry. One scan saves your info directly to their phonebook.</span>
+                                            </li>
+                                            <li className="flex items-start gap-3">
+                                                <CheckCircleIcon className="w-6 h-6 text-indigo-600 flex-shrink-0 mt-0.5" />
+                                                <span className="text-indigo-800"><strong>Eco-Friendly:</strong> Reduce paper waste while maintaining a high-tech image.</span>
+                                            </li>
+                                            <li className="flex items-start gap-3">
+                                                <CheckCircleIcon className="w-6 h-6 text-indigo-600 flex-shrink-0 mt-0.5" />
+                                                <span className="text-indigo-800"><strong>Always Ready:</strong> Your phone is always with you; you never "run out" of business cards.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h2 className="text-3xl font-bold text-gray-900 tracking-tight mb-6">Top 3 Use Cases for Professionals</h2>
+                                    <div className="grid grid-cols-1 gap-6">
+                                        {[
+                                            {
+                                                title: "Real Estate & Field Sales",
+                                                desc: "Add your QR code to lawn signs, flyers, or window displays. Potential clients can save your contact details and viewing times without having to type a thing."
+                                            },
+                                            {
+                                                title: "Conferences & Networking Events",
+                                                desc: "Wear your QR code on your badge or set it as your phone's lock screen. It's the ultimate icebreaker and ensures your follow-up rate remains near 100%."
+                                            },
+                                            {
+                                                title: "Professional Services & Consulting",
+                                                desc: "Embed your vCard QR code in your email signature and pitch decks. It provides a tactile, interactive way for stakeholders to 'own' your contact information."
+                                            }
+                                        ].map((useCase, i) => (
+                                            <div key={i} className="p-8 border border-gray-100 rounded-2xl bg-white shadow-sm">
+                                                <span className="text-indigo-600 font-black text-sm uppercase tracking-widest mb-2 block">Use Case 0{i + 1}</span>
+                                                <h4 className="text-xl font-bold text-gray-900 mb-2">{useCase.title}</h4>
+                                                <p className="text-gray-600 leading-relaxed">{useCase.desc}</p>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
 

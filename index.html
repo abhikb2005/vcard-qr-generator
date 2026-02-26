@@ -254,7 +254,8 @@
       <h1>Free vCard QR Code Generator</h1>
       <p class="subtitle">Stop losing contacts. Share your details instantly with a professional vCard QR code. No app
         required.</p>
-      <p class="text-sm text-indigo-200 mt-2 max-w-2xl mx-auto">The #1 free vCard QR code generator trusted by realtors, sales teams, and professionals worldwide.</p>
+      <p class="text-sm text-indigo-200 mt-2 max-w-2xl mx-auto">The #1 free vCard QR code generator trusted by realtors,
+        sales teams, and professionals worldwide.</p>
 
       <div class="mt-6 flex flex-wrap items-center justify-center gap-6 text-sm text-indigo-100">
         <div class="flex items-center gap-2">
@@ -304,554 +305,618 @@
   </div>
   <!-- End Hero -->
 
-  <!-- Use Cases Section (New) -->
-  <div class="bg-gray-50 border-b border-gray-200 py-12">
+  <!-- Trust Bar / Industry Use Cases (Expanded) -->
+  <div class="bg-gray-50 border-b border-gray-200 py-16">
     <div class="container mx-auto px-4 max-w-6xl">
-      <p class="text-center text-sm font-bold text-indigo-600 uppercase tracking-widest mb-8">Trusted by Professionals
+      <p class="text-center text-sm font-bold text-indigo-600 uppercase tracking-widest mb-12">Trusted by Professionals
         in Every Industry</p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-        <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div class="text-4xl mb-4">🏠</div>
-          <h3 class="font-bold text-xl text-gray-900 mb-2">For Realtors</h3>
-          <p class="text-gray-600 leading-relaxed">Place on "For Sale" signs. Capture buyer leads instantly instead of
-            losing them to voicemail.</p>
+        <div class="p-8 bg-white rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-shadow">
+          <div class="text-4xl mb-6">🏠</div>
+          <h3 class="font-bold text-xl text-gray-900 mb-3">For Realtors</h3>
+          <p class="text-gray-600 leading-relaxed text-sm">Place on "For Sale" signs. Capture buyer leads instantly
+            instead of losing them to voicemail or missing calls.</p>
         </div>
-        <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div class="text-4xl mb-4">🤝</div>
-          <h3 class="font-bold text-xl text-gray-900 mb-2">For Sales Teams</h3>
-          <p class="text-gray-600 leading-relaxed">Ditch paper cards. Seamless contact exchange at conferences builds
-            your pipeline faster.</p>
+        <div class="p-8 bg-white rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-shadow">
+          <div class="text-4xl mb-6">🤝</div>
+          <h3 class="font-bold text-xl text-gray-900 mb-3">For Sales Teams</h3>
+          <p class="text-gray-600 leading-relaxed text-sm">Ditch paper cards. Seamless contact exchange at conferences
+            builds your pipeline faster and reduces manual entry errors.</p>
         </div>
-        <div class="p-8 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div class="text-4xl mb-4">🩺</div>
-          <h3 class="font-bold text-xl text-gray-900 mb-2">For Doctors</h3>
-          <p class="text-gray-600 leading-relaxed">Let patients save clinic details and appointment booking links in one
-            tap.</p>
+        <div class="p-8 bg-white rounded-2xl shadow-sm border border-gray-200/50 hover:shadow-md transition-shadow">
+          <div class="text-4xl mb-6">🩺</div>
+          <h3 class="font-bold text-xl text-gray-900 mb-3">For Doctors</h3>
+          <p class="text-gray-600 leading-relaxed text-sm">Let patients save clinic details and appointment booking
+            links in one tap. Perfect for clinic front desks and appointment cards.</p>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Main Generator Form -->
-  <div class="container">
+  <div class="container" id="top">
     <div class="main-content">
-      <h2 style="text-align: center; margin-bottom: 30px;">Generate Your vCard QR Code</h2>
-
-      <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <div
-          class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
-          <header class="text-center mb-8">
-            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">vCard QR Code
-              Generator</h1>
-            <p class="mt-2 text-gray-600 dark:text-gray-400">Enter your contact details below to create a scannable QR
-              code.</p>
-          </header>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <!-- Form Section -->
-            <div class="space-y-4">
-              <div class="flex justify-between items-center">
-                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Contact Information</h2>
-                <div class="flex items-center space-x-2">
-                  <button id="fillSampleBtn"
-                    class="px-3 py-1 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-gray-700 rounded-md hover:bg-blue-200 dark:hover:bg-gray-600 transition">Fill
-                    Sample</button>
-                  <button id="clearDataBtn"
-                    class="px-3 py-1 text-sm font-medium text-red-600 dark:text-red-400 bg-red-100 dark:bg-gray-700 rounded-md hover:bg-red-200 dark:hover:bg-gray-600 transition">Clear</button>
-                </div>
-              </div>
-              <form id="vcard-form" class="space-y-4">
-                <div>
-                  <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full
-                    Name (Required)</label>
-                  <input type="text" id="fullName" placeholder="John Doe"
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100">
-                </div>
-                <div>
-                  <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone
-                    Number</label>
-                  <input type="tel" id="phone" placeholder="+15551234567"
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100">
-                </div>
-                <div>
-                  <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email
-                    Address</label>
-                  <input type="email" id="email" placeholder="john@example.com"
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100">
-                </div>
-                <div>
-                  <label for="website"
-                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website</label>
-                  <input type="url" id="website" placeholder="https://example.com"
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100">
-                </div>
-                <div>
-                  <label for="company"
-                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company</label>
-                  <input type="text" id="company" placeholder="Acme Corporation"
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100">
-                </div>
-                <div>
-                  <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job
-                    Title</label>
-                  <input type="text" id="title" placeholder="Software Engineer"
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition bg-white dark:bg-gray-700 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100">
-                </div>
-              </form>
+      <h2 style="text-align: center; margin-bottom: 30px; font-weight:700; font-size:1.5rem">Generate Your vCard QR Code
+      </h2>
+      <!-- Form Section -->
+      <div class="space-y-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-gray-800">Contact Information</h2>
+          <div class="flex items-center space-x-2">
+            <button id="fillSampleBtn"
+              class="px-3 py-1 text-sm font-medium text-blue-600 bg-blue-100 rounded-md hover:bg-blue-200 transition">Fill
+              Sample</button>
+            <button id="clearDataBtn"
+              class="px-3 py-1 text-sm font-medium text-red-600 bg-red-100 rounded-md hover:bg-red-200 transition">Clear</button>
+          </div>
+        </div>
+        <form id="vcard-form" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name (Required)</label>
+              <input type="text" id="fullName" placeholder="John Doe"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition">
             </div>
-
-            <!-- QR Code Section -->
-            <div class="flex flex-col items-center justify-center mt-6 md:mt-0">
-              <div
-                class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white w-full max-w-[250px] aspect-square flex items-center justify-center">
-                <div id="qrcode"></div>
-                <div id="qrPlaceholder" class="text-gray-400 dark:text-gray-500 text-center text-sm">Enter a name to
-                  generate QR code</div>
-              </div>
-              <div class="w-full max-w-[250px] mt-6 space-y-3">
-                <a id="downloadBtn" href="#" download="vcard-qrcode.png"
-                  class="inline-flex items-center justify-center w-full px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition opacity-50 cursor-not-allowed"
-                  aria-disabled="true" disabled>
-                  Download QR Code
-                </a>
-                <a id="proUpgradeBtn" href="./logo-qr-code.html"
-                  class="inline-flex items-center justify-center w-full px-4 py-2 border-2 border-indigo-600 text-base font-medium rounded-md shadow-sm text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
-                  ✨ Add Your Logo (Pro)
-                </a>
-                <button id="shareBtn"
-                  class="hidden w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition opacity-50 cursor-not-allowed"
-                  aria-disabled="true" disabled>
-                  Share
-                </button>
-              </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+              <input type="tel" id="phone" placeholder="+15551234567"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition">
             </div>
           </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+              <input type="email" id="email" placeholder="john@example.com"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition">
+            </div>
+            <div>
+              <label for="website" class="block text-sm font-medium text-gray-700 mb-1">Website</label>
+              <input type="url" id="website" placeholder="https://example.com"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Company</label>
+              <input type="text" id="company" placeholder="Acme Corporation"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition">
+            </div>
+            <div>
+              <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+              <input type="text" id="title" placeholder="Software Engineer"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- QR Code Preview Section -->
+      <div class="mt-12 flex flex-col items-center">
+        <div
+          class="p-6 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50 flex items-center justify-center w-full max-w-[260px] aspect-square relative">
+          <div id="qrcode"></div>
+          <div id="qrPlaceholder" class="text-gray-400 text-center text-sm px-4">Enter your name to generate your
+            professional QR code</div>
+        </div>
+        <div class="w-full max-w-[260px] mt-8 space-y-3">
+          <a id="downloadBtn" href="#" download="vcard-qrcode.png"
+            class="flex items-center justify-center w-full px-6 py-3 border border-transparent text-base font-bold rounded-xl shadow-lg text-white bg-blue-600 hover:bg-blue-700 transition opacity-50 cursor-not-allowed uppercase tracking-wide">Download
+            QR</a>
+          <a href="/logo-qr-code.html"
+            class="flex items-center justify-center w-full px-6 py-3 border-2 border-indigo-600 text-base font-bold rounded-xl text-indigo-600 bg-white hover:bg-indigo-50 transition uppercase tracking-wide">✨
+            Add Your Logo</a>
         </div>
       </div>
 
       <!-- Pro Features Section -->
       <div
-        style="text-align: center; margin-top: 40px; padding: 30px; border-radius: 16px; background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #ddd6fe 100%);">
-        <h3 style="font-size: 1.5rem; font-weight: 700; color: #5b21b6; margin-bottom: 8px;">✨ Pro Features</h3>
-        <p style="color: #6b7280; margin-bottom: 24px;">Unlock powerful customization options for your QR codes</p>
+        style="text-align: center; margin-top: 60px; padding: 40px; border-radius: 24px; background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #ddd6fe 100%);">
+        <h3 style="font-size: 1.5rem; font-weight: 800; color: #5b21b6; margin-bottom: 8px;">✨ Unlock Pro Customization
+        </h3>
+        <p style="color: #6b7280; margin-bottom: 30px; font-weight:500">Go beyond basic QR codes with professional
+          branding</p>
         <div
-          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 24px;">
-          <div style="background: white; padding: 16px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-            <div style="font-size: 1.75rem; margin-bottom: 8px;">🖼️</div>
-            <strong style="color: #1f2937;">Logo Overlay</strong>
-            <p style="font-size: 0.875rem; color: #6b7280; margin-top: 4px;">Brand your QR</p>
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-bottom: 30px;">
+          <div
+            style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid rgba(255,255,255,0.8)">
+            <div style="font-size: 2rem; margin-bottom: 10px;">🖼️</div>
+            <strong style="color: #1f2937; display:block; font-size:0.9rem">Logo Overlay</strong>
           </div>
-          <div style="background: white; padding: 16px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-            <div style="font-size: 1.75rem; margin-bottom: 8px;">🎨</div>
-            <strong style="color: #1f2937;">Custom Colors</strong>
-            <p style="font-size: 0.875rem; color: #6b7280; margin-top: 4px;">QR + background</p>
+          <div
+            style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid rgba(255,255,255,0.8)">
+            <div style="font-size: 2rem; margin-bottom: 10px;">🎨</div>
+            <strong style="color: #1f2937; display:block; font-size:0.9rem">Brand Colors</strong>
           </div>
-          <div style="background: white; padding: 16px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-            <div style="font-size: 1.75rem; margin-bottom: 8px;">🏷️</div>
-            <strong style="color: #1f2937;">Frame Templates</strong>
-            <p style="font-size: 0.875rem; color: #6b7280; margin-top: 4px;">"Scan Me" & more</p>
+          <div
+            style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid rgba(255,255,255,0.8)">
+            <div style="font-size: 2rem; margin-bottom: 10px;">🏷️</div>
+            <strong style="color: #1f2937; display:block; font-size:0.9rem">Call-to-Action</strong>
           </div>
-          <div style="background: white; padding: 16px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-            <div style="font-size: 1.75rem; margin-bottom: 8px;">📐</div>
-            <strong style="color: #1f2937;">SVG Downloads</strong>
-            <p style="font-size: 0.875rem; color: #6b7280; margin-top: 4px;">Hi-res, scalable</p>
+          <div
+            style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid rgba(255,255,255,0.8)">
+            <div style="font-size: 2rem; margin-bottom: 10px;">📐</div>
+            <strong style="color: #1f2937; display:block; font-size:0.9rem">SVG Export</strong>
           </div>
         </div>
-        <a href="./logo-qr-code.html" class="btn"
-          style="background: linear-gradient(135deg, #7c3aed, #a855f7); padding: 12px 32px; font-size: 1rem;">
-          Try Pro Features →
+        <a href="/logo-qr-code.html" class="btn"
+          style="background: linear-gradient(135deg, #7c3aed, #a855f7); padding: 14px 40px; font-size: 1.1rem; box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.3)">Try
+          Pro Features →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ad Unit: After Generator -->
+  <div class="ad-container">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949" data-ad-slot="7438060059"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Detailed Features Section -->
+  <div class="py-20 bg-white" id="features">
+    <div class="container max-w-6xl">
+      <h2 class="text-3xl font-bold text-center mb-16">The Professional Standard for Digital Business Cards</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div class="flex gap-4">
+          <div
+            class="flex-shrink-0 bg-indigo-100 w-12 h-12 rounded-xl flex items-center justify-center text-indigo-600 font-bold text-xl">
+            🎯</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-2">Instant Saving</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">No manual entry. Contacts save directly to the phone's
+              address book with a single tap after scanning.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div
+            class="flex-shrink-0 bg-purple-100 w-12 h-12 rounded-xl flex items-center justify-center text-purple-600 font-bold text-xl">
+            💼</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-2">Universal Compatibility</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">Works natively on iOS and Android without any additional
+              apps. Built on standard vCard 3.0 protocols.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div
+            class="flex-shrink-0 bg-green-100 w-12 h-12 rounded-xl flex items-center justify-center text-green-600 font-bold text-xl">
+            🌱</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-2">Sustainable Networking</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">Reduce your carbon footprint. One digital card replaces
+              thousands of printed paper cards that usually end up in the trash.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div
+            class="flex-shrink-0 bg-blue-100 w-12 h-12 rounded-xl flex items-center justify-center text-blue-600 font-bold text-xl">
+            🎨</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-2">Brand Consistency</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">Pro options allow you to maintain brand integrity with
+              custom logos and primary colors directly inside the QR block.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div
+            class="flex-shrink-0 bg-red-100 w-12 h-12 rounded-xl flex items-center justify-center text-red-600 font-bold text-xl">
+            🔒</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-2">Privacy First</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">Your data never leaves your browser. We don't store or
+              track the personal information you enter into our generator.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div
+            class="flex-shrink-0 bg-yellow-100 w-12 h-12 rounded-xl flex items-center justify-center text-yellow-600 font-bold text-xl">
+            ⚡</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-2">High-Res Output</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">Crisp, clear QR codes generated instantly. Perfect for
+              email signatures, resumes, and high-quality printed materials.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works Section (Expanded) -->
+  <div class="py-24 bg-gray-900 text-white">
+    <div class="container max-w-5xl text-center">
+      <h2 class="text-3xl font-bold mb-16">How to Create Your vCard QR Code — 3 Simple Steps</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="flex flex-col items-center">
+          <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center text-2xl font-bold mb-6">1
+          </div>
+          <h3 class="text-xl font-bold mb-4">Enter Details</h3>
+          <p class="text-indigo-100/80 leading-relaxed">Fill in your name, job title, company, phone, email, and
+            website. No registration required.</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center text-2xl font-bold mb-6">2
+          </div>
+          <h3 class="text-xl font-bold mb-4">Generate & Preview</h3>
+          <p class="text-indigo-100/80 leading-relaxed">Watch as your unique QR code is created instantly. Optionally
+            upgrade to add your logo.</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center text-2xl font-bold mb-6">3
+          </div>
+          <h3 class="text-xl font-bold mb-4">Download & Share</h3>
+          <p class="text-indigo-100/80 leading-relaxed">Save the PNG to your device. Add it to your business cards or
+            share it digitally via email or socials.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Section (New) -->
+  <div class="py-24 bg-white" id="faq">
+    <div class="container max-w-3xl">
+      <h2 class="text-3xl font-bold text-center mb-16">Frequently Asked Questions</h2>
+      <div class="space-y-12">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Are vCard QR codes really free?</h3>
+          <p class="text-gray-600 leading-relaxed">Yes! Static vCard QR codes generated on our platform are 100% free
+            and will never expire. We offer a one-time upgrade for logo customization and premium styling.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Do I need an app to scan the QR code?</h3>
+          <p class="text-gray-600 leading-relaxed">No. Most modern smartphones (iOS 11+ and Android 9+) can scan QR
+            codes directly using the built-in camera app. Older phones can use any free QR reader app.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Can I edit my vCard after I print it?</h3>
+          <p class="text-gray-600 leading-relaxed">The free version generates "Static" codes, which cannot be changed
+            after printing. For "Dynamic" codes that you can update anytime, we recommend our Pro dashboard (coming
+            soon).</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">What data goes into the vCard QR code?</h3>
+          <p class="text-gray-600 leading-relaxed">It encodes your contact information using the standard vCard (VCF)
+            format. This includes your Name, Organization, Job Title, Phone Number, Email, and Website URL.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action Section -->
+  <div class="cta-section">
+    <div class="container">
+      <h2 class="text-3xl font-bold mb-6">Ready to upgrade your networking?</h2>
+      <p style="font-size: 1.2rem; margin: 20px 0 40px; opacity: 0.9;">Join 10,000+ professionals using digital business
+        cards daily</p>
+      <a href="#top" class="btn" style="font-size: 1.2rem; padding: 18px 50px; border-radius:12px; font-weight:700">🚀
+        Create Your QR Code Now</a>
+      <div style="margin-top: 40px; opacity: 0.8; font-size:0.9rem">
+        <span>✅ Completely Free</span>
+        <span style="margin: 0 15px">•</span>
+        <span>✅ No Sign-up</span>
+        <span style="margin: 0 15px">•</span>
+        <span>✅ Instant Download</span>
+      </div>
+    </div>
+  </div>
+  <!-- End CTA Section -->
+
+  <!-- Ad Unit: Before Footer -->
+  <div class="ad-container">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949" data-ad-slot="4811896719"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- Footer Section -->
+  <div style="background: #111827; color: white; text-align: center; padding: 40px 20px;">
+    <div class="container">
+      <!-- Internal Linking Grid -->
+      <div class="mb-12 border-b border-gray-800 pb-8">
+        <h4 class="text-gray-400 font-semibold mb-6 uppercase tracking-wider text-sm">Popular Professional Tools
+        </h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-center md:text-left">
+          <a href="/p/real-estate-agent-new-york/" class="text-gray-500 hover:text-white transition">Real Estate Agent
+            NY</a>
+          <a href="/p/real-estate-agent-los-angeles/" class="text-gray-500 hover:text-white transition">Real Estate
+            Agent LA</a>
+          <a href="/p/real-estate-agent-miami/" class="text-gray-500 hover:text-white transition">Real Estate Agent
+            Miami</a>
+          <a href="/p/real-estate-agent-chicago/" class="text-gray-500 hover:text-white transition">Real Estate Agent
+            Chicago</a>
+          <a href="/p/real-estate-agent-houston/" class="text-gray-500 hover:text-white transition">Real Estate Agent
+            Houston</a>
+          <a href="/p/recruiter-san-francisco/" class="text-gray-500 hover:text-white transition">Recruiters SF</a>
+          <a href="/p/recruiter-new-york/" class="text-gray-500 hover:text-white transition">Recruiters NY</a>
+          <a href="/p/recruiter-austin/" class="text-gray-500 hover:text-white transition">Recruiters Austin</a>
+          <a href="/p/sales-representative-new-york/" class="text-gray-500 hover:text-white transition">Sales Reps
+            NY</a>
+          <a href="/p/sales-representative-los-angeles/" class="text-gray-500 hover:text-white transition">Sales Reps
+            LA</a>
+          <a href="/p/event-planner-las-vegas/" class="text-gray-500 hover:text-white transition">Event Planners
+            Vegas</a>
+          <a href="/p/event-planner-new-york/" class="text-gray-500 hover:text-white transition">Event Planners NY</a>
+          <a href="/p/wedding-planner-los-angeles/" class="text-gray-500 hover:text-white transition">Wedding Planners
+            LA</a>
+          <a href="/p/photographer-new-york/" class="text-gray-500 hover:text-white transition">Photographers NY</a>
+          <a href="/p/photographer-los-angeles/" class="text-gray-500 hover:text-white transition">Photographers LA</a>
+          <a href="/p/personal-trainer-miami/" class="text-gray-500 hover:text-white transition">Personal Trainers
+            Miami</a>
+          <a href="/p/personal-trainer-los-angeles/" class="text-gray-500 hover:text-white transition">Personal Trainers
+            LA</a>
+          <a href="/p/hair-stylist-new-york/" class="text-gray-500 hover:text-white transition">Hair Stylists NY</a>
+          <a href="/p/plumber-chicago/" class="text-gray-500 hover:text-white transition">Plumbers Chicago</a>
+          <a href="/p/electrician-houston/" class="text-gray-500 hover:text-white transition">Electricians Houston</a>
+          <a href="/p/chiropractor-los-angeles/" class="text-gray-500 hover:text-white transition">Chiropractors LA</a>
+          <a href="/p/financial-advisor-new-york/" class="text-gray-500 hover:text-white transition">Financial Advisors
+            NY</a>
+          <a href="/p/graphic-designer-san-francisco/" class="text-gray-500 hover:text-white transition">Graphic
+            Designers SF</a>
+          <a href="/p/yoga-instructor-austin/" class="text-gray-500 hover:text-white transition">Yoga Instructors
+            Austin</a>
+          <a href="/p/" class="text-indigo-400 hover:text-white transition font-medium">View All Professions →</a>
+        </div>
+      </div>
+
+      <p>&copy; 2026 vCard QR Code Generator. Made with ❤️ for modern professionals.</p>
+      <div style="margin-top: 20px;">
+        <a href="https://www.uneed.best/tool/vcard-qr-code-generator" target="_blank" rel="noopener">
+          <img src="https://www.uneed.best/EMBED3B.png" alt="Featured on Uneed" style="height: 40px;" />
         </a>
       </div>
-      <!-- End Main Generator Form -->
+      <p style="margin-top: 15px;">
+        <a href="./privacy-policy.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Privacy
+          Policy</a>
+        <a href="./terms-of-service.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Terms of
+          Service</a>
+        <a href="./contact.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Contact</a>
+        <a id="footer-how-to-link" href="/blog/qr-code-and-vcard-guide/"
+          style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Ultimate vCard QR code guide</a>
+      </p>
+    </div>
+  </div>
+  <!-- End Footer Section -->
 
-      <!-- Ad Unit: After Generator -->
-      <div class="ad-container">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949"
-          data-ad-slot="7438060059" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true"></div>
+    <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
+      <h3 class="text-lg font-medium text-gray-900 dark:text-white">Clear Form Data?</h3>
+      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Are you sure you want to clear all the data? This
+        action cannot be undone.</p>
+      <div class="mt-6 flex justify-center space-x-4">
+        <button id="cancelClearBtn"
+          class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600">Cancel</button>
+        <button id="confirmClearBtn"
+          class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">Confirm
+          Clear</button>
       </div>
+    </div>
+  </div>
 
-      <!-- Features Section -->
-      <div class="features-grid container" id="features">
-        <div class="feature">
-          <div style="font-size: 2rem; margin-bottom: 15px;">🎯</div>
-          <h3>Professional Networking</h3>
-          <p>Make lasting impressions at conferences, meetings, and networking events with modern digital business
-            cards.</p>
-        </div>
-        <div class="feature">
-          <div style="font-size: 2rem; margin-bottom: 15px;">💼</div>
-          <h3>No App Required</h3>
-          <p>Recipients can save your contact info instantly using their phone's built-in camera — no special apps
-            needed.</p>
-        </div>
-        <div class="feature">
-          <div style="font-size: 2rem; margin-bottom: 15px;">🌱</div>
-          <h3>Eco-Friendly</h3>
-          <p>Go paperless and reduce waste while looking tech-savvy. Perfect for environmentally conscious
-            professionals.</p>
-        </div>
-        <div class="feature">
-          <div style="font-size: 2rem; margin-bottom: 15px;">⚡</div>
-          <h3>Instant Contact Saving</h3>
-          <p>Contacts are saved directly to phone address books with one tap — no manual typing required.</p>
-        </div>
-        <div class="feature">
-          <div style="font-size: 2rem; margin-bottom: 15px;">🎨</div>
-          <h3>Customizable Design</h3>
-          <p>Create QR codes that match your brand with custom colors, logos, and professional styling options.</p>
-        </div>
-        <div class="feature">
-          <div style="font-size: 2rem; margin-bottom: 15px;">🔒</div>
-          <h3>Secure & Private</h3>
-          <p>Everything runs in your browser. We don’t store your personal information or track your QR usage.</p>
-        </div>
-      </div>
-      <!-- End Features Section -->
+  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('vcard-form');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const shareBtn = document.getElementById('shareBtn');
+      const qrCodeElement = document.getElementById('qrcode');
+      const qrPlaceholder = document.getElementById('qrPlaceholder');
+      const fillSampleBtn = document.getElementById('fillSampleBtn');
+      const phoneInput = document.getElementById('phone');
+      const clearDataBtn = document.getElementById('clearDataBtn');
+      const confirmModal = document.getElementById('confirmModal');
+      const confirmClearBtn = document.getElementById('confirmClearBtn');
+      const cancelClearBtn = document.getElementById('cancelClearBtn');
 
-      <!-- How It Works Section -->
-      <div class="how-it-works">
-        <div class="container">
-          <h2>How It Works — In 3 Simple Steps</h2>
-          <div class="steps">
-            <div class="step">
-              <div class="step-number">1</div>
-              <h3>Enter Details</h3>
-              <p>Fill in your contact information: name, phone, email, company, and job title.</p>
-            </div>
-            <div class="step">
-              <div class="step-number">2</div>
-              <h3>Generate QR Code</h3>
-              <p>Click generate and instantly create your professional vCard QR code.</p>
-            </div>
-            <div class="step">
-              <div class="step-number">3</div>
-              <h3>Share & Network</h3>
-              <p>Download your QR code and add it to business cards, email signatures, or share digitally.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- End How It Works Section -->
+      // ---- GA4 event helpers ----
+      function gaTrack(name, params) {
+        if (typeof gtag === 'function') {
+          gtag('event', name, params || {});
+        }
+      }
 
-      <!-- Call to Action Section -->
-      <div class="cta-section">
-        <div class="container">
-          <h2>Ready to Transform Your Networking?</h2>
-          <p style="font-size: 1.2rem; margin: 20px 0 40px; opacity: 0.9;">Join thousands of professionals who've
-            upgraded to digital business cards</p>
-          <a href="#top" class="btn" style="font-size: 1.2rem; padding: 18px 40px;">🚀 Create Your QR Code Now</a>
-
-          <div style="margin-top: 40px; opacity: 0.8;">
-            <p>✅ Completely Free • ✅ No Registration Required • ✅ Instant Download</p>
-          </div>
-        </div>
-      </div>
-      <!-- End CTA Section -->
-
-      <!-- Ad Unit: Before Footer -->
-      <div class="ad-container">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949"
-          data-ad-slot="4811896719" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-
-      <!-- Footer Section -->
-      <div style="background: #111827; color: white; text-align: center; padding: 40px 20px;">
-        <div class="container">
-          <!-- Internal Linking Grid -->
-          <div class="mb-12 border-b border-gray-800 pb-8">
-            <h4 class="text-gray-400 font-semibold mb-6 uppercase tracking-wider text-sm">Popular Professional Tools
-            </h4>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-center md:text-left">
-              <a href="/p/real-estate-agent-new-york/" class="text-gray-500 hover:text-white transition">Real Estate Agent NY</a>
-              <a href="/p/real-estate-agent-los-angeles/" class="text-gray-500 hover:text-white transition">Real Estate Agent LA</a>
-              <a href="/p/real-estate-agent-miami/" class="text-gray-500 hover:text-white transition">Real Estate Agent Miami</a>
-              <a href="/p/real-estate-agent-chicago/" class="text-gray-500 hover:text-white transition">Real Estate Agent Chicago</a>
-              <a href="/p/real-estate-agent-houston/" class="text-gray-500 hover:text-white transition">Real Estate Agent Houston</a>
-              <a href="/p/recruiter-san-francisco/" class="text-gray-500 hover:text-white transition">Recruiters SF</a>
-              <a href="/p/recruiter-new-york/" class="text-gray-500 hover:text-white transition">Recruiters NY</a>
-              <a href="/p/recruiter-austin/" class="text-gray-500 hover:text-white transition">Recruiters Austin</a>
-              <a href="/p/sales-representative-new-york/" class="text-gray-500 hover:text-white transition">Sales Reps NY</a>
-              <a href="/p/sales-representative-los-angeles/" class="text-gray-500 hover:text-white transition">Sales Reps LA</a>
-              <a href="/p/event-planner-las-vegas/" class="text-gray-500 hover:text-white transition">Event Planners Vegas</a>
-              <a href="/p/event-planner-new-york/" class="text-gray-500 hover:text-white transition">Event Planners NY</a>
-              <a href="/p/wedding-planner-los-angeles/" class="text-gray-500 hover:text-white transition">Wedding Planners LA</a>
-              <a href="/p/photographer-new-york/" class="text-gray-500 hover:text-white transition">Photographers NY</a>
-              <a href="/p/photographer-los-angeles/" class="text-gray-500 hover:text-white transition">Photographers LA</a>
-              <a href="/p/personal-trainer-miami/" class="text-gray-500 hover:text-white transition">Personal Trainers Miami</a>
-              <a href="/p/personal-trainer-los-angeles/" class="text-gray-500 hover:text-white transition">Personal Trainers LA</a>
-              <a href="/p/hair-stylist-new-york/" class="text-gray-500 hover:text-white transition">Hair Stylists NY</a>
-              <a href="/p/plumber-chicago/" class="text-gray-500 hover:text-white transition">Plumbers Chicago</a>
-              <a href="/p/electrician-houston/" class="text-gray-500 hover:text-white transition">Electricians Houston</a>
-              <a href="/p/chiropractor-los-angeles/" class="text-gray-500 hover:text-white transition">Chiropractors LA</a>
-              <a href="/p/financial-advisor-new-york/" class="text-gray-500 hover:text-white transition">Financial Advisors NY</a>
-              <a href="/p/graphic-designer-san-francisco/" class="text-gray-500 hover:text-white transition">Graphic Designers SF</a>
-              <a href="/p/yoga-instructor-austin/" class="text-gray-500 hover:text-white transition">Yoga Instructors Austin</a>
-              <a href="/p/" class="text-indigo-400 hover:text-white transition font-medium">View All Professions →</a>
-            </div>
-          </div>
-
-          <p>&copy; 2026 vCard QR Code Generator. Made with ❤️ for modern professionals.</p>
-          <div style="margin-top: 20px;">
-            <a href="https://www.uneed.best/tool/vcard-qr-code-generator" target="_blank" rel="noopener">
-              <img src="https://www.uneed.best/EMBED3B.png" alt="Featured on Uneed" style="height: 40px;" />
-            </a>
-          </div>
-          <p style="margin-top: 15px;">
-            <a href="./privacy-policy.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Privacy
-              Policy</a>
-            <a href="./terms-of-service.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Terms of
-              Service</a>
-            <a href="./contact.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Contact</a>
-            <a id="footer-how-to-link" href="/blog/qr-code-and-vcard-guide/"
-              style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Ultimate vCard QR code guide</a>
-          </p>
-        </div>
-      </div>
-      <!-- End Footer Section -->
-
-      <!-- Confirmation Modal -->
-      <div id="confirmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="fixed inset-0 transition-opacity" aria-hidden="true"></div>
-        <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
-          <h3 class="text-lg font-medium text-gray-900 dark:text-white">Clear Form Data?</h3>
-          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Are you sure you want to clear all the data? This
-            action cannot be undone.</p>
-          <div class="mt-6 flex justify-center space-x-4">
-            <button id="cancelClearBtn"
-              class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600">Cancel</button>
-            <button id="confirmClearBtn"
-              class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700">Confirm
-              Clear</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scripts -->
-      <script>
-        document.addEventListener('DOMContentLoaded', () => {
-          const form = document.getElementById('vcard-form');
-          const downloadBtn = document.getElementById('downloadBtn');
-          const shareBtn = document.getElementById('shareBtn');
-          const qrCodeElement = document.getElementById('qrcode');
-          const qrPlaceholder = document.getElementById('qrPlaceholder');
-          const fillSampleBtn = document.getElementById('fillSampleBtn');
-          const phoneInput = document.getElementById('phone');
-          const clearDataBtn = document.getElementById('clearDataBtn');
-          const confirmModal = document.getElementById('confirmModal');
-          const confirmClearBtn = document.getElementById('confirmClearBtn');
-          const cancelClearBtn = document.getElementById('cancelClearBtn');
-
-          // ---- GA4 event helpers ----
-          function gaTrack(name, params) {
-            if (typeof gtag === 'function') {
-              gtag('event', name, params || {});
-            }
-          }
-
-          // 1) Download QR
-          downloadBtn?.addEventListener('click', () => {
-            // Optionally include field completeness to see quality of downloads
-            const hasName = (document.getElementById('fullName')?.value.trim().length || 0) > 0;
-            gaTrack('download_qr', {
-              event_category: 'engagement',
-              event_label: 'download_button',
-              has_name: hasName ? 'yes' : 'no'
-            });
-          });
-
-          // 2) “Ultimate vCard QR code guide” link (treat as Pro CTA for now)
-          document.getElementById('guideLink')?.addEventListener('click', () => {
-            gaTrack('pro_cta_click', {
-              event_category: 'engagement',
-              event_label: 'footer_guide_link'
-            });
-          });
-
-          // Instantiate QRCode object
-          const qrcode = new QRCode(qrCodeElement, {
-            width: 218,
-            height: 218,
-            colorDark: '#000000',
-            colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.H
-          });
-
-          // Show share button if Web Share API available
-          if (navigator.share) {
-            shareBtn.classList.remove('hidden');
-          }
-
-          // Update UI state (enable/disable buttons and show/hide placeholder)
-          const updateUIState = (hasContent) => {
-            const buttons = [downloadBtn, shareBtn];
-            if (hasContent) {
-              qrPlaceholder.classList.add('hidden');
-              qrCodeElement.classList.remove('hidden');
-              buttons.forEach(btn => {
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                btn.removeAttribute('disabled');
-              });
-            } else {
-              qrPlaceholder.classList.remove('hidden');
-              qrCodeElement.classList.add('hidden');
-              buttons.forEach(btn => {
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-                btn.setAttribute('disabled', 'true');
-              });
-              downloadBtn.href = '#';
-            }
-          };
-
-          // Generate QR Code from form values
-          const generateQRCode = () => {
-            const fullName = document.getElementById('fullName').value.trim();
-            if (!fullName) {
-              qrcode.clear();
-              updateUIState(false);
-              return;
-            }
-            updateUIState(true);
-            const phone = document.getElementById('phone').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const website = document.getElementById('website').value.trim();
-            const company = document.getElementById('company').value.trim();
-            const title = document.getElementById('title').value.trim();
-            const nameParts = fullName.split(' ');
-            const firstName = nameParts.shift() || '';
-            const lastName = nameParts.join(' ') || '';
-
-            const vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
-            qrcode.makeCode(vCardString);
-            setTimeout(() => {
-              const canvas = qrCodeElement.querySelector('canvas');
-              if (canvas) {
-                downloadBtn.href = canvas.toDataURL();
-              }
-            }, 100);
-          };
-
-          // Share QR Code using Web Share API
-          const shareQRCode = async () => {
-            const canvas = qrCodeElement.querySelector('canvas');
-            if (!canvas || !navigator.share) return;
-            canvas.toBlob(async (blob) => {
-              const file = new File([blob], 'vcard-qrcode.png', { type: 'image/png' });
-              const shareData = {
-                files: [file],
-                title: 'My vCard QR Code',
-              };
-              try {
-                await navigator.share(shareData);
-              } catch (err) {
-                console.error('Share failed:', err);
-              }
-            }, 'image/png');
-          };
-
-          // Fill sample data for testing
-          const fillSampleData = () => {
-            document.getElementById('fullName').value = 'Jane Appleseed';
-            document.getElementById('phone').value = '+18006927753';
-            document.getElementById('email').value = 'jane.appleseed@example.com';
-            document.getElementById('website').value = 'https://www.apple.com';
-            document.getElementById('company').value = 'Apple Inc.';
-            document.getElementById('title').value = 'Creative Director';
-            generateQRCode();
-          };
-
-          // Sanitize phone number input
-          const sanitizePhoneInput = () => {
-            phoneInput.value = phoneInput.value.replace(/[^0-9+]/g, '');
-          };
-
-          // Clear form data
-          const handleClearData = () => {
-            form.reset();
-            generateQRCode();
-            confirmModal.classList.add('hidden');
-          };
-
-          // Event listeners
-          form.addEventListener('input', generateQRCode);
-          fillSampleBtn.addEventListener('click', fillSampleData);
-          shareBtn.addEventListener('click', shareQRCode);
-          phoneInput.addEventListener('input', sanitizePhoneInput);
-          clearDataBtn.addEventListener('click', () => confirmModal.classList.remove('hidden'));
-          cancelClearBtn.addEventListener('click', () => confirmModal.classList.add('hidden'));
-          confirmClearBtn.addEventListener('click', handleClearData);
-          confirmModal.addEventListener('click', (e) => {
-            if (e.target === confirmModal) {
-              confirmModal.classList.add('hidden');
-            }
-          });
-
-          // Initialize UI state
-          updateUIState(false);
-          qrcode.clear();
+      // 1) Download QR
+      downloadBtn?.addEventListener('click', () => {
+        // Optionally include field completeness to see quality of downloads
+        const hasName = (document.getElementById('fullName')?.value.trim().length || 0) > 0;
+        gaTrack('download_qr', {
+          event_category: 'engagement',
+          event_label: 'download_button',
+          has_name: hasName ? 'yes' : 'no'
         });
-      </script>
-      <script>
-        (function () {
-          const footerLink = document.getElementById('footer-how-to-link');
-          if (!footerLink) return;
+      });
 
-          const canonicalHost = 'www.vcardqrcodegenerator.com';
-          const canonicalGuideSlug = 'qr-code-and-vcard-guide';
-          const canonicalGuide = `https://${canonicalHost}/blog/${canonicalGuideSlug}/`;
+      // 2) “Ultimate vCard QR code guide” link (treat as Pro CTA for now)
+      document.getElementById('guideLink')?.addEventListener('click', () => {
+        gaTrack('pro_cta_click', {
+          event_category: 'engagement',
+          event_label: 'footer_guide_link'
+        });
+      });
 
-          const ensureCanonical = (value) => {
-            try {
-              const url = new URL(value, canonicalGuide);
-              url.protocol = 'https:';
-              url.hostname = canonicalHost;
-              url.hash = '';
-              url.search = '';
-              if (/^\/blog\/[^/]+$/.test(url.pathname) && !url.pathname.endsWith('/')) {
-                url.pathname = `${url.pathname}/`;
-              }
-              return url.toString();
-            } catch (error) {
-              return canonicalGuide;
-            }
+      // Instantiate QRCode object
+      const qrcode = new QRCode(qrCodeElement, {
+        width: 218,
+        height: 218,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      // Show share button if Web Share API available
+      if (navigator.share) {
+        shareBtn.classList.remove('hidden');
+      }
+
+      // Update UI state (enable/disable buttons and show/hide placeholder)
+      const updateUIState = (hasContent) => {
+        const buttons = [downloadBtn, shareBtn];
+        if (hasContent) {
+          qrPlaceholder.classList.add('hidden');
+          qrCodeElement.classList.remove('hidden');
+          buttons.forEach(btn => {
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            btn.removeAttribute('disabled');
+          });
+        } else {
+          qrPlaceholder.classList.remove('hidden');
+          qrCodeElement.classList.add('hidden');
+          buttons.forEach(btn => {
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btn.setAttribute('disabled', 'true');
+          });
+          downloadBtn.href = '#';
+        }
+      };
+
+      // Generate QR Code from form values
+      const generateQRCode = () => {
+        const fullName = document.getElementById('fullName').value.trim();
+        if (!fullName) {
+          qrcode.clear();
+          updateUIState(false);
+          return;
+        }
+        updateUIState(true);
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const website = document.getElementById('website').value.trim();
+        const company = document.getElementById('company').value.trim();
+        const title = document.getElementById('title').value.trim();
+        const nameParts = fullName.split(' ');
+        const firstName = nameParts.shift() || '';
+        const lastName = nameParts.join(' ') || '';
+
+        const vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
+        qrcode.makeCode(vCardString);
+        setTimeout(() => {
+          const canvas = qrCodeElement.querySelector('canvas');
+          if (canvas) {
+            downloadBtn.href = canvas.toDataURL();
+          }
+        }, 100);
+      };
+
+      // Share QR Code using Web Share API
+      const shareQRCode = async () => {
+        const canvas = qrCodeElement.querySelector('canvas');
+        if (!canvas || !navigator.share) return;
+        canvas.toBlob(async (blob) => {
+          const file = new File([blob], 'vcard-qrcode.png', { type: 'image/png' });
+          const shareData = {
+            files: [file],
+            title: 'My vCard QR Code',
           };
+          try {
+            await navigator.share(shareData);
+          } catch (err) {
+            console.error('Share failed:', err);
+          }
+        }, 'image/png');
+      };
 
-          footerLink.href = canonicalGuide;
+      // Fill sample data for testing
+      const fillSampleData = () => {
+        document.getElementById('fullName').value = 'Jane Appleseed';
+        document.getElementById('phone').value = '+18006927753';
+        document.getElementById('email').value = 'jane.appleseed@example.com';
+        document.getElementById('website').value = 'https://www.apple.com';
+        document.getElementById('company').value = 'Apple Inc.';
+        document.getElementById('title').value = 'Creative Director';
+        generateQRCode();
+      };
 
-          fetch('/blog_index.json', { cache: 'no-store' })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error('Manifest unavailable');
-              }
-              return response.json();
-            })
-            .then((entries) => {
-              if (!Array.isArray(entries)) {
-                return;
-              }
+      // Sanitize phone number input
+      const sanitizePhoneInput = () => {
+        phoneInput.value = phoneInput.value.replace(/[^0-9+]/g, '');
+      };
 
-              const normalized = entries
-                .filter((entry) => entry && typeof entry === 'object')
-                .map((entry) => {
-                  const slug = typeof entry.slug === 'string' ? entry.slug : '';
-                  const url = typeof entry.url === 'string' ? entry.url : '';
-                  return { slug, url };
-                });
+      // Clear form data
+      const handleClearData = () => {
+        form.reset();
+        generateQRCode();
+        confirmModal.classList.add('hidden');
+      };
 
-              const guideEntry = normalized.find((entry) => entry.slug.toLowerCase() === canonicalGuideSlug);
-              if (!guideEntry) {
-                return;
-              }
+      // Event listeners
+      form.addEventListener('input', generateQRCode);
+      fillSampleBtn.addEventListener('click', fillSampleData);
+      shareBtn.addEventListener('click', shareQRCode);
+      phoneInput.addEventListener('input', sanitizePhoneInput);
+      clearDataBtn.addEventListener('click', () => confirmModal.classList.remove('hidden'));
+      cancelClearBtn.addEventListener('click', () => confirmModal.classList.add('hidden'));
+      confirmClearBtn.addEventListener('click', handleClearData);
+      confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) {
+          confirmModal.classList.add('hidden');
+        }
+      });
 
-              const href = guideEntry.url || `/blog/${guideEntry.slug}/`;
-              footerLink.href = ensureCanonical(href);
-            })
-            .catch(() => {
-              footerLink.href = canonicalGuide;
+      // Initialize UI state
+      updateUIState(false);
+      qrcode.clear();
+    });
+  </script>
+  <script>
+    (function () {
+      const footerLink = document.getElementById('footer-how-to-link');
+      if (!footerLink) return;
+
+      const canonicalHost = 'www.vcardqrcodegenerator.com';
+      const canonicalGuideSlug = 'qr-code-and-vcard-guide';
+      const canonicalGuide = `https://${canonicalHost}/blog/${canonicalGuideSlug}/`;
+
+      const ensureCanonical = (value) => {
+        try {
+          const url = new URL(value, canonicalGuide);
+          url.protocol = 'https:';
+          url.hostname = canonicalHost;
+          url.hash = '';
+          url.search = '';
+          if (/^\/blog\/[^/]+$/.test(url.pathname) && !url.pathname.endsWith('/')) {
+            url.pathname = `${url.pathname}/`;
+          }
+          return url.toString();
+        } catch (error) {
+          return canonicalGuide;
+        }
+      };
+
+      footerLink.href = canonicalGuide;
+
+      fetch('/blog_index.json', { cache: 'no-store' })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Manifest unavailable');
+          }
+          return response.json();
+        })
+        .then((entries) => {
+          if (!Array.isArray(entries)) {
+            return;
+          }
+
+          const normalized = entries
+            .filter((entry) => entry && typeof entry === 'object')
+            .map((entry) => {
+              const slug = typeof entry.slug === 'string' ? entry.slug : '';
+              const url = typeof entry.url === 'string' ? entry.url : '';
+              return { slug, url };
             });
-        })();
-      </script>
+
+          const guideEntry = normalized.find((entry) => entry.slug.toLowerCase() === canonicalGuideSlug);
+          if (!guideEntry) {
+            return;
+          }
+
+          const href = guideEntry.url || `/blog/${guideEntry.slug}/`;
+          footerLink.href = ensureCanonical(href);
+        })
+        .catch(() => {
+          footerLink.href = canonicalGuide;
+        });
+    })();
+  </script>
 </body>
 
 </html>
