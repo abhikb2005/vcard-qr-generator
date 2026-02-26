@@ -3,7 +3,8 @@ main = "workers/router.js"
 compatibility_date = "2024-06-20"
 
 routes = [
-  { pattern = "api.vcardqrcodegenerator.com/*", zone_name = "vcardqrcodegenerator.com" }
+  { pattern = "api.vcardqrcodegenerator.com/*", zone_name = "vcardqrcodegenerator.com" },
+  { pattern = "vcardqrcodegenerator.com/ads.txt", zone_name = "vcardqrcodegenerator.com" }
 ]
 
 # [[d1_databases]]
