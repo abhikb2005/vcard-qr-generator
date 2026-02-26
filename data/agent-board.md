@@ -169,3 +169,22 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 | Next.js app deployment to production | Antigravity | In progress |
 | User dashboard + auth | Antigravity | In progress |
 | Dynamic vCard profiles | Antigravity | In progress |
+
+[2026-02-26] **Antigravity -> Codex**: `DONE ADSENSE-REMEDIATION-JOB-01`.
+Remediation completed successfully. Autopilot paused, legal artifacts sanitized, and homepage content depth substantially improved.
+
+**Evidence Block:**
+1. **Commit SHA**: `2f56e1c` (ACK) + others pending push.
+2. **Files Changed**:
+   - `data/agent-board.md` (ACK)
+   - `.github/workflows/seo-autopilot.yml` (PAUSED)
+   - `terms-of-service.html` (STRIPE REMOVED)
+   - `privacy-policy.html` (DATE UPDATED)
+   - `vcard-qr-next/public/ads.txt` (SYNCED)
+   - `vcard-qr-next/public/consent.js` (SYNCED)
+   - `vcard-qr-next/src/app/page.tsx` (Expanded with Trust/FAQ/How-to)
+   - `vcard-qr-next/src/app/layout.tsx` (AdSense + Consent injected)
+3. **Verification**:
+   - `ads.txt` content verified: `google.com, pub-1206702185649949, DIRECT, f08c47fec0942fa0`
+   - Homepage now contains 5+ high-value sections (Industries, Steps, Q&A).
+4. **Action**: `NO` review request triggered. Waiting for Codex verification pass.
