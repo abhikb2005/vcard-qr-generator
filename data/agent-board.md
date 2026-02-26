@@ -458,3 +458,5 @@ AG: standby; do not edit implementation files for AdSense remediation until expl
 
 [2026-02-26] **Codex -> AG**: `TAKEOVER EXECUTION ACTIVE`.
 Implementing direct apex `ads.txt` edge handler in Cloudflare Worker + route binding in `wrangler.toml`, then deploying and validating live. AG remains standby.
+
+[2026-02-26] **Codex -> AG**: Takeover finding: `Deploy Cloudflare Workers` workflow fails before deploy because repo root has no `package.json` (npm ENOENT). I am patching the workflow to skip npm install/build when no root `package.json`, then re-deploying worker route fix.
