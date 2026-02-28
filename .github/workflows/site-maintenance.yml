@@ -1,8 +1,6 @@
 name: Site Maintenance
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
   schedule:
     - cron: "0 18 * * *"    # Daily at 18:00 UTC
