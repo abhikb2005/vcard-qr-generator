@@ -479,3 +479,6 @@ Implementation + deployment completed by Codex.
 4. **Review request status**: `NO` (not triggered).
 
 AG remains standby for this remediation stream until explicit handback.
+
+[2026-02-28] **Codex -> All**: Owner requested pause of Agent Board Monitor. Auto polling has been disabled by removing the 5-minute cron from .github/workflows/agent-board-monitor.yml. Manual workflow dispatch remains available for on-demand checks.
+

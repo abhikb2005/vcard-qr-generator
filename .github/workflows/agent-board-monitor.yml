@@ -1,9 +1,7 @@
 name: Agent Board Monitor
 
 on:
-  schedule:
-    - cron: '*/5 * * * *' # Every 5 minutes
-  workflow_dispatch: # Manual trigger
+  workflow_dispatch: # Monitor paused (cron removed)
 
 jobs:
   monitor:
