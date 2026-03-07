@@ -14,13 +14,13 @@
 | 4 | Feb 25 | Kaywa QR Code | kaywa-alternative | ✅ Done |
 | 5 | Feb 26 | QRFY | qrfy-alternative | ✅ Done |
 | 6 | Feb 27 | Yohn.io | yohn-io-alternative | ✅ Done |
-| 7 | Feb 28 | Autonix | autonix-alternative | ☐ |
-| 8 | Mar 1 | QR Code AI 2.0 | qr-code-ai-alternative | ☐ |
-| 9 | Mar 2 | MetriQR | metriqr-alternative | ☐ |
-| 10 | Mar 3 | QR Code Dynamic | qr-code-dynamic-alternative | ☐ |
+| 7 | Feb 28 | Autonix | autonix-alternative | ✅ Done |
+| 8 | Mar 1 | QR Code AI 2.0 | qr-code-ai-alternative | ✅ Done |
+| 9 | Mar 2 | MetriQR | metriqr-alternative | ✅ Done |
+| 10 | Mar 3 | QR Code Dynamic | qr-code-dynamic-alternative | ✅ Done |
 | 11 | Mar 4 | Hovercode | hovercode-alternative | ✅ Exists (pSEO) |
-| 12 | Mar 5 | QR Planet | qr-planet-alternative | ☐ |
-| 13 | Mar 6 | QR Factory | qr-factory-alternative | ☐ |
+| 12 | Mar 5 | QR Planet | qr-planet-alternative | ✅ Done |
+| 13 | Mar 7 | QR Factory | qr-factory-alternative | ✅ Done |
 | 14 | Mar 7 | SaferCodes | safercodes-alternative | ☐ |
 | 15 | Mar 8 | Free QR Code Generator | free-qr-code-generator-alternative | ☐ |
 | 16 | Mar 9 | Mini QR | mini-qr-alternative | ☐ |
