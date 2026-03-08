@@ -21,7 +21,7 @@
 | 11 | Mar 4 | Hovercode | hovercode-alternative | ✅ Exists (pSEO) |
 | 12 | Mar 5 | QR Planet | qr-planet-alternative | ✅ Done |
 | 13 | Mar 7 | QR Factory | qr-factory-alternative | ✅ Done |
-| 14 | Mar 7 | SaferCodes | safercodes-alternative | ☐ |
+| 14 | Mar 8 | SaferCodes | safercodes-alternative | ✅ Done |
 | 15 | Mar 8 | Free QR Code Generator | free-qr-code-generator-alternative | ☐ |
 | 16 | Mar 9 | Mini QR | mini-qr-alternative | ☐ |
 | 17 | Mar 10 | QR Dive | qr-dive-alternative | ☐ |
