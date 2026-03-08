@@ -40,6 +40,17 @@
 | 30 | Mar 23 | Free-qr-code.net | free-qr-code-net-alternative | ☐ |
 | 31 | Mar 24 | Online QR Code Image Generator | online-qr-code-image-generator-alternative | ☐ |
 | 32 | Mar 25 | QR Code Generator (Compzets) | compzets-alternative | ☐ |
+| 33 | Mar 26 | Uniqode (Beaconstac) | uniqode-alternative | ☐ |
+| 34 | Mar 27 | Trueqrcode | trueqrcode-alternative | ☐ |
+| 35 | Mar 28 | QRCodeChimp | qrcodechimp-alternative | ☐ |
+| 36 | Mar 29 | Flowcode | flowcode-alternative | ☐ |
+| 37 | Mar 30 | ViralQR | viralqr-alternative | ☐ |
+| 38 | Mar 31 | V1CE | v1ce-alternative | ☐ |
+| 39 | Apr 1 | QRCode Monkey | qrcode-monkey-alternative | ☐ |
+| 40 | Apr 2 | QR-Code.io | qr-code-io-alternative | ☐ |
+| 41 | Apr 3 | Bitly QR | bitly-qr-alternative | ☐ |
+| 42 | Apr 4 | Scantrust | scantrust-alternative | ☐ |
+| 43 | Apr 5 | Qroq | qroq-alternative | ☐ |
 
 ## Excluded (not relevant competitors)
 - ShareX, ScreenTray, qscreenshot — screenshot tools, not QR generators
