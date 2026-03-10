@@ -24,7 +24,7 @@
 | 14 | Mar 8 | SaferCodes | safercodes-alternative | ✅ Done |
 | 15 | Mar 8 | Free QR Code Generator | free-qr-code-generator-alternative | ✅ Done |
 | 16 | Mar 9 | Mini QR | mini-qr-alternative | ✅ Done |
-| 17 | Mar 10 | QR Dive | qr-dive-alternative | ☐ |
+| 17 | Mar 10 | QR Dive | qr-dive-alternative | ✅ Done |
 | 18 | Mar 11 | Midiacode | midiacode-alternative | ☐ |
 | 19 | Mar 12 | QRCodeFree | qrcodefree-alternative | ☐ |
 | 20 | Mar 13 | QR Studio PRO | qr-studio-pro-alternative | ☐ |
