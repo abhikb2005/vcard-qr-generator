@@ -26,7 +26,7 @@
 | 16 | Mar 9 | Mini QR | mini-qr-alternative | ✅ Done |
 | 17 | Mar 10 | QR Dive | qr-dive-alternative | ✅ Done |
 | 18 | Mar 11 | Midiacode | midiacode-alternative | ✅ Done |
-| 19 | Mar 12 | QRCodeFree | qrcodefree-alternative | ☐ |
+| 19 | Mar 12 | QRCodeFree | qrcodefree-alternative | ✅ Done |
 | 20 | Mar 13 | QR Studio PRO | qr-studio-pro-alternative | ☐ |
 | 21 | Mar 14 | Contact.et | contact-et-alternative | ☐ |
 | 22 | Mar 15 | QRvCards | qrvcards-alternative | ☐ |
