@@ -28,7 +28,7 @@
 | 18 | Mar 11 | Midiacode | midiacode-alternative | ✅ Done |
 | 19 | Mar 12 | QRCodeFree | qrcodefree-alternative | ✅ Done |
 | 20 | Mar 13 | QR Studio PRO | qr-studio-pro-alternative | ✅ Done |
-| 21 | Mar 14 | Contact.et | contact-et-alternative | ☐ |
+| 21 | Mar 14 | Contact.et | contact-et-alternative | ✅ Done |
 | 22 | Mar 15 | QRvCards | qrvcards-alternative | ☐ |
 | 23 | Mar 16 | vCard Garden | vcard-garden-alternative | ☐ |
 | 24 | Mar 17 | Free QR Code Generator (QR Tiger) | qr-tiger-alternative | ☐ |
