@@ -30,7 +30,56 @@
       "@type": "Organization",
       "name": "vCard QR Code Generator"
     },
-    "datePublished": "2025-09-21T00:00:00+00:00"
+    "datePublished": "2025-09-21T00:00:00+00:00",
+    "dateModified": "2026-03-16T00:00:00+00:00"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What format does a vCard QR code use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A vCard QR code uses the vCard (VCF) format, an open standard for contact data. The most common version is vCard 3.0, which encodes fields like BEGIN:VCARD, VERSION:3.0, N (name), FN (full name), TEL (phone), EMAIL, ORG (company), TITLE, URL, and ADR (address) as structured text inside the QR code."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between vCard 3.0 and vCard 4.0 for QR codes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "vCard 3.0 is the recommended format for QR codes because it has universal compatibility across all iPhones, Android devices, and email clients. vCard 4.0 adds social media profiles and richer formatting but has inconsistent support on older devices. vCard 3.0 also produces smaller, easier-to-scan QR codes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between a QR code and a vCard QR code?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A regular QR code can contain various types of data like URLs or text. A vCard QR code specifically contains structured contact information in vCard format that phones recognize and can save directly to contacts with one tap — no manual typing required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a special app to scan vCard QR codes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Most modern smartphones can scan vCard QR codes using their built-in camera app. The phone automatically recognizes the vCard format and prompts you to save the contact. No additional app is needed on iPhone or Android."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much information can a vCard QR code store?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A vCard QR code can store name, multiple phone numbers, email addresses, company, job title, website URL, and physical address. However, keeping data under 300 characters ensures the best scanning reliability. Too much data makes the QR code denser and harder to scan at small print sizes."
+        }
+      }
+    ]
   }
   </script>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -69,6 +118,7 @@
         <ol class="mt-4 list-decimal list-inside space-y-2 text-base sm:text-lg">
           <li><a href="#what-are-vcard-qr-codes" class="text-indigo-600 hover:text-indigo-500">What are vCard QR Codes?</a></li>
           <li><a href="#how-vcard-qr-codes-work" class="text-indigo-600 hover:text-indigo-500">How vCard QR Codes Work</a></li>
+          <li><a href="#vcard-format" class="text-indigo-600 hover:text-indigo-500">vCard QR Code Format Explained</a></li>
           <li><a href="#comparison" class="text-indigo-600 hover:text-indigo-500">vCard QR Codes vs Traditional QR Codes</a></li>
           <li><a href="#types" class="text-indigo-600 hover:text-indigo-500">Types of QR Codes for Business</a></li>
           <li><a href="#benefits" class="text-indigo-600 hover:text-indigo-500">Benefits of vCard QR Codes</a></li>
@@ -76,6 +126,8 @@
           <li><a href="#best-practices" class="text-indigo-600 hover:text-indigo-500">Best Practices</a></li>
           <li><a href="#applications" class="text-indigo-600 hover:text-indigo-500">Business Applications</a></li>
           <li><a href="#troubleshooting" class="text-indigo-600 hover:text-indigo-500">Troubleshooting</a></li>
+          <li><a href="#iphone-vs-android" class="text-indigo-600 hover:text-indigo-500">vCard QR Codes on iPhone vs Android</a></li>
+          <li><a href="#vcard-vs-mecard" class="text-indigo-600 hover:text-indigo-500">vCard vs MeCard: Quick Comparison</a></li>
           <li><a href="#faq" class="text-indigo-600 hover:text-indigo-500">FAQ</a></li>
         </ol>
       </nav>
@@ -114,6 +166,96 @@
           <li><strong>Preview:</strong> Contact details appear on screen for review</li>
           <li><strong>Saving:</strong> User taps 'Add to Contacts' to save information instantly</li>
         </ol>
+      </section>
+
+      <section id="vcard-format" class="space-y-4">
+        <h2 class="text-2xl font-semibold text-slate-900">vCard QR Code Format Explained</h2>
+        <p>The vCard format (also called VCF) is an open standard for storing contact information. When you create a vCard QR code, the contact data is encoded inside the QR code using this structured text format. Understanding how the format works helps you create better, more compatible QR codes.</p>
+
+        <h3 class="text-xl font-semibold text-slate-900 mt-6">vCard 3.0 Format Structure</h3>
+        <p>Most vCard QR codes use vCard version 3.0, which is supported by virtually every smartphone. Here&rsquo;s what the format looks like inside a QR code:</p>
+        <div class="rounded-xl border border-slate-200 bg-slate-900 text-green-400 font-mono text-sm p-5 overflow-x-auto">
+          <pre>BEGIN:VCARD
+VERSION:3.0
+N:Smith;Jane;;;
+FN:Jane Smith
+ORG:Acme Corp
+TITLE:Marketing Director
+TEL;TYPE=WORK,VOICE:+1-555-123-4567
+TEL;TYPE=CELL:+1-555-987-6543
+EMAIL:jane.smith@acme.com
+URL:https://acme.com
+ADR;TYPE=WORK:;;123 Main St;New York;NY;10001;USA
+END:VCARD</pre>
+        </div>
+
+        <h3 class="text-xl font-semibold text-slate-900 mt-6">Key vCard Fields</h3>
+        <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <table class="min-w-full divide-y divide-slate-200 text-left text-base">
+            <thead class="bg-slate-100 text-slate-900">
+              <tr>
+                <th class="px-4 py-3 font-semibold">Field</th>
+                <th class="px-4 py-3 font-semibold">Purpose</th>
+                <th class="px-4 py-3 font-semibold">Example</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 font-mono text-sm">
+              <tr>
+                <td class="px-4 py-3">N</td>
+                <td class="px-4 py-3 font-sans">Structured name (Last;First)</td>
+                <td class="px-4 py-3">N:Smith;Jane;;;</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">FN</td>
+                <td class="px-4 py-3 font-sans">Full display name</td>
+                <td class="px-4 py-3">FN:Jane Smith</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">ORG</td>
+                <td class="px-4 py-3 font-sans">Company / organization</td>
+                <td class="px-4 py-3">ORG:Acme Corp</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">TITLE</td>
+                <td class="px-4 py-3 font-sans">Job title</td>
+                <td class="px-4 py-3">TITLE:Marketing Director</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">TEL</td>
+                <td class="px-4 py-3 font-sans">Phone number (with type)</td>
+                <td class="px-4 py-3">TEL;TYPE=CELL:+1-555-987-6543</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">EMAIL</td>
+                <td class="px-4 py-3 font-sans">Email address</td>
+                <td class="px-4 py-3">EMAIL:jane@acme.com</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">URL</td>
+                <td class="px-4 py-3 font-sans">Website</td>
+                <td class="px-4 py-3">URL:https://acme.com</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">ADR</td>
+                <td class="px-4 py-3 font-sans">Address (street;city;state;zip;country)</td>
+                <td class="px-4 py-3">ADR;TYPE=WORK:;;123 Main St;NY;...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-xl font-semibold text-slate-900 mt-6">vCard 3.0 vs 4.0: Which Should You Use?</h3>
+        <p>vCard 4.0 adds support for features like social media profiles and richer address formatting, but <strong>vCard 3.0 is the safer choice for QR codes</strong>. Here&rsquo;s why:</p>
+        <ul class="list-disc list-inside space-y-2">
+          <li><strong>Universal compatibility</strong> &mdash; vCard 3.0 works on every iPhone, Android phone, and desktop email client. vCard 4.0 has inconsistent support, especially on older Android devices.</li>
+          <li><strong>Smaller data size</strong> &mdash; QR codes have a data limit. vCard 3.0&rsquo;s simpler syntax keeps codes compact and scannable. More data means a denser, harder-to-scan QR code.</li>
+          <li><strong>Reliable field mapping</strong> &mdash; Phone contacts apps reliably parse 3.0 fields (N, FN, TEL, EMAIL, ORG). Some 4.0-specific fields get ignored or misinterpreted.</li>
+        </ul>
+        <p class="mt-2">Our <a href="/" class="text-indigo-600 hover:text-indigo-500">free vCard QR code generator</a> uses vCard 3.0 by default to ensure maximum compatibility across all devices. For a deeper comparison of contact formats, see our <a href="/blog/mecard-vs-vcard-qr-code/" class="text-indigo-600 hover:text-indigo-500">MeCard vs vCard guide</a>.</p>
+
+        <div class="rounded-xl border border-slate-200 bg-slate-100/60 px-5 py-4 text-base text-slate-800 mt-4">
+          <strong>Tip:</strong> Keep your vCard data under 300 characters for the best scanning reliability. Include only essential fields &mdash; name, phone, email, company, and website. Every extra field makes the QR code denser and harder to scan at small print sizes.
+        </div>
       </section>
 
       <section id="comparison" class="space-y-4">
@@ -231,6 +373,129 @@
         </ul>
       </section>
 
+      <section id="iphone-vs-android" class="space-y-4">
+        <h2 class="text-2xl font-semibold text-slate-900">vCard QR Codes on iPhone vs Android</h2>
+        <p>vCard QR codes work on both platforms, but the scanning and saving experience differs. Knowing these differences helps you create codes that work reliably for everyone.</p>
+
+        <h3 class="text-xl font-semibold text-slate-900 mt-6">iPhone (iOS 11+)</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li><strong>Built-in scanning</strong> &mdash; Open the Camera app and point at the QR code. A notification banner appears at the top with the contact name.</li>
+          <li><strong>One-tap save</strong> &mdash; Tap the banner to open the contact card, then tap &ldquo;Create New Contact&rdquo; or &ldquo;Add to Existing Contact.&rdquo;</li>
+          <li><strong>vCard 3.0 &amp; 4.0 support</strong> &mdash; iOS handles both versions well. All standard fields (name, phone, email, address, company, title, URL) are parsed correctly.</li>
+          <li><strong>Photo support</strong> &mdash; iOS can display an embedded PHOTO field, but this significantly increases QR code density and is not recommended for printed codes.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-slate-900 mt-6">Android (varies by manufacturer)</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li><strong>Google Lens / Camera</strong> &mdash; Most Android phones (Pixel, Samsung, OnePlus) scan QR codes through the camera app or Google Lens. Tap the detected link to open the contact.</li>
+          <li><strong>Inconsistent vCard 4.0 support</strong> &mdash; Some older Android devices or third-party contacts apps may not parse vCard 4.0 fields correctly. Stick with <strong>vCard 3.0</strong> for maximum compatibility.</li>
+          <li><strong>Samsung-specific</strong> &mdash; Samsung devices use Bixby Vision or the built-in camera scanner. vCard 3.0 works reliably across all Samsung Galaxy models.</li>
+          <li><strong>Fallback option</strong> &mdash; If the built-in camera doesn&rsquo;t detect the QR code, free apps like <em>Google Lens</em> or <em>QR Code Reader</em> work on any Android device.</li>
+        </ul>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm mt-4">
+          <table class="min-w-full divide-y divide-slate-200 text-left text-base">
+            <thead class="bg-slate-100 text-slate-900">
+              <tr>
+                <th class="px-4 py-3 font-semibold">Feature</th>
+                <th class="px-4 py-3 font-semibold">iPhone</th>
+                <th class="px-4 py-3 font-semibold">Android</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr>
+                <td class="px-4 py-3">Built-in QR scanner</td>
+                <td class="px-4 py-3">Yes (Camera app, iOS 11+)</td>
+                <td class="px-4 py-3">Yes (most devices, Android 9+)</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">vCard 3.0 support</td>
+                <td class="px-4 py-3">Full support</td>
+                <td class="px-4 py-3">Full support</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">vCard 4.0 support</td>
+                <td class="px-4 py-3">Full support</td>
+                <td class="px-4 py-3">Partial (varies by device)</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">Save to contacts</td>
+                <td class="px-4 py-3">One-tap from banner</td>
+                <td class="px-4 py-3">Tap link &rarr; save prompt</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3">No app required</td>
+                <td class="px-4 py-3">Yes</td>
+                <td class="px-4 py-3">Yes (most models)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rounded-xl border border-slate-200 bg-slate-100/60 px-5 py-4 text-base text-slate-800 mt-4">
+          <strong>Best practice:</strong> Always test your vCard QR code on both an iPhone and an Android device before printing. Use vCard 3.0 format and keep data minimal for the most reliable cross-platform experience. See our step-by-step <a href="/blog/how-to-scan-vcard-qr-code-android-iphone/" class="text-indigo-600 hover:text-indigo-500">scanning guide for iPhone &amp; Android</a>.
+        </div>
+      </section>
+
+      <section id="vcard-vs-mecard" class="space-y-4">
+        <h2 class="text-2xl font-semibold text-slate-900">vCard vs MeCard: Quick Comparison</h2>
+        <p>When creating a contact QR code, you&rsquo;ll encounter two formats: <strong>vCard</strong> and <strong>MeCard</strong>. Both encode contact data, but they differ in important ways.</p>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <table class="min-w-full divide-y divide-slate-200 text-left text-base">
+            <thead class="bg-slate-100 text-slate-900">
+              <tr>
+                <th class="px-4 py-3 font-semibold">Feature</th>
+                <th class="px-4 py-3 font-semibold">vCard (VCF)</th>
+                <th class="px-4 py-3 font-semibold">MeCard</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr>
+                <td class="px-4 py-3 font-semibold">Origin</td>
+                <td class="px-4 py-3">Open standard (RFC 6350)</td>
+                <td class="px-4 py-3">Created by NTT DoCoMo (Japan)</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-semibold">Data size</td>
+                <td class="px-4 py-3">Larger (more verbose syntax)</td>
+                <td class="px-4 py-3">Smaller (compact syntax)</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-semibold">Fields supported</td>
+                <td class="px-4 py-3">Name, phone, email, company, title, address, URL, photo, notes</td>
+                <td class="px-4 py-3">Name, phone, email, address, URL, notes</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-semibold">Job title &amp; company</td>
+                <td class="px-4 py-3">Yes (ORG + TITLE fields)</td>
+                <td class="px-4 py-3">No</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-semibold">iPhone support</td>
+                <td class="px-4 py-3">Full native support</td>
+                <td class="px-4 py-3">Partial (may open as URL)</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-semibold">Android support</td>
+                <td class="px-4 py-3">Full native support</td>
+                <td class="px-4 py-3">Full native support</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-semibold">Best for</td>
+                <td class="px-4 py-3 font-semibold text-indigo-700">Business cards, professional networking</td>
+                <td class="px-4 py-3">Simple personal contact sharing</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-xl font-semibold text-slate-900 mt-6">Which Should You Choose?</h3>
+        <p><strong>Use vCard</strong> if you need job title, company name, or multiple phone numbers on your QR code &mdash; which covers most professional and business use cases. vCard is the universal standard and works reliably on both iPhone and Android.</p>
+        <p class="mt-2"><strong>Use MeCard</strong> only if QR code density is your top priority (e.g., very small print sizes) and you don&rsquo;t need company or title fields. MeCard&rsquo;s compact syntax produces a simpler, easier-to-scan code, but sacrifices important business fields.</p>
+        <p class="mt-2">For most users, <strong>vCard is the right choice</strong>. Our <a href="/" class="text-indigo-600 hover:text-indigo-500">generator</a> uses vCard 3.0 for maximum compatibility. For a deeper dive with code examples, see our full <a href="/blog/mecard-vs-vcard-qr-code/" class="text-indigo-600 hover:text-indigo-500">MeCard vs vCard comparison</a>.</p>
+      </section>
+
       <section id="faq" class="space-y-6">
         <h2 class="text-2xl font-semibold text-slate-900">FAQ</h2>
         <div class="grid gap-6">
@@ -305,7 +570,7 @@
   <footer class="border-t border-slate-200 bg-white/90 py-10">
     <div class="max-w-4xl mx-auto px-6 flex flex-col items-center gap-2 text-sm text-slate-500">
       <a href="/" class="text-indigo-600 hover:text-indigo-500 font-medium">Back to generator</a>
-      <span>&copy; 2025 vCard QR Code Generator</span>
+      <span>&copy; 2026 vCard QR Code Generator</span>
     </div>
   </footer>
 </body>
