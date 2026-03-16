@@ -139,6 +139,9 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-03-16 | Amp | Schedule cleanup: removed 4 low-value entries (#26-#28, #30), renumbered | `data/competitor-blog-schedule.md` |
+| 2026-03-16 | Amp | Competitor blog #23 (vCard Garden) | `blog/vcard-garden-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
+| 2026-03-15 | Amp | Competitor blog #22 (QRvCards) | `blog/qrvcards-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-02-26 | Antigravity | **Dynamic vCards + SEO Autopilot** | `src/app/vcard/edit/`, `scripts/autopilot_seo.js`, `.github/workflows/seo-autopilot.yml`, `src/app/sitemap.ts`, `src/components/SaveContactButton.tsx` |
 | 2026-02-26 | Antigravity | Dashboard Analytics (Recent Scans) | `src/app/dashboard/DashboardClient.tsx` |
 | 2026-02-25 | Antigravity | **Full UI Restoration + pSEO Alignment** | `src/app/globals.css`, `src/components/SEOPage.tsx`, `src/lib/seo/metadata.ts`, `src/app/p/[id]/page.tsx`, `scripts/migrate_seo_pages.js` |

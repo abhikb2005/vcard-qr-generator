@@ -29,30 +29,30 @@
 | 19 | Mar 12 | QRCodeFree | qrcodefree-alternative | ✅ Done |
 | 20 | Mar 13 | QR Studio PRO | qr-studio-pro-alternative | ✅ Done |
 | 21 | Mar 14 | Contact.et | contact-et-alternative | ✅ Done |
-| 22 | Mar 15 | QRvCards | qrvcards-alternative | ☐ |
-| 23 | Mar 16 | vCard Garden | vcard-garden-alternative | ☐ |
+| 22 | Mar 15 | QRvCards | qrvcards-alternative | ✅ Done |
+| 23 | Mar 16 | vCard Garden | vcard-garden-alternative | ✅ Done |
 | 24 | Mar 17 | Free QR Code Generator (QR Tiger) | qr-tiger-alternative | ☐ |
 | 25 | Mar 18 | free-qr-code-generator.com | free-qr-code-generator-com-alternative | ☐ |
-| 26 | Mar 19 | Free-QR-Code.com | free-qr-code-com-alternative | ☐ |
-| 27 | Mar 20 | Free QR Code Generator Online | free-qr-code-online-alternative | ☐ |
-| 28 | Mar 21 | Free vCard Generator | free-vcard-generator-alternative | ☐ |
-| 29 | Mar 22 | freeqrcode.fr | freeqrcode-fr-alternative | ☐ |
-| 30 | Mar 23 | Free-qr-code.net | free-qr-code-net-alternative | ☐ |
-| 31 | Mar 24 | Online QR Code Image Generator | online-qr-code-image-generator-alternative | ☐ |
-| 32 | Mar 25 | QR Code Generator (Compzets) | compzets-alternative | ☐ |
-| 33 | Mar 26 | Uniqode (Beaconstac) | uniqode-alternative | ☐ |
-| 34 | Mar 27 | Trueqrcode | trueqrcode-alternative | ☐ |
-| 35 | Mar 28 | QRCodeChimp | qrcodechimp-alternative | ☐ |
-| 36 | Mar 29 | Flowcode | flowcode-alternative | ☐ |
-| 37 | Mar 30 | ViralQR | viralqr-alternative | ☐ |
-| 38 | Mar 31 | V1CE | v1ce-alternative | ☐ |
-| 39 | Apr 1 | QRCode Monkey | qrcode-monkey-alternative | ☐ |
-| 40 | Apr 2 | QR-Code.io | qr-code-io-alternative | ☐ |
-| 41 | Apr 3 | Bitly QR | bitly-qr-alternative | ☐ |
-| 42 | Apr 4 | Scantrust | scantrust-alternative | ☐ |
-| 43 | Apr 5 | Qroq | qroq-alternative | ☐ |
+| 26 | Mar 19 | Online QR Code Image Generator | online-qr-code-image-generator-alternative | ☐ |
+| 27 | Mar 20 | QR Code Generator (Compzets) | compzets-alternative | ☐ |
+| 28 | Mar 21 | Uniqode (Beaconstac) | uniqode-alternative | ☐ |
+| 29 | Mar 22 | Trueqrcode | trueqrcode-alternative | ☐ |
+| 30 | Mar 23 | QRCodeChimp | qrcodechimp-alternative | ☐ |
+| 31 | Mar 24 | Flowcode | flowcode-alternative | ☐ |
+| 32 | Mar 25 | ViralQR | viralqr-alternative | ☐ |
+| 33 | Mar 26 | V1CE | v1ce-alternative | ☐ |
+| 34 | Mar 27 | QRCode Monkey | qrcode-monkey-alternative | ☐ |
+| 35 | Mar 28 | QR-Code.io | qr-code-io-alternative | ☐ |
+| 36 | Mar 29 | Bitly QR | bitly-qr-alternative | ☐ |
+| 37 | Mar 30 | Scantrust | scantrust-alternative | ☐ |
+| 38 | Mar 31 | Qroq | qroq-alternative | ☐ |
+| 39 | Apr 1 | freeqrcode.fr | freeqrcode-fr-alternative | ☐ (deprioritized) |
 
 ## Excluded (not relevant competitors)
+- Free-QR-Code.com — dead/nonexistent site, would produce thin content
+- Free QR Code Generator Online — generic keyword, not a real product; near-duplicate of existing posts
+- Free vCard Generator — generic keyword, not a branded competitor; would duplicate existing content
+- Free-qr-code.net — dead/nonexistent site, would produce thin content
 - ShareX, ScreenTray, qscreenshot — screenshot tools, not QR generators
 - Binary Eye, Qripex — QR scanners, not generators
 - ZXing Project, Zint — developer libraries, not end-user tools
