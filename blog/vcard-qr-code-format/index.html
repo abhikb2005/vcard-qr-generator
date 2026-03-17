@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>vCard QR Code Format Explained: Fields, Syntax &amp; Examples (2026)</title>
+  <meta name="description" content="Learn the vCard QR code format — every field, the correct syntax, vCard 3.0 vs 4.0 differences, and common mistakes. Free technical reference with copy-paste examples." />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="vCard QR Code Format Explained: Fields, Syntax & Examples (2026)" />
+  <meta property="og:description" content="Learn the vCard QR code format — every field, the correct syntax, vCard 3.0 vs 4.0 differences, and common mistakes. Free technical reference with copy-paste examples." />
+  <meta property="og:url" content="https://www.vcardqrcodegenerator.com/blog/vcard-qr-code-format/" />
+  <meta property="og:site_name" content="vCard QR Code Generator" />
+  <meta property="og:image" content="https://www.vcardqrcodegenerator.com/og-blog.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="vCard QR Code Format Explained: Fields, Syntax & Examples (2026)" />
+  <meta name="twitter:description" content="Learn the vCard QR code format — every field, the correct syntax, vCard 3.0 vs 4.0 differences, and common mistakes. Free technical reference with copy-paste examples." />
+  <link rel="canonical" href="https://www.vcardqrcodegenerator.com/blog/vcard-qr-code-format/" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "vCard QR Code Format Explained: Fields, Syntax & Examples (2026)",
+    "description": "Learn the vCard QR code format — every field, the correct syntax, vCard 3.0 vs 4.0 differences, and common mistakes. Free technical reference with copy-paste examples.",
+    "mainEntityOfPage": "https://www.vcardqrcodegenerator.com/blog/vcard-qr-code-format/",
+    "author": { "@type": "Organization", "name": "vCard QR Code Generator" },
+    "publisher": { "@type": "Organization", "name": "vCard QR Code Generator" },
+    "datePublished": "2026-03-17T00:00:00+00:00"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What format do vCard QR codes use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "vCard QR codes encode contact data in the VCF (Virtual Contact File) format, an open standard defined by RFC 2426 (version 3.0) and RFC 6350 (version 4.0). The QR code contains plain-text vCard syntax starting with BEGIN:VCARD and ending with END:VCARD."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I use vCard 3.0 or 4.0 for QR codes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use vCard 3.0 for QR codes. It has near-universal compatibility across iPhone, Android, Outlook, and Gmail. vCard 4.0 adds features like multiple value types and XML support, but device and app compatibility is inconsistent — some phones ignore 4.0 fields or fail to parse the contact entirely."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many characters can a vCard QR code hold?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A standard QR code can hold up to about 4,296 alphanumeric characters at the lowest error correction level. However, for reliable scanning on business cards, keep your vCard data under 300 characters. More data means a denser QR code with smaller modules that are harder to scan."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I put a photo in a vCard QR code?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Technically, vCard supports a PHOTO field with base64-encoded image data. In practice, embedding a photo makes the QR code far too dense to scan reliably — a small headshot can add 10,000+ characters. Instead, use a URL link to a hosted photo or profile page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between vCard and MeCard format?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "vCard (VCF) is an open standard with full contact field support including job title, organization, address, notes, and photo. MeCard is a simpler format created by NTT DoCoMo that uses fewer characters but supports fewer fields. vCard is the recommended format for professional use. See our full MeCard vs vCard comparison for details."
+        }
+      }
+    ]
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/consent.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206702185649949" crossorigin="anonymous"></script>
+  <style>.adsbygoogle-container { min-height: 100px; margin: 1.5rem 0; }</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <header class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
+    <div class="max-w-5xl mx-auto px-4 py-10">
+      <a href="/" class="text-white/90 underline">&larr; Home</a>
+      <h1 class="text-3xl md:text-4xl font-bold mt-4">vCard QR Code Format Explained: Fields, Syntax &amp; Examples</h1>
+      <p class="mt-3 text-white/90">A complete technical reference for the vCard (VCF) format used inside QR codes &mdash; every field, correct syntax, version differences, and common mistakes to avoid.</p>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-4 py-10 space-y-8">
+    <div class="adsbygoogle-container">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949" data-ad-slot="7438060059" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    <nav class="rounded-xl border border-gray-200 bg-white p-6" aria-label="Table of Contents">
+      <h2 class="text-xl font-semibold text-gray-900">In This Guide</h2>
+      <ol class="mt-3 list-decimal list-inside space-y-2">
+        <li><a href="#what-is-vcard" class="text-indigo-600 hover:underline">What Is the vCard (VCF) Format?</a></li>
+        <li><a href="#field-reference" class="text-indigo-600 hover:underline">Complete Field Reference with Examples</a></li>
+        <li><a href="#full-example" class="text-indigo-600 hover:underline">Full vCard Example (Copy-Paste Ready)</a></li>
+        <li><a href="#30-vs-40" class="text-indigo-600 hover:underline">vCard 3.0 vs 4.0: Which to Use for QR Codes</a></li>
+        <li><a href="#qr-density" class="text-indigo-600 hover:underline">QR Code Density and Data Length</a></li>
+        <li><a href="#common-mistakes" class="text-indigo-600 hover:underline">Common Formatting Mistakes</a></li>
+        <li><a href="#faq" class="text-indigo-600 hover:underline">FAQ</a></li>
+      </ol>
+    </nav>
+
+    <section id="what-is-vcard">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">What Is the vCard (VCF) Format?</h2>
+      <p class="mb-4">vCard is an open standard for storing contact information in a plain-text file with the <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">.vcf</code> extension. When a phone scans a <a href="/blog/vcard-qr-code/" class="text-indigo-600 hover:underline">vCard QR code</a>, it reads this text and offers to save the contact directly to the address book.</p>
+      <p class="mb-4">The format is defined by two RFCs:</p>
+      <ul class="list-disc list-inside space-y-2 mb-4">
+        <li><strong>vCard 3.0</strong> &mdash; RFC 2426 (1998). The most widely supported version. Used by iPhone, Android, Outlook, Gmail, and virtually every contact app.</li>
+        <li><strong>vCard 4.0</strong> &mdash; RFC 6350 (2011). Adds features like multiple value types and XML representation, but device support is inconsistent.</li>
+      </ul>
+      <p>Every vCard starts with <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">BEGIN:VCARD</code> and ends with <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">END:VCARD</code>. Between those markers, each line defines one property (field) in the format <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">PROPERTY:value</code>. The entire block is encoded as text inside the QR code.</p>
+    </section>
+
+    <section id="field-reference">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Complete Field Reference with Examples</h2>
+      <p class="mb-4">Below is every vCard 3.0 property commonly used in QR codes. Use this as a reference when building or debugging your contact codes.</p>
+      <div class="overflow-x-auto mb-4">
+        <table class="w-full border-collapse border border-gray-200 text-sm">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border border-gray-200 px-4 py-2 text-left">Property</th>
+              <th class="border border-gray-200 px-4 py-2 text-left">Purpose</th>
+              <th class="border border-gray-200 px-4 py-2 text-left">Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">BEGIN:VCARD</td>
+              <td class="border border-gray-200 px-4 py-2">Start marker (required)</td>
+              <td class="border border-gray-200 px-4 py-2 text-gray-500">Always first line</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">VERSION</td>
+              <td class="border border-gray-200 px-4 py-2">vCard version (required)</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">VERSION:3.0</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">N</td>
+              <td class="border border-gray-200 px-4 py-2">Structured name (Last;First;Middle;Prefix;Suffix)</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">N:Smith;Jane;;Dr.;</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">FN</td>
+              <td class="border border-gray-200 px-4 py-2">Full display name (required)</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">FN:Dr. Jane Smith</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">ORG</td>
+              <td class="border border-gray-200 px-4 py-2">Company / organization</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">ORG:Acme Corp</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">TITLE</td>
+              <td class="border border-gray-200 px-4 py-2">Job title</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">TITLE:Marketing Director</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">TEL</td>
+              <td class="border border-gray-200 px-4 py-2">Phone number (with type)</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">TEL;TYPE=CELL:+1-555-123-4567</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">EMAIL</td>
+              <td class="border border-gray-200 px-4 py-2">Email address (with type)</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">EMAIL;TYPE=WORK:jane@acme.com</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">URL</td>
+              <td class="border border-gray-200 px-4 py-2">Website</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">URL:https://acme.com</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">ADR</td>
+              <td class="border border-gray-200 px-4 py-2">Address (PO;Ext;Street;City;State;Zip;Country)</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">ADR;TYPE=WORK:;;123 Main St;Boston;MA;02101;USA</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">NOTE</td>
+              <td class="border border-gray-200 px-4 py-2">Free-text note</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">NOTE:Met at CES 2026</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">PHOTO</td>
+              <td class="border border-gray-200 px-4 py-2">Photo (URL or base64)</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">PHOTO;VALUE=URI:https://example.com/photo.jpg</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">END:VCARD</td>
+              <td class="border border-gray-200 px-4 py-2">End marker (required)</td>
+              <td class="border border-gray-200 px-4 py-2 text-gray-500">Always last line</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">N</code> field uses semicolons to separate name components. Empty components are still marked with semicolons (e.g., <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">N:Smith;Jane;;;</code> for no prefix or suffix). The <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">ADR</code> field works the same way with seven semicolon-separated parts.</p>
+    </section>
+
+    <section id="full-example">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Full vCard Example (Copy-Paste Ready)</h2>
+      <p class="mb-4">Here&rsquo;s a complete vCard 3.0 block ready to encode into a QR code. This is exactly what our <a href="/" class="text-indigo-600 hover:underline">free vCard QR code generator</a> produces:</p>
+      <pre class="bg-gray-900 text-green-400 rounded-lg p-4 overflow-x-auto text-sm leading-relaxed mb-4"><code>BEGIN:VCARD
+VERSION:3.0
+N:Smith;Jane;;Dr.;
+FN:Dr. Jane Smith
+ORG:Acme Corp
+TITLE:Marketing Director
+TEL;TYPE=CELL:+1-555-123-4567
+TEL;TYPE=WORK:+1-555-987-6543
+EMAIL;TYPE=WORK:jane@acme.com
+URL:https://acme.com
+ADR;TYPE=WORK:;;123 Main St;Boston;MA;02101;USA
+NOTE:Head of global marketing
+END:VCARD</code></pre>
+      <p class="mb-4">This example is <strong>about 280 characters</strong> &mdash; well within the ideal range for a scannable QR code on a business card. Every line break is significant; the vCard format uses <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">CRLF</code> (carriage return + line feed) as the line separator per the RFC spec, though most devices also accept plain <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">LF</code>.</p>
+      <p>You can add or remove fields as needed. The only truly required properties are <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">BEGIN</code>, <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">VERSION</code>, <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">FN</code>, and <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">END</code>. Everything else is optional but recommended for a useful contact entry.</p>
+    </section>
+
+    <section id="30-vs-40">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">vCard 3.0 vs 4.0: Which Version for QR Codes?</h2>
+      <p class="mb-4">The short answer: <strong>use vCard 3.0</strong>. Here&rsquo;s a detailed comparison:</p>
+      <div class="overflow-x-auto mb-4">
+        <table class="w-full border-collapse border border-gray-200 text-sm">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border border-gray-200 px-4 py-2 text-left">Feature</th>
+              <th class="border border-gray-200 px-4 py-2 text-left">vCard 3.0 (RFC 2426)</th>
+              <th class="border border-gray-200 px-4 py-2 text-left">vCard 4.0 (RFC 6350)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-semibold">iPhone support</td>
+              <td class="border border-gray-200 px-4 py-2 font-semibold text-green-700">Full</td>
+              <td class="border border-gray-200 px-4 py-2 text-yellow-700">Partial</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-200 px-4 py-2 font-semibold">Android support</td>
+              <td class="border border-gray-200 px-4 py-2 font-semibold text-green-700">Full</td>
+              <td class="border border-gray-200 px-4 py-2 text-yellow-700">Varies by device</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-semibold">Outlook / Gmail</td>
+              <td class="border border-gray-200 px-4 py-2 font-semibold text-green-700">Full</td>
+              <td class="border border-gray-200 px-4 py-2 text-yellow-700">Partial</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-200 px-4 py-2 font-semibold">TYPE parameter syntax</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">TEL;TYPE=CELL:...</td>
+              <td class="border border-gray-200 px-4 py-2 font-mono text-xs">TEL;TYPE=cell;VALUE=uri:tel:...</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-semibold">N field</td>
+              <td class="border border-gray-200 px-4 py-2">Required</td>
+              <td class="border border-gray-200 px-4 py-2">Optional (can use FN only)</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="border border-gray-200 px-4 py-2 font-semibold">XML/JSON representation</td>
+              <td class="border border-gray-200 px-4 py-2">No</td>
+              <td class="border border-gray-200 px-4 py-2">Yes (xCard, jCard)</td>
+            </tr>
+            <tr>
+              <td class="border border-gray-200 px-4 py-2 font-semibold">Recommended for QR codes</td>
+              <td class="border border-gray-200 px-4 py-2 font-semibold text-indigo-700">&#10003; Yes</td>
+              <td class="border border-gray-200 px-4 py-2 text-red-600">&#10007; No</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mb-4">vCard 4.0 introduced useful features for server-to-server contact sync, but those features add complexity without benefit inside a QR code. The 4.0 TYPE parameter syntax is longer (using more QR code space), and many phones still don&rsquo;t fully parse 4.0 contacts from QR scans.</p>
+      <p>Our generator uses vCard 3.0 by default for maximum compatibility. For a deeper format comparison, see our <a href="/blog/mecard-vs-vcard-qr-code/" class="text-indigo-600 hover:underline">MeCard vs vCard guide</a>.</p>
+    </section>
+
+    <section id="qr-density">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">QR Code Density and Data Length</h2>
+      <p class="mb-4">Every character in your vCard adds modules (the tiny black/white squares) to the QR code. More data means a denser code that&rsquo;s harder to scan, especially when printed small on a <a href="/blog/business-card-qr-code-generator/" class="text-indigo-600 hover:underline">business card</a>.</p>
+      <p class="mb-4">Here are practical guidelines:</p>
+      <ul class="list-disc list-inside space-y-2 mb-4">
+        <li><strong>Under 150 characters</strong> &mdash; Very easy to scan. Name, phone, and email only. QR code is compact with large modules.</li>
+        <li><strong>150&ndash;300 characters</strong> &mdash; The sweet spot. Includes name, title, company, phone, email, website, and address. Scans reliably at 2&times;2 cm or larger.</li>
+        <li><strong>300&ndash;500 characters</strong> &mdash; Still works but requires a larger print size (at least 3&times;3 cm). The QR code will have noticeably smaller modules.</li>
+        <li><strong>500+ characters</strong> &mdash; Risk zone. Notes, multiple phone numbers, and long addresses push into this range. May fail on older phones or small prints. Consider trimming optional fields.</li>
+        <li><strong>1,000+ characters</strong> &mdash; Likely unscannable on a business card. Embedded photos (base64) easily exceed this. Use a URL-based <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">PHOTO</code> field instead.</li>
+      </ul>
+      <p class="mb-4">Higher error correction levels (M, Q, H) add redundancy that further increases density. Our generator uses error correction level M by default, which balances reliability with data capacity. If you add a <a href="/logo-qr-code.html" class="text-indigo-600 hover:underline">logo overlay</a>, the error correction increases to H &mdash; keep your vCard data shorter in that case.</p>
+      <p>For <a href="/blog/contact-qr-code-printing-guide/" class="text-indigo-600 hover:underline">print-ready QR codes</a>, always test your code at the final print size before ordering cards.</p>
+    </section>
+
+    <section id="common-mistakes">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Common vCard Formatting Mistakes</h2>
+      <p class="mb-4">These errors cause QR codes to fail silently &mdash; the phone scans the code but shows raw text instead of a &ldquo;Save Contact&rdquo; prompt:</p>
+      <ol class="list-decimal list-inside space-y-4 mb-4">
+        <li>
+          <strong>Missing BEGIN:VCARD or END:VCARD</strong>
+          <p class="ml-6 mt-1 text-gray-600">Both markers are required. Without them, the phone treats the data as plain text, not a contact.</p>
+        </li>
+        <li>
+          <strong>Wrong or missing VERSION line</strong>
+          <p class="ml-6 mt-1 text-gray-600">The <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">VERSION:3.0</code> line must appear immediately after <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">BEGIN:VCARD</code>. Omitting it or putting <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">VERSION:2.1</code> (the legacy format) causes parsing failures on modern devices.</p>
+        </li>
+        <li>
+          <strong>Missing FN (full name) field</strong>
+          <p class="ml-6 mt-1 text-gray-600"><code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">FN</code> is required in vCard 3.0. Without it, some devices save the contact with a blank name or refuse to import it.</p>
+        </li>
+        <li>
+          <strong>Wrong semicolons in the N field</strong>
+          <p class="ml-6 mt-1 text-gray-600">The <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">N</code> field has five components separated by semicolons: Last;First;Middle;Prefix;Suffix. Writing <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">N:Jane Smith</code> instead of <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">N:Smith;Jane;;;</code> puts the full name in the last-name slot.</p>
+        </li>
+        <li>
+          <strong>Embedding a base64 photo</strong>
+          <p class="ml-6 mt-1 text-gray-600">A small JPEG headshot encoded in base64 adds 10,000&ndash;30,000 characters &mdash; far beyond what a printable QR code can hold. Use a <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">PHOTO;VALUE=URI</code> URL reference instead.</p>
+        </li>
+        <li>
+          <strong>Special characters not escaped</strong>
+          <p class="ml-6 mt-1 text-gray-600">Commas, semicolons, and backslashes inside values must be escaped with a backslash (<code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">\,</code> <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">\;</code> <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">\\</code>). Unescaped semicolons in an address or note will corrupt the field structure.</p>
+        </li>
+        <li>
+          <strong>Blank lines inside the vCard</strong>
+          <p class="ml-6 mt-1 text-gray-600">Empty lines between properties can break parsers. Every line inside <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">BEGIN</code>/<code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">END</code> should contain a property.</p>
+        </li>
+      </ol>
+      <p>The easiest way to avoid all of these issues is to use a dedicated <a href="/" class="text-indigo-600 hover:underline">vCard QR code generator</a> that handles the formatting automatically. Our tool produces correctly formatted vCard 3.0 output and lets you <a href="/blog/how-to-scan-vcard-qr-code-android-iphone/" class="text-indigo-600 hover:underline">test the scan</a> before downloading.</p>
+    </section>
+
+    <section id="faq">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        <div class="p-4 bg-white rounded-lg border">
+          <h3 class="font-semibold text-gray-900">What format do vCard QR codes use?</h3>
+          <p class="text-gray-700 mt-2">vCard QR codes encode contact data in the VCF (Virtual Contact File) format, an open standard defined by RFC 2426 (version 3.0) and RFC 6350 (version 4.0). The QR code contains plain-text vCard syntax starting with <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">BEGIN:VCARD</code> and ending with <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">END:VCARD</code>.</p>
+        </div>
+        <div class="p-4 bg-white rounded-lg border">
+          <h3 class="font-semibold text-gray-900">Should I use vCard 3.0 or 4.0 for QR codes?</h3>
+          <p class="text-gray-700 mt-2">Use vCard 3.0. It has near-universal compatibility across iPhone, Android, Outlook, and Gmail. vCard 4.0 adds features like multiple value types and XML support, but device and app compatibility is inconsistent &mdash; some phones ignore 4.0 fields or fail to parse the contact entirely.</p>
+        </div>
+        <div class="p-4 bg-white rounded-lg border">
+          <h3 class="font-semibold text-gray-900">How many characters can a vCard QR code hold?</h3>
+          <p class="text-gray-700 mt-2">A standard QR code can hold up to about 4,296 alphanumeric characters at the lowest error correction level. However, for reliable scanning on business cards, keep your vCard data under 300 characters. More data means a denser QR code with smaller modules that are harder to scan.</p>
+        </div>
+        <div class="p-4 bg-white rounded-lg border">
+          <h3 class="font-semibold text-gray-900">Can I put a photo in a vCard QR code?</h3>
+          <p class="text-gray-700 mt-2">Technically, vCard supports a <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">PHOTO</code> field with base64-encoded image data. In practice, embedding a photo makes the QR code far too dense to scan reliably &mdash; a small headshot can add 10,000+ characters. Instead, use a URL link to a hosted photo or profile page.</p>
+        </div>
+        <div class="p-4 bg-white rounded-lg border">
+          <h3 class="font-semibold text-gray-900">What is the difference between vCard and MeCard format?</h3>
+          <p class="text-gray-700 mt-2">vCard (VCF) is an open standard with full contact field support including job title, organization, address, notes, and photo. MeCard is a simpler format created by NTT DoCoMo that uses fewer characters but supports fewer fields. vCard is the recommended format for professional use. See our full <a href="/blog/mecard-vs-vcard-qr-code/" class="text-indigo-600 hover:underline">MeCard vs vCard comparison</a> for details.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Related Resources</h2>
+      <ul class="space-y-2">
+        <li><a href="/blog/qr-code-and-vcard-guide/" class="text-indigo-600 hover:underline">The Complete Guide to vCard QR Codes</a></li>
+        <li><a href="/blog/mecard-vs-vcard-qr-code/" class="text-indigo-600 hover:underline">MeCard vs vCard: QR Code Format Comparison</a></li>
+        <li><a href="/blog/qr-code-vcf-contact-file/" class="text-indigo-600 hover:underline">QR Code VCF Contact File: Understanding vCard File Format</a></li>
+        <li><a href="/blog/vcard-qr-code-best-practices/" class="text-indigo-600 hover:underline">vCard QR Code Best Practices for 2026</a></li>
+        <li><a href="/bulk-qr-code.html" class="text-indigo-600 hover:underline">Bulk vCard QR Code Generator</a></li>
+        <li><a href="/logo-qr-code.html" class="text-indigo-600 hover:underline">Logo QR Code Generator ($4.99 one-time)</a></li>
+      </ul>
+    </section>
+
+    <div class="adsbygoogle-container">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949" data-ad-slot="4811896719" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    <section class="mt-8 p-6 rounded-xl bg-indigo-50 border border-indigo-200">
+      <h2 class="text-xl font-semibold text-indigo-900">Create Your Free vCard QR Code</h2>
+      <p class="mt-2 text-indigo-800">Skip the manual formatting. Our generator builds a correctly formatted vCard 3.0 QR code automatically &mdash; just enter your details and download.</p>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <a href="/" class="inline-flex items-center justify-center rounded-full bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Free vCard QR Generator</a>
+        <a href="/logo-qr-code.html" class="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-indigo-600 border border-indigo-300 hover:bg-indigo-50">Add Logo ($4.99)</a>
+      </div>
+    </section>
+  </main>
+  <footer class="text-center text-sm text-gray-500 py-10">&copy; 2026 vCard QR Code Generator</footer>
+</body>
+</html>
