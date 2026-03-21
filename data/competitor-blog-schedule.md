@@ -34,8 +34,8 @@
 | 24 | Mar 17 | Free QR Code Generator (QR Tiger) | qr-tiger-alternative | ✅ Done |
 | 25 | Mar 18 | free-qr-code-generator.com | free-qr-code-generator-com-alternative | ✅ Done |
 | 26 | Mar 19 | Online QR Code Image Generator | online-qr-code-image-generator-alternative | ✅ Done |
-| 27 | Mar 20 | QR Code Generator (Compzets) | compzets-alternative | ☐ |
-| 28 | Mar 21 | Uniqode (Beaconstac) | uniqode-alternative | ☐ |
+| 27 | Mar 20 | QR Code Generator (Compzets) | compzets-alternative | ✅ Done |
+| 28 | Mar 21 | Uniqode (Beaconstac) | uniqode-alternative | ✅ Done |
 | 29 | Mar 22 | Trueqrcode | trueqrcode-alternative | ☐ |
 | 30 | Mar 23 | QRCodeChimp | qrcodechimp-alternative | ☐ |
 | 31 | Mar 24 | Flowcode | flowcode-alternative | ☐ |
