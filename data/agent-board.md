@@ -139,6 +139,8 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-03-22 | Amp | GSC check: updated title/description for vcard-guide (pos 12.8 but 0 clicks), added internal links from homepage to business-card blog, checked indexing status | `blog/qr-code-and-vcard-guide/index.html`, `index.html`, `blog_index.json`, `mcp-gsc/check_indexing.py` |
+| 2026-03-22 | Amp | Competitor blog #29 (Trueqrcode) | `blog/trueqrcode-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-03-21 | Amp | Competitor blogs #27 (Compzets), #28 (Uniqode/Beaconstac) | `blog/compzets-alternative/index.html`, `blog/uniqode-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-03-20 | Amp | Competitor blogs #24 (QR Tiger), #25 (free-qr-code-generator.com), #26 (Online QR Code Image Generator) | `blog/qr-tiger-alternative/index.html`, `blog/free-qr-code-generator-com-alternative/index.html`, `blog/online-qr-code-image-generator-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-03-17 | Amp | Content gap blog B1: vCard QR Code Format guide (targeting "vcard qr code format" / "qr code vcard format") | `blog/vcard-qr-code-format/index.html`, `sitemap.xml`, `blog_index.json` |

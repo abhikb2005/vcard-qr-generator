@@ -36,7 +36,7 @@
 | 26 | Mar 19 | Online QR Code Image Generator | online-qr-code-image-generator-alternative | ✅ Done |
 | 27 | Mar 20 | QR Code Generator (Compzets) | compzets-alternative | ✅ Done |
 | 28 | Mar 21 | Uniqode (Beaconstac) | uniqode-alternative | ✅ Done |
-| 29 | Mar 22 | Trueqrcode | trueqrcode-alternative | ☐ |
+| 29 | Mar 22 | Trueqrcode | trueqrcode-alternative | ✅ Done |
 | 30 | Mar 23 | QRCodeChimp | qrcodechimp-alternative | ☐ |
 | 31 | Mar 24 | Flowcode | flowcode-alternative | ☐ |
 | 32 | Mar 25 | ViralQR | viralqr-alternative | ☐ |
