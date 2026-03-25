@@ -139,6 +139,8 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-03-25 | Amp | Competitor blogs #31 (Flowcode), #32 (ViralQR) | `blog/flowcode-alternative/index.html`, `blog/viralqr-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
+| 2026-03-23 | Amp | Competitor blog #30 (QRCodeChimp) | `blog/qrcodechimp-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-03-22 | Amp | GSC check: updated title/description for vcard-guide (pos 12.8 but 0 clicks), added internal links from homepage to business-card blog, checked indexing status | `blog/qr-code-and-vcard-guide/index.html`, `index.html`, `blog_index.json`, `mcp-gsc/check_indexing.py` |
 | 2026-03-22 | Amp | Competitor blog #29 (Trueqrcode) | `blog/trueqrcode-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-03-21 | Amp | Competitor blogs #27 (Compzets), #28 (Uniqode/Beaconstac) | `blog/compzets-alternative/index.html`, `blog/uniqode-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
