@@ -40,7 +40,7 @@
 | 30 | Mar 23 | QRCodeChimp | qrcodechimp-alternative | ✅ Done |
 | 31 | Mar 24 | Flowcode | flowcode-alternative | ✅ Done |
 | 32 | Mar 25 | ViralQR | viralqr-alternative | ✅ Done |
-| 33 | Mar 26 | V1CE | v1ce-alternative | ☐ |
+| 33 | Mar 26 | V1CE | v1ce-alternative | ✅ Done |
 | 34 | Mar 27 | QRCode Monkey | qrcode-monkey-alternative | ☐ |
 | 35 | Mar 28 | QR-Code.io | qr-code-io-alternative | ☐ |
 | 36 | Mar 29 | Bitly QR | bitly-qr-alternative | ☐ |
