@@ -6,4 +6,4 @@
 
 | Target Keyword | Proposed Slug | Cluster Category | Unique Angle / Rationale | Status |
 |----------------|---------------|------------------|--------------------------|--------|
-| Real Estate Agents Miami vCard QR Codes | real-estate-agents-miami-vcard-qr-codes | Professions | How real estate agents in Miami can use vCard QR codes at open houses and property showings to
+
