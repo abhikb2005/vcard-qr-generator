@@ -41,10 +41,10 @@
 | 31 | Mar 24 | Flowcode | flowcode-alternative | ✅ Done |
 | 32 | Mar 25 | ViralQR | viralqr-alternative | ✅ Done |
 | 33 | Mar 26 | V1CE | v1ce-alternative | ✅ Done |
-| 34 | Mar 27 | QRCode Monkey | qrcode-monkey-alternative | ☐ |
-| 35 | Mar 28 | QR-Code.io | qr-code-io-alternative | ☐ |
-| 36 | Mar 29 | Bitly QR | bitly-qr-alternative | ☐ |
-| 37 | Mar 30 | Scantrust | scantrust-alternative | ☐ |
+| 34 | Mar 27 | QRCode Monkey | qrcode-monkey-alternative | ✅ Done |
+| 35 | Mar 28 | QR-Code.io | qr-code-io-alternative | ✅ Done |
+| 36 | Mar 29 | Bitly QR | bitly-qr-alternative | ✅ Done |
+| 37 | Mar 30 | Scantrust | scantrust-alternative | ✅ Done |
 | 38 | Mar 31 | Qroq | qroq-alternative | ☐ |
 | 39 | Apr 1 | freeqrcode.fr | freeqrcode-fr-alternative | ☐ (deprioritized) |
 

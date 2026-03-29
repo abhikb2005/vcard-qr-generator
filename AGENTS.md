@@ -3,6 +3,10 @@
 > **This file provides context and rules for any AI agent (Amp, Cursor, Copilot, Claude Code, etc.) working on this repository.**
 > Read this file before making any changes.
 
+## 🧠 Agent Memory
+
+Before starting work, read `.agent/context-dump.md` for full project context, user preferences, standing instructions, and cross-project knowledge. This file is the persistent memory shared across all Amp surfaces (VS Code, CLI, etc.).
+
 ## Project Overview
 
 - **Product:** vCard QR Code Generator — a free, privacy-first tool for creating vCard QR codes
@@ -98,6 +102,15 @@ Before doing ANY work, read **`data/agent-board.md`**. This is a shared message 
 | `p/` | Programmatic SEO pages (30 job+city pages) |
 | `consent.js` | GDPR cookie consent script |
 | `workers/` | Cloudflare Workers (F5Bot monitor, etc.) |
+| `ideas/pod-quirkyquotemakr/` | **QuirkyQuoteMakr POD project** — has its own AGENTS.md, status tracker, and marketing playbook |
+
+## 🛒 QuirkyQuoteMakr (POD Project)
+
+A separate Print-on-Demand brand lives under `ideas/pod-quirkyquotemakr/`. If the user asks about the POD project, QuirkyQuoteMakr, design uploads, Redbubble, or "where are we on POD":
+
+1. **Read `ideas/pod-quirkyquotemakr/AGENTS.md`** first — it has full instructions
+2. **Read `ideas/pod-quirkyquotemakr/POD_STATUS_TRACKER.md`** — single source of truth for schedule and progress
+3. Report current week, completed items, overdue items, and next steps
 
 ## 🔌 Continuity Keywords
 

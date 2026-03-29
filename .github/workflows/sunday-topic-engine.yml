@@ -1,0 +1,40 @@
+name: Sunday Topic Engine
+
+on:
+  schedule:
+    - cron: '30 6 * * 0' # 12:00 PM IST every Sunday (06:30 UTC)
+  workflow_dispatch: # Allows manual trigger for testing
+
+jobs:
+  generate-topics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required for pushing commits
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Topic Engine
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/generate_topics.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "SEO Autopilot Bot"
+          git config --global user.email "bot@vcardqrcodegenerator.com"
+          git add data/vcard-growth-schedule.md
+          
+          # Check if there are changes before committing
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(seo): Generate 10 new topics for the growth schedule [skip ci]"
+            git push
+          else
+            echo "No new topics generated."
+          fi
