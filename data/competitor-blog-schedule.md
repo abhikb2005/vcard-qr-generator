@@ -45,8 +45,24 @@
 | 35 | Mar 28 | QR-Code.io | qr-code-io-alternative | ✅ Done |
 | 36 | Mar 29 | Bitly QR | bitly-qr-alternative | ✅ Done |
 | 37 | Mar 30 | Scantrust | scantrust-alternative | ✅ Done |
-| 38 | Mar 31 | Qroq | qroq-alternative | ☐ |
-| 39 | Apr 1 | freeqrcode.fr | freeqrcode-fr-alternative | ☐ (deprioritized) |
+| 38 | Mar 31 | Qroq | qroq-alternative | ✅ Done |
+| 39 | Apr 1 | freeqrcode.fr | freeqrcode-fr-alternative | ✅ Done |
+| 40 | Apr 4 | ME-QR | me-qr-alternative | ☐ |
+| 41 | Apr 5 | Popl | popl-alternative | ☐ |
+| 42 | Apr 6 | GoQR.me | goqr-me-alternative | ☐ |
+| 43 | Apr 7 | Unitag | unitag-alternative | ☐ |
+| 44 | Apr 8 | Jotform QR Code Generator | jotform-alternative | ☐ |
+| 45 | Apr 9 | QRstuff | qrstuff-alternative | ☐ |
+| 46 | Apr 10 | QRBatch | qrbatch-alternative | ☐ |
+| 47 | Apr 11 | Dot Cards | dot-cards-alternative | ☐ |
+| 48 | Apr 12 | Supercode | supercode-alternative | ☐ |
+| 49 | Apr 13 | QR Code KIT (uQR.me) | qr-code-kit-alternative | ☐ |
+| 50 | Apr 14 | Canva QR Code Generator | canva-qr-alternative | ☐ |
+| 51 | Apr 15 | Adobe Express QR Code | adobe-express-qr-alternative | ☐ |
+| 52 | Apr 16 | Visualead | visualead-alternative | ☐ |
+| 53 | Apr 17 | Pageloot | pageloot-alternative | ☐ |
+| 54 | Apr 18 | Delivr | delivr-alternative | ☐ |
+| 55 | Apr 19 | Qfuse | qfuse-alternative | ☐ |
 
 ## Excluded (not relevant competitors)
 - Free-QR-Code.com — dead/nonexistent site, would produce thin content
@@ -62,6 +78,9 @@
 - TEC-IT Barcode Studio, Online Barcode Generator — barcode-focused
 - Send to My-phone, Offline QR Code Generator — browser extensions
 - QR code render for IPFS — niche crypto tool
+- Google Chrome QR — built-in browser feature, not a branded product people seek alternatives to
+- QReator — tiny 1-person iOS app, no web presence
+- FreeQR (freeqr.com) — despite "free" branding, actually paid SaaS starting at $3.99/mo
 
 ## Blog Post Template
 Each post should follow the pattern in `blog/add-logo-to-qr-code/index.html`:
