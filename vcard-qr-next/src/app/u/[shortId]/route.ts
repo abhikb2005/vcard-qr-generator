@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/utils/supabase/server'
-
-// Basic memory cache to prevent spamming from the same IP
-const recentScans = new Set<string>();
+import { createClient } from '@supabase/supabase-js'
 
 async function hashIP(ip: string): Promise<string> {
     const encoder = new TextEncoder();
@@ -14,10 +11,15 @@ async function hashIP(ip: string): Promise<string> {
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ shortId: string }> }) {
     const { shortId } = await params
-    const supabase = await createClient()
+    
+    // Use Service Role admin client to bypass RLS for public scanning
+    const supabaseAdmin = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
 
     // 1. Fetch the QR code mapping
-    const { data: qr, error } = await supabase
+    const { data: qr, error } = await supabaseAdmin
         .from('qr_codes')
         .select('id, target_url, vcard_data')
         .eq('short_code', shortId)
@@ -31,13 +33,17 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const rawIp = request.headers.get('x-forwarded-for') || 'unknown'
     const ipHash = await hashIP(rawIp);
     
-    // Basic rate limit check: prevent duplicate scans from same IP within the lambda's memory life
-    const scanKey = `${qr.id}-${ipHash}`;
-    if (!recentScans.has(scanKey)) {
-        recentScans.add(scanKey);
-        // Clear it after 60 seconds
-        setTimeout(() => recentScans.delete(scanKey), 60000);
+    // Check if this IP+QR combo was logged in the last 60 seconds (Rate Limiting)
+    const { data: recentScan } = await supabaseAdmin
+        .from('scans')
+        .select('id')
+        .eq('qr_id', qr.id)
+        .eq('ip_address', ipHash)
+        .gte('scanned_at', new Date(Date.now() - 60000).toISOString())
+        .limit(1)
+        .maybeSingle()
 
+    if (!recentScan) {
         const userAgent = request.headers.get('user-agent') || 'unknown'
         const referer = request.headers.get('referer') || 'direct'
         // Vercel-specific Geo Headers (will fall back to 'unknown' if hosted elsewhere)
@@ -46,8 +52,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
         // Fire and forget
         Promise.all([
-            supabase.rpc('increment_scan_count', { qr_id: qr.id }),
-            supabase.from('scans').insert({
+            supabaseAdmin.rpc('increment_scan_count', { qr_id: qr.id }),
+            supabaseAdmin.from('scans').insert({
                 qr_id: qr.id,
                 ip_address: ipHash, // GDPR Compliant Hash
                 user_agent: userAgent,
@@ -60,8 +66,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     // 3. Redirect Logic
-    // If it's a vCard, we redirect to our internal public profile page
-    // The 'target_url' for vCards was set to similar public URL, but let's be explicit
     if (qr.vcard_data) {
         const origin = new URL(request.url).origin
         return NextResponse.redirect(`${origin}/p/${shortId}`)
