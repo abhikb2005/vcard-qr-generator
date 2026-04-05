@@ -47,8 +47,8 @@
 | 37 | Mar 30 | Scantrust | scantrust-alternative | ✅ Done |
 | 38 | Mar 31 | Qroq | qroq-alternative | ✅ Done |
 | 39 | Apr 1 | freeqrcode.fr | freeqrcode-fr-alternative | ✅ Done |
-| 40 | Apr 4 | ME-QR | me-qr-alternative | ☐ |
-| 41 | Apr 5 | Popl | popl-alternative | ☐ |
+| 40 | Apr 4 | ME-QR | me-qr-alternative | ✅ Done |
+| 41 | Apr 5 | Popl | popl-alternative | ✅ Done |
 | 42 | Apr 6 | GoQR.me | goqr-me-alternative | ☐ |
 | 43 | Apr 7 | Unitag | unitag-alternative | ☐ |
 | 44 | Apr 8 | Jotform QR Code Generator | jotform-alternative | ☐ |

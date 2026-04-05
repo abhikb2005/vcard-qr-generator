@@ -63,10 +63,11 @@ Before doing ANY work, read **`data/agent-board.md`**. This is a shared message 
 - See `data/competitor-blog-schedule.md` for the competitor blog post queue
 
 ### 6. Tech Stack & Conventions
-- Static HTML + Tailwind CSS (via CDN: `https://cdn.tailwindcss.com`)
-- No build tools or bundlers for the main site (the `vcard-qr-next/` directory is a separate Next.js project, not the live site)
-- The `p/` directory contains programmatic SEO (pSEO) pages — 30 job+city landing pages
-- Use existing code patterns — check neighboring files before adding new libraries
+- Static HTML + Tailwind CSS (via CDN: `https://cdn.tailwindcss.com`) serves the **main marketing site** (`www.vcardqrcodegenerator.com`).
+- The `vcard-qr-next/` directory is a separate Next.js project deployed as the **SaaS application** at `app.vcardqrcodegenerator.com`. 
+- The Next.js SaaS app must NOT duplicate the static marketing site's pSEO or blog pages.
+- The `p/` directory contains programmatic SEO (pSEO) pages on the static site — 30 job+city landing pages.
+- Use existing code patterns — check neighboring files before adding new libraries.
 
 ### 7. Browser Automation Standard
 - For any browser automation (Playwright, MCP browser tools, scripted UI checks), use **Microsoft Edge** by default.
@@ -116,7 +117,7 @@ A separate Print-on-Demand brand lives under `ideas/pod-quirkyquotemakr/`. If th
 
 To ensure smooth handoffs between different AI agents (like Amp and Antigravity), use the following triggers:
 
-- **"Flipping the Switch"**: Refers to the process of migrating the live site from the static HTML root to the dynamic Next.js application in `vcard-qr-next/`. See `vcard-qr-next/data/pseo_engine_guide.md` for the technical checklist.
+- **"Flipping the Switch"**: Refers to the launch of the `app.vcardqrcodegenerator.com` subdomain Next.js SaaS app and linking it from the static site. (Note: We are NOT migrating the static root site to Next.js anymore due to SEO risks).
 - **"Run pSEO Engine"**: Refers to generating or updating the programmatic SEO pages (comparison pages, city/job landing pages) using the dynamic engine inside the Next.js app.
 
 Read `vcard-qr-next/data/pseo_engine_guide.md` for full technical details before executing these requests.

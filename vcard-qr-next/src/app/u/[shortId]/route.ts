@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 
+// Basic memory cache to prevent spamming from the same IP
+const recentScans = new Set<string>();
+
+async function hashIP(ip: string): Promise<string> {
+    const encoder = new TextEncoder();
+    // Use the current date as a daily salt for the hash
+    const data = encoder.encode(ip + new Date().toISOString().split('T')[0]);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 export async function GET(request: NextRequest, { params }: { params: Promise<{ shortId: string }> }) {
     const { shortId } = await params
     const supabase = await createClient()
@@ -17,24 +28,36 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     // 2. Async: Log the scan
-    const ip = request.headers.get('x-forwarded-for') || 'unknown'
-    const userAgent = request.headers.get('user-agent') || 'unknown'
-    const referer = request.headers.get('referer') || 'direct'
-    const country = request.headers.get('x-vercel-ip-country') || 'unknown'
-    const city = request.headers.get('x-vercel-ip-city') || 'unknown'
+    const rawIp = request.headers.get('x-forwarded-for') || 'unknown'
+    const ipHash = await hashIP(rawIp);
+    
+    // Basic rate limit check: prevent duplicate scans from same IP within the lambda's memory life
+    const scanKey = `${qr.id}-${ipHash}`;
+    if (!recentScans.has(scanKey)) {
+        recentScans.add(scanKey);
+        // Clear it after 60 seconds
+        setTimeout(() => recentScans.delete(scanKey), 60000);
 
-    await Promise.all([
-        supabase.rpc('increment_scan_count', { qr_id: qr.id }),
-        supabase.from('scans').insert({
-            qr_id: qr.id,
-            ip_address: ip,
-            user_agent: userAgent,
-            referer: referer,
-            country: country,
-            city: city,
-            device_type: 'unknown'
-        })
-    ])
+        const userAgent = request.headers.get('user-agent') || 'unknown'
+        const referer = request.headers.get('referer') || 'direct'
+        // Vercel-specific Geo Headers (will fall back to 'unknown' if hosted elsewhere)
+        const country = request.headers.get('x-vercel-ip-country') || 'unknown'
+        const city = request.headers.get('x-vercel-ip-city') || 'unknown'
+
+        // Fire and forget
+        Promise.all([
+            supabase.rpc('increment_scan_count', { qr_id: qr.id }),
+            supabase.from('scans').insert({
+                qr_id: qr.id,
+                ip_address: ipHash, // GDPR Compliant Hash
+                user_agent: userAgent,
+                referer: referer,
+                country: country,
+                city: city,
+                device_type: 'unknown'
+            })
+        ]).catch(console.error)
+    }
 
     // 3. Redirect Logic
     // If it's a vCard, we redirect to our internal public profile page

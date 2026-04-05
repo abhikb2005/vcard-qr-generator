@@ -10,6 +10,25 @@ create table if not exists public.qr_codes (
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
+-- Create a table for Profiles
+create table if not exists public.profiles (
+  id uuid references auth.users on delete cascade primary key,
+  subscription_plan text default 'free',
+  period_end timestamp with time zone,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable RLS for Profiles
+alter table public.profiles enable row level security;
+
+create policy "Users can view their own profile" 
+  on public.profiles for select 
+  using (auth.uid() = id);
+
+create policy "Users can update their own profile" 
+  on public.profiles for update 
+  using (auth.uid() = id);
+
 -- Enable Row Level Security (RLS)
 alter table public.qr_codes enable row level security;
 
@@ -17,6 +36,10 @@ alter table public.qr_codes enable row level security;
 create policy "Users can view their own QR codes" 
   on public.qr_codes for select 
   using (auth.uid() = user_id);
+
+create policy "Public can read QR codes for redirect" 
+  on public.qr_codes for select 
+  using (true);
 
 create policy "Users can create their own QR codes" 
   on public.qr_codes for insert 

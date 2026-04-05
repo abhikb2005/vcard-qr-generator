@@ -1,0 +1,47 @@
+# SEO Content Engine — Project Configuration
+# Last updated: 2026-03-29
+
+project:
+  name: "vCard QR Code Generator"
+  url: "https://www.vcardqrcodegenerator.com"
+  type: "static"
+  hosting: "Cloudflare Pages"
+  analytics: "GA4 (G-E90B41BNEH)"
+  ads: "Google AdSense (ca-pub-1206702185649949)"
+  payment: "Dodo Payments"
+
+content:
+  blog_dir: "blog/"
+  blog_index: "blog_index.json"
+  sitemap: "sitemap.xml"
+  pseo_dir: "p/"
+  templates_dir: ".seo-engine/templates/"
+
+seo:
+  default_author: "vCard QR Code Generator"
+  schema_types: ["Article", "FAQPage"]
+  canonical_base: "https://www.vcardqrcodegenerator.com"
+  og_image: "https://www.vcardqrcodegenerator.com/og-blog.png"
+
+clusters:
+  - id: "competitor-alternatives"
+    pillar: "/"
+    description: "Competitor comparison pages targeting '[competitor] alternative' keywords"
+  - id: "vcard-fundamentals"
+    pillar: "/blog/vcard-qr-code/"
+    description: "Core vCard QR code education and how-to content"
+  - id: "networking"
+    pillar: "/blog/qr-vcard-for-networking-events/"
+    description: "Professional networking, events, and business card content"
+  - id: "technical"
+    pillar: "/blog/vcard-qr-code-format/"
+    description: "Technical guides on QR code formats, encoding, and specifications"
+  - id: "design-customize"
+    pillar: "/blog/customize-qr-codes/"
+    description: "QR code design, customization, and branding content"
+  - id: "privacy-security"
+    pillar: "/blog/privacy-first-digital-business-card/"
+    description: "Privacy, security, and GDPR-related QR code content"
+  - id: "use-cases"
+    pillar: "/blog/business-card-qr-code-generator/"
+    description: "Specific use case guides (resume, email, phone, bulk)"

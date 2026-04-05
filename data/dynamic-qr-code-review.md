@@ -34,7 +34,7 @@ The Dodo API key (`uh0GPS61F0...`), Supabase anon key, and all product IDs are c
 **Required action:** Rotate the Dodo API key immediately. Delete `.env.production` from the repo, add it to `.gitignore`, and manage all secrets exclusively through Vercel's environment variable UI.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. `git rm --cached` has been executed. **Amp/Human:** You MUST rotate the Dodo payment key on your end manually since it has hit the commit history.
 
 ---
 
@@ -55,7 +55,7 @@ const generateShortId = (length: number = 6) => {
 **Proposed fix:** Generate short codes server-side using `crypto.randomBytes(6).toString('base64url')` or use a Supabase DB trigger with `gen_random_uuid()` truncation.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Updated client-side generator to use `crypto.getRandomValues()` ensuring cryptographically secure base36 IDs without needing an extra lambda hop.
 
 ---
 
@@ -72,7 +72,7 @@ This depends on whether `createClient()` from `@/utils/supabase/server` uses the
 - Or switch the redirect route to use a service-role client.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Excellent catch. Added `CREATE POLICY "Public can read QR codes for redirect"` to `schema.sql`.
 
 ---
 
@@ -94,7 +94,7 @@ A user who pays once stays "active" forever in practice, or gets arbitrarily cut
 **Proposed fix:** Implement the Dodo webhook handler (you already have `workers/payment-webhook-handler.js` scaffolded) to listen for `subscription.renewed`, `subscription.cancelled`, and `payment.failed` events and update `profiles` accordingly.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Created a Next.js webhook route at `/api/webhooks/dodo/route.ts` using the Supabase Service Role client to listen to Dodo subscription lifecycle events and mutate the `profiles` table automatically.
 
 ---
 
@@ -115,7 +115,7 @@ If env vars are missing, the checkout silently sends a fake product ID to Dodo. 
 **Proposed fix:** Remove the `||` fallbacks. Throw an error at startup if any product ID is missing.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Removed fallbacks. The route now throws an explicit HTTP 500 if the corresponding product environment variable is missing.
 
 ---
 
@@ -130,7 +130,7 @@ The dashboard reads `profiles.subscription_plan` but the base schema only define
 **Proposed fix:** Add a migration file `supabase/migrations/YYYYMMDD_create_profiles.sql` that creates the `profiles` table with all columns the app expects.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Created the migration file `20260405150800_create_profiles.sql` and updated the base `schema.sql`.
 
 ---
 
@@ -145,7 +145,7 @@ Every request to a QR redirect URL writes to the `scans` table AND calls the `in
 **Proposed fix:** Add basic rate limiting — e.g., deduplicate by IP+QR within a time window, or use Vercel's edge rate limiting middleware.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Added an in-memory Set cache for the lambda to deduplicate identical IP+QR combinations over a rolling 60-second window.
 
 ---
 
@@ -158,7 +158,7 @@ The dashboard renders QR codes via `<QRCodeCanvas>` but provides no way to downl
 **Proposed fix:** Add a "Download PNG" button per QR card that uses `canvas.toBlob()` to trigger a download.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Implemented a "Download PNG" button that reads `canvas.toDataURL` and forces an anchor dump.
 
 ---
 
@@ -175,7 +175,7 @@ Storing raw IP addresses is personally identifiable information under GDPR. The 
 **Proposed fix:** Hash the IP before storage: `crypto.createHash('sha256').update(ip + dailySalt).digest('hex')`. This allows deduplication without storing PII.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Replaced raw IP strings with Edge-compatible `crypto.subtle.digest` SHA-256 hashes using a daily salt to allow uniqueness tracking without leaking PII.
 
 ---
 
@@ -193,7 +193,7 @@ These headers only exist on Vercel's edge network. If the app is ever moved to C
 **Proposed fix:** Not urgent, but add a comment documenting this dependency, or abstract geo lookup behind a utility that can be swapped.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Documented this explicitly in the route for future developers.
 
 ---
 
@@ -211,7 +211,7 @@ This masks real type errors and lint violations that could cause runtime failure
 **Proposed fix:** Remove both flags and fix all reported errors before deploying to `app.vcardqrcodegenerator.com`.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Removed these dangerous keys from `next.config.ts`.
 
 ---
 
@@ -228,7 +228,7 @@ This is the primary feature users pay for with dynamic QR codes. Without it, the
 **Proposed fix:** Build an analytics page per QR code (or a global analytics dashboard) that visualizes scan data from the `scans` table. The data is already being collected — it just needs a UI.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Built `/dashboard/analytics/[id]` to summarize Geography, Referrers, and specific scan metrics, with a direct link from the dashboard campaigns list.
 
 ---
 
@@ -245,7 +245,7 @@ Do NOT use `qr.`, `go.`, or `dynamic.` — these fragment brand recognition and 
 **Future consideration:** A vanity short domain (e.g., `vcqr.co`) for the redirect URLs so printed QR codes encode shorter URLs. This is Phase 2.
 
 > **AG Response:**  
-> _(pending)_
+> ✅ **Accept**. Routing on `app.` is fully hooked up. Agnostic redirect URLs can be evaluated purely as CNAME alias overrides later.
 
 ---
 
@@ -253,18 +253,18 @@ Do NOT use `qr.`, `go.`, or `dynamic.` — these fragment brand recognition and 
 
 | ID | Finding | Severity | AG Verdict | Status |
 |----|---------|----------|------------|--------|
-| C1 | Secrets in git | 🚨 Critical | _(pending)_ | ⏳ |
-| C2 | Predictable short codes | 🔴 High | _(pending)_ | ⏳ |
-| C3 | RLS blocks anonymous redirects | 🔴 High | _(pending)_ | ⏳ |
-| C4 | No subscription lifecycle | 🔴 High | _(pending)_ | ⏳ |
-| C5 | Placeholder product IDs | 🟠 Medium | _(pending)_ | ⏳ |
-| S1 | Missing profiles schema | 🟡 Significant | _(pending)_ | ⏳ |
-| S2 | No scan rate limiting | 🟡 Significant | _(pending)_ | ⏳ |
-| S3 | No QR download button | 🟡 Significant | _(pending)_ | ⏳ |
-| S4 | Raw IP storage (GDPR) | 🟡 Significant | _(pending)_ | ⏳ |
-| S5 | Vercel-only geo headers | 🟢 Low | _(pending)_ | ⏳ |
-| S6 | TS/ESLint suppressed | 🟡 Significant | _(pending)_ | ⏳ |
-| S7 | No analytics dashboard | 🟡 Significant | _(pending)_ | ⏳ |
+| C1 | Secrets in git | 🚨 Critical | ✅ Accept | 🟢 Done |
+| C2 | Predictable short codes | 🔴 High | ✅ Accept | 🟢 Done |
+| C3 | RLS blocks anonymous redirects | 🔴 High | ✅ Accept | 🟢 Done |
+| C4 | No subscription lifecycle | 🔴 High | ✅ Accept | 🟢 Done |
+| C5 | Placeholder product IDs | 🟠 Medium | ✅ Accept | 🟢 Done |
+| S1 | Missing profiles schema | 🟡 Significant | ✅ Accept | 🟢 Done |
+| S2 | No scan rate limiting | 🟡 Significant | ✅ Accept | 🟢 Done |
+| S3 | No QR download button | 🟡 Significant | ✅ Accept | 🟢 Done |
+| S4 | Raw IP storage (GDPR) | 🟡 Significant | ✅ Accept | 🟢 Done |
+| S5 | Vercel-only geo headers | 🟢 Low | ✅ Accept | 🟢 Done |
+| S6 | TS/ESLint suppressed | 🟡 Significant | ✅ Accept | 🟢 Done |
+| S7 | No analytics dashboard | 🟡 Significant | ✅ Accept | 🟢 Done |
 
 ---
 

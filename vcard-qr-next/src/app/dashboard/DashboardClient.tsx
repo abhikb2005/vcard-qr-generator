@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import CreateQrForm from '@/components/CreateQrForm'
 import LogoutButton from '@/components/LogoutButton'
-import { LinkIcon, QrCodeIcon, ChartBarIcon, ArrowTopRightOnSquareIcon, CalendarIcon, UserPlusIcon, TrashIcon, ArrowPathIcon, WalletIcon } from '@heroicons/react/24/outline'
+import { LinkIcon, QrCodeIcon, ChartBarIcon, ArrowTopRightOnSquareIcon, CalendarIcon, UserPlusIcon, TrashIcon, ArrowPathIcon, WalletIcon, ArrowDownTrayIcon, ChartPieIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -112,6 +112,18 @@ export default function DashboardClient() {
         } else {
             setQrCodes(prev => prev.filter(q => q.id !== id))
         }
+    }
+
+    const handleDownload = (id: string, name: string) => {
+        const canvas = document.getElementById(`qr-canvas-${id}`) as HTMLCanvasElement
+        if (!canvas) return
+        const imgUrl = canvas.toDataURL("image/png")
+        const a = document.createElement("a")
+        a.href = imgUrl
+        a.download = `${name || 'dynamic-qr-code'}.png`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
     }
 
     const handleUpgrade = async (tier: string) => {
@@ -362,6 +374,7 @@ export default function DashboardClient() {
                                                 {/* QR Code Canvas */}
                                                 <div className="flex-shrink-0 bg-white p-2 border border-gray-100 rounded-lg">
                                                     <QRCodeCanvas
+                                                        id={`qr-canvas-${qr.id}`}
                                                         value={`${origin}/u/${qr.short_code}`}
                                                         size={120}
                                                         level={"H"}
@@ -407,7 +420,7 @@ export default function DashboardClient() {
                                                         </div>
                                                     </div>
 
-                                                    <div className="mt-4 flex items-center gap-3 justify-end sm:justify-start">
+                                                    <div className="mt-4 flex flex-wrap items-center gap-2 justify-end sm:justify-start">
                                                         <a
                                                             href={`/u/${qr.short_code}`}
                                                             target="_blank"
@@ -416,6 +429,18 @@ export default function DashboardClient() {
                                                         >
                                                             Test Link <ArrowTopRightOnSquareIcon className="w-4 h-4" />
                                                         </a>
+                                                        <button
+                                                            onClick={() => handleDownload(qr.id, qr.name)}
+                                                            className="inline-flex items-center gap-1 px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none transition-colors"
+                                                        >
+                                                            <ArrowDownTrayIcon className="w-4 h-4" /> Download
+                                                        </button>
+                                                        <Link
+                                                            href={`/dashboard/analytics/${qr.id}`}
+                                                            className="inline-flex items-center gap-1 px-3 py-2 border border-indigo-200 shadow-sm text-sm font-medium rounded-lg text-indigo-700 bg-white hover:bg-indigo-50 focus:outline-none transition-colors"
+                                                        >
+                                                            <ChartPieIcon className="w-4 h-4" /> Analytics
+                                                        </Link>
                                                         {qr.vcard_data && (
                                                             <Link
                                                                 href={`/vcard/edit/${qr.id}`}

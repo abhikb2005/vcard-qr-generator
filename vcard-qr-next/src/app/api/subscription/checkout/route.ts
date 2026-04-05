@@ -5,9 +5,9 @@ import { NextResponse } from 'next/server'
 // Map tiers to Dodo Product IDs (You'll need to create these in Dodo Dashboard)
 // For now, we use placeholders or enviroment variables
 const PRODUCT_IDS = {
-    starter: process.env.DODO_PRODUCT_ID_STARTER || 'pdt_starter_placeholder',
-    growth: process.env.DODO_PRODUCT_ID_GROWTH || 'pdt_growth_placeholder',
-    business: process.env.DODO_PRODUCT_ID_BUSINESS || 'pdt_business_placeholder'
+    starter: process.env.DODO_PRODUCT_ID_STARTER,
+    growth: process.env.DODO_PRODUCT_ID_GROWTH,
+    business: process.env.DODO_PRODUCT_ID_BUSINESS
 }
 
 export async function POST(request: Request) {
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     const productId = PRODUCT_IDS[tier as keyof typeof PRODUCT_IDS]
 
     if (!productId) {
-        return NextResponse.json({ error: 'Invalid Tier' }, { status: 400 })
+        return NextResponse.json({ error: `Missing Dodo Product ID configuration for tier: ${tier}` }, { status: 500 })
     }
 
     try {

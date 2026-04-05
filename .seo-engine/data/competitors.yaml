@@ -1,0 +1,432 @@
+# Competitor Matrix — 39 competitors from AlternativeTo listing
+# Used by SEO engine for comparison content and cannibalization prevention
+
+competitors:
+  - id: "qr-io-alternative"
+    name: "QR.io"
+    status: done
+    post_url: "/blog/qr-io-alternative/"
+    pricing: "Subscription ($7–39/mo)"
+    vcard_support: limited
+    weaknesses:
+      - "vCard behind paid plans"
+      - "Dynamic codes server-dependent"
+      - "Limited free tier"
+
+  - id: "scanova-alternative"
+    name: "Scanova"
+    status: done
+    post_url: "/blog/scanova-alternative/"
+    pricing: "Subscription ($5–49/mo)"
+    vcard_support: limited
+    weaknesses:
+      - "Limited free tier"
+      - "Account required"
+      - "Codes expire on free plan"
+
+  - id: "qr-code-generator-alternative"
+    name: "QR Code Generator (qr-code-generator.com)"
+    status: done
+    post_url: "/blog/qr-code-generator-alternative/"
+    pricing: "Subscription ($10–47/mo)"
+    vcard_support: limited
+    weaknesses:
+      - "vCard behind paywall"
+      - "14-day trial only"
+      - "Aggressive upsells"
+
+  - id: "kaywa-alternative"
+    name: "Kaywa QR Code"
+    status: done
+    post_url: "/blog/kaywa-alternative/"
+    pricing: "Freemium (~$15/mo paid)"
+    vcard_support: limited
+    weaknesses:
+      - "Limited free tier"
+      - "Email verification required"
+      - "Outdated interface"
+
+  - id: "qrfy-alternative"
+    name: "QRFY"
+    status: done
+    post_url: "/blog/qrfy-alternative/"
+    pricing: "Subscription (~$6.99+/mo)"
+    vcard_support: limited
+    weaknesses:
+      - "Codes expire on free tier"
+      - "Limited free codes"
+      - "Account required"
+
+  - id: "yohn-io-alternative"
+    name: "Yohn.io"
+    status: done
+    post_url: "/blog/yohn-io-alternative/"
+    pricing: "Paid plans"
+    vcard_support: limited
+    weaknesses:
+      - "Limited free tier"
+      - "Account required"
+      - "Server-dependent codes"
+
+  - id: "autonix-alternative"
+    name: "Autonix"
+    status: done
+    post_url: "/blog/autonix-alternative/"
+    pricing: "Paid plans"
+    vcard_support: no
+    weaknesses:
+      - "Analytics-focused, not vCard-focused"
+      - "Account required"
+      - "Subscription pricing"
+
+  - id: "qr-code-ai-alternative"
+    name: "QR Code AI 2.0"
+    status: done
+    post_url: "/blog/qr-code-ai-alternative/"
+    pricing: "Subscription"
+    vcard_support: no
+    weaknesses:
+      - "AI artistic QR codes, not vCard-focused"
+      - "Subscription required"
+      - "Niche use case"
+
+  - id: "metriqr-alternative"
+    name: "MetriQR"
+    status: done
+    post_url: "/blog/metriqr-alternative/"
+    pricing: "Paid plans"
+    vcard_support: limited
+    weaknesses:
+      - "Analytics-focused platform"
+      - "Paid plans for useful features"
+      - "Account required"
+
+  - id: "qr-code-dynamic-alternative"
+    name: "QR Code Dynamic"
+    status: done
+    post_url: "/blog/qr-code-dynamic-alternative/"
+    pricing: "Subscription"
+    vcard_support: limited
+    weaknesses:
+      - "Free static codes limited"
+      - "Dynamic codes require subscription"
+      - "Server-dependent"
+
+  - id: "hovercode-alternative"
+    name: "Hovercode"
+    status: done
+    post_url: "/p/"
+    pricing: "Subscription"
+    vcard_support: limited
+    weaknesses:
+      - "Subscription pricing"
+      - "Limited free tier"
+      - "Account required"
+
+  - id: "qr-planet-alternative"
+    name: "QR Planet"
+    status: done
+    post_url: "/blog/qr-planet-alternative/"
+    pricing: "Free static / paid dynamic ($5+/mo)"
+    vcard_support: yes
+    weaknesses:
+      - "Dynamic vCards require subscription"
+      - "Free static codes only"
+      - "Account required for paid features"
+
+  - id: "qr-factory-alternative"
+    name: "QR Factory"
+    status: done
+    post_url: "/blog/qr-factory-alternative/"
+    pricing: "Desktop app ($5–20)"
+    vcard_support: limited
+    weaknesses:
+      - "macOS-only desktop app"
+      - "No web-based tool"
+      - "No vCard optimization"
+
+  - id: "safercodes-alternative"
+    name: "SaferCodes"
+    status: done
+    post_url: "/blog/safercodes-alternative/"
+    pricing: "Subscription"
+    vcard_support: limited
+    weaknesses:
+      - "COVID check-in tool pivot"
+      - "Subscription model"
+      - "Limited vCard features"
+
+  - id: "free-qr-code-generator-alternative"
+    name: "Free QR Code Generator"
+    status: done
+    post_url: "/blog/free-qr-code-generator-alternative/"
+    pricing: "Free (ad-supported)"
+    vcard_support: limited
+    weaknesses:
+      - "No vCard specialization"
+      - "Ad-heavy interface"
+      - "Basic features only"
+
+  - id: "mini-qr-alternative"
+    name: "Mini QR"
+    status: done
+    post_url: "/blog/mini-qr-alternative/"
+    pricing: "Free (ad-supported)"
+    vcard_support: limited
+    weaknesses:
+      - "Ad-heavy"
+      - "Limited features"
+      - "Basic customization"
+
+  - id: "qr-dive-alternative"
+    name: "QR Dive"
+    status: done
+    post_url: "/blog/qr-dive-alternative/"
+    pricing: "Free (ad-supported)"
+    vcard_support: limited
+    weaknesses:
+      - "Limited features"
+      - "Ad-heavy"
+      - "Basic tool"
+
+  - id: "midiacode-alternative"
+    name: "Midiacode"
+    status: done
+    post_url: "/blog/midiacode-alternative/"
+    pricing: "Subscription"
+    vcard_support: limited
+    weaknesses:
+      - "Account required"
+      - "Subscription pricing"
+      - "Limited vCard features"
+
+  - id: "qrcodefree-alternative"
+    name: "QRCodeFree"
+    status: done
+    post_url: "/blog/qrcodefree-alternative/"
+    pricing: "Was free"
+    vcard_support: limited
+    weaknesses:
+      - "Site no longer active"
+      - "Dead/discontinued"
+      - "No ongoing support"
+
+  - id: "qr-studio-pro-alternative"
+    name: "QR Studio PRO"
+    status: done
+    post_url: "/blog/qr-studio-pro-alternative/"
+    pricing: "Paid app"
+    vcard_support: limited
+    weaknesses:
+      - "Desktop/mobile app only"
+      - "No web version"
+      - "Paid download"
+
+  - id: "contact-et-alternative"
+    name: "Contact.et"
+    status: done
+    post_url: "/blog/contact-et-alternative/"
+    pricing: "Free"
+    vcard_support: yes
+    weaknesses:
+      - "Limited customization"
+      - "Basic feature set"
+      - "No bulk generation"
+
+  - id: "qrvcards-alternative"
+    name: "QRvCards"
+    status: done
+    post_url: "/blog/qrvcards-alternative/"
+    pricing: "Free"
+    vcard_support: yes
+    weaknesses:
+      - "Limited customization"
+      - "No bulk generation"
+      - "Basic interface"
+
+  - id: "vcard-garden-alternative"
+    name: "vCard Garden"
+    status: done
+    post_url: "/blog/vcard-garden-alternative/"
+    pricing: "Free"
+    vcard_support: yes
+    weaknesses:
+      - "Limited features"
+      - "No bulk generation"
+      - "Basic customization"
+
+  - id: "qr-tiger-alternative"
+    name: "QR Tiger"
+    status: done
+    post_url: "/blog/qr-tiger-alternative/"
+    pricing: "Subscription ($7–37/mo)"
+    vcard_support: limited
+    weaknesses:
+      - "Limited free tier"
+      - "Account required"
+      - "Scan limits on free codes"
+
+  - id: "free-qr-code-generator-com-alternative"
+    name: "free-qr-code-generator.com"
+    status: done
+    post_url: "/blog/free-qr-code-generator-com-alternative/"
+    pricing: "Free (ad-supported)"
+    vcard_support: limited
+    weaknesses:
+      - "No vCard specialization"
+      - "Aggressive upsells"
+      - "Basic features"
+
+  - id: "online-qr-code-image-generator-alternative"
+    name: "Online QR Code Image Generator"
+    status: done
+    post_url: "/blog/online-qr-code-image-generator-alternative/"
+    pricing: "Free"
+    vcard_support: limited
+    weaknesses:
+      - "Limited features"
+      - "No vCard specialization"
+      - "Basic tool"
+
+  - id: "compzets-alternative"
+    name: "QR Code Generator (Compzets)"
+    status: done
+    post_url: "/blog/compzets-alternative/"
+    pricing: "Was free"
+    vcard_support: limited
+    weaknesses:
+      - "Discontinued"
+      - "No longer maintained"
+      - "No ongoing support"
+
+  - id: "uniqode-alternative"
+    name: "Uniqode (Beaconstac)"
+    status: done
+    post_url: "/blog/uniqode-alternative/"
+    pricing: "Subscription ($5–99/mo)"
+    vcard_support: yes
+    weaknesses:
+      - "Enterprise pricing"
+      - "Account required"
+      - "Codes expire without subscription"
+
+  - id: "trueqrcode-alternative"
+    name: "Trueqrcode"
+    status: done
+    post_url: "/blog/trueqrcode-alternative/"
+    pricing: "Subscription"
+    vcard_support: limited
+    weaknesses:
+      - "Limited free tier"
+      - "Codes expire on free plan"
+      - "Account required"
+
+  - id: "qrcodechimp-alternative"
+    name: "QRCodeChimp"
+    status: done
+    post_url: "/blog/qrcodechimp-alternative/"
+    pricing: "Freemium"
+    vcard_support: limited
+    weaknesses:
+      - "Limited free codes"
+      - "Subscription for more"
+      - "Account required"
+
+  - id: "flowcode-alternative"
+    name: "Flowcode"
+    status: done
+    post_url: "/blog/flowcode-alternative/"
+    pricing: "Subscription ($7–99/mo)"
+    vcard_support: limited
+    weaknesses:
+      - "Limited free tier"
+      - "Account required"
+      - "Seat limits on team plans"
+
+  - id: "viralqr-alternative"
+    name: "ViralQR"
+    status: done
+    post_url: "/blog/viralqr-alternative/"
+    pricing: "Subscription"
+    vcard_support: limited
+    weaknesses:
+      - "Auto-renewal traps"
+      - "Scan tracking raises privacy concerns"
+      - "Subscription required"
+
+  - id: "v1ce-alternative"
+    name: "V1CE"
+    status: done
+    post_url: "/blog/v1ce-alternative/"
+    pricing: "NFC cards ($49.99+) + subscription"
+    vcard_support: limited
+    weaknesses:
+      - "Physical NFC card purchase required"
+      - "Monthly subscription for digital features"
+      - "Hardware lock-in"
+
+  - id: "qrcode-monkey-alternative"
+    name: "QRCode Monkey"
+    status: done
+    post_url: "/blog/qrcode-monkey-alternative/"
+    pricing: "Free (ad-supported)"
+    vcard_support: limited
+    weaknesses:
+      - "Server-side caching concerns"
+      - "Ad-heavy interface"
+      - "No vCard optimization"
+
+  - id: "qr-code-io-alternative"
+    name: "QR-Code.io"
+    status: done
+    post_url: "/blog/qr-code-io-alternative/"
+    pricing: "Subscription"
+    vcard_support: limited
+    weaknesses:
+      - "Limited free tier"
+      - "Server-dependent codes"
+      - "Subscription required"
+
+  - id: "bitly-qr-alternative"
+    name: "Bitly QR"
+    status: done
+    post_url: "/blog/bitly-qr-alternative/"
+    pricing: "Freemium (paid plans $8+/mo)"
+    vcard_support: no
+    weaknesses:
+      - "No native vCard support"
+      - "Interstitial ads on free codes"
+      - "URL shortener, not vCard tool"
+
+  - id: "scantrust-alternative"
+    name: "Scantrust"
+    status: done
+    post_url: "/blog/scantrust-alternative/"
+    pricing: "Enterprise ($250–650/mo)"
+    vcard_support: no
+    weaknesses:
+      - "Enterprise pricing, no free tier"
+      - "Supply chain focus, not contact sharing"
+      - "No vCard support"
+
+  - id: "qroq-alternative"
+    name: "Qroq"
+    status: pending
+    post_url: "/blog/qroq-alternative/"
+    pricing: "Paid SaaS (pricing not transparent)"
+    vcard_support: limited
+    weaknesses:
+      - "23 QR code types — not vCard-focused"
+      - "Subscription required, opaque pricing"
+      - "Dynamic codes server-dependent"
+
+  - id: "freeqrcode-fr-alternative"
+    name: "freeqrcode.fr"
+    status: pending
+    post_url: "/blog/freeqrcode-fr-alternative/"
+    pricing: "Free"
+    vcard_support: limited
+    weaknesses:
+      - "French-language only"
+      - "Limited international audience"
+      - "Basic feature set"

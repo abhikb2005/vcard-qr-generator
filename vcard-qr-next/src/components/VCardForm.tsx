@@ -6,7 +6,9 @@ import { useRouter } from 'next/navigation'
 import { UserIcon, PhoneIcon, EnvelopeIcon, BriefcaseIcon, MapPinIcon, GlobeAltIcon, ArrowPathIcon, CheckIcon, LinkIcon } from '@heroicons/react/24/outline'
 
 const generateShortId = (length: number = 6) => {
-    return Math.random().toString(36).substring(2, 2 + length)
+    const array = new Uint8Array(length);
+    crypto.getRandomValues(array);
+    return Array.from(array, byte => byte.toString(36).padStart(2, '0')).join('').substring(0, length);
 }
 
 export default function VCardForm({ userId, initialData }: { userId: string, initialData?: any }) {

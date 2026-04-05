@@ -1,0 +1,71 @@
+# Feature Registry — vCard QR Code Generator
+# Used by SEO engine for comparison tables and content generation
+
+core_features:
+  - id: "vcard-qr-generation"
+    name: "vCard QR Code Generation"
+    description: "Generate QR codes with vCard 3.0 contact data encoded directly"
+    page: "/"
+    free: true
+
+  - id: "custom-colors"
+    name: "Custom QR Code Colors"
+    description: "Choose foreground and background colors for QR codes"
+    page: "/"
+    free: true
+
+  - id: "corner-styles"
+    name: "Corner Style Customization"
+    description: "Choose from multiple corner and dot styles"
+    page: "/"
+    free: true
+
+  - id: "png-svg-download"
+    name: "PNG/SVG Download"
+    description: "Download QR codes in PNG or SVG format"
+    page: "/"
+    free: true
+
+  - id: "no-signup"
+    name: "No Signup Required"
+    description: "Generate codes without creating an account"
+    page: "/"
+    free: true
+
+  - id: "client-side"
+    name: "Client-Side Processing"
+    description: "All QR generation happens in the browser; no data sent to servers"
+    page: "/"
+    free: true
+
+  - id: "static-codes"
+    name: "Static QR Codes"
+    description: "Codes encode data directly; work forever with no server dependency"
+    page: "/"
+    free: true
+
+  - id: "iphone-android"
+    name: "iPhone & Android Compatible"
+    description: "vCard 3.0 format tested and optimized for both platforms"
+    page: "/"
+    free: true
+
+pro_features:
+  - id: "logo-qr"
+    name: "Logo QR Code"
+    description: "Add a custom logo to the center of your QR code"
+    page: "/logo-qr-code.html"
+    price: "$4.99 one-time"
+
+bulk_features:
+  - id: "bulk-csv"
+    name: "Bulk CSV Upload"
+    description: "Generate multiple vCard QR codes from a CSV/Excel file"
+    page: "/bulk-qr-code.html"
+    free: true
+
+  - id: "bulk-zip"
+    name: "Bulk ZIP Download"
+    description: "Download all generated QR codes as a ZIP archive"
+    page: "/bulk-qr-code.html"
+    free: true
