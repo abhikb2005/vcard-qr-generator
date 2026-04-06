@@ -91,3 +91,4 @@ create policy "Server can insert scans"
 create index qr_codes_user_id_idx on public.qr_codes (user_id);
 create index qr_codes_short_code_idx on public.qr_codes (short_code);
 create index scans_qr_id_idx on public.scans (qr_id);
+create index scans_rate_limit_idx on public.scans (qr_id, ip_address, scanned_at);
