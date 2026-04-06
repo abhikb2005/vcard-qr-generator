@@ -49,7 +49,7 @@
 | 39 | Apr 1 | freeqrcode.fr | freeqrcode-fr-alternative | ✅ Done |
 | 40 | Apr 4 | ME-QR | me-qr-alternative | ✅ Done |
 | 41 | Apr 5 | Popl | popl-alternative | ✅ Done |
-| 42 | Apr 6 | GoQR.me | goqr-me-alternative | ☐ |
+| 42 | Apr 6 | GoQR.me | goqr-me-alternative | ✅ Done |
 | 43 | Apr 7 | Unitag | unitag-alternative | ☐ |
 | 44 | Apr 8 | Jotform QR Code Generator | jotform-alternative | ☐ |
 | 45 | Apr 9 | QRstuff | qrstuff-alternative | ☐ |
