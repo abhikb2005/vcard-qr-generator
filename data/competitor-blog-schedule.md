@@ -50,7 +50,7 @@
 | 40 | Apr 4 | ME-QR | me-qr-alternative | ✅ Done |
 | 41 | Apr 5 | Popl | popl-alternative | ✅ Done |
 | 42 | Apr 6 | GoQR.me | goqr-me-alternative | ✅ Done |
-| 43 | Apr 7 | Unitag | unitag-alternative | ☐ |
+| 43 | Apr 7 | Unitag | unitag-alternative | ✅ Done |
 | 44 | Apr 8 | Jotform QR Code Generator | jotform-alternative | ☐ |
 | 45 | Apr 9 | QRstuff | qrstuff-alternative | ☐ |
 | 46 | Apr 10 | QRBatch | qrbatch-alternative | ☐ |
