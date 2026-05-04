@@ -1,0 +1,42 @@
+name: Dynamic SEO Daily
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 3 * * *" # 09:00 IST daily
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dynamic-seo-daily-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run dynamic SEO daily engine
+        env:
+          GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
+          GOOGLE_ADS_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID }}
+          ADSENSE_ACCOUNT_ID: ${{ secrets.ADSENSE_ACCOUNT_ID }}
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+        run: python scripts/dynamic_seo_daily.py
+      - name: Commit and push changes
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "Dynamic SEO Bot"
+            git config user.email "bot@vcardqrcodegenerator.com"
+            git add blog/ blog_index.json sitemap.xml data/dynamic-seo-daily-tracker.md data/directory-submission-outbox/ data/dynamic-seo-directory-queue.md
+            git commit -m "chore(seo): publish daily dynamic QR content [skip ci]"
+            git push
+          else
+            echo "No dynamic SEO changes to commit."
+          fi

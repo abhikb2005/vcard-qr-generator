@@ -1,5 +1,19 @@
 [
   {
+    "slug": "editable-qr-code",
+    "title": "Editable QR Code: Change a QR Code After Printing (2026 Guide)",
+    "description": "Need an editable QR code? Learn how dynamic QR codes let you change the destination after printing, when to use them, and how to create one for vCards and business cards.",
+    "url": "/blog/editable-qr-code/",
+    "date": "2026-05-04"
+  },
+  {
+    "slug": "what-qr-code-type-for-vcard-with-updates",
+    "title": "What QR Code Type Should You Use for a vCard With Updates? (2026)",
+    "description": "If your vCard details may change after printing, learn whether a static vCard QR code or dynamic vCard QR code is the better fit for business cards.",
+    "url": "/blog/what-qr-code-type-for-vcard-with-updates/",
+    "date": "2026-05-04"
+  },
+  {
     "slug": "unitag-alternative",
     "title": "Best Unitag Alternative for vCard QR Codes (Free, 2026)",
     "description": "Looking for a Unitag alternative for vCard QR codes? Our free generator creates permanent contact codes with no subscription, no scan limits, and complete privacy.",

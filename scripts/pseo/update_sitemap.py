@@ -127,6 +127,24 @@ def file_lastmod_iso(path: Path) -> str:
     return dt.isoformat(timespec="seconds")
 
 
+def _load_existing_sitemap_lastmods() -> Dict[str, str]:
+    if not SITEMAP.exists():
+        return {}
+    try:
+        text = SITEMAP.read_text(encoding="utf-8")
+    except Exception:
+        return {}
+
+    lastmods: Dict[str, str] = {}
+    for match in re.finditer(
+        r"<url>\s*<loc>(.*?)</loc>\s*<lastmod>(.*?)</lastmod>\s*</url>",
+        text,
+        re.DOTALL,
+    ):
+        lastmods[match.group(1).strip()] = match.group(2).strip()
+    return lastmods
+
+
 def normalize_url(path: Path) -> str:
     rel = path.resolve().relative_to(ROOT)
 
@@ -165,6 +183,7 @@ def _write_sitemap(posts: List[Post]) -> None:
     urlset.set("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9")
 
     seen: set[str] = set()
+    existing_lastmods = _load_existing_sitemap_lastmods()
 
     def include(path: Path) -> None:
         if not path.exists():
@@ -173,13 +192,15 @@ def _write_sitemap(posts: List[Post]) -> None:
         if loc in seen:
             return
         seen.add(loc)
-        _add_url(urlset, loc, file_lastmod_iso(path))
+        _add_url(urlset, loc, existing_lastmods.get(loc) or file_lastmod_iso(path))
 
     include(ROOT / "index.html")
     include(ROOT / "privacy-policy.html")
     include(ROOT / "contact.html")
     include(ROOT / "terms-of-service.html")
     include(ROOT / "logo-qr-code.html")
+    include(ROOT / "qr-code-with-logo.html")
+    include(ROOT / "dynamic-qr-code-generator.html")
     include(ROOT / "bulk-qr-code.html")
 
     blogs_index = ROOT / "blogs" / "index.html"
