@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- Parity Deals PPP Banner -->
+  <script src="https://cdn.paritydeals.com/banner.js"></script>
+  <!-- Cookie Consent (must load before any tracking) -->
+  <script src="/consent.js"></script>
+  <!-- Google tag (gtag.js) for Pro funnel tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-E90B41BNEH');
+
+    // GA4 Pro funnel event helper
+    function gaTrackPro(name, params) {
+      if (typeof gtag === 'function') {
+        gtag('event', name, params || {});
+      }
+    }
+  </script>
+  <!-- 100% privacy-first analytics -->
+  <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <style>
+    /* Hide Pro app until gate passes to avoid FOUC */
+    html:not(.pro-ok) body {
+      visibility: hidden;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator with Logo — Free Preview, Branded Download ($4.99)</title>
+  <meta name="description"
+    content="Free QR code generator with logo. Create branded URL, text, or Wi-Fi QR codes. Upload your logo, customize colors, preview instantly. High-res download with one-time payment — no subscription." />
+  <meta name="keywords"
+    content="qr code with logo, logo qr code generator, branded qr code, custom qr code generator, add logo to qr code, qr code generator with logo, image qr code, url qr code with logo, wifi qr code with logo" />
+  <link rel="canonical" href="https://www.vcardqrcodegenerator.com/qr-code-with-logo.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="QR Code Generator with Logo — Free Preview, Branded Download" />
+  <meta property="og:description" content="Free logo QR code generator for URL, text, and Wi-Fi codes. Upload your brand image, customize colors, preview free. $4.99 one-time for branded download — no subscription." />
+  <meta property="og:url" content="https://www.vcardqrcodegenerator.com/qr-code-with-logo.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "QR Code Generator with Logo",
+      "url": "https://vcardqrcodegenerator.com/qr-code-with-logo.html",
+      "applicationCategory": "Utility",
+      "operatingSystem": "All",
+      "description": "Free QR code generator with logo for URL, text, and Wi-Fi QR codes. Upload your logo, customize colors and corners, preview free. One-time $4.99 to download a high-res branded copy.",
+      "offers": {
+        "@type": "Offer",
+        "price": "4.99",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Abilash K B"
+      }
+    }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is the QR code generator with logo really free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Designing your QR code, uploading any logo, customizing colors, and previewing the result are completely free with no signup. You only pay $4.99 when you want to download the high-resolution branded version. No subscription, no recurring fee, no account."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What kinds of QR codes can I add a logo to?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can create branded URL QR codes (links to any website), plain text QR codes, and Wi-Fi QR codes (auto-join network with SSID and password). For contact / vCard QR codes with a logo, use our dedicated vCard QR Code Generator with Logo at /logo-qr-code.html."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will adding a logo break my QR code?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, as long as the logo covers no more than 20-30% of the QR code area. Our generator uses the highest error correction level (H), which can recover up to 30% of damaged data. The logo is automatically sized and centered for optimal scannability."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does the branded download cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The branded high-resolution download costs $4.99 as a one-time payment — no monthly subscription. You can re-download for 24 hours after purchase. Designing and previewing your branded QR code is always free."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What file format is the download?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "High-resolution PNG, suitable for printing on flyers, posters, business cards, and marketing materials at 300 DPI or higher."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206702185649949"
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Advanced QR code library that supports logos -->
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .ad-container {
+      margin: 2rem 0;
+      min-height: 100px;
+      text-align: center;
+    }
+
+    .type-tab.active {
+      background-color: #4f46e5;
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+  <script>
+    (function () {
+      // Worker URLs (shared with logo-qr-code.html)
+      window.__CHECKOUT_API__ = "https://dodo-create-checkout.abhikb2005.workers.dev/";
+      window.__TOKEN_VALIDATOR__ = "https://token-validator.abhikb2005.workers.dev/";
+
+      // Allow page to render
+      document.documentElement.classList.add("pro-ok");
+    })();
+  </script>
+
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <a href="/" class="flex-shrink-0 flex items-center text-indigo-600 font-bold text-xl">
+          ← Back to Home
+        </a>
+        <div class="hidden sm:flex items-center gap-4 text-sm text-gray-600">
+          <a href="/logo-qr-code.html" class="hover:text-indigo-600">vCard with Logo</a>
+          <a href="/bulk-qr-code.html" class="hover:text-indigo-600">Bulk Generator</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="bg-gradient-to-r from-indigo-900 to-blue-900 text-white pt-20 pb-24">
+    <div class="container mx-auto px-4 text-center max-w-4xl">
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+        QR Code Generator <span class="text-blue-400">with Logo</span>
+      </h1>
+      <p class="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
+        Create a branded URL, text, or Wi-Fi QR code with your logo in the center. Free preview, $4.99 one-time for the high-res download. No subscription, no signup.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#tool-section"
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg shadow-lg transform transition hover:-translate-y-1 text-lg">
+          Try It Free →
+        </a>
+        <a href="/logo-qr-code.html"
+          class="bg-white text-indigo-600 hover:bg-indigo-50 font-bold py-4 px-8 rounded-lg shadow-lg transform transition hover:-translate-y-1 text-lg">
+          Need a vCard QR Code? →
+        </a>
+      </div>
+      <p class="mt-4 text-sm text-indigo-300">Free preview · $4.99 one-time · 24-hour download window · No monthly fees</p>
+    </div>
+  </div>
+
+  <!-- Problem / Solution -->
+  <div class="py-16 bg-white">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Why use a Custom QR Code?</h2>
+        <p class="text-lg text-gray-600">Plain QR codes look spammy and get ignored. Branded codes get scanned.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200 text-center opacity-75">
+          <div class="w-32 h-32 mx-auto bg-white p-2 mb-6">
+            <svg viewBox="0 0 100 100" class="w-full h-full">
+              <rect width="100" height="100" fill="white" />
+              <g fill="#333">
+                <rect x="5" y="5" width="25" height="25" rx="2" />
+                <rect x="70" y="5" width="25" height="25" rx="2" />
+                <rect x="5" y="70" width="25" height="25" rx="2" />
+                <rect x="35" y="35" width="30" height="30" rx="2" />
+              </g>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-700 mb-2">The "Generic" Code</h3>
+          <ul class="text-left text-gray-600 space-y-2 mx-auto max-w-xs">
+            <li>❌ Looks suspicious or spammy</li>
+            <li>❌ Ruins your brand design</li>
+            <li>❌ Lower scan rates</li>
+          </ul>
+        </div>
+        <div class="bg-white p-8 rounded-2xl border-2 border-indigo-600 shadow-xl text-center relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-indigo-600 text-white text-xs font-bold px-3 py-1">PRO</div>
+          <div class="w-32 h-32 mx-auto bg-white p-2 mb-6 border border-indigo-100 rounded-lg">
+            <svg viewBox="0 0 100 100" class="w-full h-full">
+              <rect width="100" height="100" fill="white" />
+              <g fill="#4f46e5">
+                <rect x="5" y="5" width="25" height="25" rx="4" />
+                <rect x="70" y="5" width="25" height="25" rx="4" />
+                <rect x="5" y="70" width="25" height="25" rx="4" />
+                <circle cx="50" cy="50" r="12" fill="#4f46e5" />
+              </g>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-indigo-900 mb-2">The "Branded" Code</h3>
+          <ul class="text-left text-gray-700 space-y-2 mx-auto max-w-xs">
+            <li>✅ Instantly recognizable brand</li>
+            <li>✅ 30% higher engagement</li>
+            <li>✅ Professional &amp; trusted</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div class="p-6">
+          <div class="text-4xl mb-4">🖼️</div>
+          <h3 class="font-bold text-lg mb-2">Custom Logo Upload</h3>
+          <p class="text-gray-600 text-sm">Upload any PNG, JPG, or SVG logo. We optimize sizing and placement for guaranteed scannability.</p>
+        </div>
+        <div class="p-6">
+          <div class="text-4xl mb-4">🎨</div>
+          <h3 class="font-bold text-lg mb-2">Brand Colors</h3>
+          <p class="text-gray-600 text-sm">Pick the exact hex code that matches your brand. Custom dot styles, corner shapes, and backgrounds.</p>
+        </div>
+        <div class="p-6">
+          <div class="text-4xl mb-4">📐</div>
+          <h3 class="font-bold text-lg mb-2">High-Res PNG</h3>
+          <p class="text-gray-600 text-sm">Print-ready 300+ DPI PNG download — perfect for flyers, posters, packaging, signage, and business collateral.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tool Section -->
+  <div id="tool-section" class="py-16 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-2xl border border-gray-200">
+        <header class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Design Your Branded QR Code</h2>
+          <p class="mt-2 text-gray-600">Pick a content type, fill in the details, upload your logo. Preview is always free.</p>
+        </header>
+
+        <!-- Type Selector -->
+        <div class="flex justify-center mb-6">
+          <div class="inline-flex rounded-lg border border-gray-200 bg-gray-50 p-1" role="tablist">
+            <button type="button" data-type="url" class="type-tab active px-4 py-2 text-sm font-medium rounded-md">URL</button>
+            <button type="button" data-type="text" class="type-tab px-4 py-2 text-sm font-medium rounded-md">Text</button>
+            <button type="button" data-type="wifi" class="type-tab px-4 py-2 text-sm font-medium rounded-md">Wi-Fi</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <form id="qr-form" class="space-y-4">
+            <!-- URL Fields -->
+            <div data-fields="url" class="space-y-4">
+              <div>
+                <label for="url-input" class="block text-sm font-medium text-gray-700 mb-1">Destination URL</label>
+                <input type="url" id="url-input" placeholder="https://example.com"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900" value="https://www.vcardqrcodegenerator.com/" />
+                <p class="mt-1 text-xs text-gray-500">Anyone who scans this code will be sent to this URL.</p>
+              </div>
+            </div>
+
+            <!-- Text Fields -->
+            <div data-fields="text" class="space-y-4 hidden">
+              <div>
+                <label for="text-input" class="block text-sm font-medium text-gray-700 mb-1">Text</label>
+                <textarea id="text-input" rows="4" placeholder="Any plain text, code, or message..."
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900"></textarea>
+                <p class="mt-1 text-xs text-gray-500">Plain text appears in the scanner app — no link, no website.</p>
+              </div>
+            </div>
+
+            <!-- Wi-Fi Fields -->
+            <div data-fields="wifi" class="space-y-4 hidden">
+              <div>
+                <label for="wifi-ssid" class="block text-sm font-medium text-gray-700 mb-1">Network Name (SSID)</label>
+                <input type="text" id="wifi-ssid" placeholder="MyHomeNetwork"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900" />
+              </div>
+              <div>
+                <label for="wifi-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input type="text" id="wifi-password" placeholder="(leave blank for open network)"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900" />
+              </div>
+              <div>
+                <label for="wifi-encryption" class="block text-sm font-medium text-gray-700 mb-1">Encryption</label>
+                <select id="wifi-encryption" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900">
+                  <option value="WPA">WPA / WPA2 / WPA3</option>
+                  <option value="WEP">WEP</option>
+                  <option value="nopass">None (open network)</option>
+                </select>
+              </div>
+              <p class="text-xs text-gray-500">Phones will auto-prompt to join the network when they scan the code.</p>
+            </div>
+
+            <hr class="my-4 border-gray-200">
+            <h3 class="font-semibold text-gray-900">🎨 Customization</h3>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="qr-style" class="block text-sm font-medium text-gray-700 mb-1">Dots Style</label>
+                <select id="qr-style" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900">
+                  <option value="rounded">Rounded</option>
+                  <option value="dots">Dots</option>
+                  <option value="square">Classic</option>
+                  <option value="classy">Classy</option>
+                  <option value="classy-rounded">Soft</option>
+                  <option value="extra-rounded">Extra Round</option>
+                </select>
+              </div>
+              <div>
+                <label for="corner-style" class="block text-sm font-medium text-gray-700 mb-1">Corners</label>
+                <select id="corner-style" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900">
+                  <option value="square">Square</option>
+                  <option value="dot">Rounded</option>
+                  <option value="extra-rounded">Extra Rounded</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="qr-color" class="block text-sm font-medium text-gray-700 mb-1">Brand Color</label>
+              <div class="flex gap-2">
+                <input type="color" id="qr-color" value="#000000"
+                  class="w-12 h-10 border border-gray-300 rounded-md cursor-pointer" />
+                <input type="text" id="qr-color-hex" value="#000000"
+                  class="flex-1 px-3 py-2 border border-gray-300 rounded-md font-mono text-sm" />
+              </div>
+            </div>
+
+            <div class="hidden">
+              <input type="color" id="bg-color" value="#FFFFFF">
+              <input type="text" id="bg-color-hex" value="#FFFFFF">
+            </div>
+          </form>
+
+          <!-- Preview Column -->
+          <div class="space-y-6 flex flex-col items-center sticky top-6">
+            <div class="text-sm font-medium text-gray-500 uppercase tracking-wide">Live Preview</div>
+            <div id="qr-code-container"
+              class="p-6 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 flex items-center justify-center w-full aspect-square relative hover:border-indigo-400 transition-colors">
+              <!-- QR renders here -->
+            </div>
+            <p id="loading-text" class="text-sm text-green-600 font-medium hidden">Checking payment status...</p>
+
+            <div class="w-full space-y-3">
+              <button id="main-action-btn" type="button"
+                class="w-full py-4 text-base font-bold rounded-lg shadow-md text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transform transition hover:-translate-y-0.5">
+                Upload Your Logo (Free Preview)
+              </button>
+
+              <input type="file" id="logo-upload" class="hidden" accept="image/png, image/jpeg, image/svg+xml" />
+
+              <button id="proFeaturesBtn" type="button"
+                class="w-full text-center px-4 py-3 text-base font-bold rounded-lg shadow-md text-white bg-green-600 hover:bg-green-700 transform transition hover:-translate-y-0.5">
+                Download Branded QR — $4.99
+              </button>
+
+              <p id="pricing-info" class="text-center text-xs text-gray-500">
+                Free to design and preview. One-time $4.99 to download a branded high-res copy. 24-hour re-download window.
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2 text-xs text-gray-400">
+              <span>🔒 Secure Dodo Payment</span>
+              <span>•</span>
+              <span>⚡ Instant Delivery</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Use Cases -->
+  <div class="py-16 bg-gray-50 border-t border-gray-200">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <h2 class="text-center text-2xl font-bold mb-10">Who uses Branded QR Codes?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+          <h3 class="font-bold text-gray-900 mb-2">Marketers &amp; Agencies</h3>
+          <p class="text-gray-600 text-sm">Branded URL codes on flyers, posters, and packaging convert better than plain codes — and look like part of the design instead of an afterthought.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+          <h3 class="font-bold text-gray-900 mb-2">Restaurants &amp; Cafes</h3>
+          <p class="text-gray-600 text-sm">Wi-Fi QR codes with the venue logo make guest network access effortless and on-brand at the same time.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+          <h3 class="font-bold text-gray-900 mb-2">Product Packaging</h3>
+          <p class="text-gray-600 text-sm">A logo-centered URL code on the back of a product points customers to your store, manual, or warranty page — and reinforces brand at the moment of purchase.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO Content -->
+  <div class="py-16 bg-white">
+    <div class="container mx-auto px-4 max-w-3xl space-y-8">
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">QR Code Generator with Logo: The Complete Guide</h2>
+        <p class="mb-4 text-gray-700">A QR code generator with logo lets you embed your company logo, brand mark, or personal image directly into the center of a QR code. Branded QR codes outperform plain black-and-white codes in nearly every printed and digital placement — they look trustworthy, instantly identify the source, and signal professionalism. This page lets you brand <strong>URL, text, and Wi-Fi</strong> QR codes with your logo. If you're specifically creating a contact (vCard) QR code, use our dedicated <a href="/logo-qr-code.html" class="text-indigo-600 hover:underline">vCard QR code generator with logo</a> instead.</p>
+        <p class="mb-4 text-gray-700">Most generic generators bury logo upload behind a monthly subscription that costs $9–$30 every single month, even if you only need a single QR code. Our tool is different: design and preview your branded QR code completely free — colors, dot styles, corner styles, logo upload, and live preview all work without payment. You only pay a single $4.99 fee when you're ready to download the high-resolution branded copy. No subscription, no account creation, no email harvesting beyond the receipt the payment processor sends.</p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Why Branded QR Codes Get More Scans</h2>
+        <p class="mb-4 text-gray-700">Independent QR analytics studies (Bitly, QR Code Generator, Beaconstac) consistently report that QR codes with a centered logo or image receive <strong>20–35% higher scan rates</strong> than plain codes when placed in the same context. Three reasons:</p>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700 mb-4">
+          <li><strong>Trust signal.</strong> A QR code with your logo is verifiable at a glance. A plain code on a flyer or product looks like it could be anything — including a phishing redirect.</li>
+          <li><strong>Brand recall.</strong> A scannable code that visually carries your brand reinforces brand identity on every print piece — flyers, packaging, signage, posters, conference handouts.</li>
+          <li><strong>Visual contrast.</strong> A custom-colored, logo-centered QR code stands out against design layouts. Plain black squares look like raw machine output and get visually ignored.</li>
+        </ul>
+        <p class="text-gray-700">For high-stakes placements — printed marketing collateral, real estate "For Sale" signs, restaurant menus, conference handouts, product packaging — the lift from branding is the difference between a code that gets scanned and a code that gets ignored.</p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">URL, Text, or Wi-Fi: Pick the Right Type</h2>
+        <p class="mb-4 text-gray-700">Different contexts call for different QR code content types. Here's how to choose:</p>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700 mb-4">
+          <li><strong>URL QR code.</strong> The default for almost any marketing use case. Anyone who scans the code is sent straight to your website, landing page, store, menu, or campaign URL. Best for flyers, posters, packaging, and signage.</li>
+          <li><strong>Text QR code.</strong> Encodes a literal text message that displays in the scanner app. Useful for serial numbers, SKUs, license plates, ticket codes, or short notes that don't need to live on a website.</li>
+          <li><strong>Wi-Fi QR code.</strong> Includes the SSID, password, and encryption type. When a guest scans, their phone prompts them to join the network — no typing the password. Perfect for cafes, hotels, co-working spaces, and Airbnbs.</li>
+        </ul>
+        <p class="text-gray-700">If you need a contact (vCard) code that auto-fills "Save Contact" details, use the <a href="/logo-qr-code.html" class="text-indigo-600 hover:underline">vCard QR code generator with logo</a>.</p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">How Logo Embedding Works (The Technical Bit)</h2>
+        <p class="mb-4 text-gray-700">QR codes are designed with built-in error correction. A QR code can be partially obscured, scratched, or covered and still scan correctly because every code carries redundant data. There are four error-correction levels: L (~7% recovery), M (~15%), Q (~25%), and <strong>H (~30%)</strong>. Our generator uses Level H by default, which means up to 30% of the code area can be covered — including by your logo — without breaking scannability.</p>
+        <p class="mb-4 text-gray-700">In practice, we cap logo coverage at ~20% of the code surface and place it dead-center, where the structural finder patterns (the three big squares in the corners) are not located. The result is a code that scans reliably from any modern phone camera while displaying your logo prominently.</p>
+        <p class="text-gray-700">Always test by scanning the downloaded QR code with at least two different phones before printing in volume. We provide a live preview at every step so you can verify scannability before paying.</p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Static vs. Dynamic Branded QR Codes</h2>
+        <p class="mb-4 text-gray-700">This page generates a <strong>static</strong> branded QR code — your URL, text, or Wi-Fi credentials are encoded directly inside the QR pattern. Once printed, the data cannot be changed, but the code never expires and never depends on any server staying online. Perfect for one-off prints, packaging, and event signage.</p>
+        <p class="text-gray-700">If you need to update the destination URL after printing (e.g., the campaign landing page changes and you've already printed thousands of flyers), use a <a href="https://app.vcardqrcodegenerator.com/login" class="text-indigo-600 hover:underline">dynamic QR code</a> instead. Dynamic codes redirect through a short link you control, so you can update the destination without re-printing. Both options support logo embedding.</p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Best Practices for Branded QR Codes</h2>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700">
+          <li><strong>Use SVG or transparent-background PNG for your logo</strong> so it sits cleanly on the code background.</li>
+          <li><strong>Keep logo coverage under 20%.</strong> Larger logos look prominent but reduce scan reliability in low-light or angled-camera conditions.</li>
+          <li><strong>Maintain high contrast</strong> between code dots and background. Avoid dark-on-dark or light-on-light combinations. Black or near-black on white is most reliable.</li>
+          <li><strong>Print at 300 DPI minimum.</strong> A QR code printed at 72 DPI on a glossy flyer will frequently fail to scan.</li>
+          <li><strong>Leave a 4-module quiet zone</strong> around the code (white space). Most professional templates include this automatically — don't crop into it.</li>
+          <li><strong>Test before mass-printing.</strong> Scan from 6, 12, and 24 inches away, on iOS and Android, in normal indoor lighting.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+          <div class="p-4 bg-gray-50 rounded-lg border">
+            <h3 class="font-semibold text-gray-900">Is the QR code generator with logo really free to use?</h3>
+            <p class="text-gray-700 mt-2">Yes. Designing your QR code, uploading any logo, customizing colors, and previewing the result are completely free with no signup. You only pay $4.99 when you want to download the high-resolution branded version. No subscription, no recurring fee, no account.</p>
+          </div>
+          <div class="p-4 bg-gray-50 rounded-lg border">
+            <h3 class="font-semibold text-gray-900">What kinds of QR codes can I add a logo to here?</h3>
+            <p class="text-gray-700 mt-2">URL, plain text, and Wi-Fi QR codes. For contact / vCard QR codes with a logo, use our <a href="/logo-qr-code.html" class="text-indigo-600 hover:underline">vCard QR Code Generator with Logo</a>.</p>
+          </div>
+          <div class="p-4 bg-gray-50 rounded-lg border">
+            <h3 class="font-semibold text-gray-900">How much does the branded download cost?</h3>
+            <p class="text-gray-700 mt-2">$4.99 one-time payment. No monthly subscription. You can download the branded QR code multiple times within a 24-hour access window, then re-purchase if you need more downloads later.</p>
+          </div>
+          <div class="p-4 bg-gray-50 rounded-lg border">
+            <h3 class="font-semibold text-gray-900">Will adding a logo break my QR code?</h3>
+            <p class="text-gray-700 mt-2">No. Our generator uses the highest error correction (Level H, 30% recovery), and the logo is automatically sized to cover no more than 20% of the code area. Always <a href="/blog/how-to-scan-vcard-qr-code-android-iphone/" class="text-indigo-600 hover:underline">test by scanning</a> before printing in bulk.</p>
+          </div>
+          <div class="p-4 bg-gray-50 rounded-lg border">
+            <h3 class="font-semibold text-gray-900">What file format is the download?</h3>
+            <p class="text-gray-700 mt-2">High-resolution PNG (suitable for 300 DPI printing on flyers, posters, packaging, and signage). The image is rendered at 218×218 pixels minimum and scales cleanly for print.</p>
+          </div>
+          <div class="p-4 bg-gray-50 rounded-lg border">
+            <h3 class="font-semibold text-gray-900">Is my data safe?</h3>
+            <p class="text-gray-700 mt-2">Yes. All QR code generation happens in your browser — your URL, text, Wi-Fi credentials, and logo are never sent to our servers. The only data we receive is your email when you initiate checkout, which is used solely for payment receipt delivery via Dodo Payments.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Related Resources</h2>
+        <ul class="space-y-2">
+          <li><a href="/logo-qr-code.html" class="text-indigo-600 hover:underline">vCard QR Code Generator with Logo (for contact codes)</a></li>
+          <li><a href="/blog/add-logo-to-qr-code/" class="text-indigo-600 hover:underline">How to Add a Logo to Your QR Code (Step-by-Step Guide)</a></li>
+          <li><a href="/blog/customize-qr-codes/" class="text-indigo-600 hover:underline">How to Customize QR Codes With Colors &amp; Logos</a></li>
+          <li><a href="/blog/design-that-converts-vcard-qr-code/" class="text-indigo-600 hover:underline">Best QR Code Design Tips to Get More Scans</a></li>
+          <li><a href="/bulk-qr-code.html" class="text-indigo-600 hover:underline">Bulk vCard QR Code Generator (CSV upload)</a></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12 text-center">
+    <div class="container mx-auto px-4">
+      <h3 class="text-2xl font-bold mb-4">Ready to brand your QR code?</h3>
+      <a href="#tool-section"
+        class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg mb-8">
+        Brand Your QR Code Now
+      </a>
+      <p class="text-gray-500 text-sm">&copy; 2026 vCard QR Generator. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const form = document.getElementById('qr-form');
+      const mainActionBtn = document.getElementById('main-action-btn');
+      const downloadBtn = document.getElementById('proFeaturesBtn');
+      const logoUploadInput = document.getElementById('logo-upload');
+      const qrContainer = document.getElementById('qr-code-container');
+      const loadingText = document.getElementById('loading-text');
+      const pricingInfo = document.getElementById('pricing-info');
+
+      const checkoutApiUrl = window.__CHECKOUT_API__;
+      const tokenValidatorUrl = window.__TOKEN_VALIDATOR__;
+
+      gaTrackPro('pro_page_view', { event_category: 'pro_funnel', event_label: 'logo_generic_page_load' });
+
+      // Payment return handler — same shape as logo-qr-code.html
+      async function consumePaymentFromUrl() {
+        const url = new URL(window.location.href);
+        const paymentId = url.searchParams.get('payment_id');
+        const status = url.searchParams.get('status');
+        const token = url.searchParams.get('token');
+
+        if (!token && !paymentId) return "none";
+
+        if (loadingText) {
+          loadingText.classList.remove('hidden');
+          loadingText.textContent = 'Validating payment...';
+        }
+
+        if (paymentId && status === 'succeeded') {
+          gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
+          localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
+          url.searchParams.delete('payment_id');
+          url.searchParams.delete('status');
+          url.searchParams.delete('token');
+          history.replaceState({}, '', url.toString());
+          window.location.reload();
+          return "success";
+        }
+
+        if (token) {
+          try {
+            const res = await fetch(`${tokenValidatorUrl}?token=${encodeURIComponent(token)}`);
+            const json = await res.json();
+            if (json.status === 'success') {
+              gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
+              localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
+              url.searchParams.delete('token');
+              url.searchParams.delete('payment_id');
+              url.searchParams.delete('status');
+              history.replaceState({}, '', url.toString());
+              window.location.reload();
+              return "success";
+            }
+          } catch (e) { /* fall through */ }
+        }
+
+        if (loadingText) {
+          loadingText.textContent = 'Payment not confirmed yet. Please wait a few seconds and refresh.';
+          loadingText.classList.remove('hidden');
+        }
+        return "pending";
+      }
+
+      const tokenStatus = await consumePaymentFromUrl();
+      if (tokenStatus === "pending") return;
+
+      // 24-hour feature gate (shared key with logo-qr-code.html)
+      let featureUnlocked =
+        parseInt(localStorage.getItem("pro_unlocked_until") || "0", 10) > Date.now();
+
+      let logoImage = null;
+      let currentType = 'url';
+
+      const qrCode = new QRCodeStyling({
+        width: 218,
+        height: 218,
+        type: 'canvas',
+        data: 'https://www.vcardqrcodegenerator.com/',
+        image: '',
+        dotsOptions: { color: '#000000', type: 'rounded' },
+        backgroundOptions: { color: '#ffffff' },
+        imageOptions: {
+          crossOrigin: 'anonymous',
+          imageSize: 0.4,
+          margin: 5
+        },
+        qrOptions: { errorCorrectionLevel: 'H' }
+      });
+      qrCode.append(qrContainer);
+
+      if (featureUnlocked) {
+        downloadBtn.textContent = 'Download Branded QR Code';
+        if (loadingText) loadingText.classList.add('hidden');
+        if (pricingInfo) pricingInfo.textContent = '✓ Branded download unlocked. Click Download to save your QR code.';
+      } else {
+        downloadBtn.textContent = 'Download Branded QR — $4.99';
+        if (loadingText) loadingText.classList.add('hidden');
+      }
+
+      // Build the payload string for the current content type
+      const buildPayload = () => {
+        if (currentType === 'url') {
+          const url = (document.getElementById('url-input').value || '').trim();
+          return url || 'https://www.vcardqrcodegenerator.com/';
+        }
+        if (currentType === 'text') {
+          return (document.getElementById('text-input').value || '').trim() || ' ';
+        }
+        if (currentType === 'wifi') {
+          const ssid = (document.getElementById('wifi-ssid').value || '').trim();
+          const pwd = (document.getElementById('wifi-password').value || '').trim();
+          const enc = document.getElementById('wifi-encryption').value;
+          if (!ssid) return 'WIFI:T:WPA;S:Network;P:password;;';
+          // Escape per spec: \ ; , : "
+          const esc = (s) => s.replace(/([\\;,:"])/g, '\\$1');
+          if (enc === 'nopass') {
+            return `WIFI:T:nopass;S:${esc(ssid)};;`;
+          }
+          return `WIFI:T:${enc};S:${esc(ssid)};P:${esc(pwd)};;`;
+        }
+        return ' ';
+      };
+
+      const updateQRCode = () => {
+        const data = buildPayload();
+        const selectedStyle = document.getElementById('qr-style').value;
+        const selectedColor = document.getElementById('qr-color').value;
+        const cornerStyle = document.getElementById('corner-style').value;
+        const bgColor = document.getElementById('bg-color').value;
+
+        qrCode.update({
+          data,
+          image: logoImage || '',
+          backgroundOptions: { color: bgColor },
+          dotsOptions: { color: selectedColor, type: selectedStyle },
+          cornersSquareOptions: { color: selectedColor, type: cornerStyle },
+          cornersDotOptions: {
+            color: selectedColor,
+            type: cornerStyle === 'extra-rounded' ? 'dot' : cornerStyle
+          }
+        });
+      };
+
+      // Type tab switcher
+      document.querySelectorAll('.type-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.type-tab').forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentType = tab.getAttribute('data-type');
+          document.querySelectorAll('[data-fields]').forEach((wrap) => {
+            wrap.classList.toggle('hidden', wrap.getAttribute('data-fields') !== currentType);
+          });
+          gaTrackPro('pro_type_switch', { event_category: 'pro_funnel', event_label: currentType });
+          updateQRCode();
+        });
+      });
+
+      // Customization listeners
+      document.getElementById('qr-style').addEventListener('change', updateQRCode);
+      document.getElementById('corner-style').addEventListener('change', updateQRCode);
+      document.getElementById('qr-color').addEventListener('input', (e) => {
+        document.getElementById('qr-color-hex').value = e.target.value;
+        updateQRCode();
+      });
+      document.getElementById('qr-color-hex').addEventListener('input', (e) => {
+        const hex = e.target.value;
+        if (/^#[0-9A-Fa-f]{6}$/.test(hex)) {
+          document.getElementById('qr-color').value = hex;
+          updateQRCode();
+        }
+      });
+      document.getElementById('bg-color').addEventListener('input', (e) => {
+        document.getElementById('bg-color-hex').value = e.target.value;
+        updateQRCode();
+      });
+
+      // Live update for any form input
+      form.addEventListener('input', updateQRCode);
+
+      // Logo upload
+      logoUploadInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          gaTrackPro('pro_logo_upload', { event_category: 'pro_funnel', event_label: 'logo_selected' });
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            logoImage = e.target.result;
+            updateQRCode();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      mainActionBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        logoUploadInput.click();
+      });
+
+      const handleCheckout = async () => {
+        gaTrackPro('pro_checkout_start', { event_category: 'pro_funnel', event_label: 'checkout_initiated' });
+        try {
+          if (loadingText) {
+            loadingText.classList.remove('hidden');
+            loadingText.textContent = 'Redirecting to secure checkout...';
+          }
+          const res = await fetch(checkoutApiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: '', name: '' }),
+          });
+          const data = await res.json();
+          if (!data.checkout_url) throw new Error('No checkout_url returned');
+          window.location.href = data.checkout_url;
+        } catch (e) {
+          alert('Could not start checkout. Please try again.');
+          if (loadingText) loadingText.textContent = 'Upgrade to unlock branded download';
+        }
+      };
+
+      downloadBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (!featureUnlocked) {
+          handleCheckout();
+          return;
+        }
+        gaTrackPro('pro_download_branded_qr', { event_category: 'pro_funnel', event_label: 'branded_qr_downloaded' });
+        qrCode.download({ name: 'branded-qr', extension: 'png' });
+      });
+
+      updateQRCode();
+    });
+  </script>
+</body>
+
+</html>

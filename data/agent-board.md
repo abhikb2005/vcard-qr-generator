@@ -137,6 +137,8 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-05-04 | Codex | Published Amp's logo QR intent split from the local workspace onto current `origin/main`: added the generic logo QR page, retargeted the vCard logo page, and added sitemap discovery for the new page. | `qr-code-with-logo.html`, `logo-qr-code.html`, `sitemap.xml`, `data/agent-board.md` |
+| 2026-04-29 | Amp | Decision A (Option B) — split logo QR page by intent: created new generic `qr-code-with-logo.html` (URL/Text/Wi-Fi + logo, $4.99 same checkout flow, 24h window) targeting "qr code with logo" / "logo qr code generator"; re-targeted `logo-qr-code.html` purely for vCard intent (title, meta, OG, JSON-LD, hero H1, internal links, alternate link to new page) | `qr-code-with-logo.html` (new), `logo-qr-code.html`, `sitemap.xml` |
 | 2026-03-27 | Amp | Competitor blog #34 (QRCode Monkey) | `blog/qrcode-monkey-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-03-26 | Amp | Competitor blog #33 (V1CE) | `blog/v1ce-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
 | 2026-03-25 | Amp | Competitor blogs #31 (Flowcode), #32 (ViralQR) | `blog/flowcode-alternative/index.html`, `blog/viralqr-alternative/index.html`, `sitemap.xml`, `blog_index.json`, `data/competitor-blog-schedule.md` |
