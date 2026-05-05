@@ -69,10 +69,20 @@ def api_status() -> dict[str, str]:
         os.getenv(name)
         for name in ("GA4_CLIENT_ID", "GA4_CLIENT_SECRET", "GA4_REFRESH_TOKEN", "GA4_PROPERTY_ID")
     )
+    ads_secret_auth = all(
+        os.getenv(name)
+        for name in (
+            "GOOGLE_ADS_DEVELOPER_TOKEN",
+            "GOOGLE_ADS_CUSTOMER_ID",
+            "GOOGLE_ADS_CLIENT_ID",
+            "GOOGLE_ADS_CLIENT_SECRET",
+            "GOOGLE_ADS_REFRESH_TOKEN",
+        )
+    )
     return {
         "gsc": "available" if gsc_secret_auth or (ROOT / "mcp-gsc" / "token.json").exists() else "blocked: no OAuth secrets or local token",
         "ga4": "available" if ga4_secret_auth else "blocked: re-auth required",
-        "keyword_planner": "available" if os.getenv("GOOGLE_ADS_DEVELOPER_TOKEN") and os.getenv("GOOGLE_ADS_CUSTOMER_ID") else "blocked: missing Google Ads credentials",
+        "keyword_planner": "available" if ads_secret_auth else "blocked: missing Google Ads credentials",
         "adsense": "available" if os.getenv("ADSENSE_ACCOUNT_ID") else "blocked: missing AdSense account/OAuth credentials",
     }
 
@@ -164,6 +174,54 @@ def fetch_ga4_landing_rows() -> list[dict[str, Any]]:
     return rows
 
 
+def fetch_keyword_ideas(topics: list[dict[str, str]]) -> list[dict[str, Any]]:
+    required = (
+        "GOOGLE_ADS_DEVELOPER_TOKEN",
+        "GOOGLE_ADS_CUSTOMER_ID",
+        "GOOGLE_ADS_CLIENT_ID",
+        "GOOGLE_ADS_CLIENT_SECRET",
+        "GOOGLE_ADS_REFRESH_TOKEN",
+    )
+    if not all(os.getenv(name) for name in required):
+        return []
+
+    try:
+        from google.ads.googleads.client import GoogleAdsClient
+    except ImportError:
+        return []
+
+    config = {
+        "developer_token": os.environ["GOOGLE_ADS_DEVELOPER_TOKEN"],
+        "client_id": os.environ["GOOGLE_ADS_CLIENT_ID"],
+        "client_secret": os.environ["GOOGLE_ADS_CLIENT_SECRET"],
+        "refresh_token": os.environ["GOOGLE_ADS_REFRESH_TOKEN"],
+        "use_proto_plus": True,
+    }
+    if os.getenv("GOOGLE_ADS_LOGIN_CUSTOMER_ID"):
+        config["login_customer_id"] = os.environ["GOOGLE_ADS_LOGIN_CUSTOMER_ID"]
+
+    client = GoogleAdsClient.load_from_dict(config)
+    idea_service = client.get_service("KeywordPlanIdeaService")
+    request = client.get_type("GenerateKeywordIdeasRequest")
+    request.customer_id = os.environ["GOOGLE_ADS_CUSTOMER_ID"]
+    request.language = "languageConstants/1000"  # English
+    request.geo_target_constants.append("geoTargetConstants/2840")  # United States
+    request.keyword_plan_network = client.enums.KeywordPlanNetworkEnum.GOOGLE_SEARCH
+    request.keyword_seed.keywords.extend([topic["keyword"] for topic in topics])
+
+    ideas: list[dict[str, Any]] = []
+    for idea in idea_service.generate_keyword_ideas(request=request):
+        metrics = idea.keyword_idea_metrics
+        ideas.append(
+            {
+                "text": idea.text,
+                "avg_monthly_searches": float(metrics.avg_monthly_searches or 0),
+                "competition": str(metrics.competition.name),
+            }
+        )
+    return ideas
+
+
 def topic_score(topic: dict[str, str], rows: list[dict[str, Any]]) -> float:
     keyword = topic["keyword"].lower()
     keyword_tokens = {token for token in re.split(r"[^a-z0-9]+", keyword) if len(token) > 2}
@@ -214,15 +272,36 @@ def ga4_topic_score(topic: dict[str, str], rows: list[dict[str, Any]]) -> float:
     return score
 
 
-def pick_topic(gsc_rows: list[dict[str, Any]] | None = None, ga4_rows: list[dict[str, Any]] | None = None) -> dict[str, str]:
+def keyword_planner_topic_score(topic: dict[str, str], ideas: list[dict[str, Any]]) -> float:
+    topic_tokens = {token for token in re.split(r"[^a-z0-9]+", topic["keyword"].lower()) if len(token) > 2}
+    score = 0.0
+    for idea in ideas:
+        text = str(idea.get("text", "")).lower()
+        idea_tokens = {token for token in re.split(r"[^a-z0-9]+", text) if len(token) > 2}
+        overlap = len(topic_tokens & idea_tokens)
+        if not overlap:
+            continue
+        volume = float(idea.get("avg_monthly_searches", 0))
+        competition = str(idea.get("competition", "")).upper()
+        competition_factor = {"LOW": 1.4, "MEDIUM": 1.0, "HIGH": 0.7}.get(competition, 0.8)
+        score += (volume ** 0.5) * overlap * competition_factor
+    return score
+
+
+def pick_topic(
+    gsc_rows: list[dict[str, Any]] | None = None,
+    ga4_rows: list[dict[str, Any]] | None = None,
+    keyword_ideas: list[dict[str, Any]] | None = None,
+) -> dict[str, str]:
     slugs = existing_slugs()
     candidates = [topic for topic in TOPICS if topic["slug"] not in slugs]
-    if candidates and (gsc_rows or ga4_rows):
+    if candidates and (gsc_rows or ga4_rows or keyword_ideas):
         scored = sorted(
             (
                 (
                     topic_score(topic, gsc_rows or [])
-                    + ga4_topic_score(topic, ga4_rows or []),
+                    + ga4_topic_score(topic, ga4_rows or [])
+                    + keyword_planner_topic_score(topic, keyword_ideas or []),
                     topic,
                 )
                 for topic in candidates
@@ -297,12 +376,14 @@ def append_tracker(
     status: dict[str, str],
     gsc_rows: list[dict[str, Any]],
     ga4_rows: list[dict[str, Any]],
+    keyword_ideas: list[dict[str, Any]],
 ) -> None:
     gsc_note = f"GSC live rows: {len(gsc_rows)}" if gsc_rows else f"GSC {status['gsc']}"
     ga4_note = f"GA4 landing rows: {len(ga4_rows)}" if ga4_rows else f"GA4 {status['ga4']}"
+    keyword_note = f"Keyword Planner ideas: {len(keyword_ideas)}" if keyword_ideas else f"Keyword Planner {status['keyword_planner']}"
     line = (
         f"| {date.today().isoformat()} | {topic['keyword']} | `/blog/{topic['slug']}/` | "
-        f"{gsc_note}; {ga4_note}; Keyword Planner {status['keyword_planner']} | {directory} action card prepared | "
+        f"{gsc_note}; {ga4_note}; {keyword_note} | {directory} action card prepared | "
         f"Published by automation | Directory submission may require browser login/captcha | Next queue item |\n"
     )
     if not TRACKER.exists():
@@ -388,7 +469,12 @@ def main() -> None:
     except Exception as exc:
         ga4_rows = []
         status["ga4"] = f"blocked: {exc.__class__.__name__}"
-    topic = pick_topic(gsc_rows, ga4_rows)
+    try:
+        keyword_ideas = fetch_keyword_ideas(TOPICS)
+    except Exception as exc:
+        keyword_ideas = []
+        status["keyword_planner"] = f"blocked: {exc.__class__.__name__}"
+    topic = pick_topic(gsc_rows, ga4_rows, keyword_ideas)
     out_dir = BLOG_ROOT / topic["slug"]
     out_dir.mkdir(parents=True, exist_ok=True)
     out_file = out_dir / "index.html"
@@ -396,7 +482,7 @@ def main() -> None:
         out_file.write_text(render_blog(topic), encoding="utf-8")
     directory = next_directory()
     write_directory_action_card(directory, topic)
-    append_tracker(topic, directory, status, gsc_rows, ga4_rows)
+    append_tracker(topic, directory, status, gsc_rows, ga4_rows, keyword_ideas)
     run_update_indexes()
     print(json.dumps({"topic": topic, "api_status": status}, indent=2))
 
