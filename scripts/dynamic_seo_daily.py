@@ -5,8 +5,9 @@ import os
 import re
 import subprocess
 import sys
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 BLOG_ROOT = ROOT / "blog"
@@ -16,6 +17,7 @@ DIRECTORY_OUTBOX = ROOT / "data" / "directory-submission-outbox"
 
 APP_URL = "https://app.vcardqrcodegenerator.com/login"
 SITE_URL = "https://www.vcardqrcodegenerator.com"
+GSC_SITE_URL = os.getenv("GSC_SITE_URL", "sc-domain:vcardqrcodegenerator.com")
 
 TOPICS = [
     {
@@ -58,8 +60,12 @@ TOPICS = [
 
 
 def api_status() -> dict[str, str]:
+    gsc_secret_auth = all(
+        os.getenv(name)
+        for name in ("GSC_CLIENT_ID", "GSC_CLIENT_SECRET", "GSC_REFRESH_TOKEN")
+    )
     return {
-        "gsc": "available" if (ROOT / "mcp-gsc" / "token.json").exists() else "blocked: no local token",
+        "gsc": "available" if gsc_secret_auth or (ROOT / "mcp-gsc" / "token.json").exists() else "blocked: no OAuth secrets or local token",
         "ga4": "available" if os.getenv("GA4_PROPERTY_ID") and os.getenv("GOOGLE_APPLICATION_CREDENTIALS") else "blocked: re-auth required",
         "keyword_planner": "available" if os.getenv("GOOGLE_ADS_DEVELOPER_TOKEN") and os.getenv("GOOGLE_ADS_CUSTOMER_ID") else "blocked: missing Google Ads credentials",
         "adsense": "available" if os.getenv("ADSENSE_ACCOUNT_ID") else "blocked: missing AdSense account/OAuth credentials",
@@ -70,8 +76,79 @@ def existing_slugs() -> set[str]:
     return {p.parent.name for p in BLOG_ROOT.glob("*/index.html")}
 
 
-def pick_topic() -> dict[str, str]:
+def fetch_gsc_query_rows() -> list[dict[str, Any]]:
+    if not all(os.getenv(name) for name in ("GSC_CLIENT_ID", "GSC_CLIENT_SECRET", "GSC_REFRESH_TOKEN")):
+        return []
+
+    try:
+        from google.oauth2.credentials import Credentials
+        from google.auth.transport.requests import Request
+        from googleapiclient.discovery import build
+    except ImportError:
+        return []
+
+    creds = Credentials(
+        token=None,
+        refresh_token=os.environ["GSC_REFRESH_TOKEN"],
+        token_uri="https://oauth2.googleapis.com/token",
+        client_id=os.environ["GSC_CLIENT_ID"],
+        client_secret=os.environ["GSC_CLIENT_SECRET"],
+        scopes=["https://www.googleapis.com/auth/webmasters"],
+    )
+    creds.refresh(Request())
+    service = build("searchconsole", "v1", credentials=creds, cache_discovery=False)
+    end = date.today() - timedelta(days=2)
+    start = end - timedelta(days=27)
+    body = {
+        "startDate": start.isoformat(),
+        "endDate": end.isoformat(),
+        "dimensions": ["query"],
+        "rowLimit": 500,
+        "type": "web",
+    }
+    return service.searchanalytics().query(siteUrl=GSC_SITE_URL, body=body).execute().get("rows", [])
+
+
+def topic_score(topic: dict[str, str], rows: list[dict[str, Any]]) -> float:
+    keyword = topic["keyword"].lower()
+    keyword_tokens = {token for token in re.split(r"[^a-z0-9]+", keyword) if len(token) > 2}
+    dynamic_tokens = {"dynamic", "editable", "update", "updates", "reusable", "printing", "vcard"}
+    score = 0.0
+
+    for row in rows:
+        query = row.get("keys", [""])[0].lower()
+        query_tokens = {token for token in re.split(r"[^a-z0-9]+", query) if len(token) > 2}
+        overlap = len(keyword_tokens & query_tokens)
+        has_dynamic_intent = bool(dynamic_tokens & query_tokens)
+        exactish = keyword in query or query in keyword
+        if not exactish and overlap < 2 and not (overlap and has_dynamic_intent):
+            continue
+
+        impressions = float(row.get("impressions", 0))
+        clicks = float(row.get("clicks", 0))
+        position = float(row.get("position", 50))
+        rank_gap = max(1.0, min(position, 40.0))
+        score += impressions * (1 + overlap) / rank_gap
+        score += clicks * 5
+        if exactish:
+            score += 20
+        if has_dynamic_intent:
+            score += 10
+
+    return score
+
+
+def pick_topic(gsc_rows: list[dict[str, Any]] | None = None) -> dict[str, str]:
     slugs = existing_slugs()
+    candidates = [topic for topic in TOPICS if topic["slug"] not in slugs]
+    if gsc_rows and candidates:
+        scored = sorted(
+            ((topic_score(topic, gsc_rows), topic) for topic in candidates),
+            key=lambda item: item[0],
+            reverse=True,
+        )
+        if scored[0][0] > 0:
+            return scored[0][1]
     for topic in TOPICS:
         if topic["slug"] not in slugs:
             return topic
@@ -131,10 +208,11 @@ def render_blog(topic: dict[str, str]) -> str:
 """
 
 
-def append_tracker(topic: dict[str, str], directory: str, status: dict[str, str]) -> None:
+def append_tracker(topic: dict[str, str], directory: str, status: dict[str, str], gsc_rows: list[dict[str, Any]]) -> None:
+    gsc_note = f"GSC live rows: {len(gsc_rows)}" if gsc_rows else f"GSC {status['gsc']}"
     line = (
         f"| {date.today().isoformat()} | {topic['keyword']} | `/blog/{topic['slug']}/` | "
-        f"GSC/local seeds; Keyword Planner {status['keyword_planner']} | {directory} action card prepared | "
+        f"{gsc_note}; Keyword Planner {status['keyword_planner']} | {directory} action card prepared | "
         f"Published by automation | Directory submission may require browser login/captcha | Next queue item |\n"
     )
     if not TRACKER.exists():
@@ -210,7 +288,12 @@ def run_update_indexes() -> None:
 
 def main() -> None:
     status = api_status()
-    topic = pick_topic()
+    try:
+        gsc_rows = fetch_gsc_query_rows()
+    except Exception as exc:
+        gsc_rows = []
+        status["gsc"] = f"blocked: {exc.__class__.__name__}"
+    topic = pick_topic(gsc_rows)
     out_dir = BLOG_ROOT / topic["slug"]
     out_dir.mkdir(parents=True, exist_ok=True)
     out_file = out_dir / "index.html"
@@ -218,7 +301,7 @@ def main() -> None:
         out_file.write_text(render_blog(topic), encoding="utf-8")
     directory = next_directory()
     write_directory_action_card(directory, topic)
-    append_tracker(topic, directory, status)
+    append_tracker(topic, directory, status, gsc_rows)
     run_update_indexes()
     print(json.dumps({"topic": topic, "api_status": status}, indent=2))
 
