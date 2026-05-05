@@ -79,11 +79,20 @@ def api_status() -> dict[str, str]:
             "GOOGLE_ADS_REFRESH_TOKEN",
         )
     )
+    adsense_secret_auth = all(
+        os.getenv(name)
+        for name in (
+            "ADSENSE_ACCOUNT_ID",
+            "ADSENSE_CLIENT_ID",
+            "ADSENSE_CLIENT_SECRET",
+            "ADSENSE_REFRESH_TOKEN",
+        )
+    )
     return {
         "gsc": "available" if gsc_secret_auth or (ROOT / "mcp-gsc" / "token.json").exists() else "blocked: no OAuth secrets or local token",
         "ga4": "available" if ga4_secret_auth else "blocked: re-auth required",
         "keyword_planner": "available" if ads_secret_auth else "blocked: missing Google Ads credentials",
-        "adsense": "available" if os.getenv("ADSENSE_ACCOUNT_ID") else "blocked: missing AdSense account/OAuth credentials",
+        "adsense": "available" if adsense_secret_auth else "blocked: missing AdSense account/OAuth credentials",
     }
 
 
@@ -220,6 +229,65 @@ def fetch_keyword_ideas(topics: list[dict[str, str]]) -> list[dict[str, Any]]:
             }
         )
     return ideas
+
+
+def fetch_adsense_summary() -> dict[str, Any]:
+    required = (
+        "ADSENSE_ACCOUNT_ID",
+        "ADSENSE_CLIENT_ID",
+        "ADSENSE_CLIENT_SECRET",
+        "ADSENSE_REFRESH_TOKEN",
+    )
+    if not all(os.getenv(name) for name in required):
+        return {}
+
+    try:
+        from google.oauth2.credentials import Credentials
+        from google.auth.transport.requests import Request
+        from googleapiclient.discovery import build
+    except ImportError:
+        return {}
+
+    creds = Credentials(
+        token=None,
+        refresh_token=os.environ["ADSENSE_REFRESH_TOKEN"],
+        token_uri="https://oauth2.googleapis.com/token",
+        client_id=os.environ["ADSENSE_CLIENT_ID"],
+        client_secret=os.environ["ADSENSE_CLIENT_SECRET"],
+        scopes=["https://www.googleapis.com/auth/adsense.readonly"],
+    )
+    creds.refresh(Request())
+    service = build("adsense", "v2", credentials=creds, cache_discovery=False)
+    account = os.environ["ADSENSE_ACCOUNT_ID"]
+    report = service.accounts().reports().generate(
+        account=account,
+        dateRange="LAST_7_DAYS",
+        metrics=["ESTIMATED_EARNINGS", "IMPRESSIONS", "CLICKS", "PAGE_VIEWS"],
+    ).execute()
+    headers = [header.get("name") for header in report.get("headers", [])]
+    rows = report.get("rows", [])
+    values: dict[str, float] = {header: 0.0 for header in headers if header}
+    if rows:
+        cells = rows[0].get("cells", [])
+        for header, cell in zip(headers, cells):
+            try:
+                values[header] = float(str(cell).replace(",", ""))
+            except ValueError:
+                values[header] = 0.0
+
+    page_views = values.get("PAGE_VIEWS", 0.0)
+    impressions = values.get("IMPRESSIONS", 0.0)
+    earnings = values.get("ESTIMATED_EARNINGS", 0.0)
+    clicks = values.get("CLICKS", 0.0)
+    return {
+        "rows": len(rows),
+        "estimated_earnings": earnings,
+        "impressions": impressions,
+        "clicks": clicks,
+        "page_views": page_views,
+        "ctr": clicks / max(impressions, 1.0),
+        "page_rpm": (earnings / page_views * 1000.0) if page_views else 0.0,
+    }
 
 
 def topic_score(topic: dict[str, str], rows: list[dict[str, Any]]) -> float:
@@ -377,13 +445,23 @@ def append_tracker(
     gsc_rows: list[dict[str, Any]],
     ga4_rows: list[dict[str, Any]],
     keyword_ideas: list[dict[str, Any]],
+    adsense_summary: dict[str, Any],
 ) -> None:
     gsc_note = f"GSC live rows: {len(gsc_rows)}" if gsc_rows else f"GSC {status['gsc']}"
     ga4_note = f"GA4 landing rows: {len(ga4_rows)}" if ga4_rows else f"GA4 {status['ga4']}"
     keyword_note = f"Keyword Planner ideas: {len(keyword_ideas)}" if keyword_ideas else f"Keyword Planner {status['keyword_planner']}"
+    if adsense_summary:
+        adsense_note = (
+            "AdSense "
+            f"rows: {adsense_summary.get('rows', 0)}, "
+            f"RPM: {adsense_summary.get('page_rpm', 0.0):.2f}, "
+            f"CTR: {adsense_summary.get('ctr', 0.0):.2%}"
+        )
+    else:
+        adsense_note = f"AdSense {status['adsense']}"
     line = (
         f"| {date.today().isoformat()} | {topic['keyword']} | `/blog/{topic['slug']}/` | "
-        f"{gsc_note}; {ga4_note}; {keyword_note} | {directory} action card prepared | "
+        f"{gsc_note}; {ga4_note}; {keyword_note}; {adsense_note} | {directory} action card prepared | "
         f"Published by automation | Directory submission may require browser login/captcha | Next queue item |\n"
     )
     if not TRACKER.exists():
@@ -474,6 +552,11 @@ def main() -> None:
     except Exception as exc:
         keyword_ideas = []
         status["keyword_planner"] = f"blocked: {exc.__class__.__name__}"
+    try:
+        adsense_summary = fetch_adsense_summary()
+    except Exception as exc:
+        adsense_summary = {}
+        status["adsense"] = f"blocked: {exc.__class__.__name__}"
     topic = pick_topic(gsc_rows, ga4_rows, keyword_ideas)
     out_dir = BLOG_ROOT / topic["slug"]
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -482,7 +565,7 @@ def main() -> None:
         out_file.write_text(render_blog(topic), encoding="utf-8")
     directory = next_directory()
     write_directory_action_card(directory, topic)
-    append_tracker(topic, directory, status, gsc_rows, ga4_rows, keyword_ideas)
+    append_tracker(topic, directory, status, gsc_rows, ga4_rows, keyword_ideas, adsense_summary)
     run_update_indexes()
     print(json.dumps({"topic": topic, "api_status": status}, indent=2))
 
