@@ -26,3 +26,4 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 - Do not bypass captchas or create paid accounts.
 - If a directory requires login, captcha, or email verification, log the blocker and move to the next directory.
 - Do not send outreach email without explicit approval; draft only.
+| 2026-05-05 | editable vcard qr code | `/blog/editable-vcard-qr-code/` | GSC/local seeds; Keyword Planner blocked: missing Google Ads credentials | LinkedIn Company Page action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
