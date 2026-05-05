@@ -18,6 +18,7 @@ DIRECTORY_OUTBOX = ROOT / "data" / "directory-submission-outbox"
 APP_URL = "https://app.vcardqrcodegenerator.com/login"
 SITE_URL = "https://www.vcardqrcodegenerator.com"
 GSC_SITE_URL = os.getenv("GSC_SITE_URL", "sc-domain:vcardqrcodegenerator.com")
+GA4_PROPERTY_ID = os.getenv("GA4_PROPERTY_ID", "505092702")
 
 TOPICS = [
     {
@@ -64,9 +65,13 @@ def api_status() -> dict[str, str]:
         os.getenv(name)
         for name in ("GSC_CLIENT_ID", "GSC_CLIENT_SECRET", "GSC_REFRESH_TOKEN")
     )
+    ga4_secret_auth = all(
+        os.getenv(name)
+        for name in ("GA4_CLIENT_ID", "GA4_CLIENT_SECRET", "GA4_REFRESH_TOKEN", "GA4_PROPERTY_ID")
+    )
     return {
         "gsc": "available" if gsc_secret_auth or (ROOT / "mcp-gsc" / "token.json").exists() else "blocked: no OAuth secrets or local token",
-        "ga4": "available" if os.getenv("GA4_PROPERTY_ID") and os.getenv("GOOGLE_APPLICATION_CREDENTIALS") else "blocked: re-auth required",
+        "ga4": "available" if ga4_secret_auth else "blocked: re-auth required",
         "keyword_planner": "available" if os.getenv("GOOGLE_ADS_DEVELOPER_TOKEN") and os.getenv("GOOGLE_ADS_CUSTOMER_ID") else "blocked: missing Google Ads credentials",
         "adsense": "available" if os.getenv("ADSENSE_ACCOUNT_ID") else "blocked: missing AdSense account/OAuth credentials",
     }
@@ -109,6 +114,56 @@ def fetch_gsc_query_rows() -> list[dict[str, Any]]:
     return service.searchanalytics().query(siteUrl=GSC_SITE_URL, body=body).execute().get("rows", [])
 
 
+def fetch_ga4_landing_rows() -> list[dict[str, Any]]:
+    if not all(os.getenv(name) for name in ("GA4_CLIENT_ID", "GA4_CLIENT_SECRET", "GA4_REFRESH_TOKEN", "GA4_PROPERTY_ID")):
+        return []
+
+    try:
+        from google.oauth2.credentials import Credentials
+        from google.auth.transport.requests import Request
+        from google.analytics.data_v1beta import BetaAnalyticsDataClient
+        from google.analytics.data_v1beta.types import DateRange, Dimension, Metric, OrderBy, RunReportRequest
+    except ImportError:
+        return []
+
+    creds = Credentials(
+        token=None,
+        refresh_token=os.environ["GA4_REFRESH_TOKEN"],
+        token_uri="https://oauth2.googleapis.com/token",
+        client_id=os.environ["GA4_CLIENT_ID"],
+        client_secret=os.environ["GA4_CLIENT_SECRET"],
+        scopes=["https://www.googleapis.com/auth/analytics.readonly"],
+    )
+    creds.refresh(Request())
+    client = BetaAnalyticsDataClient(credentials=creds)
+    request = RunReportRequest(
+        property=f"properties/{GA4_PROPERTY_ID}",
+        dimensions=[Dimension(name="landingPage")],
+        metrics=[
+            Metric(name="sessions"),
+            Metric(name="activeUsers"),
+            Metric(name="engagedSessions"),
+            Metric(name="screenPageViews"),
+        ],
+        date_ranges=[DateRange(start_date="28daysAgo", end_date="yesterday")],
+        order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)],
+        limit=100,
+    )
+    response = client.run_report(request)
+    rows: list[dict[str, Any]] = []
+    for row in response.rows:
+        rows.append(
+            {
+                "landingPage": row.dimension_values[0].value,
+                "sessions": float(row.metric_values[0].value or 0),
+                "activeUsers": float(row.metric_values[1].value or 0),
+                "engagedSessions": float(row.metric_values[2].value or 0),
+                "screenPageViews": float(row.metric_values[3].value or 0),
+            }
+        )
+    return rows
+
+
 def topic_score(topic: dict[str, str], rows: list[dict[str, Any]]) -> float:
     keyword = topic["keyword"].lower()
     keyword_tokens = {token for token in re.split(r"[^a-z0-9]+", keyword) if len(token) > 2}
@@ -138,12 +193,40 @@ def topic_score(topic: dict[str, str], rows: list[dict[str, Any]]) -> float:
     return score
 
 
-def pick_topic(gsc_rows: list[dict[str, Any]] | None = None) -> dict[str, str]:
+def ga4_topic_score(topic: dict[str, str], rows: list[dict[str, Any]]) -> float:
+    topic_tokens = {token for token in re.split(r"[^a-z0-9]+", topic["keyword"].lower()) if len(token) > 2}
+    score = 0.0
+    for row in rows:
+        path = str(row.get("landingPage", "")).lower()
+        path_tokens = {token for token in re.split(r"[^a-z0-9]+", path) if len(token) > 2}
+        overlap = len(topic_tokens & path_tokens)
+        dynamic_path = any(token in path_tokens for token in ("dynamic", "editable", "vcard", "business", "card"))
+        if not overlap and not dynamic_path:
+            continue
+        sessions = float(row.get("sessions", 0))
+        engaged = float(row.get("engagedSessions", 0))
+        engagement_rate = engaged / max(sessions, 1)
+        score += sessions * (0.2 + engagement_rate)
+        if overlap:
+            score += overlap * 3
+        if dynamic_path:
+            score += 2
+    return score
+
+
+def pick_topic(gsc_rows: list[dict[str, Any]] | None = None, ga4_rows: list[dict[str, Any]] | None = None) -> dict[str, str]:
     slugs = existing_slugs()
     candidates = [topic for topic in TOPICS if topic["slug"] not in slugs]
-    if gsc_rows and candidates:
+    if candidates and (gsc_rows or ga4_rows):
         scored = sorted(
-            ((topic_score(topic, gsc_rows), topic) for topic in candidates),
+            (
+                (
+                    topic_score(topic, gsc_rows or [])
+                    + ga4_topic_score(topic, ga4_rows or []),
+                    topic,
+                )
+                for topic in candidates
+            ),
             key=lambda item: item[0],
             reverse=True,
         )
@@ -208,11 +291,18 @@ def render_blog(topic: dict[str, str]) -> str:
 """
 
 
-def append_tracker(topic: dict[str, str], directory: str, status: dict[str, str], gsc_rows: list[dict[str, Any]]) -> None:
+def append_tracker(
+    topic: dict[str, str],
+    directory: str,
+    status: dict[str, str],
+    gsc_rows: list[dict[str, Any]],
+    ga4_rows: list[dict[str, Any]],
+) -> None:
     gsc_note = f"GSC live rows: {len(gsc_rows)}" if gsc_rows else f"GSC {status['gsc']}"
+    ga4_note = f"GA4 landing rows: {len(ga4_rows)}" if ga4_rows else f"GA4 {status['ga4']}"
     line = (
         f"| {date.today().isoformat()} | {topic['keyword']} | `/blog/{topic['slug']}/` | "
-        f"{gsc_note}; Keyword Planner {status['keyword_planner']} | {directory} action card prepared | "
+        f"{gsc_note}; {ga4_note}; Keyword Planner {status['keyword_planner']} | {directory} action card prepared | "
         f"Published by automation | Directory submission may require browser login/captcha | Next queue item |\n"
     )
     if not TRACKER.exists():
@@ -293,7 +383,12 @@ def main() -> None:
     except Exception as exc:
         gsc_rows = []
         status["gsc"] = f"blocked: {exc.__class__.__name__}"
-    topic = pick_topic(gsc_rows)
+    try:
+        ga4_rows = fetch_ga4_landing_rows()
+    except Exception as exc:
+        ga4_rows = []
+        status["ga4"] = f"blocked: {exc.__class__.__name__}"
+    topic = pick_topic(gsc_rows, ga4_rows)
     out_dir = BLOG_ROOT / topic["slug"]
     out_dir.mkdir(parents=True, exist_ok=True)
     out_file = out_dir / "index.html"
@@ -301,7 +396,7 @@ def main() -> None:
         out_file.write_text(render_blog(topic), encoding="utf-8")
     directory = next_directory()
     write_directory_action_card(directory, topic)
-    append_tracker(topic, directory, status, gsc_rows)
+    append_tracker(topic, directory, status, gsc_rows, ga4_rows)
     run_update_indexes()
     print(json.dumps({"topic": topic, "api_status": status}, indent=2))
 

@@ -7,7 +7,7 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 | Source | Status | Notes |
 |---|---|---|
 | GSC | Available in GitHub Actions | OAuth secrets `GSC_CLIENT_ID`, `GSC_CLIENT_SECRET`, and `GSC_REFRESH_TOKEN` are configured; daily runner can pull live Search Console query rows. |
-| GA4 | Blocked | Local token needs re-auth; previous run returned `invalid_grant`. |
+| GA4 | Available in GitHub Actions | OAuth secrets `GA4_CLIENT_ID`, `GA4_CLIENT_SECRET`, `GA4_REFRESH_TOKEN`, and `GA4_PROPERTY_ID` are configured; daily runner can pull landing-page engagement data. |
 | Google Ads Keyword Planner | Blocked | Needs developer token, customer ID, and OAuth credentials. |
 | AdSense Management API | Blocked | Needs AdSense OAuth scope/account access. |
 | Local directory docs | Available | `data/directory-submissions.md` and `data/backlink-strategy.md`. |
