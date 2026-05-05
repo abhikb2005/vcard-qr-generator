@@ -22,6 +22,8 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 
 ## Directory Submission Rules
 
+- Manual submission mode starts on 2026-05-06: submit one queued directory/backlink action per day by hand to avoid rate limits and account/captcha problems.
+- The daily automation may prepare exactly one action card per day, but it must not submit forms, create accounts, bypass captchas, or send outreach emails.
 - Submit only free listings unless the user explicitly approves payment.
 - Use Microsoft Edge for browser automation when running locally.
 - Do not bypass captchas or create paid accounts.

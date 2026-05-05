@@ -2,6 +2,8 @@
 
 Source priority: `data/directory-submissions.md`, `data/backlink-strategy.md`, then the Google Sheet directory list.
 
+Execution policy: manual one-per-day submission begins on 2026-05-06. The automation prepares one action card per day; a human submits the selected listing to avoid rate limits, captchas, account restrictions, and low-quality bulk-submission signals.
+
 | Priority | Directory | URL | Source | Fee | Fit | Expected Blocker | Status |
 |---:|---|---|---|---|---|---|---|
 | 1 | GitHub repo/profile | https://github.com/abhikb2005/vcard-qr-generator | Agent queue | Free | Official open/free/privacy-first backlink | Login/manual profile or README edit | Queued |
