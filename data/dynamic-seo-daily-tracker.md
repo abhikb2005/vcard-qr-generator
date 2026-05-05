@@ -8,7 +8,7 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 |---|---|---|
 | GSC | Available in GitHub Actions | OAuth secrets `GSC_CLIENT_ID`, `GSC_CLIENT_SECRET`, and `GSC_REFRESH_TOKEN` are configured; daily runner can pull live Search Console query rows. |
 | GA4 | Available in GitHub Actions | OAuth secrets `GA4_CLIENT_ID`, `GA4_CLIENT_SECRET`, `GA4_REFRESH_TOKEN`, and `GA4_PROPERTY_ID` are configured; daily runner can pull landing-page engagement data. |
-| Google Ads Keyword Planner | Credentials configured; API enable pending | Repo secrets are configured for developer token, customer ID, login customer ID, and OAuth refresh; Google Ads API is still disabled in Google Cloud project `610405945437`. |
+| Google Ads Keyword Planner | Available in GitHub Actions | Repo secrets are configured for developer token, OAuth refresh, and accessible customer/login ID `8387009764`; live Keyword Planner smoke test succeeded. |
 | AdSense Management API | Blocked | Needs AdSense OAuth scope/account access. |
 | Local directory docs | Available | `data/directory-submissions.md` and `data/backlink-strategy.md`. |
 | Google Sheet directory list | Available for read | Sheet ID `1O09GuZaG5jGTAtOZj7mpPmyCjPDskKYe`. |
