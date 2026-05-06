@@ -19,6 +19,7 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 |---|---|---|---|---|---|---|---|
 | 2026-05-04 | editable QR code; what QR code type for vCard with updates | `/blog/editable-qr-code/`; `/blog/what-qr-code-type-for-vcard-with-updates/` | Fresh GSC opportunity from sidecar: `what qr code type for vcard with updates` ranking ~7.3; Keyword Planner blocked | GitHub README backlink added; AlternativeTo action card prepared | Published 2 posts + hub; GitHub backlink completed; directory queued | External directory forms require account login or manual verification; no directory credentials provided | LinkedIn Company Page |
 | 2026-05-05 | editable vcard qr code | `/blog/editable-vcard-qr-code/` | GSC/local seeds; Keyword Planner blocked: missing Google Ads credentials | LinkedIn Company Page action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
+| 2026-05-06 | dynamic vcard qr code | `/blog/dynamic-vcard-qr-code/` | GSC live rows: 426; GA4 landing rows: 4; Keyword Planner ideas: 77; AdSense rows: 0, RPM: 0.00, CTR: 0.00% | LinkedIn Company Page action card prepared | Published by automation; expanded by Codex into full guide | Directory submission is manual from 2026-05-06 | LinkedIn Company Page |
 
 ## Directory Submission Rules
 
@@ -29,4 +30,3 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 - Do not bypass captchas or create paid accounts.
 - If a directory requires login, captcha, or email verification, log the blocker and move to the next directory.
 - Do not send outreach email without explicit approval; draft only.
-| 2026-05-06 | dynamic vcard qr code | `/blog/dynamic-vcard-qr-code/` | GSC live rows: 426; GA4 landing rows: 4; Keyword Planner ideas: 77; AdSense rows: 0, RPM: 0.00, CTR: 0.00% | LinkedIn Company Page action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |

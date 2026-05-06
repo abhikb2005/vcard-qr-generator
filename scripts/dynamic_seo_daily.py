@@ -469,7 +469,12 @@ def append_tracker(
         TRACKER.write_text("# Dynamic SEO Daily Tracker\n\n## Daily Log\n\n| Date | Keyword | Blog URL | Source Data | Directory Action | Status | Blockers | Next Queue Item |\n|---|---|---|---|---|---|---|---|\n", encoding="utf-8")
     text = TRACKER.read_text(encoding="utf-8")
     if f"| {date.today().isoformat()} |" not in text:
-        TRACKER.write_text(text.rstrip() + "\n" + line, encoding="utf-8")
+        marker = "\n## Directory Submission Rules"
+        if marker in text:
+            before, after = text.split(marker, 1)
+            TRACKER.write_text(before.rstrip() + "\n" + line + marker + after, encoding="utf-8")
+        else:
+            TRACKER.write_text(text.rstrip() + "\n" + line, encoding="utf-8")
 
 
 def next_directory() -> str:
