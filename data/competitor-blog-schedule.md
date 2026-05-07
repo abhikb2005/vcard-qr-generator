@@ -63,6 +63,31 @@
 | 53 | Apr 17 | Pageloot | pageloot-alternative | ☐ |
 | 54 | Apr 18 | Delivr | delivr-alternative | ☐ |
 | 55 | Apr 19 | Qfuse | qfuse-alternative | ☐ |
+| 56 | Apr 20 | pH-7 QRCode Generator PHP Class | ph-7-qrcode-generator-php-class-alternative | ☐ |
+| 57 | Apr 21 | rclement business-card-generator | business-card-generator-alternative | ☐ |
+| 58 | Apr 22 | c-leitner Bulk vCard QR Generator | bulk-vcard-qr-generator-alternative | ☐ |
+| 59 | Apr 23 | erme07 vcardGenerator | erme07-vcardgenerator-alternative | ☐ |
+| 60 | Apr 24 | giauphan laravel-qr-code | laravel-qr-code-alternative | ☐ |
+| 61 | Apr 25 | palahsu QR-CodeGen | qr-codegen-alternative | ☐ |
+| 62 | Apr 26 | giauphan qr-code | giauphan-qr-code-alternative | ☐ |
+| 63 | Apr 27 | mr-internetix vcard-qr-code-generator | mr-internetix-vcard-qr-code-generator-alternative | ☐ |
+| 64 | Apr 28 | giulioco vcard-qr-generator | giulioco-vcard-qr-generator-alternative | ☐ |
+| 65 | Apr 29 | ztcrypto angular-qr-code-generator | angular-qr-code-generator-alternative | ☐ |
+
+## GitHub Repository Competitors from AlternativeTo Discovery
+
+These were added from the AlternativeTo GitHub repository suggestions screen on 2026-05-07. Some are developer libraries or small source projects rather than full end-user SaaS products, so Amp should research each one before writing and skip/noindex any post that would be too thin.
+
+- `pH-7/QRCode-Generator-PHP-Class` — QRCode PHP class/library with vCard support.
+- `rclement/business-card-generator` — digital QR-code business-card generator at `business-card-generator.vercel.app`.
+- `c-leitner/Bulk-vCard-QR-Generator` — bulk source project for generating vCard QR codes.
+- `erme07/vcardGenerator` — web project at `vcardgenerator.pages.dev`.
+- `giauphan/laravel-qr-code` — Laravel/PHP QR code generator wrapper.
+- `palahsu/QR-CodeGen` — QR code generator for links and other data.
+- `giauphan/qr-code` — PHP QR code generator.
+- `mr-internetix/vcard-qr-code-generator` — vCard QR code generator project.
+- `giulioco/vcard-qr-generator` — Python script that creates QR codes from vCard files.
+- `ztcrypto/angular-qr-code-generator` — Angular QR code generator with logo support.
 
 ## Excluded (not relevant competitors)
 - Free-QR-Code.com — dead/nonexistent site, would produce thin content
