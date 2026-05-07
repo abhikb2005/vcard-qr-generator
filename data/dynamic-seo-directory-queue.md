@@ -7,8 +7,8 @@ Execution policy: manual one-per-day submission begins on 2026-05-06. The automa
 | Priority | Directory | URL | Source | Fee | Fit | Expected Blocker | Status |
 |---:|---|---|---|---|---|---|---|
 | 1 | GitHub repo/profile | https://github.com/abhikb2005/vcard-qr-generator | Agent queue | Free | Official open/free/privacy-first backlink | Login/manual profile or README edit | Queued |
-| 2 | LinkedIn Company Page | https://www.linkedin.com/company/setup/new/ | Agent queue | Free | Company/profile visibility | Login and verification likely | Pending |
-| 3 | AlternativeTo | https://alternativeto.net/submit/ | Local docs | Free | Strong comparison/discovery fit | Account/login likely | Pending |
+| 2 | LinkedIn Company Page | https://www.linkedin.com/company/setup/new/ | Agent queue | Free | Company/profile visibility | Login and verification likely | Submitted 2026-05-06 |
+| 3 | AlternativeTo | https://alternativeto.net/submit/ | Local docs | Free | Strong comparison/discovery fit | Account/login likely | Submitted 2026-05-07 |
 | 4 | SaaSHub | https://www.saashub.com/submit | Local docs | Free | Strong SaaS/tool fit | Account/login likely | Pending |
 | 5 | Uneed refresh/listing | https://www.uneed.best/submit-a-tool | Agent queue + Sheet | Free | Existing launch-directory fit | Account/review likely | Pending |
 | 6 | DevHunt refresh/listing | https://devhunt.org/submit | Agent queue | Free | Developer-friendly launch fit | GitHub login likely | Pending |
