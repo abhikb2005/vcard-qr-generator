@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-05-08 | Codex | Marked Uneed as confirmed from launch email/permanent backlink and moved today's manual directory recommendation to DevHunt. | `data/dynamic-seo-directory-queue.md`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-08 | Codex | Marked SaaSHub as already submitted and moved today's manual directory recommendation to Uneed. | `data/dynamic-seo-directory-queue.md`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-08 | Codex | Expanded today's automated "change QR code after printing" blog into a full SEO guide and updated tracker/index metadata. | `blog/change-qr-code-after-printing/index.html`, `blog_index.json`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-07 | Codex | Logged user-completed AlternativeTo directory submission and marked LinkedIn/AlternativeTo queue items as submitted. | `data/dynamic-seo-daily-tracker.md`, `data/dynamic-seo-directory-queue.md`, `data/agent-board.md` |
