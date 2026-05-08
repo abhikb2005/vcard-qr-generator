@@ -11,7 +11,7 @@ Execution policy: manual one-per-day submission begins on 2026-05-06. The automa
 | 3 | AlternativeTo | https://alternativeto.net/submit/ | Local docs | Free | Strong comparison/discovery fit | Account/login likely | Submitted 2026-05-07 |
 | 4 | SaaSHub | https://www.saashub.com/submit | Local docs | Free | Strong SaaS/tool fit | Account/login likely | Submitted earlier: https://www.saashub.com/vcard-qr-code-generator |
 | 5 | Uneed refresh/listing | https://www.uneed.best/submit-a-tool | Agent queue + Sheet | Free | Existing launch-directory fit | Account/review likely | Confirmed by Uneed email 2026-05-08; permanent backlink earned |
-| 6 | DevHunt refresh/listing | https://devhunt.org/submit | Agent queue | Free | Developer-friendly launch fit | GitHub login likely | Pending |
+| 6 | DevHunt refresh/listing | https://devhunt.org/submit | Agent queue | Free | Developer-friendly launch fit | GitHub login likely | Submitted 2026-05-08: https://devhunt.org/tool/vcard-qr-code-generator |
 | 7 | Indie Hackers | https://www.indiehackers.com/ | Agent queue | Free | Build-in-public visibility | Login/community moderation | Pending |
 | 8 | Dev.to article | https://dev.to/new | Agent queue | Free | Technical article backlink | Login required | Pending |
 | 9 | Product Hunt upcoming/ship | https://www.producthunt.com/ | Agent queue + Sheet | Free | Launch teaser for Dynamic QR Codes | Login/manual launch setup | Pending |
