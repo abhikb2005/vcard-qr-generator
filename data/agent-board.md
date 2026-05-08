@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-05-08 | Codex | Expanded today's automated "change QR code after printing" blog into a full SEO guide and updated tracker/index metadata. | `blog/change-qr-code-after-printing/index.html`, `blog_index.json`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-07 | Codex | Logged user-completed AlternativeTo directory submission and marked LinkedIn/AlternativeTo queue items as submitted. | `data/dynamic-seo-daily-tracker.md`, `data/dynamic-seo-directory-queue.md`, `data/agent-board.md` |
 | 2026-05-07 | Codex | Added AlternativeTo GitHub repository suggestions to the competitor blog schedule for Amp to research as possible alternative posts. | `data/competitor-blog-schedule.md`, `data/agent-board.md` |
 | 2026-05-07 | Codex | Expanded today's automated Dynamic QR Code Generator blog into a full SEO guide; kept the daily tracker aligned with manual directory policy. | `blog/dynamic-qr-code-generator/index.html`, `blog_index.json`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
