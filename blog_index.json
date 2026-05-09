@@ -1,5 +1,12 @@
 [
   {
+    "slug": "reusable-qr-code",
+    "title": "Reusable QR Code: One Code, Many Future Updates (2026)",
+    "description": "Reusable QR codes let you keep the same printed code while updating the destination behind it.",
+    "url": "/blog/reusable-qr-code/",
+    "date": "2026-05-09"
+  },
+  {
     "slug": "change-qr-code-after-printing",
     "title": "How to Change a QR Code After Printing (2026)",
     "description": "Learn when you can change a QR code after printing, when you cannot, and how dynamic QR codes protect business cards, flyers, signs, menus, and campaigns.",
