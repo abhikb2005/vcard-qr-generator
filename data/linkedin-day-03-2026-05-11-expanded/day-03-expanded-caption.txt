@@ -1,0 +1,45 @@
+QR codes were not born in marketing.
+
+They were born in car factories.
+
+The original problem was not "how do we make menus touchless?"
+
+It was much more practical than that: automotive parts were moving through manufacturing lines, and teams needed a faster way to track them.
+
+Barcodes were already useful, but they had limits. They stored less information. They were more constrained by scanning angle. They were not built for the kind of quick, flexible information handoff the workflow needed.
+
+So Denso Wave developed the QR code in the 1990s.
+
+QR literally means Quick Response.
+
+Very literal naming. Refreshing, honestly.
+
+The funny thing is that marketing later adopted QR codes for almost the same reason factories needed them.
+
+A physical thing exists in front of someone.
+
+A business card.
+A flyer.
+A poster.
+A menu.
+A product package.
+
+And you need to move that person from physical attention to digital action without making them type, search, or guess.
+
+That is the real job.
+
+Not magic.
+Not a whole campaign.
+Not a growth hack wearing a square costume.
+
+Just a fast handoff.
+
+Which is why QR codes work best when the next step is specific:
+
+Scan to save contact.
+Scan to see the event schedule.
+Scan to open the menu.
+Scan to update details.
+Scan to track a campaign.
+
+Look at one printed asset today and ask whether it has a real next step.

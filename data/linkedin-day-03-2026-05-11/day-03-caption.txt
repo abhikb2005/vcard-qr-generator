@@ -1,0 +1,23 @@
+QR codes were not born in marketing.
+
+They were born in car factories.
+
+The original problem was not "how do we make menus touchless?"
+
+It was tracking automotive parts more efficiently.
+
+That matters because QR codes were built for speed, reliability, and machine readability.
+
+Marketing adopted them later because the format happened to solve a broader problem:
+
+How do you move information from a physical surface into a digital action quickly?
+
+That is why QR stands for Quick Response.
+
+Very literal naming. Refreshing, honestly.
+
+The marketing world sometimes treats QR codes like a gimmick. But the underlying technology came from operations, logistics, and manufacturing.
+
+Which is probably why it works best when the use case is practical.
+
+Look at one printed asset today and ask whether it has a real next step.

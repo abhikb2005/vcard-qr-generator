@@ -1,0 +1,72 @@
+Was the QR code ?invented? during lunch?
+
+Sort of.
+
+The QR code was not invented for marketing.
+
+It was invented because factories had an irritating information problem.
+
+In the early 1990s, Denso?s manufacturing sites needed to track more automotive parts, more variants, and more information. Barcodes were useful, but limited. Sometimes a single box needed multiple barcode labels, and workers had to scan them one by one.
+
+Beep.
+Beep.
+Beep.
+
+Not exactly the glamorous origin story of one of the most recognizable symbols in the world.
+
+Then came a lunch break.
+
+Masahiro Hara, an engineer at Denso, was playing Go. Black and white stones sat on a grid.
+
+And that grid gave him the mental model.
+
+A barcode is a line.
+A QR code could be a field.
+
+Instead of storing information in one direction, it could store information across two dimensions.
+
+More data.
+Faster reading.
+Better tolerance for damage.
+Support for Japanese characters.
+A cleaner physical-to-digital handoff.
+
+But the grid created another problem.
+
+How would a scanner quickly find the code on a messy printed surface?
+
+That is where the three big corner squares come in.
+
+They are not decoration. They are finder patterns. They tell the scanner where the code is, how it is rotated, and where to begin.
+
+In 1994, DENSO WAVE released the QR Code.
+
+QR meant Quick Response. Very literal naming. Refreshing, honestly.
+
+Then DENSO made the decision that helped it spread: they retained the patent, but chose not to enforce it.
+
+The invention had to wait for the world to catch up.
+
+Factory scanners first.
+Then tickets and consumer uses in Japan.
+Then smartphones.
+Then native camera scanning.
+Then COVID menus, payments, check-ins, and everyday QR behavior.
+
+So yes, QR codes look boring.
+
+But their origin story is not boring at all.
+
+They are the result of a factory problem, a lunch-break Go board, a recognition problem, and one very good decision to let the format spread for free.
+
+That is also the lesson for marketing.
+
+A QR code is not the campaign.
+
+It is the handoff.
+
+Physical attention ? digital action.
+
+Look at one printed asset today and ask:
+
+Does this have a real next step?
