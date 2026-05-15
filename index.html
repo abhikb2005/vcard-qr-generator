@@ -13,24 +13,24 @@
   <!-- SEO and Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free vCard QR Code Generator — Create &amp; Share Digital Business Cards</title>
+  <title>Free vCard QR Code Generator for Business Cards</title>
   <meta name="description"
-    content="Create a free vCard QR code in seconds. Our vCard QR code generator lets you build digital business cards — no signup, no app required. Try it now!">
+    content="Create a free QR code people can scan to save your contact. Works on iPhone and Android. No signup, no app, and your contact data stays in your browser.">
   <meta name="keywords"
     content="vcard qr code, business card qr, contact qr code generator, digital business card, free qr code">
   <meta name="author" content="vCard QR code generator">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.vcardqrcodegenerator.com/">
-  <meta property="og:title" content="Free vCard QR Code Generator">
+  <meta property="og:title" content="Free vCard QR Code Generator for Business Cards">
   <meta property="og:description"
-    content="Create professional contact QR codes instantly for your business cards. Free and fast!">
+    content="Create a free QR code people can scan to save your contact. Works on iPhone and Android. No signup, no app, and your contact data stays in your browser.">
   <meta property="og:image"
     content="https://raw.githubusercontent.com/abhikb2005/vcard-qr-generator/main/vcard-qr-generator-promo.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://www.vcardqrcodegenerator.com/">
-  <meta name="twitter:title" content="Free vCard QR Code Generator">
+  <meta name="twitter:title" content="Free vCard QR Code Generator for Business Cards">
   <meta name="twitter:description"
-    content="Create professional contact QR codes instantly for business cards. Free and fast!">
+    content="Create a free QR code people can scan to save your contact. Works on iPhone and Android. No signup, no app, and your contact data stays in your browser.">
   <meta name="twitter:image"
     content="https://raw.githubusercontent.com/abhikb2005/vcard-qr-generator/main/vcard-qr-generator-promo.png">
   <!-- Canonical URL -->
@@ -44,7 +44,7 @@
       "url": "https://www.vcardqrcodegenerator.com/",
       "applicationCategory": "Utility",
       "operatingSystem": "All",
-      "description": "Free vCard QR code generator for creating contact QR codes instantly.",
+      "description": "Free vCard QR code generator for business cards that lets people scan and save your contact without typing.",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -251,31 +251,30 @@
   <!-- Hero Section -->
   <div class="hero">
     <div class="container">
-      <h1>Free vCard QR Code Generator</h1>
-      <p class="subtitle">Stop losing contacts. Share your details instantly with a professional vCard QR code. No app
-        required.</p>
-      <p class="text-sm text-indigo-200 mt-2 max-w-2xl mx-auto">The #1 free vCard QR code generator trusted by realtors,
-        sales teams, and professionals worldwide.</p>
+      <h1>Turn Your Business Card Into a Saved Contact</h1>
+      <p class="subtitle">Add your details, generate a free vCard QR code, and place it on your card, badge, resume, or
+        email signature. Anyone who scans it can save you without typing.</p>
+      <p class="text-sm text-indigo-200 mt-2 max-w-2xl mx-auto">Scan &rarr; Contact opens &rarr; Tap Save.</p>
 
       <div class="mt-6 flex flex-wrap items-center justify-center gap-6 text-sm text-indigo-100">
         <div class="flex items-center gap-2">
-          <span class="tracking-[0.3em] text-xs uppercase text-indigo-200">Featured Guide</span>
+          <span class="tracking-[0.3em] text-xs uppercase text-indigo-200">Free</span>
           <a id="guideLink" href="/blog/qr-code-and-vcard-guide/"
             class="inline-flex items-center gap-1 font-semibold text-white hover:underline">
-            Ultimate vCard QR code guide <span aria-hidden="true">→</span>
+            No signup. No app. Contact data stays in your browser.
           </a>
         </div>
         <div class="flex items-center gap-2 bg-indigo-500/20 px-3 py-1 rounded-full border border-indigo-400/30">
-          <span class="text-xs uppercase text-green-300 font-bold">New</span>
+          <span class="text-xs uppercase text-green-300 font-bold">Teams</span>
           <a href="/bulk-qr-code.html" class="inline-flex items-center gap-1 font-semibold text-white hover:underline">
-            Bulk Generator for Teams <span aria-hidden="true">→</span>
+            Bulk generator for staff and events <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
         <div
           class="flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 px-3 py-1 rounded-full border border-purple-400/30">
           <span class="text-xs uppercase text-yellow-300 font-bold">Pro</span>
           <a href="/logo-qr-code.html" class="inline-flex items-center gap-1 font-semibold text-white hover:underline">
-            Logos, Colors & Frames <span aria-hidden="true">→</span>
+            Add your logo for print <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </div>
@@ -749,13 +748,13 @@
       });
 
       // Show share button if Web Share API available
-      if (navigator.share) {
+      if (navigator.share && shareBtn) {
         shareBtn.classList.remove('hidden');
       }
 
       // Update UI state (enable/disable buttons and show/hide placeholder)
       const updateUIState = (hasContent) => {
-        const buttons = [downloadBtn, shareBtn];
+        const buttons = [downloadBtn, shareBtn].filter(Boolean);
         if (hasContent) {
           qrPlaceholder.classList.add('hidden');
           qrCodeElement.classList.remove('hidden');
@@ -846,7 +845,7 @@
       // Event listeners
       form.addEventListener('input', generateQRCode);
       fillSampleBtn.addEventListener('click', fillSampleData);
-      shareBtn.addEventListener('click', shareQRCode);
+      if (shareBtn) shareBtn.addEventListener('click', shareQRCode);
       phoneInput.addEventListener('input', sanitizePhoneInput);
       clearDataBtn.addEventListener('click', () => confirmModal.classList.remove('hidden'));
       cancelClearBtn.addEventListener('click', () => confirmModal.classList.add('hidden'));

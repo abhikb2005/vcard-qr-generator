@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-05-16 | Codex | Applied approved locked landing-page copy to the homepage, logo QR, bulk QR, and dynamic QR pages for live publishing. Added a locked copy record for future agents. | `index.html`, `logo-qr-code.html`, `bulk-qr-code.html`, `dynamic-qr-code-generator.html`, `data/landing-page-copy-lock-2026-05-15.md`, `data/agent-board.md` |
 | 2026-05-15 | Codex | Published today's fresh dynamic SEO blog on QR code tracking for offline marketing and extended the daily engine topic seeds so future runs do not repeat exhausted starter topics. | `blog/qr-code-tracking-offline-marketing/index.html`, `blog_index.json`, `sitemap.xml`, `scripts/dynamic_seo_daily.py`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-11 | Codex | Logged SideProjectors manual submission and advanced next directory queue item to Launching Next. | `data/dynamic-seo-directory-queue.md`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-11 | Codex | Deferred Product Hunt due to long-standing account issue and moved today's manual directory recommendation to SideProjectors. | `data/dynamic-seo-directory-queue.md`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
