@@ -57,6 +57,48 @@ TOPICS = [
         "title": "Reusable QR Code: One Code, Many Future Updates",
         "description": "Reusable QR codes let you keep the same printed code while updating the destination behind it.",
     },
+    {
+        "keyword": "qr code tracking for offline marketing",
+        "slug": "qr-code-tracking-offline-marketing",
+        "title": "QR Code Tracking for Offline Marketing",
+        "description": "Learn how QR code tracking helps measure flyers, business cards, signs, packaging, and offline campaigns without overcomplicating your marketing setup.",
+    },
+    {
+        "keyword": "dynamic qr code for business cards",
+        "slug": "dynamic-qr-code-for-business-cards",
+        "title": "Dynamic QR Code for Business Cards: When Editability Matters",
+        "description": "Learn when a dynamic QR code is worth using on business cards and when a free static vCard QR code is enough.",
+    },
+    {
+        "keyword": "qr code for flyers",
+        "slug": "qr-code-for-flyers",
+        "title": "QR Code for Flyers: How to Make Print Campaigns Measurable",
+        "description": "Use QR codes on flyers to connect print attention to a focused mobile action, track scans, and avoid stale campaign links.",
+    },
+    {
+        "keyword": "qr code campaign tracking",
+        "slug": "qr-code-campaign-tracking",
+        "title": "QR Code Campaign Tracking: A Simple Framework",
+        "description": "A practical framework for tracking QR code campaigns across print assets, events, business cards, and local marketing.",
+    },
+    {
+        "keyword": "event qr code tracking",
+        "slug": "event-qr-code-tracking",
+        "title": "Event QR Code Tracking for Badges, Booths, and Follow-Up",
+        "description": "Learn how to use dynamic QR codes at events to measure scans, route attendees to the right action, and improve follow-up.",
+    },
+    {
+        "keyword": "qr code lead generation",
+        "slug": "qr-code-lead-generation",
+        "title": "QR Code Lead Generation for Offline Marketing",
+        "description": "Turn business cards, flyers, signs, and event materials into measurable lead-generation paths with focused QR code campaigns.",
+    },
+    {
+        "keyword": "trackable qr code",
+        "slug": "trackable-qr-code",
+        "title": "Trackable QR Code: What You Can Measure and What You Cannot",
+        "description": "Understand what trackable QR codes can report, what they cannot prove, and how to set up cleaner offline marketing measurement.",
+    },
 ]
 
 
