@@ -1,5 +1,12 @@
 [
   {
+    "slug": "qr-code-campaign-tracking",
+    "title": "QR Code Campaign Tracking: A Simple Framework (2026)",
+    "description": "A practical framework for tracking QR code campaigns across print assets, events, business cards, and local marketing.",
+    "url": "/blog/qr-code-campaign-tracking/",
+    "date": "2026-05-18"
+  },
+  {
     "slug": "qr-code-for-flyers",
     "title": "QR Code for Flyers: How to Make Print Campaigns Measurable (2026)",
     "description": "Use QR codes on flyers to connect print attention to a focused mobile action, track scans, and avoid stale campaign links.",
