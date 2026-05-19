@@ -1,5 +1,12 @@
 [
   {
+    "slug": "event-qr-code-tracking",
+    "title": "Event QR Code Tracking for Badges, Booths, and Follow-Up (2026)",
+    "description": "Learn how to use dynamic QR codes at events to measure scans, route attendees to the right action, and improve follow-up.",
+    "url": "/blog/event-qr-code-tracking/",
+    "date": "2026-05-19"
+  },
+  {
     "slug": "qr-code-campaign-tracking",
     "title": "QR Code Campaign Tracking: A Simple Framework (2026)",
     "description": "A practical framework for tracking QR code campaigns across print assets, events, business cards, and local marketing.",

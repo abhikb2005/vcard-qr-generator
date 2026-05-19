@@ -32,6 +32,7 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 | 2026-05-16 | dynamic qr code for business cards | `/blog/dynamic-qr-code-for-business-cards/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | Launching Next action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-05-17 | qr code for flyers | `/blog/qr-code-for-flyers/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | Launching Next action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-05-18 | qr code campaign tracking | `/blog/qr-code-campaign-tracking/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | Launching Next action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
+| 2026-05-19 | event qr code tracking | `/blog/event-qr-code-tracking/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | Launching Next action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 
 ## Directory Submission Rules
 
