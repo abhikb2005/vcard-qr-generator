@@ -34,6 +34,7 @@
 - vCard payload API: POST https://vcardqrcodegenerator.com/v1/vcard
 - Streaming API: GET https://vcardqrcodegenerator.com/v1/stream
 - JSON errors: API errors return error.code, error.message, error.hint, error.docsUrl, and error.status.
+- Retry and throttling: POST /v1/vcard accepts Idempotency-Key and JSON responses include RateLimit-Limit, RateLimit-Remaining, and RateLimit-Reset.
 - MCP tools: get_product_context, create_vcard_payload
 - Auth docs: Public discovery and vCard payload endpoints do not require authentication. Account, billing, analytics, and dynamic QR actions should remain authenticated in the app experience before agents can modify user-owned resources.
 

@@ -9,8 +9,14 @@ const SITE_URL = 'https://www.vcardqrcodegenerator.com';
 const CORS_HEADERS = {
   'access-control-allow-origin': '*',
   'access-control-allow-methods': 'GET, POST, OPTIONS',
-  'access-control-allow-headers': 'content-type, authorization',
+  'access-control-allow-headers': 'content-type, authorization, idempotency-key',
   'access-control-max-age': '86400',
+};
+
+const RATE_LIMIT_HEADERS = {
+  'ratelimit-limit': '60',
+  'ratelimit-remaining': '59',
+  'ratelimit-reset': '60',
 };
 
 function notFound() {
@@ -24,12 +30,13 @@ function json(body, status = 200, extraHeaders = {}) {
       'content-type': 'application/json; charset=utf-8',
       'cache-control': status === 200 ? 'public, max-age=300' : 'no-store',
       ...CORS_HEADERS,
+      ...RATE_LIMIT_HEADERS,
       ...extraHeaders,
     },
   });
 }
 
-function apiError(code, message, status = 400, hint = 'See the developer docs for valid request formats.', extra = {}) {
+function apiError(code, message, status = 400, hint = 'See the developer docs for valid request formats.', extra = {}, extraHeaders = {}) {
   return json({
     error: {
       code,
@@ -39,7 +46,7 @@ function apiError(code, message, status = 400, hint = 'See the developer docs fo
       status,
       ...extra,
     },
-  }, status);
+  }, status, extraHeaders);
 }
 
 function jsonRpcError(id, code, message, status = 400, data = {}) {
@@ -90,6 +97,17 @@ function escapeVCardValue(value) {
     .replace(/\n/g, '\\n')
     .replace(/,/g, '\\,')
     .replace(/;/g, '\\;');
+}
+
+function idempotencyHeaders(request) {
+  const key = request.headers.get('idempotency-key');
+  if (!key) {
+    return {};
+  }
+
+  return {
+    'idempotency-key': key.slice(0, 255),
+  };
 }
 
 function getProductContext() {
@@ -178,6 +196,9 @@ function openApiSpec() {
           operationId: 'createVCardPayload',
           summary: 'Create a vCard QR payload',
           description: 'Returns standard vCard text suitable for QR encoding. The free website generator keeps QR rendering client-side for privacy.',
+          parameters: [
+            { $ref: '#/components/parameters/IdempotencyKey' },
+          ],
           requestBody: {
             required: true,
             content: { 'application/json': { schema: { $ref: '#/components/schemas/VCardRequest' } } },
@@ -185,14 +206,30 @@ function openApiSpec() {
           responses: {
             '200': {
               description: 'vCard payload created',
+              headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
+                'Idempotency-Key': { $ref: '#/components/headers/IdempotencyKey' },
+              },
               content: { 'application/json': { schema: { $ref: '#/components/schemas/VCardResponse' } } },
             },
             '400': {
               description: 'Missing or invalid input',
+              headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
+              },
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
             '405': {
               description: 'Method not allowed',
+              headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
+              },
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
           },
@@ -203,6 +240,9 @@ function openApiSpec() {
           operationId: 'createVCardPayloadApiAlias',
           summary: 'Create a vCard QR payload through the /api alias',
           description: 'Returns standard vCard text suitable for QR encoding. Errors are always structured JSON with error.code, message, hint, docsUrl, and status.',
+          parameters: [
+            { $ref: '#/components/parameters/IdempotencyKey' },
+          ],
           requestBody: {
             required: true,
             content: { 'application/json': { schema: { $ref: '#/components/schemas/VCardRequest' } } },
@@ -210,23 +250,47 @@ function openApiSpec() {
           responses: {
             '200': {
               description: 'vCard payload created',
+              headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
+                'Idempotency-Key': { $ref: '#/components/headers/IdempotencyKey' },
+              },
               content: { 'application/json': { schema: { $ref: '#/components/schemas/VCardResponse' } } },
             },
             '400': {
               description: 'Structured JSON error response',
+              headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
+              },
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
             '404': {
               description: 'Route or resource not found',
+              headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
+              },
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
             '405': {
               description: 'Method not allowed',
+              headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
+              },
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
             '429': {
               description: 'Rate limit guidance for future protected endpoints',
               headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
                 'Retry-After': {
                   schema: { type: 'integer' },
                   description: 'Seconds to wait before retrying.',
@@ -236,6 +300,11 @@ function openApiSpec() {
             },
             '500': {
               description: 'Unexpected server error',
+              headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
+              },
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
           },
@@ -281,6 +350,33 @@ function openApiSpec() {
       },
     },
     components: {
+      parameters: {
+        IdempotencyKey: {
+          name: 'Idempotency-Key',
+          in: 'header',
+          required: false,
+          schema: { type: 'string', maxLength: 255 },
+          description: 'Optional retry key. The vCard payload endpoint is deterministic and echoes this header so agents can safely correlate retries.',
+        },
+      },
+      headers: {
+        RateLimitLimit: {
+          schema: { type: 'integer', example: 60 },
+          description: 'Maximum number of requests in the current window.',
+        },
+        RateLimitRemaining: {
+          schema: { type: 'integer', example: 59 },
+          description: 'Requests remaining in the current window.',
+        },
+        RateLimitReset: {
+          schema: { type: 'integer', example: 60 },
+          description: 'Seconds until the rate-limit window resets.',
+        },
+        IdempotencyKey: {
+          schema: { type: 'string' },
+          description: 'Echo of the request Idempotency-Key header when supplied.',
+        },
+      },
       schemas: {
         Health: {
           type: 'object',
@@ -440,6 +536,11 @@ function apiIndex() {
         },
       },
     },
+    retryContract: {
+      idempotencyKey: 'Optional Idempotency-Key header is accepted and echoed by POST /api/v1/vcard.',
+      rateLimitHeaders: ['RateLimit-Limit', 'RateLimit-Remaining', 'RateLimit-Reset'],
+      retryAfter: 'Future 429 responses will also include Retry-After.',
+    },
     endpoints: {
       health: `${BASE_URL}/api/v1/health`,
       product: `${BASE_URL}/api/v1/product`,
@@ -451,24 +552,26 @@ function apiIndex() {
 }
 
 async function handleVCard(request) {
+  const retryHeaders = idempotencyHeaders(request);
+
   if (request.method !== 'POST') {
     return apiError('method_not_allowed', 'Use POST with a JSON body.', 405, 'Send contact fields as JSON to /v1/vcard or /api/v1/vcard.', {
       allowedMethods: ['POST', 'OPTIONS'],
-    });
+    }, retryHeaders);
   }
 
   let input;
   try {
     input = await request.json();
   } catch {
-    return apiError('invalid_json', 'Request body must be valid JSON.', 400, 'Set Content-Type: application/json and send a JSON object.');
+    return apiError('invalid_json', 'Request body must be valid JSON.', 400, 'Set Content-Type: application/json and send a JSON object.', {}, retryHeaders);
   }
 
   const vcard = buildVCard(input);
   if (!vcard) {
     return apiError('missing_full_name', 'fullName is required.', 400, 'Include a non-empty fullName field in the request body.', {
       field: 'fullName',
-    });
+    }, retryHeaders);
   }
 
   return json({
@@ -476,7 +579,7 @@ async function handleVCard(request) {
     qrPayload: vcard,
     generatorUrl: SITE_URL,
     privacyNote: 'The public API returns the vCard payload. Browser QR rendering remains available on the free generator, where contact data can stay on device.',
-  });
+  }, 200, retryHeaders);
 }
 
 function streamProgress(url) {

@@ -56,6 +56,8 @@ Errors from REST endpoints are structured JSON:
 }
 ```
 
+Mutation requests can include an `Idempotency-Key` header. The vCard payload API is deterministic and echoes the key when supplied so agents can correlate safe retries. JSON API responses include `RateLimit-Limit`, `RateLimit-Remaining`, and `RateLimit-Reset` headers for agent self-throttling.
+
 ## API Example
 
 ```bash

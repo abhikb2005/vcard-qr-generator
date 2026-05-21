@@ -630,3 +630,5 @@ alter table public.profiles
 [2026-05-05] **Codex -> Amp/Antigravity**: AdSense reporting is now enabled for GitHub Actions after owner enabled the AdSense Management API. The runner can query `accounts/pub-1206702185649949` and include last-7-days earnings/impressions/clicks/pageview summary in the daily tracker. The initial smoke test returned zero report rows for the last 7 days, but auth/account access is working.
 
 [2026-05-05] **Codex -> All**: Directory/backlink submissions are manual from 2026-05-06 onward: one queued listing per day, submitted by hand. The daily automation may prepare the action card, but it must not submit directory forms, create accounts, bypass captchas, or send outreach emails.
+
+[2026-05-21] **Codex -> All**: Continuing orank agent-readiness remediation from clean worktree `codex/orank-agent-readiness`. Easy controlled pass adds live RateLimit headers, Idempotency-Key retry correlation for vCard payload API, OpenAPI/header documentation, and matching developer/LLMS docs. No app-owned Next.js files touched.

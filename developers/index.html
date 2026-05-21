@@ -99,6 +99,7 @@
       <h2 class="text-2xl font-bold">REST API</h2>
       <p class="mt-3 text-slate-700">The first public API supports discovery and vCard payload generation. It returns standard vCard text for QR encoding instead of storing contact details on a server.</p>
       <p class="mt-3 text-slate-700">All API errors use structured JSON with <code>error.code</code>, <code>error.message</code>, <code>error.hint</code>, <code>error.docsUrl</code>, and <code>error.status</code>. Agents can call either <code>/v1/*</code> or the common <code>/api/v1/*</code> aliases.</p>
+      <p class="mt-3 text-slate-700">Mutation requests accept an optional <code>Idempotency-Key</code> header for retry correlation. API responses include <code>RateLimit-Limit</code>, <code>RateLimit-Remaining</code>, and <code>RateLimit-Reset</code> headers so agents can self-throttle.</p>
       <div class="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-white">
         <div class="border-b border-slate-200 px-5 py-3 font-semibold">Create a vCard payload</div>
         <pre class="p-5 text-sm bg-slate-950 text-slate-100">curl -X POST https://vcardqrcodegenerator.com/v1/vcard \
