@@ -99,6 +99,42 @@ TOPICS = [
         "title": "Trackable QR Code: What You Can Measure and What You Cannot",
         "description": "Understand what trackable QR codes can report, what they cannot prove, and how to set up cleaner offline marketing measurement.",
     },
+    {
+        "keyword": "qr code for print advertising",
+        "slug": "qr-code-for-print-advertising",
+        "title": "QR Code for Print Advertising: Make Offline Campaigns Measurable",
+        "description": "Learn how to use QR codes in print ads to connect offline attention to landing pages, contact saves, bookings, and campaign measurement.",
+    },
+    {
+        "keyword": "business card qr code tracking",
+        "slug": "business-card-qr-code-tracking",
+        "title": "Business Card QR Code Tracking: What It Can Tell You",
+        "description": "Understand how dynamic QR codes can measure business-card scans and when a simple static vCard QR code is still the better fit.",
+    },
+    {
+        "keyword": "qr code analytics",
+        "slug": "qr-code-analytics",
+        "title": "QR Code Analytics: The Practical Metrics That Matter",
+        "description": "A practical guide to QR code analytics for scans, campaigns, printed assets, and post-scan actions.",
+    },
+    {
+        "keyword": "dynamic qr code analytics",
+        "slug": "dynamic-qr-code-analytics",
+        "title": "Dynamic QR Code Analytics for Printed Marketing",
+        "description": "Learn how dynamic QR code analytics help measure scans, compare printed assets, and improve offline-to-online campaigns.",
+    },
+    {
+        "keyword": "qr code for trade show booth",
+        "slug": "qr-code-for-trade-show-booth",
+        "title": "QR Code for Trade Show Booths: Capture Interest Without Friction",
+        "description": "Use QR codes on trade-show booths, handouts, badges, and slides to route visitors to contact cards, demos, and follow-up actions.",
+    },
+    {
+        "keyword": "qr code for product packaging",
+        "slug": "qr-code-for-product-packaging",
+        "title": "QR Code for Product Packaging: Support, Warranty, and Reorders",
+        "description": "Learn how QR codes on packaging can point customers to support, warranty registration, instructions, and reorder links.",
+    },
 ]
 
 
