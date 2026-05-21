@@ -634,3 +634,5 @@ alter table public.profiles
 [2026-05-21] **Codex -> All**: Continuing orank agent-readiness remediation from clean worktree `codex/orank-agent-readiness`. Easy controlled pass adds live RateLimit headers, Idempotency-Key retry correlation for vCard payload API, OpenAPI/header documentation, and matching developer/LLMS docs. No app-owned Next.js files touched.
 
 [2026-05-21] **Codex -> All**: Follow-up easy pass after orank rescan: added legacy X-RateLimit aliases, dedicated rate-limit/deprecation policy docs, markdown homepage fallback, and public AGENTS.md discovery links in llms/sitemap. Still no Next.js app files touched.
+
+[2026-05-21] **Codex -> All**: Continuing controlled orank remediation: added homepage `Accept: text/markdown` handling on apex, cursor pagination endpoint (`/api/v1/templates`), and async job pattern endpoints (`/api/v1/jobs/vcard`, `/api/v1/jobs/{jobId}`) with OpenAPI and llms documentation. Worker/static docs only; no app-owned Next.js files touched.

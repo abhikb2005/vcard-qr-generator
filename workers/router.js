@@ -39,6 +39,19 @@ function json(body, status = 200, extraHeaders = {}) {
   });
 }
 
+function markdown(body, status = 200, extraHeaders = {}) {
+  return new Response(body, {
+    status,
+    headers: {
+      'content-type': 'text/markdown; charset=utf-8',
+      'cache-control': 'public, max-age=300',
+      vary: 'Accept',
+      ...CORS_HEADERS,
+      ...extraHeaders,
+    },
+  });
+}
+
 function apiError(code, message, status = 400, hint = 'See the developer docs for valid request formats.', extra = {}, extraHeaders = {}) {
   return json({
     error: {
@@ -113,6 +126,28 @@ function idempotencyHeaders(request) {
   };
 }
 
+function homepageMarkdown() {
+  return `# vCard QR Code Generator
+
+vCard QR Code Generator is a free, privacy-first tool for creating static vCard QR codes for business cards, resumes, email signatures, badges, and professional networking.
+
+Static QR generation runs in the browser, so contact data does not need to leave the user's device for the free generator.
+
+## Agent and Developer Resources
+
+- Website: ${SITE_URL}/
+- Developer docs: ${SITE_URL}/developers/
+- OpenAPI spec: ${SITE_URL}/openapi.json
+- MCP manifest: ${SITE_URL}/mcp/manifest.json
+- Rate limits and deprecation policy: ${SITE_URL}/developers/rate-limits.html
+- llms.txt: ${SITE_URL}/llms.txt
+`;
+}
+
+function wantsMarkdown(request) {
+  return request.headers.get('accept')?.toLowerCase().includes('text/markdown');
+}
+
 function getProductContext() {
   return {
     name: 'vCard QR Code Generator',
@@ -132,6 +167,103 @@ function getProductContext() {
       'Use the app subdomain for dynamic editable contact profiles and analytics',
     ],
   };
+}
+
+const VCARD_TEMPLATES = [
+  {
+    id: 'business-card',
+    name: 'Business card contact QR',
+    useCase: 'Printed business cards and networking events',
+    requiredFields: ['fullName'],
+    optionalFields: ['organization', 'title', 'phone', 'email', 'website'],
+  },
+  {
+    id: 'resume',
+    name: 'Resume contact QR',
+    useCase: 'CVs, portfolios, and job applications',
+    requiredFields: ['fullName'],
+    optionalFields: ['phone', 'email', 'website', 'note'],
+  },
+  {
+    id: 'event-badge',
+    name: 'Event badge contact QR',
+    useCase: 'Conference badges and visitor passes',
+    requiredFields: ['fullName'],
+    optionalFields: ['organization', 'title', 'email'],
+  },
+];
+
+function listTemplates(url) {
+  const requestedLimit = Number.parseInt(url.searchParams.get('limit') || '2', 10);
+  const limit = Math.min(Math.max(Number.isFinite(requestedLimit) ? requestedLimit : 2, 1), 25);
+  const cursor = Math.max(Number.parseInt(url.searchParams.get('cursor') || '0', 10) || 0, 0);
+  const data = VCARD_TEMPLATES.slice(cursor, cursor + limit);
+  const nextCursor = cursor + data.length < VCARD_TEMPLATES.length ? String(cursor + data.length) : null;
+
+  return json({
+    data,
+    pagination: {
+      limit,
+      cursor: String(cursor),
+      next_cursor: nextCursor,
+      has_more: nextCursor !== null,
+    },
+  });
+}
+
+function jobResponse(jobId, status, result = null) {
+  return {
+    id: jobId,
+    object: 'job',
+    status,
+    created_at: new Date(0).toISOString(),
+    completed_at: status === 'succeeded' ? new Date(0).toISOString() : null,
+    links: {
+      self: `${BASE_URL}/api/v1/jobs/${jobId}`,
+    },
+    result,
+  };
+}
+
+async function createVCardJob(request) {
+  if (request.method !== 'POST') {
+    return apiError('method_not_allowed', 'Use POST with a JSON body.', 405, 'Send contact fields as JSON to /v1/jobs/vcard or /api/v1/jobs/vcard.', {
+      allowedMethods: ['POST', 'OPTIONS'],
+    }, idempotencyHeaders(request));
+  }
+
+  let input;
+  try {
+    input = await request.json();
+  } catch {
+    return apiError('invalid_json', 'Request body must be valid JSON.', 400, 'Set Content-Type: application/json and send a JSON object.', {}, idempotencyHeaders(request));
+  }
+
+  const vcard = buildVCard(input);
+  if (!vcard) {
+    return apiError('missing_full_name', 'fullName is required.', 400, 'Include a non-empty fullName field in the request body.', {
+      field: 'fullName',
+    }, idempotencyHeaders(request));
+  }
+
+  const jobId = `job_vcard_${btoa(vcard).replace(/[^a-zA-Z0-9]/g, '').slice(0, 24) || 'payload'}`;
+  return json(jobResponse(jobId, 'succeeded', {
+    vcard,
+    qrPayload: vcard,
+    generatorUrl: SITE_URL,
+  }), 202, {
+    ...idempotencyHeaders(request),
+    location: `${BASE_URL}/api/v1/jobs/${jobId}`,
+  });
+}
+
+function getJob(url) {
+  const jobId = url.pathname.split('/').pop();
+  if (!jobId?.startsWith('job_vcard_')) {
+    return apiError('job_not_found', 'Job not found.', 404, 'Use the Location header returned by POST /api/v1/jobs/vcard.');
+  }
+
+  return json(jobResponse(jobId, 'succeeded'));
 }
 
 function openApiSpec() {
@@ -313,6 +445,124 @@ function openApiSpec() {
           },
         },
       },
+      '/v1/templates': {
+        get: {
+          operationId: 'listVCardTemplates',
+          summary: 'List vCard QR templates with cursor pagination',
+          description: 'Returns public template metadata using a cursor pagination pattern for agent compatibility.',
+          parameters: [
+            { $ref: '#/components/parameters/Limit' },
+            { $ref: '#/components/parameters/Cursor' },
+          ],
+          responses: {
+            '200': {
+              description: 'Paginated template list',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/TemplateListResponse' } } },
+            },
+          },
+        },
+      },
+      '/api/v1/templates': {
+        get: {
+          operationId: 'listVCardTemplatesApiAlias',
+          summary: 'List vCard QR templates through the /api alias',
+          parameters: [
+            { $ref: '#/components/parameters/Limit' },
+            { $ref: '#/components/parameters/Cursor' },
+          ],
+          responses: {
+            '200': {
+              description: 'Paginated template list',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/TemplateListResponse' } } },
+            },
+          },
+        },
+      },
+      '/v1/jobs/vcard': {
+        post: {
+          operationId: 'createVCardJob',
+          summary: 'Create an async vCard payload job',
+          description: 'Demonstrates the async job pattern for agent workflows. The current vCard payload job completes immediately because vCard creation is deterministic and lightweight.',
+          parameters: [
+            { $ref: '#/components/parameters/IdempotencyKey' },
+          ],
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/VCardRequest' } } },
+          },
+          responses: {
+            '202': {
+              description: 'Job accepted',
+              headers: {
+                Location: { schema: { type: 'string', format: 'uri' }, description: 'URL for polling job status.' },
+                'Idempotency-Key': { $ref: '#/components/headers/IdempotencyKey' },
+              },
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Job' } } },
+            },
+            '400': {
+              description: 'Structured JSON error response',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
+          },
+        },
+      },
+      '/api/v1/jobs/vcard': {
+        post: {
+          operationId: 'createVCardJobApiAlias',
+          summary: 'Create an async vCard payload job through the /api alias',
+          parameters: [
+            { $ref: '#/components/parameters/IdempotencyKey' },
+          ],
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/VCardRequest' } } },
+          },
+          responses: {
+            '202': {
+              description: 'Job accepted',
+              headers: {
+                Location: { schema: { type: 'string', format: 'uri' }, description: 'URL for polling job status.' },
+                'Idempotency-Key': { $ref: '#/components/headers/IdempotencyKey' },
+              },
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Job' } } },
+            },
+          },
+        },
+      },
+      '/v1/jobs/{jobId}': {
+        get: {
+          operationId: 'getJob',
+          summary: 'Get async job status',
+          parameters: [
+            { $ref: '#/components/parameters/JobId' },
+          ],
+          responses: {
+            '200': {
+              description: 'Job status',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Job' } } },
+            },
+            '404': {
+              description: 'Job not found',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
+          },
+        },
+      },
+      '/api/v1/jobs/{jobId}': {
+        get: {
+          operationId: 'getJobApiAlias',
+          summary: 'Get async job status through the /api alias',
+          parameters: [
+            { $ref: '#/components/parameters/JobId' },
+          ],
+          responses: {
+            '200': {
+              description: 'Job status',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Job' } } },
+            },
+          },
+        },
+      },
       '/v1/stream': {
         get: {
           operationId: 'streamProgress',
@@ -360,6 +610,27 @@ function openApiSpec() {
           required: false,
           schema: { type: 'string', maxLength: 255 },
           description: 'Optional retry key. The vCard payload endpoint is deterministic and echoes this header so agents can safely correlate retries.',
+        },
+        Limit: {
+          name: 'limit',
+          in: 'query',
+          required: false,
+          schema: { type: 'integer', minimum: 1, maximum: 25, default: 2 },
+          description: 'Maximum number of records to return.',
+        },
+        Cursor: {
+          name: 'cursor',
+          in: 'query',
+          required: false,
+          schema: { type: 'string' },
+          description: 'Opaque cursor from the previous response pagination.next_cursor value.',
+        },
+        JobId: {
+          name: 'jobId',
+          in: 'path',
+          required: true,
+          schema: { type: 'string' },
+          description: 'Job identifier returned by the async job creation endpoint.',
         },
       },
       headers: {
@@ -417,6 +688,58 @@ function openApiSpec() {
             privacyNote: { type: 'string' },
           },
           required: ['vcard', 'qrPayload', 'generatorUrl', 'privacyNote'],
+        },
+        Template: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            name: { type: 'string' },
+            useCase: { type: 'string' },
+            requiredFields: { type: 'array', items: { type: 'string' } },
+            optionalFields: { type: 'array', items: { type: 'string' } },
+          },
+          required: ['id', 'name', 'useCase', 'requiredFields', 'optionalFields'],
+        },
+        TemplateListResponse: {
+          type: 'object',
+          properties: {
+            data: { type: 'array', items: { $ref: '#/components/schemas/Template' } },
+            pagination: {
+              type: 'object',
+              properties: {
+                limit: { type: 'integer' },
+                cursor: { type: 'string' },
+                next_cursor: { type: ['string', 'null'] },
+                has_more: { type: 'boolean' },
+              },
+              required: ['limit', 'cursor', 'next_cursor', 'has_more'],
+            },
+          },
+          required: ['data', 'pagination'],
+        },
+        Job: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            object: { type: 'string', enum: ['job'] },
+            status: { type: 'string', enum: ['queued', 'running', 'succeeded', 'failed'] },
+            created_at: { type: 'string', format: 'date-time' },
+            completed_at: { type: ['string', 'null'], format: 'date-time' },
+            links: {
+              type: 'object',
+              properties: {
+                self: { type: 'string', format: 'uri' },
+              },
+              required: ['self'],
+            },
+            result: {
+              anyOf: [
+                { $ref: '#/components/schemas/VCardResponse' },
+                { type: 'null' },
+              ],
+            },
+          },
+          required: ['id', 'object', 'status', 'created_at', 'completed_at', 'links', 'result'],
         },
         Error: {
           type: 'object',
@@ -548,6 +871,8 @@ function apiIndex() {
       health: `${BASE_URL}/api/v1/health`,
       product: `${BASE_URL}/api/v1/product`,
       vcard: `${BASE_URL}/api/v1/vcard`,
+      templates: `${BASE_URL}/api/v1/templates`,
+      vcardJob: `${BASE_URL}/api/v1/jobs/vcard`,
       stream: `${BASE_URL}/api/v1/stream`,
       mcp: `${BASE_URL}/mcp`,
     },
@@ -691,6 +1016,13 @@ export default {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
 
+    if (url.pathname === '/') {
+      if (wantsMarkdown(request)) {
+        return markdown(homepageMarkdown());
+      }
+      return Response.redirect(`${SITE_URL}/`, 301);
+    }
+
     if (url.pathname === '/ads.txt') {
       const headers = {
         'content-type': 'text/plain; charset=utf-8',
@@ -728,8 +1060,20 @@ export default {
       return json(getProductContext());
     }
 
+    if (apiPath === '/v1/templates') {
+      return listTemplates(url);
+    }
+
     if (apiPath === '/v1/vcard') {
       return handleVCard(request);
+    }
+
+    if (apiPath === '/v1/jobs/vcard') {
+      return createVCardJob(request);
+    }
+
+    if (apiPath.startsWith('/v1/jobs/')) {
+      return getJob(url);
     }
 
     if (apiPath === '/v1/stream') {

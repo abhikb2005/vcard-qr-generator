@@ -40,6 +40,8 @@ Public endpoints:
 - GET /v1/health checks API availability.
 - GET /v1/product returns product metadata, use cases, privacy notes, and integration URLs.
 - POST /v1/vcard returns a standard vCard text payload suitable for QR encoding.
+- GET /api/v1/templates returns public template metadata with cursor pagination using `limit`, `cursor`, `next_cursor`, and `has_more`.
+- POST /api/v1/jobs/vcard creates an async vCard payload job and returns `202 Accepted` with a pollable `Location` URL.
 - GET /v1/stream returns Server-Sent Events progress updates for agent workflows.
 - GET /api/v1/health, GET /api/v1/product, POST /api/v1/vcard, and GET /api/v1/stream are supported aliases for agents that expect API paths under /api.
 - GET /mcp returns the MCP manifest.

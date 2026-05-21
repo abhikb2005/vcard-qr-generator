@@ -35,6 +35,8 @@
 - REST API health check alias: GET https://vcardqrcodegenerator.com/api/v1/health
 - Product metadata API: GET https://vcardqrcodegenerator.com/v1/product
 - vCard payload API: POST https://vcardqrcodegenerator.com/v1/vcard
+- Paginated template API: GET https://vcardqrcodegenerator.com/api/v1/templates?limit=2
+- Async vCard job API: POST https://vcardqrcodegenerator.com/api/v1/jobs/vcard
 - Streaming API: GET https://vcardqrcodegenerator.com/v1/stream
 - JSON errors: API errors return error.code, error.message, error.hint, error.docsUrl, and error.status.
 - Retry and throttling: POST /v1/vcard accepts Idempotency-Key and JSON responses include RateLimit-Limit, RateLimit-Remaining, and RateLimit-Reset.
