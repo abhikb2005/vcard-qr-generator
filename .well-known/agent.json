@@ -16,7 +16,7 @@
   },
   "mcp": {
     "transport": "streamable_http",
-    "url": "https://api.vcardqrcodegenerator.com/mcp",
+    "url": "https://vcardqrcodegenerator.com/mcp",
     "manifest": "https://www.vcardqrcodegenerator.com/mcp/manifest.json"
   },
   "llms": {

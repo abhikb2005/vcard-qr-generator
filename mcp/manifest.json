@@ -5,7 +5,7 @@
   "version": "2026-05-21",
   "transport": {
     "type": "streamable_http",
-    "url": "https://api.vcardqrcodegenerator.com/mcp"
+    "url": "https://vcardqrcodegenerator.com/mcp"
   },
   "authentication": {
     "type": "none",

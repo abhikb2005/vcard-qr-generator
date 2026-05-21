@@ -3,7 +3,7 @@ import licenseHandler from './license-validate';
 
 const ADS_TXT_LINE = 'google.com, pub-1206702185649949, DIRECT, f08c47fec0942fa0\n';
 const API_VERSION = '2026-05-21';
-const BASE_URL = 'https://api.vcardqrcodegenerator.com';
+const BASE_URL = 'https://vcardqrcodegenerator.com';
 const SITE_URL = 'https://www.vcardqrcodegenerator.com';
 
 const CORS_HEADERS = {
@@ -224,6 +224,35 @@ function mcpManifest() {
   };
 }
 
+function agentDiscovery() {
+  return {
+    name: 'vCard QR Code Generator',
+    url: `${SITE_URL}/`,
+    description: 'Privacy-first vCard QR code generator for business cards, networking, resumes, badges, and branded contact sharing.',
+    capabilities: [
+      'create static vCard QR payloads',
+      'explain vCard QR code use cases',
+      'provide product metadata for AI agents',
+      'link to dynamic editable vCard QR dashboard',
+    ],
+    developer: {
+      docs: `${SITE_URL}/developers/`,
+      openapi: `${SITE_URL}/openapi.json`,
+      auth: `${SITE_URL}/developers/auth.html`,
+      webhooks: `${SITE_URL}/developers/webhooks.html`,
+    },
+    mcp: {
+      transport: 'streamable_http',
+      url: `${BASE_URL}/mcp`,
+      manifest: `${SITE_URL}/mcp/manifest.json`,
+    },
+    llms: {
+      summary: `${SITE_URL}/llms.txt`,
+      full: `${SITE_URL}/llms-full.txt`,
+    },
+  };
+}
+
 async function handleVCard(request) {
   if (request.method !== 'POST') {
     return json({ error: 'method_not_allowed', message: 'Use POST with a JSON body.' }, 405);
@@ -364,6 +393,20 @@ export default {
 
     if (url.pathname === '/mcp/manifest.json') {
       return json(mcpManifest());
+    }
+
+    if (url.pathname === '/.well-known/mcp') {
+      return json({
+        name: 'vcard-qr-code-generator',
+        url: `${BASE_URL}/mcp`,
+        transport: 'streamable_http',
+        manifest: `${SITE_URL}/mcp/manifest.json`,
+        openapi: `${SITE_URL}/openapi.json`,
+      });
+    }
+
+    if (url.pathname === '/.well-known/agent.json') {
+      return json(agentDiscovery());
     }
 
     return notFound();

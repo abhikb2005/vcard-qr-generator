@@ -16,15 +16,15 @@
 - Well-known MCP discovery: https://www.vcardqrcodegenerator.com/.well-known/mcp
 - Agent discovery file: https://www.vcardqrcodegenerator.com/.well-known/agent.json
 - Full agent documentation: https://www.vcardqrcodegenerator.com/llms-full.txt
-- Public API base URL: https://api.vcardqrcodegenerator.com
-- Streamable HTTP MCP endpoint: https://api.vcardqrcodegenerator.com/mcp
+- Public API base URL: https://vcardqrcodegenerator.com
+- Streamable HTTP MCP endpoint: https://vcardqrcodegenerator.com/mcp
 - Sitemap: https://www.vcardqrcodegenerator.com/sitemap.xml
 
 ## Developer Resources
 
-- REST API health check: GET https://api.vcardqrcodegenerator.com/v1/health
-- Product metadata API: GET https://api.vcardqrcodegenerator.com/v1/product
-- vCard payload API: POST https://api.vcardqrcodegenerator.com/v1/vcard
+- REST API health check: GET https://vcardqrcodegenerator.com/v1/health
+- Product metadata API: GET https://vcardqrcodegenerator.com/v1/product
+- vCard payload API: POST https://vcardqrcodegenerator.com/v1/vcard
 - MCP tools: get_product_context, create_vcard_payload
 - Auth docs: Public discovery and vCard payload endpoints do not require authentication. Account, billing, analytics, and dynamic QR actions should remain authenticated in the app experience before agents can modify user-owned resources.
 

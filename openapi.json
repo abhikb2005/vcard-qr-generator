@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://api.vcardqrcodegenerator.com",
+      "url": "https://vcardqrcodegenerator.com",
       "description": "Cloudflare Worker API"
     },
     {

@@ -24,7 +24,7 @@ The app dashboard at https://app.vcardqrcodegenerator.com/ is for dynamic vCard 
 
 ## Public API
 
-Base URL: https://api.vcardqrcodegenerator.com
+Base URL: https://vcardqrcodegenerator.com
 
 Public endpoints:
 
@@ -37,7 +37,7 @@ Public endpoints:
 ## API Example
 
 ```bash
-curl -X POST https://api.vcardqrcodegenerator.com/v1/vcard \
+curl -X POST https://vcardqrcodegenerator.com/v1/vcard \
   -H "Content-Type: application/json" \
   -d "{\"fullName\":\"Asha Rao\",\"organization\":\"Northstar Studio\",\"title\":\"Founder\",\"phone\":\"+1 555 0100\",\"email\":\"asha@example.com\",\"website\":\"https://example.com\"}"
 ```
@@ -46,7 +46,7 @@ The response includes `vcard`, `qrPayload`, `generatorUrl`, and `privacyNote`.
 
 ## MCP Tools
 
-MCP endpoint: https://api.vcardqrcodegenerator.com/mcp
+MCP endpoint: https://vcardqrcodegenerator.com/mcp
 
 Available public tools:
 
