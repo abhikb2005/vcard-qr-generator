@@ -1,0 +1,7 @@
+{
+  "name": "vcard-qr-code-generator",
+  "url": "https://api.vcardqrcodegenerator.com/mcp",
+  "transport": "streamable_http",
+  "manifest": "https://www.vcardqrcodegenerator.com/mcp/manifest.json",
+  "openapi": "https://www.vcardqrcodegenerator.com/openapi.json"
+}

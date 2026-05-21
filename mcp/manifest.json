@@ -1,0 +1,63 @@
+{
+  "name": "vcard-qr-code-generator",
+  "title": "vCard QR Code Generator MCP",
+  "description": "Agent tools for vCard QR Code Generator product discovery and vCard contact payload creation.",
+  "version": "2026-05-21",
+  "transport": {
+    "type": "streamable_http",
+    "url": "https://api.vcardqrcodegenerator.com/mcp"
+  },
+  "authentication": {
+    "type": "none",
+    "note": "Public read/generate tools only. Do not send sensitive contact data unless the user explicitly asks an agent to create a vCard payload."
+  },
+  "openapi": "https://www.vcardqrcodegenerator.com/openapi.json",
+  "tools": [
+    {
+      "name": "get_product_context",
+      "description": "Get product metadata, use cases, privacy posture, and integration URLs for vCard QR Code Generator.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "create_vcard_payload",
+      "description": "Create standard vCard text suitable for QR encoding from contact fields.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "Contact display name. Required."
+          },
+          "organization": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fullName"
+        ]
+      }
+    }
+  ]
+}

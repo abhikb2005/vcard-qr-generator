@@ -1,0 +1,196 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "vCard QR Code Generator API",
+    "version": "2026-05-21",
+    "description": "Public API for AI agents and developers working with vCard contact payloads and vCard QR Code Generator product metadata."
+  },
+  "servers": [
+    {
+      "url": "https://api.vcardqrcodegenerator.com",
+      "description": "Cloudflare Worker API"
+    },
+    {
+      "url": "https://www.vcardqrcodegenerator.com",
+      "description": "Static documentation host"
+    }
+  ],
+  "paths": {
+    "/v1/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Check API availability",
+        "responses": {
+          "200": {
+            "description": "API is reachable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/product": {
+      "get": {
+        "operationId": "getProductContext",
+        "summary": "Get product and integration metadata",
+        "responses": {
+          "200": {
+            "description": "Product metadata for AI agents and developers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductContext"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/vcard": {
+      "post": {
+        "operationId": "createVCardPayload",
+        "summary": "Create a vCard QR payload",
+        "description": "Returns standard vCard text suitable for QR encoding. The free website generator keeps QR rendering client-side for privacy.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VCardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "vCard payload created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VCardResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Health": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "service": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ok",
+          "service",
+          "version"
+        ]
+      },
+      "ProductContext": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "VCardRequest": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "Contact display name. Required."
+          },
+          "organization": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "website": {
+            "type": "string",
+            "format": "uri"
+          },
+          "address": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fullName"
+        ]
+      },
+      "VCardResponse": {
+        "type": "object",
+        "properties": {
+          "vcard": {
+            "type": "string"
+          },
+          "qrPayload": {
+            "type": "string"
+          },
+          "generatorUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "privacyNote": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "vcard",
+          "qrPayload",
+          "generatorUrl",
+          "privacyNote"
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error",
+          "message"
+        ]
+      }
+    }
+  }
+}

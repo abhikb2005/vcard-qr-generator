@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Cookie Consent (must load before any tracking) -->
+  <script src="/consent.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-E90B41BNEH');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard QR Code Generator Developer API Docs, OpenAPI, and MCP Server</title>
+  <meta name="description" content="Developer resources for vCard QR Code Generator: public REST API, OpenAPI spec, MCP manifest, and privacy-first integration notes for AI agents.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.vcardqrcodegenerator.com/developers/">
+  <meta property="og:title" content="vCard QR Code Generator Developer API Docs">
+  <meta property="og:description" content="OpenAPI, MCP manifest, and public API endpoints for AI agent integrations with vCard QR Code Generator.">
+  <link rel="canonical" href="https://www.vcardqrcodegenerator.com/developers/">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "vCard QR Code Generator Developer API Docs",
+      "description": "Developer resources for the vCard QR Code Generator API, OpenAPI specification, and MCP server manifest.",
+      "url": "https://www.vcardqrcodegenerator.com/developers/",
+      "about": ["OpenAPI", "MCP server", "vCard QR code API", "AI agent integration"],
+      "publisher": {
+        "@type": "Organization",
+        "name": "vCard QR Code Generator",
+        "url": "https://www.vcardqrcodegenerator.com/"
+      }
+    }
+  </script>
+  <style>
+    body { font-family: Inter, sans-serif; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <main>
+    <section class="bg-white border-b border-slate-200">
+      <div class="max-w-5xl mx-auto px-6 py-14">
+        <a class="text-sm font-semibold text-blue-700" href="/">vCard QR Code Generator</a>
+        <h1 class="mt-4 text-4xl font-extrabold tracking-tight">Developer API Docs, OpenAPI, and MCP Server</h1>
+        <p class="mt-4 max-w-3xl text-lg text-slate-700">Use these resources when an AI agent, automation, or internal workflow needs to understand vCard QR Code Generator programmatically. The free browser generator remains privacy-first: contact data can stay on the user's device.</p>
+      </div>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 py-10">
+      <h2 class="text-2xl font-bold">Predictable Agent URLs</h2>
+      <div class="mt-5 grid gap-4 md:grid-cols-2">
+        <a class="block rounded-lg border border-slate-200 bg-white p-5 hover:border-blue-400" href="/openapi.json">
+          <div class="font-semibold">OpenAPI spec</div>
+          <div class="mt-1 text-sm text-slate-600">https://www.vcardqrcodegenerator.com/openapi.json</div>
+        </a>
+        <a class="block rounded-lg border border-slate-200 bg-white p-5 hover:border-blue-400" href="/mcp/manifest.json">
+          <div class="font-semibold">MCP manifest</div>
+          <div class="mt-1 text-sm text-slate-600">https://www.vcardqrcodegenerator.com/mcp/manifest.json</div>
+        </a>
+        <a class="block rounded-lg border border-slate-200 bg-white p-5 hover:border-blue-400" href="/.well-known/agent.json">
+          <div class="font-semibold">Agent discovery file</div>
+          <div class="mt-1 text-sm text-slate-600">https://www.vcardqrcodegenerator.com/.well-known/agent.json</div>
+        </a>
+        <a class="block rounded-lg border border-slate-200 bg-white p-5 hover:border-blue-400" href="/llms-full.txt">
+          <div class="font-semibold">Full LLM docs</div>
+          <div class="mt-1 text-sm text-slate-600">https://www.vcardqrcodegenerator.com/llms-full.txt</div>
+        </a>
+        <a class="block rounded-lg border border-slate-200 bg-white p-5 hover:border-blue-400" href="https://api.vcardqrcodegenerator.com/v1/product">
+          <div class="font-semibold">Product metadata endpoint</div>
+          <div class="mt-1 text-sm text-slate-600">https://api.vcardqrcodegenerator.com/v1/product</div>
+        </a>
+        <a class="block rounded-lg border border-slate-200 bg-white p-5 hover:border-blue-400" href="https://api.vcardqrcodegenerator.com/mcp">
+          <div class="font-semibold">Streamable HTTP MCP endpoint</div>
+          <div class="mt-1 text-sm text-slate-600">https://api.vcardqrcodegenerator.com/mcp</div>
+        </a>
+        <a class="block rounded-lg border border-slate-200 bg-white p-5 hover:border-blue-400" href="/developers/auth.html">
+          <div class="font-semibold">Auth docs</div>
+          <div class="mt-1 text-sm text-slate-600">https://www.vcardqrcodegenerator.com/developers/auth.html</div>
+        </a>
+        <a class="block rounded-lg border border-slate-200 bg-white p-5 hover:border-blue-400" href="/developers/webhooks.html">
+          <div class="font-semibold">Webhooks docs</div>
+          <div class="mt-1 text-sm text-slate-600">https://www.vcardqrcodegenerator.com/developers/webhooks.html</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 py-8">
+      <h2 class="text-2xl font-bold">REST API</h2>
+      <p class="mt-3 text-slate-700">The first public API supports discovery and vCard payload generation. It returns standard vCard text for QR encoding instead of storing contact details on a server.</p>
+      <div class="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <div class="border-b border-slate-200 px-5 py-3 font-semibold">Create a vCard payload</div>
+        <pre class="p-5 text-sm bg-slate-950 text-slate-100">curl -X POST https://api.vcardqrcodegenerator.com/v1/vcard \
+  -H "Content-Type: application/json" \
+  -d "{\"fullName\":\"Asha Rao\",\"organization\":\"Northstar Studio\",\"title\":\"Founder\",\"phone\":\"+1 555 0100\",\"email\":\"asha@example.com\",\"website\":\"https://example.com\"}"</pre>
+      </div>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 py-8">
+      <h2 class="text-2xl font-bold">MCP Tools</h2>
+      <div class="mt-5 grid gap-4 md:grid-cols-2">
+        <div class="rounded-lg border border-slate-200 bg-white p-5">
+          <h3 class="font-semibold">get_product_context</h3>
+          <p class="mt-2 text-sm text-slate-700">Returns product positioning, privacy notes, use cases, and integration URLs for agents evaluating QR code generator options.</p>
+        </div>
+        <div class="rounded-lg border border-slate-200 bg-white p-5">
+          <h3 class="font-semibold">create_vcard_payload</h3>
+          <p class="mt-2 text-sm text-slate-700">Accepts contact fields and returns vCard text suitable for QR encoding. The tool does not create an account or store the contact.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 py-8">
+      <h2 class="text-2xl font-bold">Auth and Access</h2>
+      <p class="mt-3 text-slate-700">Public discovery and vCard payload tools do not require authentication. Future account, dynamic QR, analytics, billing, or webhook endpoints should use the app subdomain and documented authenticated flows before agents are allowed to modify user-owned QR codes.</p>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 py-8">
+      <h2 class="text-2xl font-bold">Integration Guides</h2>
+      <ul class="mt-4 space-y-3 text-slate-700">
+        <li><a class="font-semibold text-blue-700" href="/blog/canva-qr-alternative/">Canva QR Code Generator Alternative</a> for business card QR use cases.</li>
+        <li><a class="font-semibold text-blue-700" href="/blog/adobe-express-qr-alternative/">Adobe Express QR Code Generator Alternative</a> for branded QR workflows.</li>
+        <li><a class="font-semibold text-blue-700" href="/bulk-qr-code.html">Bulk vCard QR Code Generator</a> for teams creating many contact QR codes from CSV files.</li>
+        <li><a class="font-semibold text-blue-700" href="/logo-qr-code.html">Logo QR Code Generator</a> for branded contact QR codes.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div class="max-w-5xl mx-auto px-6 py-8 text-sm text-slate-600">
+      <a class="font-semibold text-blue-700" href="/">Free vCard QR Code Generator</a>
+      <span class="mx-2">|</span>
+      <a class="font-semibold text-blue-700" href="/llms.txt">llms.txt</a>
+    </div>
+  </footer>
+</body>
+</html>
