@@ -34,6 +34,7 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 | 2026-05-18 | qr code campaign tracking | `/blog/qr-code-campaign-tracking/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | Launching Next action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-05-19 | event qr code tracking | `/blog/event-qr-code-tracking/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | Launching Next action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-05-20 | qr code lead generation | `/blog/qr-code-lead-generation/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | Launching Next action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
+| 2026-05-21 | trackable qr code | `/blog/trackable-qr-code/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | Launching Next action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 
 ## Directory Submission Rules
 
