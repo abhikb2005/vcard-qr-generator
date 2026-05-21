@@ -191,6 +191,10 @@ function openApiSpec() {
               description: 'Missing or invalid input',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
+            '405': {
+              description: 'Method not allowed',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
           },
         },
       },
@@ -210,6 +214,28 @@ function openApiSpec() {
             },
             '400': {
               description: 'Structured JSON error response',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
+            '404': {
+              description: 'Route or resource not found',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
+            '405': {
+              description: 'Method not allowed',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
+            '429': {
+              description: 'Rate limit guidance for future protected endpoints',
+              headers: {
+                'Retry-After': {
+                  schema: { type: 'integer' },
+                  description: 'Seconds to wait before retrying.',
+                },
+              },
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
+            '500': {
+              description: 'Unexpected server error',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
           },
@@ -369,6 +395,57 @@ function agentDiscovery() {
     llms: {
       summary: `${SITE_URL}/llms.txt`,
       full: `${SITE_URL}/llms-full.txt`,
+    },
+  };
+}
+
+function mcpServerCard() {
+  return {
+    name: 'vcard-qr-code-generator',
+    displayName: 'vCard QR Code Generator MCP',
+    description: 'Public MCP tools for vCard QR Code Generator product context and vCard contact payload creation.',
+    version: API_VERSION,
+    serverUrl: `${BASE_URL}/mcp`,
+    homepage: `${SITE_URL}/`,
+    docsUrl: `${SITE_URL}/developers/`,
+    openApiUrl: `${SITE_URL}/openapi.json`,
+    tools: mcpManifest().tools.map((tool) => ({
+      name: tool.name,
+      description: tool.description,
+      inputSchema: tool.inputSchema,
+      annotations: {
+        readOnlyHint: tool.name === 'get_product_context',
+        destructiveHint: false,
+        idempotentHint: true,
+      },
+    })),
+  };
+}
+
+function apiIndex() {
+  return {
+    name: 'vCard QR Code Generator API',
+    version: API_VERSION,
+    docsUrl: `${SITE_URL}/developers/`,
+    openApiUrl: `${BASE_URL}/openapi.json`,
+    errorContract: {
+      contentType: 'application/json',
+      shape: {
+        error: {
+          code: 'string',
+          message: 'string',
+          hint: 'string',
+          docsUrl: 'string',
+          status: 'number',
+        },
+      },
+    },
+    endpoints: {
+      health: `${BASE_URL}/api/v1/health`,
+      product: `${BASE_URL}/api/v1/product`,
+      vcard: `${BASE_URL}/api/v1/vcard`,
+      stream: `${BASE_URL}/api/v1/stream`,
+      mcp: `${BASE_URL}/mcp`,
     },
   };
 }
@@ -533,6 +610,10 @@ export default {
       return json(openApiSpec());
     }
 
+    if (url.pathname === '/api' || url.pathname === '/api/' || url.pathname === '/api/v1' || url.pathname === '/api/v1/') {
+      return json(apiIndex());
+    }
+
     if (apiPath === '/v1/health') {
       return json({ ok: true, service: 'vcard-qr-generator-api', version: API_VERSION });
     }
@@ -565,6 +646,10 @@ export default {
         manifest: `${SITE_URL}/mcp/manifest.json`,
         openapi: `${SITE_URL}/openapi.json`,
       });
+    }
+
+    if (url.pathname === '/.well-known/mcp/server-card.json') {
+      return json(mcpServerCard());
     }
 
     if (url.pathname === '/.well-known/agent.json') {

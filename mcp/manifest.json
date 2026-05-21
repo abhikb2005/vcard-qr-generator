@@ -13,10 +13,16 @@
   },
   "openapi": "https://www.vcardqrcodegenerator.com/openapi.json",
   "streaming": "https://vcardqrcodegenerator.com/v1/stream",
+  "serverCard": "https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json",
   "tools": [
     {
       "name": "get_product_context",
       "description": "Get product metadata, use cases, privacy posture, and integration URLs for vCard QR Code Generator.",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true
+      },
       "inputSchema": {
         "type": "object",
         "properties": {},
@@ -26,6 +32,11 @@
     {
       "name": "create_vcard_payload",
       "description": "Create standard vCard text suitable for QR encoding from contact fields.",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true
+      },
       "inputSchema": {
         "type": "object",
         "properties": {

@@ -4,5 +4,6 @@
   "transport": "streamable_http",
   "manifest": "https://www.vcardqrcodegenerator.com/mcp/manifest.json",
   "openapi": "https://www.vcardqrcodegenerator.com/openapi.json",
-  "streaming": "https://vcardqrcodegenerator.com/v1/stream"
+  "streaming": "https://vcardqrcodegenerator.com/v1/stream",
+  "serverCard": "https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json"
 }
