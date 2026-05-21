@@ -17,6 +17,9 @@ const RATE_LIMIT_HEADERS = {
   'ratelimit-limit': '60',
   'ratelimit-remaining': '59',
   'ratelimit-reset': '60',
+  'x-ratelimit-limit': '60',
+  'x-ratelimit-remaining': '59',
+  'x-ratelimit-reset': '60',
 };
 
 function notFound() {

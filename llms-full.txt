@@ -18,11 +18,14 @@ The app dashboard at https://app.vcardqrcodegenerator.com/ is for dynamic vCard 
 - Auth docs: https://www.vcardqrcodegenerator.com/developers/auth.html
 - Webhooks docs: https://www.vcardqrcodegenerator.com/developers/webhooks.html
 - Streaming API docs: https://www.vcardqrcodegenerator.com/developers/streaming.html
+- Rate limits and deprecation policy: https://www.vcardqrcodegenerator.com/developers/rate-limits.html
 - OpenAPI spec: https://www.vcardqrcodegenerator.com/openapi.json
 - MCP manifest: https://www.vcardqrcodegenerator.com/mcp/manifest.json
 - Well-known MCP discovery: https://www.vcardqrcodegenerator.com/.well-known/mcp
 - MCP server card: https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json
 - Agent discovery file: https://www.vcardqrcodegenerator.com/.well-known/agent.json
+- Markdown homepage fallback: https://www.vcardqrcodegenerator.com/index.md
+- Agent coding instructions: https://www.vcardqrcodegenerator.com/AGENTS.md
 - Digital business card QR code generator guide: https://www.vcardqrcodegenerator.com/guides/digital-business-card-qr-code-generator/
 - Logo QR code generator: https://www.vcardqrcodegenerator.com/logo-qr-code.html
 - Bulk vCard QR code generator: https://www.vcardqrcodegenerator.com/bulk-qr-code.html

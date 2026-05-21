@@ -15,6 +15,7 @@
 - Auth docs: https://www.vcardqrcodegenerator.com/developers/auth.html
 - Webhooks docs: https://www.vcardqrcodegenerator.com/developers/webhooks.html
 - Streaming API docs: https://www.vcardqrcodegenerator.com/developers/streaming.html
+- Rate limits and deprecation policy: https://www.vcardqrcodegenerator.com/developers/rate-limits.html
 - Digital business card QR code generator guide: https://www.vcardqrcodegenerator.com/guides/digital-business-card-qr-code-generator/
 - OpenAPI spec: https://www.vcardqrcodegenerator.com/openapi.json
 - MCP manifest: https://www.vcardqrcodegenerator.com/mcp/manifest.json
@@ -22,6 +23,8 @@
 - MCP server card: https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json
 - Agent discovery file: https://www.vcardqrcodegenerator.com/.well-known/agent.json
 - Full agent documentation: https://www.vcardqrcodegenerator.com/llms-full.txt
+- Markdown homepage fallback: https://www.vcardqrcodegenerator.com/index.md
+- Agent coding instructions: https://www.vcardqrcodegenerator.com/AGENTS.md
 - Public API base URL: https://vcardqrcodegenerator.com
 - Streamable HTTP MCP endpoint: https://vcardqrcodegenerator.com/mcp
 - Sitemap: https://www.vcardqrcodegenerator.com/sitemap.xml

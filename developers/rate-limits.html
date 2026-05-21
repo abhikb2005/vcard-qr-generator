@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Cookie Consent (must load before any tracking) -->
+  <script src="/consent.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-E90B41BNEH');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard QR Code Generator API Rate Limits and Deprecation Policy</title>
+  <meta name="description" content="Rate limit headers, retry guidance, Idempotency-Key support, and API deprecation policy for the vCard QR Code Generator developer API.">
+  <link rel="canonical" href="https://www.vcardqrcodegenerator.com/developers/rate-limits.html">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>body { font-family: Inter, sans-serif; }</style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <main class="mx-auto max-w-4xl px-6 py-12">
+    <a href="/developers/" class="text-sm font-semibold text-blue-700">Developer docs</a>
+    <h1 class="mt-3 text-4xl font-extrabold">API Rate Limits and Deprecation Policy</h1>
+    <p class="mt-4 text-lg text-slate-700">vCard QR Code Generator publishes retry and throttling signals so AI agents can call the API safely.</p>
+
+    <section class="mt-8">
+      <h2 class="text-2xl font-bold">Rate Limit Headers</h2>
+      <p class="mt-3 text-slate-700">JSON API responses include RFC-style rate limit headers and legacy aliases:</p>
+      <ul class="mt-4 list-disc space-y-2 pl-6 text-slate-700">
+        <li><code>RateLimit-Limit</code> and <code>X-RateLimit-Limit</code></li>
+        <li><code>RateLimit-Remaining</code> and <code>X-RateLimit-Remaining</code></li>
+        <li><code>RateLimit-Reset</code> and <code>X-RateLimit-Reset</code></li>
+      </ul>
+      <p class="mt-3 text-slate-700">If a future protected endpoint returns <code>429</code>, agents should wait for <code>Retry-After</code> seconds, then retry with exponential backoff.</p>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-2xl font-bold">Idempotency-Key</h2>
+      <p class="mt-3 text-slate-700">Mutation requests can include an optional <code>Idempotency-Key</code> header. The current vCard payload endpoint is deterministic and echoes the key when supplied so agents can correlate safe retries.</p>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-2xl font-bold">Versioning and Deprecation</h2>
+      <p class="mt-3 text-slate-700">The public API uses URL versioning under <code>/v1/</code>. Backward-incompatible changes will use a new version path. Deprecated endpoints will be documented here and in the OpenAPI spec before removal.</p>
+      <p class="mt-3 text-slate-700">When an endpoint is scheduled for removal, responses may include <code>Deprecation</code> and <code>Sunset</code> headers plus a documentation link with migration guidance.</p>
+    </section>
+  </main>
+</body>
+</html>

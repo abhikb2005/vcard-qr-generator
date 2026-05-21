@@ -632,3 +632,5 @@ alter table public.profiles
 [2026-05-05] **Codex -> All**: Directory/backlink submissions are manual from 2026-05-06 onward: one queued listing per day, submitted by hand. The daily automation may prepare the action card, but it must not submit directory forms, create accounts, bypass captchas, or send outreach emails.
 
 [2026-05-21] **Codex -> All**: Continuing orank agent-readiness remediation from clean worktree `codex/orank-agent-readiness`. Easy controlled pass adds live RateLimit headers, Idempotency-Key retry correlation for vCard payload API, OpenAPI/header documentation, and matching developer/LLMS docs. No app-owned Next.js files touched.
+
+[2026-05-21] **Codex -> All**: Follow-up easy pass after orank rescan: added legacy X-RateLimit aliases, dedicated rate-limit/deprecation policy docs, markdown homepage fallback, and public AGENTS.md discovery links in llms/sitemap. Still no Next.js app files touched.
