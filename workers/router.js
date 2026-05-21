@@ -1020,6 +1020,9 @@ export default {
       if (wantsMarkdown(request)) {
         return markdown(homepageMarkdown());
       }
+      if (url.hostname === 'www.vcardqrcodegenerator.com') {
+        return fetch(`${SITE_URL}/index.html`, request);
+      }
       return Response.redirect(`${SITE_URL}/`, 301);
     }
 

@@ -5,6 +5,7 @@ compatibility_date = "2024-06-20"
 routes = [
   { pattern = "api.vcardqrcodegenerator.com/*", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/", zone_name = "vcardqrcodegenerator.com" },
+  { pattern = "www.vcardqrcodegenerator.com/", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/ads.txt", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/v1/*", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/api", zone_name = "vcardqrcodegenerator.com" },
