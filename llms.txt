@@ -11,6 +11,8 @@
 - Developer API docs: https://www.vcardqrcodegenerator.com/developers/
 - Auth docs: https://www.vcardqrcodegenerator.com/developers/auth.html
 - Webhooks docs: https://www.vcardqrcodegenerator.com/developers/webhooks.html
+- Streaming API docs: https://www.vcardqrcodegenerator.com/developers/streaming.html
+- Digital business card QR code generator guide: https://www.vcardqrcodegenerator.com/guides/digital-business-card-qr-code-generator/
 - OpenAPI spec: https://www.vcardqrcodegenerator.com/openapi.json
 - MCP manifest: https://www.vcardqrcodegenerator.com/mcp/manifest.json
 - Well-known MCP discovery: https://www.vcardqrcodegenerator.com/.well-known/mcp
@@ -23,8 +25,11 @@
 ## Developer Resources
 
 - REST API health check: GET https://vcardqrcodegenerator.com/v1/health
+- REST API health check alias: GET https://vcardqrcodegenerator.com/api/v1/health
 - Product metadata API: GET https://vcardqrcodegenerator.com/v1/product
 - vCard payload API: POST https://vcardqrcodegenerator.com/v1/vcard
+- Streaming API: GET https://vcardqrcodegenerator.com/v1/stream
+- JSON errors: API errors return error.code, error.message, error.hint, error.docsUrl, and error.status.
 - MCP tools: get_product_context, create_vcard_payload
 - Auth docs: Public discovery and vCard payload endpoints do not require authentication. Account, billing, analytics, and dynamic QR actions should remain authenticated in the app experience before agents can modify user-owned resources.
 

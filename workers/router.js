@@ -14,7 +14,7 @@ const CORS_HEADERS = {
 };
 
 function notFound() {
-  return json({ error: 'not_found', message: 'Not found' }, 404);
+  return apiError('not_found', 'Not found', 404, 'Check the API path and use the OpenAPI spec for supported routes.');
 }
 
 function json(body, status = 200, extraHeaders = {}) {
@@ -27,6 +27,35 @@ function json(body, status = 200, extraHeaders = {}) {
       ...extraHeaders,
     },
   });
+}
+
+function apiError(code, message, status = 400, hint = 'See the developer docs for valid request formats.', extra = {}) {
+  return json({
+    error: {
+      code,
+      message,
+      hint,
+      docsUrl: `${SITE_URL}/developers/`,
+      status,
+      ...extra,
+    },
+  }, status);
+}
+
+function jsonRpcError(id, code, message, status = 400, data = {}) {
+  return json({
+    jsonrpc: '2.0',
+    id,
+    error: {
+      code,
+      message,
+      data: {
+        hint: 'Use tools/list to inspect available MCP tools and required schemas.',
+        docsUrl: `${SITE_URL}/developers/`,
+        ...data,
+      },
+    },
+  }, status);
 }
 
 function buildVCard(input = {}) {
@@ -94,7 +123,6 @@ function openApiSpec() {
     },
     servers: [
       { url: BASE_URL, description: 'Cloudflare Worker API' },
-      { url: SITE_URL, description: 'Static documentation host' },
     ],
     paths: {
       '/v1/health': {
@@ -109,10 +137,34 @@ function openApiSpec() {
           },
         },
       },
+      '/api/v1/health': {
+        get: {
+          operationId: 'getHealthApiAlias',
+          summary: 'Check API availability through the /api alias',
+          responses: {
+            '200': {
+              description: 'API is reachable',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Health' } } },
+            },
+          },
+        },
+      },
       '/v1/product': {
         get: {
           operationId: 'getProductContext',
           summary: 'Get product and integration metadata',
+          responses: {
+            '200': {
+              description: 'Product metadata for AI agents and developers',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/ProductContext' } } },
+            },
+          },
+        },
+      },
+      '/api/v1/product': {
+        get: {
+          operationId: 'getProductContextApiAlias',
+          summary: 'Get product and integration metadata through the /api alias',
           responses: {
             '200': {
               description: 'Product metadata for AI agents and developers',
@@ -138,6 +190,65 @@ function openApiSpec() {
             '400': {
               description: 'Missing or invalid input',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
+          },
+        },
+      },
+      '/api/v1/vcard': {
+        post: {
+          operationId: 'createVCardPayloadApiAlias',
+          summary: 'Create a vCard QR payload through the /api alias',
+          description: 'Returns standard vCard text suitable for QR encoding. Errors are always structured JSON with error.code, message, hint, docsUrl, and status.',
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/VCardRequest' } } },
+          },
+          responses: {
+            '200': {
+              description: 'vCard payload created',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/VCardResponse' } } },
+            },
+            '400': {
+              description: 'Structured JSON error response',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
+          },
+        },
+      },
+      '/v1/stream': {
+        get: {
+          operationId: 'streamProgress',
+          summary: 'Stream API progress events',
+          description: 'Returns Server-Sent Events for agent workflows that need progress feedback. Current public operations are short, so this endpoint demonstrates the streaming contract agents can rely on for longer-running future jobs.',
+          parameters: [
+            {
+              name: 'operation',
+              in: 'query',
+              required: false,
+              schema: { type: 'string', default: 'create_vcard_payload' },
+              description: 'Operation name to stream progress for.',
+            },
+          ],
+          responses: {
+            '200': {
+              description: 'SSE progress stream',
+              content: {
+                'text/event-stream': {
+                  schema: { type: 'string', example: 'event: progress\\ndata: {"step":"validate","percent":25}\\n\\n' },
+                },
+              },
+            },
+          },
+        },
+      },
+      '/api/v1/stream': {
+        get: {
+          operationId: 'streamProgressApiAlias',
+          summary: 'Stream API progress events through the /api alias',
+          responses: {
+            '200': {
+              description: 'SSE progress stream',
+              content: { 'text/event-stream': { schema: { type: 'string' } } },
             },
           },
         },
@@ -185,10 +296,19 @@ function openApiSpec() {
         Error: {
           type: 'object',
           properties: {
-            error: { type: 'string' },
-            message: { type: 'string' },
+            error: {
+              type: 'object',
+              properties: {
+                code: { type: 'string' },
+                message: { type: 'string' },
+                hint: { type: 'string' },
+                docsUrl: { type: 'string', format: 'uri' },
+                status: { type: 'integer' },
+              },
+              required: ['code', 'message', 'hint', 'docsUrl', 'status'],
+            },
           },
-          required: ['error', 'message'],
+          required: ['error'],
         },
       },
     },
@@ -255,19 +375,23 @@ function agentDiscovery() {
 
 async function handleVCard(request) {
   if (request.method !== 'POST') {
-    return json({ error: 'method_not_allowed', message: 'Use POST with a JSON body.' }, 405);
+    return apiError('method_not_allowed', 'Use POST with a JSON body.', 405, 'Send contact fields as JSON to /v1/vcard or /api/v1/vcard.', {
+      allowedMethods: ['POST', 'OPTIONS'],
+    });
   }
 
   let input;
   try {
     input = await request.json();
   } catch {
-    return json({ error: 'invalid_json', message: 'Request body must be valid JSON.' }, 400);
+    return apiError('invalid_json', 'Request body must be valid JSON.', 400, 'Set Content-Type: application/json and send a JSON object.');
   }
 
   const vcard = buildVCard(input);
   if (!vcard) {
-    return json({ error: 'missing_full_name', message: 'fullName is required.' }, 400);
+    return apiError('missing_full_name', 'fullName is required.', 400, 'Include a non-empty fullName field in the request body.', {
+      field: 'fullName',
+    });
   }
 
   return json({
@@ -278,20 +402,53 @@ async function handleVCard(request) {
   });
 }
 
+function streamProgress(url) {
+  const encoder = new TextEncoder();
+  const operation = url.searchParams.get('operation') || 'create_vcard_payload';
+  const events = [
+    { event: 'progress', data: { operation, step: 'accepted', percent: 10, message: 'Streaming request accepted.' } },
+    { event: 'progress', data: { operation, step: 'validated', percent: 45, message: 'Inputs and agent contract validated.' } },
+    { event: 'progress', data: { operation, step: 'ready', percent: 85, message: 'Ready to generate or call the requested API operation.' } },
+    { event: 'complete', data: { operation, percent: 100, message: 'Streaming contract complete.', docsUrl: `${SITE_URL}/developers/streaming.html` } },
+  ];
+
+  const body = new ReadableStream({
+    start(controller) {
+      for (const item of events) {
+        controller.enqueue(encoder.encode(`event: ${item.event}\n`));
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify(item.data)}\n\n`));
+      }
+      controller.close();
+    },
+  });
+
+  return new Response(body, {
+    status: 200,
+    headers: {
+      ...CORS_HEADERS,
+      'content-type': 'text/event-stream; charset=utf-8',
+      'cache-control': 'no-store',
+      connection: 'keep-alive',
+    },
+  });
+}
+
 async function handleMcp(request) {
   if (request.method === 'GET') {
     return json(mcpManifest());
   }
 
   if (request.method !== 'POST') {
-    return json({ error: 'method_not_allowed', message: 'Use GET for the manifest or POST for JSON-RPC.' }, 405);
+    return apiError('method_not_allowed', 'Use GET for the manifest or POST for JSON-RPC.', 405, 'Call GET /mcp for discovery or POST /mcp with a JSON-RPC body.', {
+      allowedMethods: ['GET', 'POST', 'OPTIONS'],
+    });
   }
 
   let rpc;
   try {
     rpc = await request.json();
   } catch {
-    return json({ jsonrpc: '2.0', id: null, error: { code: -32700, message: 'Parse error' } }, 400);
+    return jsonRpcError(null, -32700, 'Parse error', 400);
   }
 
   const id = rpc.id ?? null;
@@ -328,7 +485,7 @@ async function handleMcp(request) {
     if (name === 'create_vcard_payload') {
       const vcard = buildVCard(args);
       if (!vcard) {
-        return json({ jsonrpc: '2.0', id, error: { code: -32602, message: 'fullName is required.' } }, 400);
+        return jsonRpcError(id, -32602, 'fullName is required.', 400, { field: 'fullName' });
       }
       return json({
         jsonrpc: '2.0',
@@ -340,12 +497,13 @@ async function handleMcp(request) {
     }
   }
 
-  return json({ jsonrpc: '2.0', id, error: { code: -32601, message: 'Method not found' } }, 404);
+  return jsonRpcError(id, -32601, 'Method not found', 404);
 }
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    const apiPath = url.pathname.startsWith('/api/v1/') ? url.pathname.slice(4) : url.pathname;
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
@@ -375,16 +533,20 @@ export default {
       return json(openApiSpec());
     }
 
-    if (url.pathname === '/v1/health') {
+    if (apiPath === '/v1/health') {
       return json({ ok: true, service: 'vcard-qr-generator-api', version: API_VERSION });
     }
 
-    if (url.pathname === '/v1/product') {
+    if (apiPath === '/v1/product') {
       return json(getProductContext());
     }
 
-    if (url.pathname === '/v1/vcard') {
+    if (apiPath === '/v1/vcard') {
       return handleVCard(request);
+    }
+
+    if (apiPath === '/v1/stream') {
+      return streamProgress(url);
     }
 
     if (url.pathname === '/mcp' || url.pathname === '/mcp/') {

@@ -14,10 +14,12 @@ The app dashboard at https://app.vcardqrcodegenerator.com/ is for dynamic vCard 
 - Developer docs: https://www.vcardqrcodegenerator.com/developers/
 - Auth docs: https://www.vcardqrcodegenerator.com/developers/auth.html
 - Webhooks docs: https://www.vcardqrcodegenerator.com/developers/webhooks.html
+- Streaming API docs: https://www.vcardqrcodegenerator.com/developers/streaming.html
 - OpenAPI spec: https://www.vcardqrcodegenerator.com/openapi.json
 - MCP manifest: https://www.vcardqrcodegenerator.com/mcp/manifest.json
 - Well-known MCP discovery: https://www.vcardqrcodegenerator.com/.well-known/mcp
 - Agent discovery file: https://www.vcardqrcodegenerator.com/.well-known/agent.json
+- Digital business card QR code generator guide: https://www.vcardqrcodegenerator.com/guides/digital-business-card-qr-code-generator/
 - Logo QR code generator: https://www.vcardqrcodegenerator.com/logo-qr-code.html
 - Bulk vCard QR code generator: https://www.vcardqrcodegenerator.com/bulk-qr-code.html
 - Dynamic vCard dashboard: https://app.vcardqrcodegenerator.com/
@@ -31,8 +33,24 @@ Public endpoints:
 - GET /v1/health checks API availability.
 - GET /v1/product returns product metadata, use cases, privacy notes, and integration URLs.
 - POST /v1/vcard returns a standard vCard text payload suitable for QR encoding.
+- GET /v1/stream returns Server-Sent Events progress updates for agent workflows.
+- GET /api/v1/health, GET /api/v1/product, POST /api/v1/vcard, and GET /api/v1/stream are supported aliases for agents that expect API paths under /api.
 - GET /mcp returns the MCP manifest.
 - POST /mcp accepts JSON-RPC MCP requests for initialize, tools/list, and tools/call.
+
+Errors from REST endpoints are structured JSON:
+
+```json
+{
+  "error": {
+    "code": "missing_full_name",
+    "message": "fullName is required.",
+    "hint": "Include a non-empty fullName field in the request body.",
+    "docsUrl": "https://www.vcardqrcodegenerator.com/developers/",
+    "status": 400
+  }
+}
+```
 
 ## API Example
 
@@ -43,6 +61,16 @@ curl -X POST https://vcardqrcodegenerator.com/v1/vcard \
 ```
 
 The response includes `vcard`, `qrPayload`, `generatorUrl`, and `privacyNote`.
+
+## Streaming
+
+Streaming endpoint: https://vcardqrcodegenerator.com/v1/stream
+
+```bash
+curl -N "https://vcardqrcodegenerator.com/v1/stream?operation=create_vcard_payload"
+```
+
+The stream uses `text/event-stream` and emits `progress` and `complete` events with JSON `data` payloads.
 
 ## MCP Tools
 

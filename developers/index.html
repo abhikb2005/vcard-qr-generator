@@ -84,17 +84,31 @@
           <div class="font-semibold">Webhooks docs</div>
           <div class="mt-1 text-sm text-slate-600">https://www.vcardqrcodegenerator.com/developers/webhooks.html</div>
         </a>
+        <a class="block rounded-lg border border-slate-200 bg-white p-5 hover:border-blue-400" href="/developers/streaming.html">
+          <div class="font-semibold">Streaming API docs</div>
+          <div class="mt-1 text-sm text-slate-600">https://www.vcardqrcodegenerator.com/developers/streaming.html</div>
+        </a>
       </div>
     </section>
 
     <section class="max-w-5xl mx-auto px-6 py-8">
       <h2 class="text-2xl font-bold">REST API</h2>
       <p class="mt-3 text-slate-700">The first public API supports discovery and vCard payload generation. It returns standard vCard text for QR encoding instead of storing contact details on a server.</p>
+      <p class="mt-3 text-slate-700">All API errors use structured JSON with <code>error.code</code>, <code>error.message</code>, <code>error.hint</code>, <code>error.docsUrl</code>, and <code>error.status</code>. Agents can call either <code>/v1/*</code> or the common <code>/api/v1/*</code> aliases.</p>
       <div class="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-white">
         <div class="border-b border-slate-200 px-5 py-3 font-semibold">Create a vCard payload</div>
         <pre class="p-5 text-sm bg-slate-950 text-slate-100">curl -X POST https://vcardqrcodegenerator.com/v1/vcard \
   -H "Content-Type: application/json" \
   -d "{\"fullName\":\"Asha Rao\",\"organization\":\"Northstar Studio\",\"title\":\"Founder\",\"phone\":\"+1 555 0100\",\"email\":\"asha@example.com\",\"website\":\"https://example.com\"}"</pre>
+      </div>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 py-8">
+      <h2 class="text-2xl font-bold">Streaming Support</h2>
+      <p class="mt-3 text-slate-700">Long-running agent workflows can use Server-Sent Events for progress feedback at <code>GET https://vcardqrcodegenerator.com/v1/stream</code> or <code>GET https://vcardqrcodegenerator.com/api/v1/stream</code>.</p>
+      <div class="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <div class="border-b border-slate-200 px-5 py-3 font-semibold">Stream progress events</div>
+        <pre class="p-5 text-sm bg-slate-950 text-slate-100">curl -N "https://vcardqrcodegenerator.com/v1/stream?operation=create_vcard_payload"</pre>
       </div>
     </section>
 
@@ -124,6 +138,7 @@
         <li><a class="font-semibold text-blue-700" href="/blog/adobe-express-qr-alternative/">Adobe Express QR Code Generator Alternative</a> for branded QR workflows.</li>
         <li><a class="font-semibold text-blue-700" href="/bulk-qr-code.html">Bulk vCard QR Code Generator</a> for teams creating many contact QR codes from CSV files.</li>
         <li><a class="font-semibold text-blue-700" href="/logo-qr-code.html">Logo QR Code Generator</a> for branded contact QR codes.</li>
+        <li><a class="font-semibold text-blue-700" href="/guides/digital-business-card-qr-code-generator/">Digital Business Card QR Code Generator Guide</a> for category-level comparison and selection guidance.</li>
       </ul>
     </section>
   </main>

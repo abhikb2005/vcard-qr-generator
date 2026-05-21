@@ -1,7 +1,7 @@
 {
   "name": "vcard-qr-code-generator",
   "title": "vCard QR Code Generator MCP",
-  "description": "Agent tools for vCard QR Code Generator product discovery and vCard contact payload creation.",
+  "description": "Agent tools for vCard QR Code Generator product discovery and vCard contact payload creation. REST APIs also support structured JSON errors and SSE streaming progress.",
   "version": "2026-05-21",
   "transport": {
     "type": "streamable_http",
@@ -12,6 +12,7 @@
     "note": "Public read/generate tools only. Do not send sensitive contact data unless the user explicitly asks an agent to create a vCard payload."
   },
   "openapi": "https://www.vcardqrcodegenerator.com/openapi.json",
+  "streaming": "https://vcardqrcodegenerator.com/v1/stream",
   "tools": [
     {
       "name": "get_product_context",

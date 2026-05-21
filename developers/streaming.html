@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Cookie Consent (must load before any tracking) -->
+  <script src="/consent.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-E90B41BNEH');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard QR Code Generator Streaming API Docs</title>
+  <meta name="description" content="Streaming API documentation for vCard QR Code Generator, including Server-Sent Events progress responses for AI agent workflows.">
+  <link rel="canonical" href="https://www.vcardqrcodegenerator.com/developers/streaming.html">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: Inter, sans-serif; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <a class="text-sm font-semibold text-blue-700" href="/developers/">Developer docs</a>
+    <h1 class="mt-4 text-4xl font-extrabold">Streaming API Docs</h1>
+    <p class="mt-4 text-lg text-slate-700">vCard QR Code Generator supports Server-Sent Events for agent workflows that need progress feedback instead of waiting for one final response.</p>
+
+    <section class="mt-10 rounded-lg border border-slate-200 bg-white p-6">
+      <h2 class="text-2xl font-bold">SSE Endpoint</h2>
+      <p class="mt-3 text-slate-700">Use <code>GET https://vcardqrcodegenerator.com/v1/stream</code> or <code>GET https://vcardqrcodegenerator.com/api/v1/stream</code>. The response content type is <code>text/event-stream</code>.</p>
+      <pre class="mt-5 rounded-lg bg-slate-950 p-5 text-sm text-slate-100">curl -N "https://vcardqrcodegenerator.com/v1/stream?operation=create_vcard_payload"</pre>
+    </section>
+
+    <section class="mt-8 rounded-lg border border-slate-200 bg-white p-6">
+      <h2 class="text-2xl font-bold">Event Shape</h2>
+      <pre class="mt-5 rounded-lg bg-slate-950 p-5 text-sm text-slate-100">event: progress
+data: {"operation":"create_vcard_payload","step":"validated","percent":45,"message":"Inputs and agent contract validated."}
+
+event: complete
+data: {"operation":"create_vcard_payload","percent":100,"message":"Streaming contract complete."}</pre>
+      <p class="mt-4 text-slate-700">Agents can parse each <code>data</code> object as JSON and show progress to the user while long-running future QR workflows execute.</p>
+    </section>
+
+    <section class="mt-8 rounded-lg border border-slate-200 bg-white p-6">
+      <h2 class="text-2xl font-bold">JSON Error Contract</h2>
+      <p class="mt-3 text-slate-700">API errors are returned as JSON with <code>error.code</code>, <code>error.message</code>, <code>error.hint</code>, <code>error.docsUrl</code>, and <code>error.status</code>. Agents should use the hint field to recover automatically.</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -6,13 +6,16 @@
     "create static vCard QR payloads",
     "explain vCard QR code use cases",
     "provide product metadata for AI agents",
-    "link to dynamic editable vCard QR dashboard"
+    "link to dynamic editable vCard QR dashboard",
+    "return structured JSON errors",
+    "stream progress with Server-Sent Events"
   ],
   "developer": {
     "docs": "https://www.vcardqrcodegenerator.com/developers/",
     "openapi": "https://www.vcardqrcodegenerator.com/openapi.json",
     "auth": "https://www.vcardqrcodegenerator.com/developers/auth.html",
-    "webhooks": "https://www.vcardqrcodegenerator.com/developers/webhooks.html"
+    "webhooks": "https://www.vcardqrcodegenerator.com/developers/webhooks.html",
+    "streaming": "https://www.vcardqrcodegenerator.com/developers/streaming.html"
   },
   "mcp": {
     "transport": "streamable_http",

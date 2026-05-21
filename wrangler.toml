@@ -6,6 +6,7 @@ routes = [
   { pattern = "api.vcardqrcodegenerator.com/*", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/ads.txt", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/v1/*", zone_name = "vcardqrcodegenerator.com" },
+  { pattern = "vcardqrcodegenerator.com/api/*", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/mcp*", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/openapi.json", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/api/openapi.json", zone_name = "vcardqrcodegenerator.com" },
