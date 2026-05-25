@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-05-25 | Codex | Logged Launching Next manual submission as queued with estimated 4-month wait and advanced the next directory target to StartupStash. | `data/dynamic-seo-directory-queue.md`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-25 | Codex | Expanded today's automated dynamic QR analytics blog into a full printed-marketing measurement guide and updated the daily tracker. | `blog/dynamic-qr-code-analytics/index.html`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-24 | Codex | Expanded today's automated trade-show booth QR blog into a full event-focused SEO guide and updated the daily tracker. | `blog/qr-code-for-trade-show-booth/index.html`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-21 | Codex | Updated the weekly search-performance instruction to include Bing and Yandex performance or crawl/submission status alongside GSC and GA4. | `tasks.md`, `data/agent-board.md` |

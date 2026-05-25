@@ -16,7 +16,7 @@ Execution policy: manual one-per-day submission begins on 2026-05-06. The automa
 | 8 | Dev.to article | https://dev.to/new | Agent queue | Free | Technical article backlink | Login required | Submitted earlier: https://dev.to/abhikb2005/how-i-built-a-privacy-first-vcard-qr-code-generator-no-backend-required-5c79 |
 | 9 | Product Hunt upcoming/ship | https://www.producthunt.com/ | Agent queue + Sheet | Free | Launch teaser for Dynamic QR Codes | Long-standing account issue | Deferred until every other website in the queue is done |
 | 10 | SideProjectors | https://www.sideprojectors.com/ | Local docs | Free | Side-project showcase | Account/login likely | Submitted 2026-05-11 |
-| 11 | Launching Next | https://www.launchingnext.com/submit/ | Local docs + Sheet | Free | Launch directory | Editorial review | Pending |
+| 11 | Launching Next | https://www.launchingnext.com/submit/ | Local docs + Sheet | Free | Launch directory | Editorial review | Submitted 2026-05-25; status: In Queue, estimated wait 4 months |
 | 12 | StartupStash | https://startupstash.com/submit/ | Local docs | Free | Startup/tool listing | Editorial review | Pending |
 | 13 | BetaList | https://betalist.com/submit | Local docs | Free/Paid mixed | Launch discovery | Account/login; stop if paywall | Pending |
 | 14 | Microlaunch | https://microlaunch.net/ | Local docs | Free | Launch/community fit | May push paid package | Pending |
