@@ -43,6 +43,7 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 | 2026-05-27 | qr code analytics | `/blog/qr-code-analytics/` | GSC live rows: 500; GA4 landing rows: 8; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-05-28 | what qr code type for vcard with updates | `/blog/what-qr-code-type-for-vcard-with-updates/` | GSC live rows: 500; GA4 landing rows: 8; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-05-29 | what qr code type for vcard with updates | `/blog/what-qr-code-type-for-vcard-with-updates/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
+| 2026-05-30 | what qr code type for vcard with updates | `/blog/what-qr-code-type-for-vcard-with-updates/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 
 ## Directory Submission Rules
 
