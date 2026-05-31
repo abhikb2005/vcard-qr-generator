@@ -24,15 +24,20 @@
     gtag('js', new Date());
     gtag('config', 'G-E90B41BNEH');
     function trackDynamicCta(location) {
-      if (typeof gtag === 'function') {
-        gtag('event', 'dynamic_qr_cta_click', {
-          source_page: 'dynamic-qr-code-generator',
-          cta_location: location,
-          anchor_text: 'Create dynamic QR code'
-        });
-      }
+      window.VcardAnalytics?.trackEvent('clicked_dynamic_qr_cta', {
+        source_page: window.location.pathname,
+        cta_location: location,
+        cta_text: 'Create dynamic QR code',
+        destination_url: 'https://app.vcardqrcodegenerator.com/login'
+      });
+      window.VcardAnalytics?.trackEvent('dynamic_qr_cta_click', {
+        source_page: 'dynamic-qr-code-generator',
+        cta_location: location,
+        anchor_text: 'Create dynamic QR code'
+      });
     }
   </script>
+  <script src="/analytics.js"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206702185649949"
     crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>

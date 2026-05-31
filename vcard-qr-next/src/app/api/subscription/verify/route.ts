@@ -10,6 +10,13 @@ const getPlanFromProductId = (productId: string) => {
     return 'free'
 }
 
+const PLAN_PRICES = {
+    starter: 5,
+    growth: 9,
+    business: 19,
+    free: 0
+}
+
 export async function POST(request: Request) {
     console.log('Verify Subscription Route')
     const supabase = await createClient()
@@ -44,7 +51,20 @@ export async function POST(request: Request) {
 
             if (error) throw error
 
-            return NextResponse.json({ success: true, plan })
+            const value =
+                typeof paymentData.total_amount === 'number' ? paymentData.total_amount / 100 :
+                    typeof paymentData.amount === 'number' ? paymentData.amount / 100 :
+                        PLAN_PRICES[plan as keyof typeof PLAN_PRICES]
+            const currency = (paymentData.currency || 'USD').toUpperCase()
+
+            return NextResponse.json({
+                success: true,
+                plan,
+                payment_id: sessionData.payment_id,
+                product_id: paymentData.product_id,
+                value,
+                currency
+            })
         } else {
             return NextResponse.json({ success: false, status: sessionData.payment_status })
         }

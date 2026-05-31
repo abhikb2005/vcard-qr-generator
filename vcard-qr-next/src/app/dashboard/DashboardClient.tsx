@@ -8,12 +8,19 @@ import { LinkIcon, QrCodeIcon, ChartBarIcon, ArrowTopRightOnSquareIcon, Calendar
 import Link from 'next/link'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { trackEvent, trackPurchase } from '@/lib/analytics'
 
 const LIMITS = {
     free: 1,
     starter: 5,
     growth: 50,
     business: Infinity
+}
+
+const PLAN_DETAILS: Record<string, { plan_id: string; plan_name: string; value: number; currency: string }> = {
+    starter: { plan_id: 'starter', plan_name: 'Starter', value: 5, currency: 'USD' },
+    growth: { plan_id: 'growth', plan_name: 'Growth', value: 9, currency: 'USD' },
+    business: { plan_id: 'business', plan_name: 'Business', value: 19, currency: 'USD' }
 }
 
 export default function DashboardClient() {
@@ -90,6 +97,27 @@ export default function DashboardClient() {
             })
             const json = await res.json()
             if (json.success) {
+                const planDetails = PLAN_DETAILS[json.plan as string] || {
+                    plan_id: json.plan || 'unknown',
+                    plan_name: json.plan || 'Unknown plan',
+                    value: json.value,
+                    currency: json.currency || 'USD'
+                }
+                trackPurchase({
+                    transaction_id: json.payment_id || sessionId,
+                    value: json.value ?? planDetails.value,
+                    currency: json.currency || planDetails.currency,
+                    plan_id: planDetails.plan_id,
+                    plan_name: planDetails.plan_name,
+                    source_page: window.location.pathname,
+                    items: [{
+                        item_id: planDetails.plan_id,
+                        item_name: planDetails.plan_name,
+                        item_category: 'vcard_qr',
+                        price: json.value ?? planDetails.value,
+                        quantity: 1
+                    }]
+                })
                 alert(`Payment Successful! You are now on the ${json.plan.toUpperCase()} plan.`)
                 // Refresh data
                 window.location.href = '/dashboard'
@@ -128,6 +156,12 @@ export default function DashboardClient() {
 
     const handleUpgrade = async (tier: string) => {
         setLoadingTier(tier)
+        const planDetails = PLAN_DETAILS[tier] || { plan_id: tier, plan_name: tier, value: 0, currency: 'USD' }
+        const planParams = {
+            ...planDetails,
+            source_page: window.location.pathname
+        }
+        trackEvent('clicked_pricing', planParams)
         try {
             const res = await fetch('/api/subscription/checkout', {
                 method: 'POST',
@@ -135,6 +169,7 @@ export default function DashboardClient() {
             })
             const json = await res.json()
             if (json.url) {
+                trackEvent('pro_checkout_start', planParams)
                 window.location.href = json.url
             } else {
                 alert('Error creating checkout: ' + (json.error || 'Unknown error'))

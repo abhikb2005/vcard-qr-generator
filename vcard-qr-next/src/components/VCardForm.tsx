@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { UserIcon, PhoneIcon, EnvelopeIcon, BriefcaseIcon, MapPinIcon, GlobeAltIcon, ArrowPathIcon, CheckIcon, LinkIcon } from '@heroicons/react/24/outline'
+import { sanitizeError, trackEvent } from '@/lib/analytics'
 
 const generateShortId = (length: number = 6) => {
     const array = new Uint8Array(length);
@@ -84,12 +85,23 @@ export default function VCardForm({ userId, initialData }: { userId: string, ini
         const { error } = result;
 
         if (error) {
+            trackEvent('error_qr_generation', {
+                qr_type: 'dynamic_vcard',
+                error_message: sanitizeError(error),
+                source_page: window.location.pathname
+            })
             if (error.code === '23505') { // Unique violation
                 alert('That alias is already taken. Please try another one.')
             } else {
                 alert('Error processing vCard: ' + error.message)
             }
         } else {
+            trackEvent('generated_qr_code', {
+                qr_type: 'dynamic_vcard',
+                source_page: window.location.pathname,
+                has_logo: false,
+                output_available: true
+            })
             setSuccess(true)
             router.push('/dashboard')
             router.refresh()

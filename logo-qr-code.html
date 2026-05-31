@@ -15,11 +15,10 @@
 
     // GA4 Pro funnel event helper
     function gaTrackPro(name, params) {
-      if (typeof gtag === 'function') {
-        gtag('event', name, params || {});
-      }
+      window.VcardAnalytics?.trackEvent(name, params || {});
     }
   </script>
+  <script src="/analytics.js"></script>
   <!-- 100% privacy-first analytics -->
   <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   <style>
@@ -614,9 +613,46 @@
 
       const checkoutApiUrl = window.__CHECKOUT_API__;
       const tokenValidatorUrl = window.__TOKEN_VALIDATOR__;
+      const proPlanParams = {
+        plan_id: 'logo_vcard_one_time',
+        plan_name: 'Logo vCard QR Code',
+        value: 4.99,
+        currency: 'USD',
+        source_page: window.location.pathname
+      };
+      let lastBrandedQrSignature = '';
 
       // Track Pro page view
       gaTrackPro('pro_page_view', { event_category: 'pro_funnel', event_label: 'page_load' });
+
+      document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"]').forEach((link) => {
+        link.addEventListener('click', () => {
+          gaTrackPro('clicked_dynamic_qr_cta', {
+            cta_text: link.textContent.trim().replace(/\s+/g, ' '),
+            cta_location: link.closest('nav') ? 'header' : 'logo_page',
+            destination_url: link.href,
+            source_page: window.location.pathname
+          });
+        });
+      });
+
+      function trackPaymentSuccess(transactionId) {
+        window.VcardAnalytics?.trackPurchase({
+          transaction_id: transactionId,
+          value: proPlanParams.value,
+          currency: proPlanParams.currency,
+          plan_id: proPlanParams.plan_id,
+          plan_name: proPlanParams.plan_name,
+          source_page: window.location.pathname,
+          items: [{
+            item_id: proPlanParams.plan_id,
+            item_name: proPlanParams.plan_name,
+            item_category: 'vcard_qr',
+            price: proPlanParams.value,
+            quantity: 1
+          }]
+        });
+      }
 
       // 1) If we returned from Dodo with ?payment_id=...&status=succeeded, or legacy ?token=..., validate it
       async function consumePaymentFromUrl() {
@@ -635,6 +671,7 @@
         // Dodo redirects with ?payment_id=...&status=succeeded
         if (paymentId && status === 'succeeded') {
           gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
+          trackPaymentSuccess(paymentId);
 
           localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
 
@@ -655,6 +692,7 @@
 
             if (json.status === 'success') {
               gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
+              trackPaymentSuccess(token);
 
               localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
 
@@ -802,31 +840,63 @@ END:VCARD`;
       };
 
       const updateQRCode = () => {
-        const vCardString = featureUnlocked ? generateVCardString() : samplePreviewData;
-        const selectedStyle = document.getElementById('qr-style').value;
-        const selectedColor = document.getElementById('qr-color').value;
-        const cornerStyle = document.getElementById('corner-style').value;
-        const bgColor = document.getElementById('bg-color').value;
+        try {
+          const vCardString = featureUnlocked ? generateVCardString() : samplePreviewData;
+          const selectedStyle = document.getElementById('qr-style').value;
+          const selectedColor = document.getElementById('qr-color').value;
+          const cornerStyle = document.getElementById('corner-style').value;
+          const bgColor = document.getElementById('bg-color').value;
 
-        qrCode.update({
-          data: vCardString,
-          image: logoImage || '',
-          backgroundOptions: {
-            color: bgColor
-          },
-          dotsOptions: {
-            color: selectedColor,
-            type: selectedStyle
-          },
-          cornersSquareOptions: {
-            color: selectedColor,
-            type: cornerStyle
-          },
-          cornersDotOptions: {
-            color: selectedColor,
-            type: cornerStyle === 'extra-rounded' ? 'dot' : cornerStyle
-          }
-        });
+          qrCode.update({
+            data: vCardString,
+            image: logoImage || '',
+            backgroundOptions: {
+              color: bgColor
+            },
+            dotsOptions: {
+              color: selectedColor,
+              type: selectedStyle
+            },
+            cornersSquareOptions: {
+              color: selectedColor,
+              type: cornerStyle
+            },
+            cornersDotOptions: {
+              color: selectedColor,
+              type: cornerStyle === 'extra-rounded' ? 'dot' : cornerStyle
+            }
+          });
+
+          setTimeout(() => {
+            try {
+              const outputRendered = !!qrContainer.querySelector('canvas, svg');
+              if (!outputRendered) throw new Error('Branded QR output was not rendered');
+              const signature = [vCardString, selectedStyle, selectedColor, cornerStyle, bgColor, logoImage ? 'logo' : 'no_logo'].join('|');
+              if (featureUnlocked && logoImage && lastBrandedQrSignature !== signature) {
+                lastBrandedQrSignature = signature;
+                gaTrackPro('generated_branded_qr_code', {
+                  qr_type: 'branded_vcard',
+                  source_page: window.location.pathname,
+                  has_logo: true,
+                  logo_uploaded: true,
+                  output_available: true
+                });
+              }
+            } catch (error) {
+              gaTrackPro('error_qr_generation', {
+                qr_type: 'branded_vcard',
+                error_message: window.VcardAnalytics?.sanitizeError(error) || 'Branded QR render failed',
+                source_page: window.location.pathname
+              });
+            }
+          }, 100);
+        } catch (error) {
+          gaTrackPro('error_qr_generation', {
+            qr_type: 'branded_vcard',
+            error_message: window.VcardAnalytics?.sanitizeError(error) || 'Branded QR generation failed',
+            source_page: window.location.pathname
+          });
+        }
       };
 
       // Listen for style/color/corner changes
@@ -865,8 +935,7 @@ END:VCARD`;
       };
 
       const handleCheckout = async () => {
-        // Track checkout initiation
-        gaTrackPro('pro_checkout_start', { event_category: 'pro_funnel', event_label: 'checkout_initiated' });
+        gaTrackPro('clicked_pricing', proPlanParams);
 
         try {
           if (loadingText) {
@@ -883,6 +952,7 @@ END:VCARD`;
           const data = await res.json();
           if (!data.checkout_url) throw new Error('No checkout_url returned');
 
+          gaTrackPro('pro_checkout_start', proPlanParams);
           window.location.href = data.checkout_url;
         } catch (e) {
           alert('Could not start checkout. Please try again.');

@@ -10,6 +10,7 @@
     gtag('js', new Date());
     gtag('config', 'G-E90B41BNEH');
   </script>
+  <script src="/analytics.js"></script>
   <!-- SEO and Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -717,12 +718,11 @@
       const confirmModal = document.getElementById('confirmModal');
       const confirmClearBtn = document.getElementById('confirmClearBtn');
       const cancelClearBtn = document.getElementById('cancelClearBtn');
+      let lastGeneratedQrPayload = '';
 
       // ---- GA4 event helpers ----
       function gaTrack(name, params) {
-        if (typeof gtag === 'function') {
-          gtag('event', name, params || {});
-        }
+        window.VcardAnalytics?.trackEvent(name, params || {});
       }
 
       // 1) Download QR
@@ -741,6 +741,30 @@
         gaTrack('pro_cta_click', {
           event_category: 'engagement',
           event_label: 'footer_guide_link'
+        });
+      });
+
+      document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"]').forEach((link) => {
+        link.addEventListener('click', () => {
+          gaTrack('clicked_dynamic_qr_cta', {
+            cta_text: link.textContent.trim().replace(/\s+/g, ' '),
+            cta_location: link.closest('nav') ? 'header' : 'homepage',
+            destination_url: link.href,
+            source_page: window.location.pathname
+          });
+        });
+      });
+
+      document.querySelectorAll('a[href*="logo-qr-code.html"]').forEach((link) => {
+        link.addEventListener('click', () => {
+          gaTrack('clicked_pricing', {
+            plan_id: 'logo_vcard_one_time',
+            plan_name: 'Logo vCard QR Code',
+            value: 4.99,
+            currency: 'USD',
+            cta_text: link.textContent.trim().replace(/\s+/g, ' '),
+            source_page: window.location.pathname
+          });
         });
       });
 
@@ -781,30 +805,55 @@
 
       // Generate QR Code from form values
       const generateQRCode = () => {
-        const fullName = document.getElementById('fullName').value.trim();
-        if (!fullName) {
-          qrcode.clear();
-          updateUIState(false);
-          return;
-        }
-        updateUIState(true);
-        const phone = document.getElementById('phone').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const website = document.getElementById('website').value.trim();
-        const company = document.getElementById('company').value.trim();
-        const title = document.getElementById('title').value.trim();
-        const nameParts = fullName.split(' ');
-        const firstName = nameParts.shift() || '';
-        const lastName = nameParts.join(' ') || '';
-
-        const vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
-        qrcode.makeCode(vCardString);
-        setTimeout(() => {
-          const canvas = qrCodeElement.querySelector('canvas');
-          if (canvas) {
-            downloadBtn.href = canvas.toDataURL();
+        try {
+          const fullName = document.getElementById('fullName').value.trim();
+          if (!fullName) {
+            qrcode.clear();
+            updateUIState(false);
+            lastGeneratedQrPayload = '';
+            return;
           }
-        }, 100);
+          updateUIState(true);
+          const phone = document.getElementById('phone').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const website = document.getElementById('website').value.trim();
+          const company = document.getElementById('company').value.trim();
+          const title = document.getElementById('title').value.trim();
+          const nameParts = fullName.split(' ');
+          const firstName = nameParts.shift() || '';
+          const lastName = nameParts.join(' ') || '';
+
+          const vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
+          qrcode.makeCode(vCardString);
+          setTimeout(() => {
+            try {
+              const canvas = qrCodeElement.querySelector('canvas');
+              if (!canvas) throw new Error('QR canvas was not rendered');
+              downloadBtn.href = canvas.toDataURL();
+              if (lastGeneratedQrPayload !== vCardString) {
+                lastGeneratedQrPayload = vCardString;
+                gaTrack('generated_qr_code', {
+                  qr_type: 'static_vcard',
+                  source_page: window.location.pathname,
+                  has_logo: false,
+                  output_available: true
+                });
+              }
+            } catch (error) {
+              gaTrack('error_qr_generation', {
+                qr_type: 'static_vcard',
+                error_message: window.VcardAnalytics?.sanitizeError(error) || 'QR render failed',
+                source_page: window.location.pathname
+              });
+            }
+          }, 100);
+        } catch (error) {
+          gaTrack('error_qr_generation', {
+            qr_type: 'static_vcard',
+            error_message: window.VcardAnalytics?.sanitizeError(error) || 'QR generation failed',
+            source_page: window.location.pathname
+          });
+        }
       };
 
       // Share QR Code using Web Share API

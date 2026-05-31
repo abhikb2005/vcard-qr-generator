@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { LinkIcon, TagIcon, PlusIcon, ArrowPathIcon, CheckIcon } from '@heroicons/react/24/outline'
+import { sanitizeError, trackEvent } from '@/lib/analytics'
 
 const generateShortId = (length: number = 6) => {
     const array = new Uint8Array(length);
@@ -45,8 +46,19 @@ export default function CreateQrForm({ userId }: { userId: string }) {
         })
 
         if (error) {
+            trackEvent('error_qr_generation', {
+                qr_type: 'dynamic_url',
+                error_message: sanitizeError(error),
+                source_page: window.location.pathname
+            })
             alert('Error creating QR code: ' + error.message)
         } else {
+            trackEvent('generated_qr_code', {
+                qr_type: 'dynamic_url',
+                source_page: window.location.pathname,
+                has_logo: false,
+                output_available: true
+            })
             setUrl('')
             setName('')
             setSuccess(true)

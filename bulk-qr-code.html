@@ -90,6 +90,7 @@
         gtag('js', new Date());
         gtag('config', 'G-E90B41BNEH');
     </script>
+    <script src="/analytics.js"></script>
     <!-- 100% privacy-first analytics -->
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 
@@ -594,9 +595,9 @@
 
             // Products
             const PRODUCTS = {
-                'pdt_0NXPxlipsCiIWgeLUcl6M': { limit: 50 },
-                'pdt_0NXPxyJkVPTIFnQ2bS5xM': { limit: 500 },
-                'pdt_0NXPy4nZegDt6mQKDzlkX': { limit: Infinity }
+                'pdt_0NXPxlipsCiIWgeLUcl6M': { limit: 50, plan_id: 'bulk_starter', plan_name: 'Starter Batch', value: 9, currency: 'USD' },
+                'pdt_0NXPxyJkVPTIFnQ2bS5xM': { limit: 500, plan_id: 'bulk_growth', plan_name: 'Growth Batch', value: 19, currency: 'USD' },
+                'pdt_0NXPy4nZegDt6mQKDzlkX': { limit: Infinity, plan_id: 'bulk_enterprise', plan_name: 'Enterprise', value: 29, currency: 'USD' }
             };
 
             let parsedData = [];
@@ -857,6 +858,15 @@ END:VCARD`;
             window.initiateCheckout = async (productId) => {
                 const btn = event.target;
                 const originalText = btn.textContent;
+                const product = PRODUCTS[productId] || {};
+                const checkoutParams = {
+                    plan_id: product.plan_id || productId,
+                    plan_name: product.plan_name || 'Bulk QR plan',
+                    value: product.value,
+                    currency: product.currency || 'USD',
+                    source_page: window.location.pathname
+                };
+                window.VcardAnalytics?.trackEvent('clicked_pricing', checkoutParams);
                 btn.disabled = true;
                 btn.textContent = "...";
 
@@ -868,7 +878,10 @@ END:VCARD`;
                         body: JSON.stringify({ email, product_id: productId }) // Send specific product ID
                     });
                     const data = await res.json();
-                    if (data.checkout_url) window.location.href = data.checkout_url;
+                    if (data.checkout_url) {
+                        window.VcardAnalytics?.trackEvent('pro_checkout_start', checkoutParams);
+                        window.location.href = data.checkout_url;
+                    }
                     else throw new Error("No URL");
                 } catch (e) {
                     alert("Payment error. Please try again.");

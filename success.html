@@ -3,9 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thanks — Unlocking Pro…</title>
+  <title>Thanks - Unlocking Pro...</title>
   <meta name="robots" content="noindex" />
   <link rel="canonical" href="https://www.vcardqrcodegenerator.com/success.html" />
+  <script src="/consent.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-E90B41BNEH');
+  </script>
+  <script src="/analytics.js"></script>
   <style>
     body {font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; margin:0; padding:3rem; color:#111;}
     .card {max-width:560px; margin:0 auto; border:1px solid #e5e7eb; border-radius:12px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.06)}
@@ -15,26 +22,43 @@
   </style>
 </head>
 <body>
-  <!-- Dodo payment success page re-applies the Pro unlock flow -->
   <div class="card">
-    <h1>Payment complete ✅</h1>
-    <p>We’re unlocking Pro features for this browser.</p>
-    <p class="muted">You’ll be redirected in a moment…</p>
+    <h1>Payment complete</h1>
+    <p>We're unlocking Pro features for this browser.</p>
+    <p class="muted">You'll be redirected in a moment...</p>
   </div>
 
   <script>
     (function () {
       try {
-        // Persist a short-lived “paid this session” flag for this browser.
         sessionStorage.setItem('pro_token_ok', '1');
-
-        // Optional GA event (will no-op if gtag isn’t present)
-        if (typeof gtag === 'function') {
-          gtag('event', 'purchase_complete', { method: 'dodo' });
+        var params = new URLSearchParams(window.location.search);
+        var transactionId = params.get('payment_id') || params.get('transaction_id') || params.get('session_id') || params.get('token');
+        if (transactionId && window.VcardAnalytics) {
+          window.VcardAnalytics.trackPurchase({
+            transaction_id: transactionId,
+            value: 4.99,
+            currency: 'USD',
+            plan_id: 'logo_vcard_one_time',
+            plan_name: 'Logo vCard QR Code',
+            source_page: window.location.pathname,
+            items: [{
+              item_id: 'logo_vcard_one_time',
+              item_name: 'Logo vCard QR Code',
+              item_category: 'vcard_qr',
+              price: 4.99,
+              quantity: 1
+            }]
+          });
+        } else {
+          window.VcardAnalytics?.trackEvent('payment_success', {
+            payment_provider: 'dodo',
+            source_page: window.location.pathname,
+            purchase_tracked: false
+          });
         }
       } catch (e) {}
 
-      // Clean URL (drop any query params) then go to Pro page
       setTimeout(function () {
         window.location.replace('/logo-qr-code.html');
       }, 800);
