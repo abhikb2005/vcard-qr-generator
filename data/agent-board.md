@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-05-31 | Codex | Fixed logo QR page mojibake/icon artifacts, forced the logo and dynamic QR pages onto dark UI surfaces with readable text, and added a visible back-to-main-site button on the dynamic QR page. | `logo-qr-code.html`, `dynamic-qr-code-generator.html`, `data/agent-board.md` |
 | 2026-05-31 | Codex | Locked the logo QR builder until payment: unpaid visitors now see a sample branded preview only, checkout no longer sends contact fields, and final download requires entered contact details after payment. | `logo-qr-code.html`, `data/agent-board.md` |
 | 2026-05-25 | Codex | Logged Launching Next manual submission as queued with estimated 4-month wait and advanced the next directory target to StartupStash. | `data/dynamic-seo-directory-queue.md`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |
 | 2026-05-25 | Codex | Expanded today's automated dynamic QR analytics blog into a full printed-marketing measurement guide and updated the daily tracker. | `blog/dynamic-qr-code-analytics/index.html`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |

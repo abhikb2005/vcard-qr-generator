@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -127,6 +127,26 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
+      background: #020617;
+      color: #e5e7eb;
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    h1,
+    h2,
+    p,
+    a,
+    button {
+      overflow-wrap: anywhere;
     }
 
     .hidden {
@@ -156,6 +176,89 @@
       min-height: 100px;
       text-align: center;
     }
+
+    body,
+    nav,
+    footer,
+    .bg-white,
+    .bg-gray-50,
+    .bg-slate-50,
+    .bg-indigo-50 {
+      background-color: #020617 !important;
+      color: #e5e7eb !important;
+    }
+
+    .border-gray-100,
+    .border-gray-200,
+    .border-gray-300,
+    .border-indigo-100,
+    .border-amber-200 {
+      border-color: #334155 !important;
+    }
+
+    .text-gray-400,
+    .text-gray-500,
+    .text-gray-600,
+    .text-gray-700,
+    .text-gray-800,
+    .text-gray-900,
+    .text-slate-600,
+    .text-slate-700,
+    .text-indigo-900,
+    .text-amber-900 {
+      color: #e5e7eb !important;
+    }
+
+    .bg-amber-50,
+    .bg-gray-100 {
+      background-color: #1e293b !important;
+      color: #f8fafc !important;
+    }
+
+    input,
+    select,
+    textarea {
+      background-color: #0f172a !important;
+      border-color: #475569 !important;
+      color: #f8fafc !important;
+    }
+
+    input::placeholder {
+      color: #94a3b8 !important;
+    }
+
+    .preview-locked input,
+    .preview-locked select {
+      background-color: #111827 !important;
+      color: #94a3b8 !important;
+    }
+
+    a {
+      color: #93c5fd;
+    }
+
+    @media (max-width: 900px) {
+      .container,
+      [class*="max-w-"] {
+        max-width: min(100%, 390px) !important;
+        width: 100% !important;
+      }
+
+      h1 {
+        font-size: 1.85rem !important;
+        line-height: 1.15 !important;
+      }
+
+      h2 {
+        font-size: 1.35rem !important;
+        line-height: 1.25 !important;
+      }
+
+      .text-xl {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+      }
+    }
   </style>
 </head>
 
@@ -177,7 +280,7 @@
       <div class="flex justify-between h-16">
         <div class="flex">
           <a href="/" class="flex-shrink-0 flex items-center text-indigo-600 font-bold text-xl">
-            â† Back to Home
+            Back to Home
           </a>
         </div>
       </div>
@@ -188,7 +291,7 @@
   <div class="bg-gradient-to-r from-indigo-900 to-blue-900 text-white pt-20 pb-24">
     <div class="container mx-auto px-4 text-center max-w-4xl">
       <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
-        Add Your Logo to a <span class="text-blue-400">vCard QR Code</span>
+        Add Your Logo to a<br><span class="text-blue-400">vCard QR Code</span>
       </h1>
       <p class="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
         Preview the branded look before payment. Then unlock the contact fields, logo upload, and high-resolution download for your final vCard QR code.
@@ -206,7 +309,7 @@
       <p class="mt-4 text-sm text-indigo-300">Free sample preview. $4.99 one-time unlock. No subscription.</p>
       <p class="mt-3 text-sm text-indigo-200">
         Need a URL, text, or Wi-Fi QR code with a logo instead?
-        <a href="/qr-code-with-logo.html" class="underline hover:text-white">Use the generic logo QR code generator â†’</a>
+        <a href="/qr-code-with-logo.html" class="underline hover:text-white">Use the generic logo QR code generator</a>
       </p>
     </div>
   </div>
@@ -237,9 +340,9 @@
           </div>
           <h3 class="text-xl font-bold text-gray-700 mb-2">The "Generic" Code</h3>
           <ul class="text-left text-gray-600 space-y-2 mx-auto max-w-xs">
-            <li>âŒ Looks suspicious or spammy</li>
-            <li>âŒ Ruins your brand design</li>
-            <li>âŒ Lower scan rates</li>
+            <li>Plain codes can look suspicious or spammy</li>
+            <li>Plain codes can weaken your brand design</li>
+            <li>Plain codes can get fewer scans</li>
           </ul>
         </div>
 
@@ -259,9 +362,9 @@
           </div>
           <h3 class="text-xl font-bold text-indigo-900 mb-2">The "Branded" Code</h3>
           <ul class="text-left text-gray-700 space-y-2 mx-auto max-w-xs">
-            <li>âœ… Instantly recognizable brand</li>
-            <li>âœ… 30% Higher engagement</li>
-            <li>âœ… Professional & Trusted</li>
+            <li>Instantly recognizable brand</li>
+            <li>Higher engagement on printed materials</li>
+            <li>Professional and trusted</li>
           </ul>
         </div>
       </div>
@@ -273,19 +376,19 @@
     <div class="container mx-auto px-4 max-w-6xl">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
         <div class="p-6">
-          <div class="text-4xl mb-4">ðŸ–¼ï¸</div>
+          <div class="text-sm font-bold uppercase tracking-wide text-blue-300 mb-4">Logo</div>
           <h3 class="font-bold text-lg mb-2">Custom Logo Upload</h3>
           <p class="text-gray-600 text-sm">After payment, upload any PNG, JPG, or SVG logo. We automatically optimize it for
             scannability.</p>
         </div>
         <div class="p-6">
-          <div class="text-4xl mb-4">ðŸŽ¨</div>
+          <div class="text-sm font-bold uppercase tracking-wide text-blue-300 mb-4">Color</div>
           <h3 class="font-bold text-lg mb-2">Brand Colors</h3>
           <p class="text-gray-600 text-sm">Don't stick to black. Use the color picker to match your exact brand hex
             code.</p>
         </div>
         <div class="p-6">
-          <div class="text-4xl mb-4">ðŸ“</div>
+          <div class="text-sm font-bold uppercase tracking-wide text-blue-300 mb-4">Print</div>
           <h3 class="font-bold text-lg mb-2">High-Res Vector</h3>
           <p class="text-gray-600 text-sm">Download crisp SVG or high-res PNG files perfect for billboards or business
             cards.</p>
@@ -350,7 +453,7 @@
             </div>
 
             <hr class="my-4 border-gray-200">
-            <h3 class="font-semibold text-gray-900">ðŸŽ¨ Customization</h3>
+            <h3 class="font-semibold text-gray-900">Customization</h3>
 
             <div class="grid grid-cols-2 gap-4">
               <div>
@@ -429,9 +532,9 @@
 
             <!-- Guarantee -->
             <div class="flex items-center gap-2 text-xs text-gray-400">
-              <span>ðŸ”’ Secure Dodo Payment</span>
-              <span>â€¢</span>
-              <span>âš¡ Instant Delivery</span>
+              <span>Secure Dodo Payment</span>
+              <span>|</span>
+              <span>Instant Delivery</span>
             </div>
           </div>
 
@@ -616,7 +719,7 @@
         if (!featureUnlocked) event.preventDefault();
       });
 
-      // UI state â€” upload + preview is ALWAYS free; only download is gated
+      // UI state - unpaid visitors see a sample preview only.
       const pricingInfo = document.getElementById('pricing-info');
       const benefitsBox = document.getElementById('benefits-box');
       const lockedFormNote = document.getElementById('locked-form-note');
@@ -643,7 +746,7 @@
         downloadBtn.textContent = 'Download Branded QR Code';
         if (loadingText) loadingText.classList.add('hidden');
         if (pricingInfo) {
-          pricingInfo.textContent = 'âœ“ Branded download unlocked. Click Download to save your QR code.';
+          pricingInfo.textContent = 'Unlocked: branded download is ready. Click Download to save your QR code.';
           pricingInfo.classList.remove('hidden');
         }
         if (benefitsBox) benefitsBox.classList.add('hidden');
@@ -802,7 +905,7 @@ END:VCARD`;
         }
       });
 
-      // Main button always opens logo upload â€” preview is free
+      // Main button opens logo upload after payment.
       mainActionBtn.addEventListener('click', (event) => {
         event.preventDefault();
         handleLogoUpload();
@@ -822,7 +925,7 @@ END:VCARD`;
         }
         gaTrackPro('pro_download_branded_qr', { event_category: 'pro_funnel', event_label: 'branded_qr_downloaded' });
         qrCode.download({ name: 'branded-vcard-qr', extension: 'png' });
-        // 24-hour access window (set in consumePaymentFromUrl) is preserved â€” user can re-download during that window
+        // 24-hour access window is preserved so the user can re-download during that window.
       });
 
       form.addEventListener('input', updateQRCode);
@@ -836,24 +939,24 @@ END:VCARD`;
     <div class="container mx-auto px-4 max-w-3xl space-y-8">
       <section>
         <h2 class="text-2xl font-bold text-gray-900 mb-4">vCard QR Code Generator with Logo: The Complete Guide</h2>
-        <p class="mb-4 text-gray-700">A vCard QR code generator with logo lets you embed your company logo, brand mark, or personal image directly into the center of a contact (vCard) QR code. Branded vCard QR codes outperform plain black-and-white codes on printed business cards, email signatures, and conference badges â€” they look trustworthy, instantly identify you as the source, and signal professionalism. This page is dedicated to <strong>vCard (contact) QR codes</strong>; if you need a URL, text, or Wi-Fi QR code with a logo, use the <a href="/qr-code-with-logo.html" class="text-indigo-600 hover:underline">generic logo QR code generator</a> instead.</p>
+        <p class="mb-4 text-gray-700">A vCard QR code generator with logo lets you embed your company logo, brand mark, or personal image directly into the center of a contact (vCard) QR code. Branded vCard QR codes outperform plain black-and-white codes on printed business cards, email signatures, and conference badges - they look trustworthy, instantly identify you as the source, and signal professionalism. This page is dedicated to <strong>vCard (contact) QR codes</strong>; if you need a URL, text, or Wi-Fi QR code with a logo, use the <a href="/qr-code-with-logo.html" class="text-indigo-600 hover:underline">generic logo QR code generator</a> instead.</p>
         <p class="mb-4 text-gray-700">Most generic generators bury logo upload behind a monthly subscription that costs $9-$30 every single month, even if you only need one QR code. Our tool is different: you can preview a sample branded vCard QR code before paying, then unlock the real contact fields, your logo upload, and the high-resolution download for a single $4.99 fee. No subscription and no account creation.</p>
       </section>
 
       <section>
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Why Branded QR Codes Get More Scans</h2>
-        <p class="mb-4 text-gray-700">Independent QR analytics studies (Bitly, QR Code Generator, Beaconstac) consistently report that QR codes with a centered logo or image receive <strong>20â€“35% higher scan rates</strong> than plain codes when placed in the same context. Three reasons:</p>
+        <p class="mb-4 text-gray-700">Independent QR analytics studies (Bitly, QR Code Generator, Beaconstac) consistently report that QR codes with a centered logo or image receive <strong>20-35% higher scan rates</strong> than plain codes when placed in the same context. Three reasons:</p>
         <ul class="list-disc pl-6 space-y-2 text-gray-700 mb-4">
-          <li><strong>Trust signal.</strong> A QR code with your logo is verifiable at a glance. A plain code on a flyer or business card looks like it could be anything â€” including a phishing redirect.</li>
-          <li><strong>Brand recall.</strong> A scannable code that visually carries your brand reinforces brand identity on every print piece â€” business cards, conference badges, packaging, signage.</li>
+          <li><strong>Trust signal.</strong> A QR code with your logo is verifiable at a glance. A plain code on a flyer or business card looks like it could be anything - including a phishing redirect.</li>
+          <li><strong>Brand recall.</strong> A scannable code that visually carries your brand reinforces brand identity on every print piece - business cards, conference badges, packaging, signage.</li>
           <li><strong>Visual contrast.</strong> A custom-colored, logo-centered QR code stands out against design layouts. Plain black squares are visually noisy and look like raw machine output.</li>
         </ul>
-        <p class="text-gray-700">For high-stakes placements â€” printed business cards that go to clients, real estate "For Sale" signs, conference handouts, restaurant menu codes â€” the lift from branding is the difference between a code that gets scanned and a code that gets ignored.</p>
+        <p class="text-gray-700">For high-stakes placements - printed business cards that go to clients, real estate "For Sale" signs, conference handouts, restaurant menu codes - the lift from branding is the difference between a code that gets scanned and a code that gets ignored.</p>
       </section>
 
       <section>
         <h2 class="text-2xl font-bold text-gray-900 mb-4">How Logo Embedding Works (The Technical Bit)</h2>
-        <p class="mb-4 text-gray-700">QR codes are designed with built-in error correction. A QR code can be partially obscured, scratched, or covered and still scan correctly because every code carries redundant data. There are four error-correction levels: L (~7% recovery), M (~15%), Q (~25%), and <strong>H (~30%)</strong>. Our generator uses Level H by default, which means up to 30% of the code area can be covered â€” including by your logo â€” without breaking scannability.</p>
+        <p class="mb-4 text-gray-700">QR codes are designed with built-in error correction. A QR code can be partially obscured, scratched, or covered and still scan correctly because every code carries redundant data. There are four error-correction levels: L (~7% recovery), M (~15%), Q (~25%), and <strong>H (~30%)</strong>. Our generator uses Level H by default, which means up to 30% of the code area can be covered - including by your logo - without breaking scannability.</p>
         <p class="mb-4 text-gray-700">In practice, we cap logo coverage at ~20% of the code surface and place it dead-center, where the structural finder patterns (the three big squares in the corners) are not located. The result is a code that scans reliably from any modern phone camera while displaying your logo prominently.</p>
         <p class="text-gray-700">Always test by scanning the downloaded QR code with at least two different phones before printing in volume. The free preview is a sample only; your real contact QR is generated after payment.</p>
       </section>
@@ -866,7 +969,7 @@ END:VCARD`;
 
       <section>
         <h2 class="text-2xl font-bold text-gray-900 mb-4">When to Use Static vs. Dynamic Branded QR Codes</h2>
-        <p class="mb-4 text-gray-700">This page generates a <strong>static</strong> branded vCard QR code â€” your contact details are encoded directly inside the QR pattern. Once printed, the data cannot be changed, but the code never expires and never depends on any server staying online. Perfect for personal business cards, one-off events, and small print runs.</p>
+        <p class="mb-4 text-gray-700">This page generates a <strong>static</strong> branded vCard QR code - your contact details are encoded directly inside the QR pattern. Once printed, the data cannot be changed, but the code never expires and never depends on any server staying online. Perfect for personal business cards, one-off events, and small print runs.</p>
         <p class="text-gray-700">If you need to update the contact info after printing (e.g., you change phones or jobs and have already printed thousands of cards), use a <a href="https://app.vcardqrcodegenerator.com/login" class="text-indigo-600 hover:underline">dynamic vCard QR code</a> instead. Dynamic codes redirect through a short link you control, so you can update the destination contact info without re-printing. Both options support logo embedding.</p>
       </section>
 
@@ -877,7 +980,7 @@ END:VCARD`;
           <li><strong>Keep logo coverage under 20%.</strong> Larger logos look prominent but reduce scan reliability in low-light or angled-camera conditions.</li>
           <li><strong>Maintain high contrast</strong> between code dots and background. Avoid dark-on-dark or light-on-light combinations. Black or near-black on white is most reliable.</li>
           <li><strong>Print at 300 DPI minimum.</strong> A QR code printed at 72 DPI on a printed business card will frequently fail to scan.</li>
-          <li><strong>Leave a 4-module quiet zone</strong> around the code (white space). Most professional templates include this automatically â€” don't crop into it.</li>
+          <li><strong>Leave a 4-module quiet zone</strong> around the code (white space). Most professional templates include this automatically - don't crop into it.</li>
           <li><strong>Test before mass-printing.</strong> Scan from 6, 12, and 24 inches away, on iOS and Android, in normal indoor lighting.</li>
         </ul>
       </section>
@@ -903,11 +1006,11 @@ END:VCARD`;
           </div>
           <div class="p-4 bg-white rounded-lg border">
             <h3 class="font-semibold text-gray-900">Do I need the branded download, or is the free generator enough?</h3>
-            <p class="text-gray-700 mt-2">The <a href="/" class="text-indigo-600 hover:underline">free generator</a> creates fully functional vCard QR codes with custom colors and corner styles. The branded download adds your logo for higher scan trust â€” studies show branded QR codes get up to 30% more scans. If your QR code will appear on <a href="/blog/contact-qr-code-printing-guide/" class="text-indigo-600 hover:underline">printed materials</a> for clients or customers, the logo upgrade is worth the one-time fee.</p>
+            <p class="text-gray-700 mt-2">The <a href="/" class="text-indigo-600 hover:underline">free generator</a> creates fully functional vCard QR codes with custom colors and corner styles. The branded download adds your logo for higher scan trust - studies show branded QR codes get up to 30% more scans. If your QR code will appear on <a href="/blog/contact-qr-code-printing-guide/" class="text-indigo-600 hover:underline">printed materials</a> for clients or customers, the logo upgrade is worth the one-time fee.</p>
           </div>
           <div class="p-4 bg-white rounded-lg border">
             <h3 class="font-semibold text-gray-900">What file format is the download?</h3>
-            <p class="text-gray-700 mt-2">High-resolution PNG (suitable for 300 DPI printing on business cards, flyers, signage, and marketing collateral). The image is rendered at 218Ã—218 pixels minimum and scaled cleanly for print.</p>
+            <p class="text-gray-700 mt-2">High-resolution PNG (suitable for 300 DPI printing on business cards, flyers, signage, and marketing collateral). The image is rendered at 218x218 pixels minimum and scaled cleanly for print.</p>
           </div>
           <div class="p-4 bg-white rounded-lg border">
             <h3 class="font-semibold text-gray-900">Is my contact data safe?</h3>
