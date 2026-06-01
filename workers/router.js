@@ -1051,10 +1051,6 @@ async function verifyStaticLogoPayment(request, env) {
     return apiError('method_not_allowed', 'Use POST for payment verification.', 405, 'Send a JSON body with payment_id and plan_id.', {}, { 'cache-control': 'no-store' });
   }
 
-  if (!env.DODO_API_KEY) {
-    return apiError('payment_verification_unavailable', 'Payment verification is not configured.', 500, 'Set DODO_API_KEY on the Worker.', {}, { 'cache-control': 'no-store' });
-  }
-
   let body = {};
   try {
     body = await request.json();
@@ -1066,6 +1062,10 @@ async function verifyStaticLogoPayment(request, env) {
   const plan = STATIC_LOGO_PLANS[body.plan_id] || STATIC_LOGO_PLANS.logo_vcard_one_time;
   if (!/^pay_[A-Za-z0-9_-]+$/.test(paymentId)) {
     return apiError('invalid_payment_id', 'A valid Dodo payment_id is required.', 400, 'Use the payment_id returned by Dodo after checkout.', {}, { 'cache-control': 'no-store' });
+  }
+
+  if (!env.DODO_API_KEY) {
+    return apiError('payment_verification_unavailable', 'Payment verification is not configured.', 500, 'Set DODO_API_KEY on the Worker.', {}, { 'cache-control': 'no-store' });
   }
 
   const response = await fetch(`${DODO_BASE_URL}/payments/${encodeURIComponent(paymentId)}`, {

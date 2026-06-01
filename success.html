@@ -37,7 +37,7 @@
         var planName = planId === 'logo_generic_one_time' ? 'Generic Logo QR Code' : 'Logo vCard QR Code';
         var payment = null;
         if (params.get('payment_id')) {
-          var response = await fetch('https://www.vcardqrcodegenerator.com/payment/verify', {
+          var response = await fetch('https://vcardqrcodegenerator.com/payment/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ payment_id: params.get('payment_id'), plan_id: planId })
