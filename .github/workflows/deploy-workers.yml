@@ -46,9 +46,19 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          DODO_API_KEY: ${{ secrets.DODO_API_KEY }}
+          DODO_PAYMENTS_API_KEY: ${{ secrets.DODO_PAYMENTS_API_KEY }}
         run: |
           # show installed wrangler version for debugging
           wrangler --version || true
+          # keep payment verification available without printing or committing the key
+          if [ -n "${DODO_API_KEY:-}" ]; then
+            printf "%s" "$DODO_API_KEY" | wrangler secret put DODO_API_KEY
+          elif [ -n "${DODO_PAYMENTS_API_KEY:-}" ]; then
+            printf "%s" "$DODO_PAYMENTS_API_KEY" | wrangler secret put DODO_API_KEY
+          else
+            echo "DODO_API_KEY/DODO_PAYMENTS_API_KEY GitHub secret not configured; payment verification endpoint will report unavailable."
+          fi
           # run deploy; if wrangler.toml exists it will pick account_id automatically
           if [ -f wrangler.toml ]; then
             wrangler deploy
