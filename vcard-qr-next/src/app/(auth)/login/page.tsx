@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { AlertCircle } from 'lucide-react'
 
 export default function LoginPage() {
@@ -200,10 +199,13 @@ export default function LoginPage() {
                     </div>
                 </form>
 
-                <div className="text-center mt-4">
-                    <Link href="/" className="text-sm text-gray-500 hover:text-gray-900">
-                        ← Back to Home
-                    </Link>
+                <div className="text-center mt-6">
+                    <a
+                        href="https://www.vcardqrcodegenerator.com/"
+                        className="inline-flex w-full items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                        Back to Main Site
+                    </a>
                 </div>
             </div>
         </div>
