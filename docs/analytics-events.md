@@ -38,7 +38,7 @@ Static logo pages are client-side tools, so the UI gate is best-effort in the br
 
 The Dodo payment verification response can provide `payment_id`, `status`, `total_amount`, `currency`, and product/cart identifiers. The static pages convert `total_amount` from the smallest currency unit into GA4 `value`. If those details are unavailable in a legacy token flow, the static logo pages fall back to the configured one-time plan value.
 
-Production Dodo verification is served by the `vcard-qr-generator-api` Cloudflare Worker on `/payment/verify`. The Worker must read the Dodo API credential from a secret binding named `DODO_API_KEY` or `DODO_PAYMENTS_API_KEY`; these values must never be stored in `wrangler.toml`, JavaScript, HTML, Markdown, workflow logs, or any committed file.
+Production Dodo verification is served by the `vcard-qr-generator-api` Cloudflare Worker on `/payment/verify`. The Worker must read the Dodo API credential from a secret binding named `DODO_API_KEY` or `DODO_PAYMENTS_API_KEY`; these values must never be stored in `wrangler.toml`, JavaScript, HTML, Markdown, workflow logs, or any committed file. Upstream lookup failures or non-successful Dodo responses must return `success: false` and must not unlock pro access or emit revenue events.
 
 ## Error Event Rules
 

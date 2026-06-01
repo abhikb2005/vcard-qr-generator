@@ -1064,17 +1064,26 @@ async function verifyStaticLogoPayment(request, env) {
     return apiError('invalid_payment_id', 'A valid Dodo payment_id is required.', 400, 'Use the payment_id returned by Dodo after checkout.', {}, { 'cache-control': 'no-store' });
   }
 
-  const dodoApiKey = env.DODO_API_KEY || env.DODO_PAYMENTS_API_KEY;
+  const dodoApiKey = String(env.DODO_API_KEY || env.DODO_PAYMENTS_API_KEY || '').trim();
   if (!dodoApiKey) {
     return apiError('payment_verification_unavailable', 'Payment verification is not configured.', 500, 'Set DODO_API_KEY on the Worker.', {}, { 'cache-control': 'no-store' });
   }
 
-  const response = await fetch(`${DODO_BASE_URL}/payments/${encodeURIComponent(paymentId)}`, {
-    headers: {
-      Authorization: `Bearer ${dodoApiKey}`,
-      Accept: 'application/json',
-    },
-  });
+  let response;
+  try {
+    response = await fetch(`${DODO_BASE_URL}/payments/${encodeURIComponent(paymentId)}`, {
+      headers: {
+        Authorization: `Bearer ${dodoApiKey}`,
+        Accept: 'application/json',
+      },
+    });
+  } catch {
+    return json({
+      success: false,
+      status: 'verification_failed',
+      payment_id: paymentId,
+    }, 200, { 'cache-control': 'no-store' });
+  }
 
   if (!response.ok) {
     return json({
@@ -1084,7 +1093,16 @@ async function verifyStaticLogoPayment(request, env) {
     }, 200, { 'cache-control': 'no-store' });
   }
 
-  const payment = await response.json();
+  let payment;
+  try {
+    payment = await response.json();
+  } catch {
+    return json({
+      success: false,
+      status: 'verification_failed',
+      payment_id: paymentId,
+    }, 200, { 'cache-control': 'no-store' });
+  }
   const status = paymentStatus(payment);
   const productId = paymentProductId(payment);
   const allowedProductIds = [env.DODO_LICENSE_PRODUCT_ID, 'pdt_ROmfPNXoSRQ16tKgZWURT'].filter(Boolean);

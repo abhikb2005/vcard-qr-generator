@@ -46,6 +46,8 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
   assert.match(worker, /\/payment\/verify/);
   assert.match(worker, /DODO_BASE_URL/);
   assert.match(worker, /\/payments\/\$\{encodeURIComponent\(paymentId\)\}/);
+  assert.match(worker, /String\(env\.DODO_API_KEY \|\| env\.DODO_PAYMENTS_API_KEY \|\| ''\)\.trim\(\)/);
+  assert.match(worker, /catch \{\s*return json\(\{\s*success: false,\s*status: 'verification_failed'/);
   assert.match(worker, /status === 'succeeded'/);
   assert.match(worker, /total_amount/);
 }
