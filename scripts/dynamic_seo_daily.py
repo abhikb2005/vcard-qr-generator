@@ -135,6 +135,36 @@ TOPICS = [
         "title": "QR Code for Product Packaging: Support, Warranty, and Reorders",
         "description": "Learn how QR codes on packaging can point customers to support, warranty registration, instructions, and reorder links.",
     },
+    {
+        "keyword": "dynamic qr code for small business",
+        "slug": "dynamic-qr-code-for-small-business",
+        "title": "Dynamic QR Code for Small Business: When Editability Is Worth It",
+        "description": "Learn when small businesses should use dynamic QR codes for business cards, flyers, menus, packaging, events, and local campaigns.",
+    },
+    {
+        "keyword": "editable qr code for marketing campaign",
+        "slug": "editable-qr-code-for-marketing-campaign",
+        "title": "Editable QR Code for Marketing Campaigns",
+        "description": "Learn when marketing campaigns need editable QR codes, scan analytics, and separate printed-asset tracking.",
+    },
+    {
+        "keyword": "dynamic qr code for local business",
+        "slug": "dynamic-qr-code-for-local-business",
+        "title": "Dynamic QR Code for Local Business Marketing",
+        "description": "Use dynamic QR codes for local flyers, signs, menus, appointment cards, and printed campaigns that may need updates.",
+    },
+    {
+        "keyword": "dynamic qr code for restaurant menu",
+        "slug": "dynamic-qr-code-for-restaurant-menu",
+        "title": "Dynamic QR Code for Restaurant Menus",
+        "description": "Learn when restaurant menus and table tents should use dynamic QR codes for editable menu links and scan visibility.",
+    },
+    {
+        "keyword": "dynamic qr code for real estate sign",
+        "slug": "dynamic-qr-code-for-real-estate-sign",
+        "title": "Dynamic QR Code for Real Estate Signs",
+        "description": "Use dynamic QR codes on real estate signs and flyers to route visitors to updated property pages, contact cards, and booking links.",
+    },
 ]
 
 
