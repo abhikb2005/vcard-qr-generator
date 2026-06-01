@@ -1,4 +1,4 @@
-const DODO_API_KEY = "uh0GPS61F0WxXWW4.3IMeq1vMPokEivVedy013O1LtXW3fNE-XSiDkXaNTDL0fBgN".trim();
+const DODO_API_KEY = (process.env.DODO_API_KEY || '').trim();
 const DODO_BASE_URL = 'https://live.dodopayments.com';
 
 async function fetchAll(endpoint) {
