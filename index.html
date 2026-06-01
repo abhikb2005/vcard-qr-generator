@@ -719,6 +719,10 @@
       const confirmClearBtn = document.getElementById('confirmClearBtn');
       const cancelClearBtn = document.getElementById('cancelClearBtn');
       let lastGeneratedQrPayload = '';
+      let staticGenerationId = 0;
+      let lastRenderedStaticGenerationId = 0;
+      let pendingStaticSuccessTimer = null;
+      let pendingStaticFailureTimer = null;
 
       // ---- GA4 event helpers ----
       function gaTrack(name, params) {
@@ -726,7 +730,19 @@
       }
 
       // 1) Download QR
-      downloadBtn?.addEventListener('click', () => {
+      downloadBtn?.addEventListener('click', (event) => {
+        if (downloadBtn.hasAttribute('disabled')) return;
+        if (!qrCodeElement.querySelector('canvas')) {
+          event.preventDefault();
+          gaTrack('error_qr_generation', {
+            qr_type: 'static_vcard',
+            source_page: window.location.pathname,
+            error_stage: 'download',
+            error_message: 'QR canvas unavailable at download',
+            recovered: false
+          });
+          return;
+        }
         // Optionally include field completeness to see quality of downloads
         const hasName = (document.getElementById('fullName')?.value.trim().length || 0) > 0;
         gaTrack('download_qr', {
@@ -768,34 +784,59 @@
         });
       });
 
-      const verifyStaticQrRendered = (vCardString, attempt = 1) => {
+      const clearStaticAnalyticsTimers = () => {
+        if (pendingStaticSuccessTimer) clearTimeout(pendingStaticSuccessTimer);
+        if (pendingStaticFailureTimer) clearTimeout(pendingStaticFailureTimer);
+        pendingStaticSuccessTimer = null;
+        pendingStaticFailureTimer = null;
+      };
+
+      const scheduleStaticSuccess = (vCardString, generationId) => {
+        if (pendingStaticFailureTimer) clearTimeout(pendingStaticFailureTimer);
+        if (pendingStaticSuccessTimer) clearTimeout(pendingStaticSuccessTimer);
+        pendingStaticSuccessTimer = setTimeout(() => {
+          if (generationId !== staticGenerationId || lastGeneratedQrPayload === vCardString) return;
+          lastGeneratedQrPayload = vCardString;
+          gaTrack('generated_qr_code', {
+            qr_type: 'static_vcard',
+            source_page: window.location.pathname,
+            has_logo: false,
+            output_available: true
+          });
+        }, 700);
+      };
+
+      const scheduleStaticFailure = (generationId, errorStage, errorMessage) => {
+        if (pendingStaticFailureTimer) clearTimeout(pendingStaticFailureTimer);
+        pendingStaticFailureTimer = setTimeout(() => {
+          if (generationId !== staticGenerationId) return;
+          if (lastRenderedStaticGenerationId === generationId) return;
+          gaTrack('error_qr_generation', {
+            qr_type: 'static_vcard',
+            source_page: window.location.pathname,
+            error_stage: errorStage,
+            error_message: errorMessage,
+            recovered: false
+          });
+        }, 1200);
+      };
+
+      const verifyStaticQrRendered = (vCardString, generationId, attempt = 1) => {
+        if (generationId !== staticGenerationId) return;
         const canvas = qrCodeElement.querySelector('canvas');
         if (canvas) {
+          lastRenderedStaticGenerationId = generationId;
           downloadBtn.href = canvas.toDataURL();
-          if (lastGeneratedQrPayload !== vCardString) {
-            lastGeneratedQrPayload = vCardString;
-            gaTrack('generated_qr_code', {
-              qr_type: 'static_vcard',
-              source_page: window.location.pathname,
-              has_logo: false,
-              output_available: true
-            });
-          }
+          scheduleStaticSuccess(vCardString, generationId);
           return;
         }
 
         if (attempt < 8) {
-          setTimeout(() => verifyStaticQrRendered(vCardString, attempt + 1), 125);
+          setTimeout(() => verifyStaticQrRendered(vCardString, generationId, attempt + 1), 125);
           return;
         }
 
-        gaTrack('error_qr_generation', {
-          qr_type: 'static_vcard',
-          source_page: window.location.pathname,
-          error_stage: 'rendering',
-          error_message: 'QR canvas was not rendered',
-          recovered: false
-        });
+        scheduleStaticFailure(generationId, 'rendering', 'QR canvas was not rendered');
       };
 
       // Instantiate QRCode object
@@ -835,12 +876,15 @@
 
       // Generate QR Code from form values
       const generateQRCode = () => {
+        const generationId = ++staticGenerationId;
         try {
           const fullName = document.getElementById('fullName').value.trim();
           if (!fullName) {
+            clearStaticAnalyticsTimers();
             qrcode.clear();
             updateUIState(false);
             lastGeneratedQrPayload = '';
+            lastRenderedStaticGenerationId = 0;
             return;
           }
           updateUIState(true);
@@ -855,15 +899,11 @@
 
           const vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
           qrcode.makeCode(vCardString);
-          setTimeout(() => verifyStaticQrRendered(vCardString), 100);
+          setTimeout(() => verifyStaticQrRendered(vCardString, generationId), 100);
         } catch (error) {
-          gaTrack('error_qr_generation', {
-            qr_type: 'static_vcard',
-            source_page: window.location.pathname,
-            error_stage: 'generation',
-            error_message: window.VcardAnalytics?.sanitizeError(error) || 'QR generation failed',
-            recovered: false
-          });
+          try { qrcode.clear(); } catch (clearError) {}
+          const message = window.VcardAnalytics?.sanitizeError(error) || 'QR generation failed';
+          scheduleStaticFailure(generationId, 'generation', message);
         }
       };
 

@@ -675,6 +675,10 @@
         source_page: window.location.pathname
       };
       let lastBrandedQrSignature = '';
+      let brandedGenerationId = 0;
+      let lastRenderedBrandedGenerationId = 0;
+      let pendingBrandedSuccessTimer = null;
+      let pendingBrandedFailureTimer = null;
 
       gaTrackPro('pro_page_view', { event_category: 'pro_funnel', event_label: 'logo_generic_page_load' });
 
@@ -866,37 +870,63 @@
         return false;
       };
 
-      const verifyBrandedQrRendered = (signature, qrType, attempt = 1) => {
+      const clearBrandedAnalyticsTimers = () => {
+        if (pendingBrandedSuccessTimer) clearTimeout(pendingBrandedSuccessTimer);
+        if (pendingBrandedFailureTimer) clearTimeout(pendingBrandedFailureTimer);
+        pendingBrandedSuccessTimer = null;
+        pendingBrandedFailureTimer = null;
+      };
+
+      const scheduleBrandedSuccess = (signature, qrType, generationId) => {
+        if (pendingBrandedFailureTimer) clearTimeout(pendingBrandedFailureTimer);
+        if (pendingBrandedSuccessTimer) clearTimeout(pendingBrandedSuccessTimer);
+        pendingBrandedSuccessTimer = setTimeout(() => {
+          if (generationId !== brandedGenerationId || lastBrandedQrSignature === signature) return;
+          lastBrandedQrSignature = signature;
+          gaTrackPro('generated_branded_qr_code', {
+            qr_type: qrType,
+            source_page: window.location.pathname,
+            has_logo: true,
+            logo_uploaded: true,
+            output_available: true
+          });
+        }, 700);
+      };
+
+      const scheduleBrandedFailure = (generationId, qrType, errorStage, errorMessage) => {
+        if (pendingBrandedFailureTimer) clearTimeout(pendingBrandedFailureTimer);
+        pendingBrandedFailureTimer = setTimeout(() => {
+          if (generationId !== brandedGenerationId) return;
+          if (lastRenderedBrandedGenerationId === generationId) return;
+          gaTrackPro('error_qr_generation', {
+            qr_type: qrType,
+            source_page: window.location.pathname,
+            error_stage: errorStage,
+            error_message: errorMessage,
+            recovered: false
+          });
+        }, 1200);
+      };
+
+      const verifyBrandedQrRendered = (signature, qrType, generationId, attempt = 1) => {
+        if (generationId !== brandedGenerationId) return;
         const outputRendered = !!qrContainer.querySelector('canvas, svg');
         if (outputRendered) {
-          if (lastBrandedQrSignature !== signature) {
-            lastBrandedQrSignature = signature;
-            gaTrackPro('generated_branded_qr_code', {
-              qr_type: qrType,
-              source_page: window.location.pathname,
-              has_logo: true,
-              logo_uploaded: true,
-              output_available: true
-            });
-          }
+          lastRenderedBrandedGenerationId = generationId;
+          scheduleBrandedSuccess(signature, qrType, generationId);
           return;
         }
 
         if (attempt < 8) {
-          setTimeout(() => verifyBrandedQrRendered(signature, qrType, attempt + 1), 125);
+          setTimeout(() => verifyBrandedQrRendered(signature, qrType, generationId, attempt + 1), 125);
           return;
         }
 
-        gaTrackPro('error_qr_generation', {
-          qr_type: qrType,
-          source_page: window.location.pathname,
-          error_stage: 'rendering',
-          error_message: 'Branded QR output was not rendered',
-          recovered: false
-        });
+        scheduleBrandedFailure(generationId, qrType, 'rendering', 'Branded QR output was not rendered');
       };
 
       const updateQRCode = () => {
+        const generationId = ++brandedGenerationId;
         try {
           const data = featureUnlocked ? buildPayload() : samplePreviewData;
           const selectedStyle = document.getElementById('qr-style').value;
@@ -904,7 +934,17 @@
           const cornerStyle = document.getElementById('corner-style').value;
           const bgColor = document.getElementById('bg-color').value;
 
-          qrCode.update({
+          const qrType = `branded_${currentType}`;
+          const verifyAfterUpdate = () => {
+            if (featureUnlocked && logoImage) {
+              const signature = [currentType, data, selectedStyle, selectedColor, cornerStyle, bgColor, 'logo'].join('|');
+              setTimeout(() => verifyBrandedQrRendered(signature, qrType, generationId), 100);
+            } else {
+              clearBrandedAnalyticsTimers();
+            }
+          };
+
+          const updateResult = qrCode.update({
             data,
             image: logoImage || '',
             backgroundOptions: { color: bgColor },
@@ -916,19 +956,13 @@
             }
           });
 
-          if (featureUnlocked && logoImage) {
-            const qrType = `branded_${currentType}`;
-            const signature = [currentType, data, selectedStyle, selectedColor, cornerStyle, bgColor, 'logo'].join('|');
-            setTimeout(() => verifyBrandedQrRendered(signature, qrType), 100);
-          }
-        } catch (error) {
-          gaTrackPro('error_qr_generation', {
-            qr_type: `branded_${currentType}`,
-            source_page: window.location.pathname,
-            error_stage: 'generation',
-            error_message: window.VcardAnalytics?.sanitizeError(error) || 'Branded QR generation failed',
-            recovered: false
+          Promise.resolve(updateResult).then(verifyAfterUpdate).catch((error) => {
+            const message = window.VcardAnalytics?.sanitizeError(error) || 'Branded QR generation failed';
+            scheduleBrandedFailure(generationId, qrType, 'generation', message);
           });
+        } catch (error) {
+          const message = window.VcardAnalytics?.sanitizeError(error) || 'Branded QR generation failed';
+          scheduleBrandedFailure(generationId, `branded_${currentType}`, 'generation', message);
         }
       };
 
@@ -1024,6 +1058,16 @@
               ? 'text-input'
               : 'wifi-ssid';
           document.getElementById(focusTarget).focus();
+          return;
+        }
+        if (!qrContainer.querySelector('canvas, svg')) {
+          gaTrackPro('error_qr_generation', {
+            qr_type: `branded_${currentType}`,
+            source_page: window.location.pathname,
+            error_stage: 'download',
+            error_message: 'Branded QR output unavailable at download',
+            recovered: false
+          });
           return;
         }
         gaTrackPro('pro_download_branded_qr', { event_category: 'pro_funnel', event_label: 'branded_qr_downloaded' });

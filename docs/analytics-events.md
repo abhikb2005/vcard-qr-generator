@@ -4,8 +4,8 @@ This site uses `trackEvent(eventName, params = {})` from `/analytics.js` on the 
 
 | Event name | Trigger | Key parameters | Why it matters | GA4 key event? |
 |---|---|---|---|---|
-| `generated_qr_code` | A normal/static vCard QR renders successfully on the homepage. Also used in the app when a dynamic QR record is created successfully. | `qr_type`, `source_page`, `has_logo`, `output_available` | Measures QR creation before download, so the top of the product funnel is visible. | No |
-| `generated_branded_qr_code` | A branded/logo QR renders successfully after a logo has been uploaded. | `qr_type`, `source_page`, `has_logo`, `logo_uploaded`, `output_available` | Separates free logo upload interest from successful branded QR creation. | No |
+| `generated_qr_code` | A normal/static vCard QR renders successfully on the homepage after the current input state settles. Also used in the app when a dynamic QR record is created successfully. | `qr_type`, `source_page`, `has_logo`, `output_available` | Measures QR creation before download, so the top of the product funnel is visible without counting every keystroke as a separate generation. | No |
+| `generated_branded_qr_code` | A branded/logo QR renders successfully after a logo has been uploaded and the current branded QR state settles. | `qr_type`, `source_page`, `has_logo`, `logo_uploaded`, `output_available` | Separates free logo upload interest from successful branded QR creation. | No |
 | `clicked_dynamic_qr_cta` | A user clicks a CTA pointing to the dynamic/pro QR flow. | `cta_text`, `cta_location`, `destination_url`, `source_page` | Measures static-site to SaaS handoff intent. | No |
 | `clicked_pricing` | A user clicks pricing, upgrade, buy, or checkout CTA. | `plan_id`, `plan_name`, `value`, `currency`, `source_page` | Shows pricing intent before checkout creation. | No |
 | `pro_checkout_start` | Checkout URL/session is successfully created and the user is about to be redirected to Dodo checkout. | `plan_id`, `plan_name`, `value`, `currency`, `source_page` | Measures real checkout starts, not just button clicks. | Yes |
@@ -23,7 +23,7 @@ This site uses `trackEvent(eventName, params = {})` from `/analytics.js` on the 
 
 ## Error Event Rules
 
-`error_qr_generation` is reserved for unrecovered failures only. Use `error_stage` to identify where the failure happened:
+`error_qr_generation` is reserved for unrecovered failures only. Static and branded inline generators guard each attempt with a generation id, so stale render checks or catches from older input states must not send this event after a newer generation succeeds. Use `error_stage` to identify where the failure happened:
 
 - `validation`: only for unrecoverable validation blockers, not normal empty form states or duplicate-alias warnings.
 - `generation`: QR data creation or persistence failed and the user could not continue.
@@ -31,11 +31,11 @@ This site uses `trackEvent(eventName, params = {})` from `/analytics.js` on the 
 - `download`: the QR existed but export/download failed.
 - `unknown`: use only when the stage cannot be safely classified.
 
-Set `recovered: false` for `error_qr_generation`. If a delayed render or retry succeeds, do not send `error_qr_generation`; use a separate retry/debug event only if needed.
+Set `recovered: false` for `error_qr_generation`. If a delayed render or retry succeeds, do not send `error_qr_generation`; use a separate retry/debug event only if needed. Empty initial state, locked previews, field validation warnings, duplicate aliases, old render timers, and successful downloads are not generation errors.
 
 ## GA4 Realtime Test Journeys
 
-1. Homepage static QR: enter a full name, wait for the QR to render, then click download. Expected events: `generated_qr_code`, `download_qr`.
+1. Homepage static QR: enter a full name, wait for the QR to render, then click download. Expected events: one settled `generated_qr_code`, then `download_qr`.
 2. vCard logo QR: unlock or simulate the payment return, upload a logo, wait for the QR to render, then download. Expected events: `pro_logo_upload`, `generated_branded_qr_code`, `pro_download_branded_qr`.
 3. Dynamic/pro CTA: click a link to `app.vcardqrcodegenerator.com`. Expected event: `clicked_dynamic_qr_cta`.
 4. Pricing/checkout: click a logo-page or bulk-page buy button, or an app dashboard upgrade plan. Expected events: `clicked_pricing`, then `pro_checkout_start` after a checkout URL is returned.

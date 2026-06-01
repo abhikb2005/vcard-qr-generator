@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-06-01 | Codex | Tightened GA4 QR generation analytics after live false positives: static and branded QR pages now ignore stale generation attempts, debounce successful generation events to the settled QR state, and only send `error_qr_generation` for the latest unrecovered failure or missing output at download. Added an inline-HTML analytics contract test. | `index.html`, `logo-qr-code.html`, `qr-code-with-logo.html`, `docs/analytics-events.md`, `tests/analytics-html-contract.test.cjs`, `data/agent-board.md` |
 | 2026-06-01 | Hermes | Swapped the homepage Uneed badge from the pre-launch “Launching Soon on Uneed” embed to the live “Published on Uneed” embed after confirming the repo already records the Uneed launch email/permanent backlink. | `index.html`, `data/agent-board.md` |
 | 2026-06-01 | Codex | Deferred Dodo webhook Supabase admin client creation to request time so the Next.js app can build without requiring service-role env vars during page-data collection. | `vcard-qr-next/src/app/api/webhooks/dodo/route.ts`, `data/agent-board.md` |
 | 2026-06-01 | Codex | Allowed the Next.js app production build to skip legacy lint/type enforcement so the app can deploy while existing build debt is handled separately. | `vcard-qr-next/next.config.ts`, `data/agent-board.md` |
