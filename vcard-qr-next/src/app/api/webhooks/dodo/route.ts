@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-// IMPORTANT: We use the service role key to bypass RLS in webhooks
-const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+function createSupabaseAdmin() {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+    if (!supabaseUrl || !serviceRoleKey) {
+        throw new Error('Missing Supabase admin configuration')
+    }
+
+    // IMPORTANT: We use the service role key to bypass RLS in webhooks.
+    return createClient(supabaseUrl, serviceRoleKey)
+}
 
 const hex = (buffer: ArrayBuffer) => [...new Uint8Array(buffer)].map((b) => b.toString(16).padStart(2, '0')).join('');
 
@@ -46,6 +52,7 @@ export async function POST(request: NextRequest) {
     }
 
     try {
+        const supabaseAdmin = createSupabaseAdmin()
         const event = JSON.parse(payload)
         const eventType = event.event || event.type
         
