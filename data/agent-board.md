@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-06-01 | Hermes | Swapped the homepage Uneed badge from the pre-launch “Launching Soon on Uneed” embed to the live “Published on Uneed” embed after confirming the repo already records the Uneed launch email/permanent backlink. | `index.html`, `data/agent-board.md` |
 | 2026-06-01 | Codex | Deferred Dodo webhook Supabase admin client creation to request time so the Next.js app can build without requiring service-role env vars during page-data collection. | `vcard-qr-next/src/app/api/webhooks/dodo/route.ts`, `data/agent-board.md` |
 | 2026-06-01 | Codex | Allowed the Next.js app production build to skip legacy lint/type enforcement so the app can deploy while existing build debt is handled separately. | `vcard-qr-next/next.config.ts`, `data/agent-board.md` |
 | 2026-06-01 | Codex | Added a visible external button on the app login page that returns users to the main marketing site instead of looping back through the app root redirect. | `vcard-qr-next/src/app/(auth)/login/page.tsx`, `data/agent-board.md` |
