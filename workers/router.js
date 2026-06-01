@@ -1064,13 +1064,14 @@ async function verifyStaticLogoPayment(request, env) {
     return apiError('invalid_payment_id', 'A valid Dodo payment_id is required.', 400, 'Use the payment_id returned by Dodo after checkout.', {}, { 'cache-control': 'no-store' });
   }
 
-  if (!env.DODO_API_KEY) {
+  const dodoApiKey = env.DODO_API_KEY || env.DODO_PAYMENTS_API_KEY;
+  if (!dodoApiKey) {
     return apiError('payment_verification_unavailable', 'Payment verification is not configured.', 500, 'Set DODO_API_KEY on the Worker.', {}, { 'cache-control': 'no-store' });
   }
 
   const response = await fetch(`${DODO_BASE_URL}/payments/${encodeURIComponent(paymentId)}`, {
     headers: {
-      Authorization: `Bearer ${env.DODO_API_KEY}`,
+      Authorization: `Bearer ${dodoApiKey}`,
       Accept: 'application/json',
     },
   });
