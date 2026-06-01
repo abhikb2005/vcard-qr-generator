@@ -85,14 +85,16 @@ export default function VCardForm({ userId, initialData }: { userId: string, ini
         const { error } = result;
 
         if (error) {
-            trackEvent('error_qr_generation', {
-                qr_type: 'dynamic_vcard',
-                error_message: sanitizeError(error),
-                source_page: window.location.pathname
-            })
             if (error.code === '23505') { // Unique violation
                 alert('That alias is already taken. Please try another one.')
             } else {
+                trackEvent('error_qr_generation', {
+                    qr_type: 'dynamic_vcard',
+                    source_page: window.location.pathname,
+                    error_stage: 'generation',
+                    error_message: sanitizeError(error),
+                    recovered: false
+                })
                 alert('Error processing vCard: ' + error.message)
             }
         } else {

@@ -48,8 +48,10 @@ export default function CreateQrForm({ userId }: { userId: string }) {
         if (error) {
             trackEvent('error_qr_generation', {
                 qr_type: 'dynamic_url',
+                source_page: window.location.pathname,
+                error_stage: 'generation',
                 error_message: sanitizeError(error),
-                source_page: window.location.pathname
+                recovered: false
             })
             alert('Error creating QR code: ' + error.message)
         } else {

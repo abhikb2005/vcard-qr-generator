@@ -866,6 +866,36 @@
         return false;
       };
 
+      const verifyBrandedQrRendered = (signature, qrType, attempt = 1) => {
+        const outputRendered = !!qrContainer.querySelector('canvas, svg');
+        if (outputRendered) {
+          if (lastBrandedQrSignature !== signature) {
+            lastBrandedQrSignature = signature;
+            gaTrackPro('generated_branded_qr_code', {
+              qr_type: qrType,
+              source_page: window.location.pathname,
+              has_logo: true,
+              logo_uploaded: true,
+              output_available: true
+            });
+          }
+          return;
+        }
+
+        if (attempt < 8) {
+          setTimeout(() => verifyBrandedQrRendered(signature, qrType, attempt + 1), 125);
+          return;
+        }
+
+        gaTrackPro('error_qr_generation', {
+          qr_type: qrType,
+          source_page: window.location.pathname,
+          error_stage: 'rendering',
+          error_message: 'Branded QR output was not rendered',
+          recovered: false
+        });
+      };
+
       const updateQRCode = () => {
         try {
           const data = featureUnlocked ? buildPayload() : samplePreviewData;
@@ -886,34 +916,18 @@
             }
           });
 
-          setTimeout(() => {
-            try {
-              const outputRendered = !!qrContainer.querySelector('canvas, svg');
-              if (!outputRendered) throw new Error('Branded QR output was not rendered');
-              const signature = [currentType, data, selectedStyle, selectedColor, cornerStyle, bgColor, logoImage ? 'logo' : 'no_logo'].join('|');
-              if (featureUnlocked && logoImage && lastBrandedQrSignature !== signature) {
-                lastBrandedQrSignature = signature;
-                gaTrackPro('generated_branded_qr_code', {
-                  qr_type: `branded_${currentType}`,
-                  source_page: window.location.pathname,
-                  has_logo: true,
-                  logo_uploaded: true,
-                  output_available: true
-                });
-              }
-            } catch (error) {
-              gaTrackPro('error_qr_generation', {
-                qr_type: `branded_${currentType}`,
-                error_message: window.VcardAnalytics?.sanitizeError(error) || 'Branded QR render failed',
-                source_page: window.location.pathname
-              });
-            }
-          }, 100);
+          if (featureUnlocked && logoImage) {
+            const qrType = `branded_${currentType}`;
+            const signature = [currentType, data, selectedStyle, selectedColor, cornerStyle, bgColor, 'logo'].join('|');
+            setTimeout(() => verifyBrandedQrRendered(signature, qrType), 100);
+          }
         } catch (error) {
           gaTrackPro('error_qr_generation', {
             qr_type: `branded_${currentType}`,
+            source_page: window.location.pathname,
+            error_stage: 'generation',
             error_message: window.VcardAnalytics?.sanitizeError(error) || 'Branded QR generation failed',
-            source_page: window.location.pathname
+            recovered: false
           });
         }
       };

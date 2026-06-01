@@ -768,6 +768,36 @@
         });
       });
 
+      const verifyStaticQrRendered = (vCardString, attempt = 1) => {
+        const canvas = qrCodeElement.querySelector('canvas');
+        if (canvas) {
+          downloadBtn.href = canvas.toDataURL();
+          if (lastGeneratedQrPayload !== vCardString) {
+            lastGeneratedQrPayload = vCardString;
+            gaTrack('generated_qr_code', {
+              qr_type: 'static_vcard',
+              source_page: window.location.pathname,
+              has_logo: false,
+              output_available: true
+            });
+          }
+          return;
+        }
+
+        if (attempt < 8) {
+          setTimeout(() => verifyStaticQrRendered(vCardString, attempt + 1), 125);
+          return;
+        }
+
+        gaTrack('error_qr_generation', {
+          qr_type: 'static_vcard',
+          source_page: window.location.pathname,
+          error_stage: 'rendering',
+          error_message: 'QR canvas was not rendered',
+          recovered: false
+        });
+      };
+
       // Instantiate QRCode object
       const qrcode = new QRCode(qrCodeElement, {
         width: 218,
@@ -825,33 +855,14 @@
 
           const vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
           qrcode.makeCode(vCardString);
-          setTimeout(() => {
-            try {
-              const canvas = qrCodeElement.querySelector('canvas');
-              if (!canvas) throw new Error('QR canvas was not rendered');
-              downloadBtn.href = canvas.toDataURL();
-              if (lastGeneratedQrPayload !== vCardString) {
-                lastGeneratedQrPayload = vCardString;
-                gaTrack('generated_qr_code', {
-                  qr_type: 'static_vcard',
-                  source_page: window.location.pathname,
-                  has_logo: false,
-                  output_available: true
-                });
-              }
-            } catch (error) {
-              gaTrack('error_qr_generation', {
-                qr_type: 'static_vcard',
-                error_message: window.VcardAnalytics?.sanitizeError(error) || 'QR render failed',
-                source_page: window.location.pathname
-              });
-            }
-          }, 100);
+          setTimeout(() => verifyStaticQrRendered(vCardString), 100);
         } catch (error) {
           gaTrack('error_qr_generation', {
             qr_type: 'static_vcard',
+            source_page: window.location.pathname,
+            error_stage: 'generation',
             error_message: window.VcardAnalytics?.sanitizeError(error) || 'QR generation failed',
-            source_page: window.location.pathname
+            recovered: false
           });
         }
       };

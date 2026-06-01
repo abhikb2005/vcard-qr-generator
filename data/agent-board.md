@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-06-01 | Codex | Reduced GA4 `error_qr_generation` noise: render checks now retry quietly, branded pages only report unrecovered logo-backed render failures, duplicate-alias validation no longer counts as QR generation failure, and analytics docs now define error-stage semantics. | `index.html`, `logo-qr-code.html`, `qr-code-with-logo.html`, `vcard-qr-next/src/components/CreateQrForm.tsx`, `vcard-qr-next/src/components/VCardForm.tsx`, `docs/analytics-events.md`, `data/agent-board.md` |
 | 2026-05-31 | Codex | Applied the paid-unlock flow to the generic QR code with logo page: unpaid visitors see a sample preview only, content fields/type tabs/logo upload are locked until payment, and final download validates required details after unlock. | `qr-code-with-logo.html`, `data/agent-board.md` |
 | 2026-05-31 | Codex | Fixed logo QR page mojibake/icon artifacts, forced the logo and dynamic QR pages onto dark UI surfaces with readable text, and added a visible back-to-main-site button on the dynamic QR page. | `logo-qr-code.html`, `dynamic-qr-code-generator.html`, `data/agent-board.md` |
 | 2026-05-31 | Codex | Locked the logo QR builder until payment: unpaid visitors now see a sample branded preview only, checkout no longer sends contact fields, and final download requires entered contact details after payment. | `logo-qr-code.html`, `data/agent-board.md` |
