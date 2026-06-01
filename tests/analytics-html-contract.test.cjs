@@ -26,6 +26,28 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
   assert.match(html, /scheduleBrandedFailure/);
   assert.match(html, /generationId !== brandedGenerationId/);
   assert.match(html, /Promise\.resolve\(updateResult\)/);
+  assert.match(html, /__PAYMENT_VERIFY_API__/);
+  assert.match(html, /verifyDodoPayment/);
+  assert.match(html, /pro_verified_unlock/);
+  assert.doesNotMatch(html, /paymentId && status === 'succeeded'\)\s*\{[\s\S]{0,240}localStorage\.setItem\('pro_unlocked_until'/);
+}
+
+{
+  const success = read('success.html');
+  assert.match(success, /payment\/verify/);
+  assert.match(success, /pro_verified_unlock/);
+  assert.match(success, /trackPurchase/);
+  assert.match(success, /pro_payment_success/);
+  assert.doesNotMatch(success, /trackEvent\('payment_success'[\s\S]*purchase_tracked: false/);
+}
+
+{
+  const worker = read('workers/router.js');
+  assert.match(worker, /\/payment\/verify/);
+  assert.match(worker, /DODO_BASE_URL/);
+  assert.match(worker, /\/payments\/\$\{encodeURIComponent\(paymentId\)\}/);
+  assert.match(worker, /status === 'succeeded'/);
+  assert.match(worker, /total_amount/);
 }
 
 console.log('analytics HTML contract tests passed');

@@ -29,33 +29,74 @@
   </div>
 
   <script>
-    (function () {
+    (async function () {
       try {
-        sessionStorage.setItem('pro_token_ok', '1');
         var params = new URLSearchParams(window.location.search);
         var transactionId = params.get('payment_id') || params.get('transaction_id') || params.get('session_id') || params.get('token');
-        if (transactionId && window.VcardAnalytics) {
-          window.VcardAnalytics.trackPurchase({
-            transaction_id: transactionId,
+        var planId = params.get('plan_id') || 'logo_vcard_one_time';
+        var planName = planId === 'logo_generic_one_time' ? 'Generic Logo QR Code' : 'Logo vCard QR Code';
+        var payment = null;
+        if (params.get('payment_id')) {
+          var response = await fetch('https://api.vcardqrcodegenerator.com/payment/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ payment_id: params.get('payment_id'), plan_id: planId })
+          });
+          var json = await response.json();
+          if (json.success) payment = json;
+        } else if (transactionId) {
+          payment = {
+            payment_id: transactionId,
             value: 4.99,
             currency: 'USD',
-            plan_id: 'logo_vcard_one_time',
-            plan_name: 'Logo vCard QR Code',
+            plan_id: planId,
+            plan_name: planName,
+            status: 'succeeded'
+          };
+        }
+
+        if (payment && window.VcardAnalytics) {
+          var value = typeof payment.value === 'number' ? payment.value : 4.99;
+          var currency = payment.currency || 'USD';
+          planId = payment.plan_id || planId;
+          planName = payment.plan_name || planName;
+          localStorage.setItem('pro_verified_unlock', JSON.stringify({
+            payment_id: payment.payment_id || transactionId,
+            plan_id: planId,
+            value: value,
+            currency: currency,
+            status: payment.status || 'succeeded',
+            expires_at: Date.now() + 24 * 60 * 60 * 1000
+          }));
+          var purchaseTracked = window.VcardAnalytics.trackPurchase({
+            transaction_id: payment.payment_id || transactionId,
+            value: value,
+            currency: currency,
+            plan_id: planId,
+            plan_name: planName,
+            payment_provider: 'dodo',
+            payment_status: payment.status || 'succeeded',
             source_page: window.location.pathname,
             items: [{
-              item_id: 'logo_vcard_one_time',
-              item_name: 'Logo vCard QR Code',
+              item_id: planId,
+              item_name: planName,
               item_category: 'vcard_qr',
-              price: 4.99,
+              price: value,
               quantity: 1
             }]
           });
-        } else {
-          window.VcardAnalytics?.trackEvent('payment_success', {
-            payment_provider: 'dodo',
-            source_page: window.location.pathname,
-            purchase_tracked: false
-          });
+          if (purchaseTracked !== false) {
+            window.VcardAnalytics.trackEvent('pro_payment_success', {
+              transaction_id: payment.payment_id || transactionId,
+              value: value,
+              currency: currency,
+              plan_id: planId,
+              plan_name: planName,
+              payment_provider: 'dodo',
+              payment_status: payment.status || 'succeeded',
+              source_page: window.location.pathname
+            });
+          }
         }
       } catch (e) {}
 

@@ -259,6 +259,7 @@
       // Worker URLs (shared with logo-qr-code.html)
       window.__CHECKOUT_API__ = "https://dodo-create-checkout.abhikb2005.workers.dev/";
       window.__TOKEN_VALIDATOR__ = "https://token-validator.abhikb2005.workers.dev/";
+      window.__PAYMENT_VERIFY_API__ = "https://api.vcardqrcodegenerator.com/payment/verify";
 
       // Allow page to render
       document.documentElement.classList.add("pro-ok");
@@ -667,6 +668,8 @@
 
       const checkoutApiUrl = window.__CHECKOUT_API__;
       const tokenValidatorUrl = window.__TOKEN_VALIDATOR__;
+      const paymentVerifyUrl = window.__PAYMENT_VERIFY_API__;
+      const verifiedUnlockStorageKey = 'pro_verified_unlock';
       const proPlanParams = {
         plan_id: 'logo_generic_one_time',
         plan_name: 'Generic Logo QR Code',
@@ -693,22 +696,78 @@
         });
       });
 
-      function trackPaymentSuccess(transactionId) {
-        window.VcardAnalytics?.trackPurchase({
+      function trackPaymentSuccess(payment) {
+        const transactionId = payment.payment_id || payment.transaction_id;
+        const value = typeof payment.value === 'number' ? payment.value : proPlanParams.value;
+        const currency = payment.currency || proPlanParams.currency;
+        const planId = payment.plan_id || proPlanParams.plan_id;
+        const planName = payment.plan_name || proPlanParams.plan_name;
+        const status = payment.status || 'succeeded';
+        const purchaseTracked = window.VcardAnalytics?.trackPurchase({
           transaction_id: transactionId,
-          value: proPlanParams.value,
-          currency: proPlanParams.currency,
-          plan_id: proPlanParams.plan_id,
-          plan_name: proPlanParams.plan_name,
+          value,
+          currency,
+          plan_id: planId,
+          plan_name: planName,
+          payment_provider: 'dodo',
+          payment_status: status,
           source_page: window.location.pathname,
           items: [{
-            item_id: proPlanParams.plan_id,
-            item_name: proPlanParams.plan_name,
+            item_id: planId,
+            item_name: planName,
             item_category: 'vcard_qr',
-            price: proPlanParams.value,
+            price: value,
             quantity: 1
           }]
         });
+        if (purchaseTracked === false) return;
+        gaTrackPro('pro_payment_success', {
+          payment_provider: 'dodo',
+          transaction_id: transactionId,
+          value,
+          currency,
+          plan_id: planId,
+          plan_name: planName,
+          payment_status: status,
+          source_page: window.location.pathname
+        });
+      }
+
+      function saveVerifiedUnlock(payment) {
+        const expiresAt = Date.now() + 24 * 60 * 60 * 1000;
+        localStorage.setItem(verifiedUnlockStorageKey, JSON.stringify({
+          payment_id: payment.payment_id || payment.transaction_id,
+          plan_id: payment.plan_id || proPlanParams.plan_id,
+          value: typeof payment.value === 'number' ? payment.value : proPlanParams.value,
+          currency: payment.currency || proPlanParams.currency,
+          status: payment.status || 'succeeded',
+          expires_at: expiresAt
+        }));
+      }
+
+      function hasVerifiedUnlock() {
+        try {
+          const unlock = JSON.parse(localStorage.getItem(verifiedUnlockStorageKey) || 'null');
+          return !!(unlock && unlock.payment_id && unlock.status === 'succeeded' && unlock.expires_at > Date.now());
+        } catch (error) {
+          return false;
+        }
+      }
+
+      async function verifyDodoPayment(paymentId) {
+        const response = await fetch(paymentVerifyUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            payment_id: paymentId,
+            plan_id: proPlanParams.plan_id
+          })
+        });
+        const json = await response.json();
+        if (!json.success) {
+          throw new Error(`Payment not verified: ${json.status || 'unknown'}`);
+        }
+        return json;
       }
 
       // Payment return handler - same shape as logo-qr-code.html
@@ -726,9 +785,17 @@
         }
 
         if (paymentId && status === 'succeeded') {
-          gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
-          trackPaymentSuccess(paymentId);
-          localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
+          try {
+            const payment = await verifyDodoPayment(paymentId);
+            saveVerifiedUnlock(payment);
+            trackPaymentSuccess(payment);
+          } catch (error) {
+            if (loadingText) {
+              loadingText.textContent = 'Payment could not be verified yet. Please wait a few seconds and refresh.';
+              loadingText.classList.remove('hidden');
+            }
+            return "pending";
+          }
           url.searchParams.delete('payment_id');
           url.searchParams.delete('status');
           url.searchParams.delete('token');
@@ -742,9 +809,16 @@
             const res = await fetch(`${tokenValidatorUrl}?token=${encodeURIComponent(token)}`);
             const json = await res.json();
             if (json.status === 'success') {
-              gaTrackPro('pro_payment_success', { event_category: 'pro_funnel', event_label: 'payment_validated' });
-              trackPaymentSuccess(token);
-              localStorage.setItem('pro_unlocked_until', String(Date.now() + 24 * 60 * 60 * 1000));
+              const payment = {
+                payment_id: token,
+                value: proPlanParams.value,
+                currency: proPlanParams.currency,
+                plan_id: proPlanParams.plan_id,
+                plan_name: proPlanParams.plan_name,
+                status: 'succeeded'
+              };
+              saveVerifiedUnlock(payment);
+              trackPaymentSuccess(payment);
               url.searchParams.delete('token');
               url.searchParams.delete('payment_id');
               url.searchParams.delete('status');
@@ -766,8 +840,7 @@
       if (tokenStatus === "pending") return;
 
       // 24-hour feature gate (shared key with logo-qr-code.html)
-      let featureUnlocked =
-        parseInt(localStorage.getItem("pro_unlocked_until") || "0", 10) > Date.now();
+      let featureUnlocked = hasVerifiedUnlock();
 
       const sampleLogoSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" rx="24" fill="#4f46e5"/><text x="60" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#fff">Logo</text><text x="60" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#bfdbfe">QR</text></svg>';
       const sampleLogoImage = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(sampleLogoSvg)}`;

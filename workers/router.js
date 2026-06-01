@@ -5,6 +5,21 @@ const ADS_TXT_LINE = 'google.com, pub-1206702185649949, DIRECT, f08c47fec0942fa0
 const API_VERSION = '2026-05-21';
 const BASE_URL = 'https://vcardqrcodegenerator.com';
 const SITE_URL = 'https://www.vcardqrcodegenerator.com';
+const DODO_BASE_URL = 'https://live.dodopayments.com';
+const STATIC_LOGO_PLANS = {
+  logo_vcard_one_time: {
+    plan_id: 'logo_vcard_one_time',
+    plan_name: 'Logo vCard QR Code',
+    fallback_value: 4.99,
+    currency: 'USD',
+  },
+  logo_generic_one_time: {
+    plan_id: 'logo_generic_one_time',
+    plan_name: 'Generic Logo QR Code',
+    fallback_value: 4.99,
+    currency: 'USD',
+  },
+};
 
 const CORS_HEADERS = {
   'access-control-allow-origin': '*',
@@ -1008,6 +1023,85 @@ async function handleMcp(request) {
   return jsonRpcError(id, -32601, 'Method not found', 404);
 }
 
+function paymentProductId(payment) {
+  return payment?.product_id
+    || payment?.product_cart?.[0]?.product_id
+    || payment?.line_items?.[0]?.product_id
+    || payment?.data?.product_id
+    || payment?.data?.product_cart?.[0]?.product_id
+    || payment?.data?.line_items?.[0]?.product_id
+    || null;
+}
+
+function amountFromPayment(payment, fallbackValue) {
+  const amount = typeof payment?.total_amount === 'number'
+    ? payment.total_amount
+    : typeof payment?.amount === 'number'
+      ? payment.amount
+      : null;
+  return amount === null ? fallbackValue : amount / 100;
+}
+
+function paymentStatus(payment) {
+  return String(payment?.status || payment?.payment_status || payment?.data?.status || '').toLowerCase();
+}
+
+async function verifyStaticLogoPayment(request, env) {
+  if (request.method !== 'POST') {
+    return apiError('method_not_allowed', 'Use POST for payment verification.', 405, 'Send a JSON body with payment_id and plan_id.', {}, { 'cache-control': 'no-store' });
+  }
+
+  if (!env.DODO_API_KEY) {
+    return apiError('payment_verification_unavailable', 'Payment verification is not configured.', 500, 'Set DODO_API_KEY on the Worker.', {}, { 'cache-control': 'no-store' });
+  }
+
+  let body = {};
+  try {
+    body = await request.json();
+  } catch {
+    return apiError('invalid_json', 'Request body must be valid JSON.', 400, 'Send { "payment_id": "...", "plan_id": "..." }.', {}, { 'cache-control': 'no-store' });
+  }
+
+  const paymentId = String(body.payment_id || '').trim();
+  const plan = STATIC_LOGO_PLANS[body.plan_id] || STATIC_LOGO_PLANS.logo_vcard_one_time;
+  if (!/^pay_[A-Za-z0-9_-]+$/.test(paymentId)) {
+    return apiError('invalid_payment_id', 'A valid Dodo payment_id is required.', 400, 'Use the payment_id returned by Dodo after checkout.', {}, { 'cache-control': 'no-store' });
+  }
+
+  const response = await fetch(`${DODO_BASE_URL}/payments/${encodeURIComponent(paymentId)}`, {
+    headers: {
+      Authorization: `Bearer ${env.DODO_API_KEY}`,
+      Accept: 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    return json({
+      success: false,
+      status: 'verification_failed',
+      payment_id: paymentId,
+    }, 200, { 'cache-control': 'no-store' });
+  }
+
+  const payment = await response.json();
+  const status = paymentStatus(payment);
+  const productId = paymentProductId(payment);
+  const allowedProductIds = [env.DODO_LICENSE_PRODUCT_ID, 'pdt_ROmfPNXoSRQ16tKgZWURT'].filter(Boolean);
+  const productAllowed = !productId || allowedProductIds.includes(productId);
+  const succeeded = status === 'succeeded' && productAllowed;
+
+  return json({
+    success: succeeded,
+    status,
+    payment_id: payment.payment_id || paymentId,
+    product_id: productId,
+    value: amountFromPayment(payment, plan.fallback_value),
+    currency: String(payment.currency || plan.currency).toUpperCase(),
+    plan_id: plan.plan_id,
+    plan_name: plan.plan_name,
+  }, 200, { 'cache-control': 'no-store' });
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -1045,6 +1139,10 @@ export default {
 
     if (url.pathname === '/license/validate') {
       return licenseHandler.fetch(request, env, ctx);
+    }
+
+    if (url.pathname === '/payment/verify') {
+      return verifyStaticLogoPayment(request, env);
     }
 
     if (url.pathname === '/openapi.json' || url.pathname === '/api/openapi.json') {
