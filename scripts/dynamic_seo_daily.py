@@ -518,7 +518,7 @@ def render_blog(topic: dict[str, str]) -> str:
   <meta property="og:url" content="{canonical}" />
   <script src="/consent.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-E90B41BNEH');function trackDynamicCta(l){{gtag('event','dynamic_qr_cta_click',{{source_page:'blog/{slug}',cta_location:l,anchor_text:'Try dynamic QR codes'}});}}</script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-E90B41BNEH');function trackDynamicCta(l){{gtag('event','clicked_dynamic_qr_cta',{{source_page:'blog/{slug}',cta_location:l,cta_text:'Create an editable QR code',destination_url:'{APP_URL}'}});}}</script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206702185649949" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="application/ld+json">{{"@context":"https://schema.org","@type":"Article","headline":"{escape_json(title)}","description":"{escape_json(desc)}","mainEntityOfPage":"{canonical}","author":{{"@type":"Organization","name":"vCard QR Code Generator"}},"publisher":{{"@type":"Organization","name":"vCard QR Code Generator"}},"datePublished":"{today}T00:00:00+00:00","dateModified":"{today}T00:00:00+00:00"}}</script>
@@ -536,7 +536,7 @@ def render_blog(topic: dict[str, str]) -> str:
       <ul><li>Business cards with changing contact details</li><li>Flyers and posters with campaign links</li><li>Restaurant menus and table tents</li><li>Conference badges and event signs</li><li>Product packaging and warranty pages</li></ul>
       <h2>Static vs dynamic</h2>
       <p>Use the free static vCard QR generator when the details are permanent and privacy-first offline behavior matters most. Use dynamic QR codes when you need editability, a reusable short link, or scan visibility.</p>
-      <section class="not-prose rounded-xl bg-indigo-50 border border-indigo-100 p-6"><h2 class="text-2xl font-bold">Create an editable QR code</h2><p class="mt-3">The Dynamic QR dashboard lets you create a QR code once and update the destination later.</p><a href="{APP_URL}" onclick="trackDynamicCta('body')" class="mt-5 inline-flex rounded-lg bg-indigo-600 px-5 py-3 font-semibold text-white">Try dynamic QR codes</a></section>
+      <section class="not-prose rounded-xl bg-indigo-50 border border-indigo-100 p-6"><h2 class="text-2xl font-bold">Create an editable QR code</h2><p class="mt-3">The Dynamic QR dashboard lets you create a QR code once and update the destination later.</p><a href="{APP_URL}" onclick="trackDynamicCta('body')" class="mt-5 inline-flex rounded-lg bg-indigo-600 px-5 py-3 font-semibold text-white">Create an editable QR code</a></section>
       <h2>Related resources</h2>
       <ul><li><a href="/dynamic-qr-code-generator.html">Dynamic QR Code Generator</a></li><li><a href="/blog/editable-qr-code/">Editable QR Code Guide</a></li><li><a href="/blog/dynamic-vs-static-vcard-qr-codes/">Dynamic vs Static QR Codes</a></li></ul>
     </article>

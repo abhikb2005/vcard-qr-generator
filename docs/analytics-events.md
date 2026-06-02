@@ -6,8 +6,8 @@ This site uses `trackEvent(eventName, params = {})` from `/analytics.js` on the 
 |---|---|---|---|---|
 | `generated_qr_code` | A normal/static vCard QR renders successfully on the homepage after the current input state settles. Also used in the app when a dynamic QR record is created successfully. | `qr_type`, `source_page`, `has_logo`, `output_available` | Measures QR creation before download, so the top of the product funnel is visible without counting every keystroke as a separate generation. | No |
 | `generated_branded_qr_code` | A branded/logo QR renders successfully after a logo has been uploaded and the current branded QR state settles. | `qr_type`, `source_page`, `has_logo`, `logo_uploaded`, `output_available` | Separates free logo upload interest from successful branded QR creation. | No |
-| `clicked_dynamic_qr_cta` | A user clicks a CTA pointing to the dynamic/pro QR flow. | `cta_text`, `cta_location`, `destination_url`, `source_page` | Measures static-site to SaaS handoff intent. | No |
-| `clicked_pricing` | A user clicks pricing, upgrade, buy, or checkout CTA. | `plan_id`, `plan_name`, `value`, `currency`, `source_page` | Monetization intent. Shows pricing interest before checkout creation; do not treat as revenue. | No |
+| `clicked_dynamic_qr_cta` | A user clicks a CTA pointing to the dynamic/editable QR flow. This is the canonical replacement for the legacy `dynamic_qr_cta_click` event. | `cta_text`, `cta_location`, `destination_url`, `source_page` | Measures static-site, blog, bulk, logo, and dashboard handoff intent into editable QR workflows. | No |
+| `clicked_pricing` | A user clicks pricing, upgrade, logo paid landing, buy, or checkout CTA. Logo landing links use `intent_type: "logo_paid_landing"` and are monetization intent only. | `plan_id`, `plan_name`, `value`, `currency`, `cta_text`, `cta_location`, `destination_url`, `intent_type`, `source_page` | Monetization intent. Shows pricing interest before checkout creation; do not treat as revenue. | No |
 | `pro_checkout_start` | Checkout URL/session is successfully created and the user is about to be redirected to Dodo checkout. | `plan_id`, `plan_name`, `value`, `currency`, `source_page` | Checkout intent. Measures real checkout starts, not purchases or revenue. | Yes |
 | `purchase` | Payment success is confirmed by Dodo verification on return, by a success page, or by the authenticated app verification route. | `transaction_id`, `value`, `currency`, `items`, `payment_provider`, `payment_status` | Revenue conversion. GA4 recommended ecommerce purchase event for revenue reporting. | Yes |
 | `payment_success` | Sent alongside `purchase`, or as a fallback custom payment success event when transaction details are incomplete. | `transaction_id`, `plan_id`, `plan_name`, `value`, `currency`, `payment_provider`, `payment_status` | Revenue conversion/debugging. Easier custom funnel reporting and reconciliation against Dodo records. | Yes |
@@ -31,6 +31,23 @@ This site uses `trackEvent(eventName, params = {})` from `/analytics.js` on the 
 - Paid value realization: `pro_download_branded_qr`.
 
 Do not use `clicked_pricing` or `pro_checkout_start` as revenue conversions. They are useful funnel steps, but no money has been confirmed yet.
+
+## Day 4 CTA Attribution
+
+Dynamic/editable QR CTAs must send `clicked_dynamic_qr_cta` with `cta_text`, `cta_location`, `destination_url`, and `source_page`. The old `dynamic_qr_cta_click` name is deprecated and should not be emitted by live pages or templates.
+
+Current high-value `cta_location` values include:
+
+- `homepage_header`: header link to the editable QR app.
+- `post_generation`: shown after a free static QR is successfully generated.
+- `post_download`: shown after a free static QR is downloaded.
+- `post_branded_download`: shown after a branded/logo QR is downloaded.
+- `post_bulk_export`: shown after bulk CSV export.
+- `bulk_hero` and `bulk_page`: bulk-page editable/team QR handoff.
+- `guide_header`, `guide_bottom`, and `guide_footer`: dynamic QR guide app CTAs.
+- `blog_inline`, `blog_body`, or existing blog-specific locations: blog app CTAs.
+
+Logo/pro landing CTAs to `/logo-qr-code.html` must send `clicked_pricing` with `intent_type: "logo_paid_landing"`. These clicks represent premium landing-page interest, not revenue. Checkout buttons should continue sending `pro_checkout_start` only after a checkout URL is created.
 
 ## Payment-Gating Assumptions
 

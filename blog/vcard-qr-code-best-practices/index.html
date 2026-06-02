@@ -80,6 +80,10 @@
   <style>
     .adsbygoogle-container { min-height: 100px; margin: 1.5rem 0; }
   </style>
+
+  <!-- Cookie Consent (must load before tracking) -->
+  <script src="/consent.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
 </head>
 <body class="bg-gray-50 text-gray-800">
   <header class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
@@ -266,5 +270,50 @@
   </main>
 
   <footer class="text-center text-sm text-gray-500 py-10">© 2026 vCard QR Code Generator</footer>
+
+  <script>
+    // DAY4_CTA_TRACKING: canonical CTA attribution for blog monetization and dynamic QR handoff.
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function(){ dataLayer.push(arguments); };
+    if (!window.__day4GaConfigured) {
+      gtag('js', new Date());
+      gtag('config', 'G-E90B41BNEH');
+      window.__day4GaConfigured = true;
+    }
+    window.trackDynamicCta = function(location) {
+      gtag('event', 'clicked_dynamic_qr_cta', {
+        cta_text: 'Create an editable QR code',
+        cta_location: location || 'blog_body',
+        source_page: window.location.pathname,
+        destination_url: 'https://app.vcardqrcodegenerator.com/login'
+      });
+    };
+    document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"]').forEach(function(link) {
+      if ((link.getAttribute('onclick') || '').indexOf('trackDynamicCta') !== -1) return;
+      link.addEventListener('click', function() {
+        gtag('event', 'clicked_dynamic_qr_cta', {
+          cta_text: link.textContent.trim().replace(/\s+/g, ' '),
+          cta_location: link.dataset.ctaLocation || 'blog_body',
+          source_page: window.location.pathname,
+          destination_url: link.href
+        });
+      });
+    });
+    document.querySelectorAll('a[href*="logo-qr-code.html"]').forEach(function(link) {
+      link.addEventListener('click', function() {
+        gtag('event', 'clicked_pricing', {
+          plan_id: 'logo_vcard_one_time',
+          plan_name: 'Logo vCard QR Code',
+          value: 4.99,
+          currency: 'USD',
+          cta_text: link.textContent.trim().replace(/\s+/g, ' '),
+          cta_location: link.dataset.ctaLocation || 'blog_body',
+          source_page: window.location.pathname,
+          destination_url: link.href,
+          intent_type: 'logo_paid_landing'
+        });
+      });
+    });
+  </script>
 </body>
 </html>

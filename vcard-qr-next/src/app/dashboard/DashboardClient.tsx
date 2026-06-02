@@ -181,6 +181,18 @@ export default function DashboardClient() {
         }
     }
 
+    const openPricingModal = (ctaLocation: string, ctaText: string) => {
+        trackEvent('clicked_pricing', {
+            plan_id: 'dynamic_pricing_modal',
+            plan_name: 'Dynamic QR plans',
+            cta_text: ctaText,
+            cta_location: ctaLocation,
+            source_page: typeof window !== 'undefined' ? window.location.pathname : '/dashboard',
+            intent_type: 'dynamic_plan_modal'
+        })
+        setShowPricing(true)
+    }
+
     const limit = LIMITS[(profile?.subscription_plan as keyof typeof LIMITS) || 'free']
     const used = qrCodes.length
     const isLimitReached = used >= limit
@@ -215,7 +227,7 @@ export default function DashboardClient() {
                         </div>
                         <div className="flex items-center gap-4">
                             <button
-                                onClick={() => setShowPricing(!showPricing)}
+                                onClick={() => showPricing ? setShowPricing(false) : openPricingModal('dashboard_header_plan_pill', `${profile?.subscription_plan?.toUpperCase()} Plan`)}
                                 className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full hover:bg-indigo-100 transition-colors"
                             >
                                 {profile?.subscription_plan?.toUpperCase()} Plan ({used}/{limit === Infinity ? '∞' : limit})
@@ -249,7 +261,7 @@ export default function DashboardClient() {
                                     disabled={loadingTier === 'starter'}
                                     className="w-full bg-indigo-600 text-white rounded-lg py-2 font-medium hover:bg-indigo-700 disabled:opacity-50"
                                 >
-                                    {loadingTier === 'starter' ? 'Loading...' : 'Upgrade to Starter'}
+                                    {loadingTier === 'starter' ? 'Loading...' : 'Start Starter: 5 editable QRs'}
                                 </button>
                             </div>
                             {/* Growth */}
@@ -267,7 +279,7 @@ export default function DashboardClient() {
                                     disabled={loadingTier === 'growth'}
                                     className="w-full bg-purple-600 text-white rounded-lg py-2 font-medium hover:bg-purple-700 disabled:opacity-50"
                                 >
-                                    {loadingTier === 'growth' ? 'Loading...' : 'Upgrade to Growth'}
+                                    {loadingTier === 'growth' ? 'Loading...' : 'Start Growth: 50 editable QRs'}
                                 </button>
                             </div>
                             {/* Business */}
@@ -284,7 +296,7 @@ export default function DashboardClient() {
                                     disabled={loadingTier === 'business'}
                                     className="w-full bg-gray-900 text-white rounded-lg py-2 font-medium hover:bg-gray-800 disabled:opacity-50"
                                 >
-                                    {loadingTier === 'business' ? 'Loading...' : 'Upgrade to Business'}
+                                    {loadingTier === 'business' ? 'Loading...' : 'Start Business: unlimited editable QRs'}
                                 </button>
                             </div>
                         </div>
@@ -308,7 +320,7 @@ export default function DashboardClient() {
                                     onClick={(e) => {
                                         if (isLimitReached) {
                                             e.preventDefault()
-                                            setShowPricing(true)
+                                            openPricingModal('limit_reached_create_card', 'Create Digital Business Card')
                                         }
                                     }}
                                     className={`inline-flex items-center justify-center w-full px-4 py-3 
@@ -329,7 +341,7 @@ export default function DashboardClient() {
                                     <h3 className="text-lg font-semibold text-gray-900">Limit Reached</h3>
                                     <p className="text-sm text-gray-500 mb-4">You have used {used}/{limit} QR codes. Upgrade to create more.</p>
                                     <button
-                                        onClick={() => setShowPricing(true)}
+                                        onClick={() => openPricingModal('limit_reached_card', 'Upgrade Plan')}
                                         className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none"
                                     >
                                         Upgrade Plan

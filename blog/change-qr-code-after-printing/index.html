@@ -18,10 +18,10 @@
     gtag('js', new Date());
     gtag('config', 'G-E90B41BNEH');
     function trackDynamicCta(location){
-      gtag('event', 'dynamic_qr_cta_click', {
+      gtag('event', 'clicked_dynamic_qr_cta', {
         source_page: 'blog/change-qr-code-after-printing',
         cta_location: location,
-        anchor_text: 'Try dynamic QR codes'
+        cta_text: 'Create an editable QR code'
       });
     }
   </script>
@@ -180,7 +180,7 @@
       <section class="not-prose rounded-xl bg-indigo-50 border border-indigo-100 p-6 my-8">
         <h2 class="text-2xl font-bold text-slate-950">Avoid the reprint problem next time</h2>
         <p class="mt-3 text-slate-700">The Dynamic QR dashboard lets you create a QR code once and update the destination later. It is built for business cards, flyers, event signs, menus, packaging, and campaigns where the printed code needs to stay useful.</p>
-        <a href="https://app.vcardqrcodegenerator.com/login" onclick="trackDynamicCta('body')" class="mt-5 inline-flex rounded-lg bg-indigo-600 px-5 py-3 font-semibold text-white">Try dynamic QR codes</a>
+        <a href="https://app.vcardqrcodegenerator.com/login" onclick="trackDynamicCta('body')" class="mt-5 inline-flex rounded-lg bg-indigo-600 px-5 py-3 font-semibold text-white">Create an editable QR code</a>
       </section>
 
       <h2>Related resources</h2>
@@ -198,5 +198,50 @@
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   </main>
+
+  <script>
+    // DAY4_CTA_TRACKING: canonical CTA attribution for blog monetization and dynamic QR handoff.
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function(){ dataLayer.push(arguments); };
+    if (!window.__day4GaConfigured) {
+      gtag('js', new Date());
+      gtag('config', 'G-E90B41BNEH');
+      window.__day4GaConfigured = true;
+    }
+    window.trackDynamicCta = function(location) {
+      gtag('event', 'clicked_dynamic_qr_cta', {
+        cta_text: 'Create an editable QR code',
+        cta_location: location || 'blog_body',
+        source_page: window.location.pathname,
+        destination_url: 'https://app.vcardqrcodegenerator.com/login'
+      });
+    };
+    document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"]').forEach(function(link) {
+      if ((link.getAttribute('onclick') || '').indexOf('trackDynamicCta') !== -1) return;
+      link.addEventListener('click', function() {
+        gtag('event', 'clicked_dynamic_qr_cta', {
+          cta_text: link.textContent.trim().replace(/\s+/g, ' '),
+          cta_location: link.dataset.ctaLocation || 'blog_body',
+          source_page: window.location.pathname,
+          destination_url: link.href
+        });
+      });
+    });
+    document.querySelectorAll('a[href*="logo-qr-code.html"]').forEach(function(link) {
+      link.addEventListener('click', function() {
+        gtag('event', 'clicked_pricing', {
+          plan_id: 'logo_vcard_one_time',
+          plan_name: 'Logo vCard QR Code',
+          value: 4.99,
+          currency: 'USD',
+          cta_text: link.textContent.trim().replace(/\s+/g, ' '),
+          cta_location: link.dataset.ctaLocation || 'blog_body',
+          source_page: window.location.pathname,
+          destination_url: link.href,
+          intent_type: 'logo_paid_landing'
+        });
+      });
+    });
+  </script>
 </body>
 </html>

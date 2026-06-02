@@ -254,7 +254,7 @@
                 </a>
                 <a href="https://app.vcardqrcodegenerator.com/login"
                     class="bg-white text-indigo-900 hover:bg-indigo-50 font-bold py-4 px-8 rounded-lg shadow-lg transform transition hover:-translate-y-1 text-lg">
-                    Need Editable QR Codes?
+                    Create editable team QR codes
                 </a>
             </div>
             <p class="mt-4 text-sm text-indigo-300">Free CSV upload. Browser-based processing. No signup required.</p>
@@ -434,7 +434,7 @@
                                         <div class="text-right">
                                             <span class="block font-bold text-gray-900">$9</span>
                                             <button onclick="initiateCheckout('pdt_0NXPxlipsCiIWgeLUcl6M')"
-                                                class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Buy</button>
+                                                class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Unlock 50 exports</button>
                                         </div>
                                     </div>
 
@@ -448,7 +448,7 @@
                                         <div class="text-right">
                                             <span class="block font-bold text-gray-900">$19</span>
                                             <button onclick="initiateCheckout('pdt_0NXPxyJkVPTIFnQ2bS5xM')"
-                                                class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Buy</button>
+                                                class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Unlock 500 exports</button>
                                         </div>
                                     </div>
 
@@ -462,7 +462,7 @@
                                         <div class="text-right">
                                             <span class="block font-bold text-gray-900">$29</span>
                                             <button onclick="initiateCheckout('pdt_0NXPy4nZegDt6mQKDzlkX')"
-                                                class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Buy</button>
+                                                class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Unlock unlimited exports</button>
                                         </div>
                                     </div>
                                 </div>
@@ -483,6 +483,11 @@
                                             d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                     </svg>
                                 </button>
+                                <div id="postBulkExportCta" class="hidden mt-4 rounded-lg border border-cyan-200 bg-cyan-50 p-4 text-center">
+                                    <p class="text-sm font-semibold text-cyan-950">Managing QR codes for a team?</p>
+                                    <a href="https://app.vcardqrcodegenerator.com/login" data-cta-location="post_bulk_export"
+                                        class="mt-2 inline-flex rounded-lg bg-cyan-600 px-4 py-2 text-sm font-bold text-white hover:bg-cyan-700">Create editable team QR codes</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -620,8 +625,22 @@
             const countDisplay = document.getElementById('countDisplay');
             const downloadArea = document.getElementById('downloadArea');
             const downloadZipBtn = document.getElementById('downloadZipBtn');
+            const postBulkExportCta = document.getElementById('postBulkExportCta');
             const limitMsg = document.getElementById('limitMsg');
             const downloadSample = document.getElementById('downloadSample');
+
+            function trackDynamicCta(link, location) {
+                window.VcardAnalytics?.trackEvent('clicked_dynamic_qr_cta', {
+                    cta_text: link.textContent.trim().replace(/\s+/g, ' '),
+                    cta_location: link.dataset.ctaLocation || location,
+                    source_page: window.location.pathname,
+                    destination_url: link.href
+                });
+            }
+
+            document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"]').forEach((link) => {
+                link.addEventListener('click', () => trackDynamicCta(link, 'bulk_page'));
+            });
 
             // Sample CSV Download
             downloadSample.addEventListener('click', (e) => {
@@ -864,6 +883,9 @@ END:VCARD`;
                     plan_name: product.plan_name || 'Bulk QR plan',
                     value: product.value,
                     currency: product.currency || 'USD',
+                    cta_text: btn.textContent.trim().replace(/\s+/g, ' '),
+                    cta_location: 'bulk_paywall',
+                    destination_url: WORKER_URL,
                     source_page: window.location.pathname
                 };
                 window.VcardAnalytics?.trackEvent('clicked_pricing', checkoutParams);
@@ -927,6 +949,7 @@ END:VCARD`;
 
                 downloadZipBtn.textContent = "Download .ZIP";
                 downloadZipBtn.disabled = false;
+                postBulkExportCta?.classList.remove('hidden');
             });
 
             // Init

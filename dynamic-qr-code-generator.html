@@ -27,13 +27,8 @@
       window.VcardAnalytics?.trackEvent('clicked_dynamic_qr_cta', {
         source_page: window.location.pathname,
         cta_location: location,
-        cta_text: 'Create dynamic QR code',
+        cta_text: 'Create an editable QR code',
         destination_url: 'https://app.vcardqrcodegenerator.com/login'
-      });
-      window.VcardAnalytics?.trackEvent('dynamic_qr_cta_click', {
-        source_page: 'dynamic-qr-code-generator',
-        cta_location: location,
-        anchor_text: 'Create dynamic QR code'
       });
     }
   </script>
@@ -206,7 +201,7 @@
         <div class="mt-8 flex flex-col sm:flex-row gap-4">
           <a href="https://app.vcardqrcodegenerator.com/login" onclick="trackDynamicCta('hero')"
             class="inline-flex justify-center rounded-lg bg-cyan-400 px-6 py-4 font-bold text-slate-950 hover:bg-cyan-300">
-            Create My Dynamic QR Code
+            Create an editable QR code
           </a>
           <a href="/"
             class="inline-flex justify-center rounded-lg bg-white/10 border border-white/30 px-6 py-4 font-bold text-white hover:bg-white/20">
@@ -310,7 +305,7 @@
       </p>
       <a href="https://app.vcardqrcodegenerator.com/login" onclick="trackDynamicCta('bottom')"
         class="mt-6 inline-flex justify-center rounded-lg bg-cyan-400 px-6 py-4 font-bold text-slate-950 hover:bg-cyan-300">
-        Create dynamic QR code
+        Create an editable QR code
       </a>
     </section>
 

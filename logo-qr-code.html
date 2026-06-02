@@ -303,7 +303,7 @@
         </a>
         <a href="https://app.vcardqrcodegenerator.com/login"
           class="bg-white text-indigo-600 hover:bg-indigo-50 font-bold py-4 px-8 rounded-lg shadow-lg transform transition hover:-translate-y-1 text-lg">
-          Need an Editable QR Code?
+          Need to edit after printing?
         </a>
       </div>
       <p class="mt-4 text-sm text-indigo-300">Free sample preview. $4.99 one-time unlock. No subscription.</p>
@@ -528,6 +528,11 @@
               <p id="pricing-info" class="text-center text-xs text-gray-500">
                 Preview uses sample data. Your final vCard QR is available after payment.
               </p>
+              <div id="postBrandedDownloadCta" class="hidden rounded-lg border border-cyan-200 bg-cyan-50 p-4 text-center">
+                <p class="text-sm font-semibold text-cyan-950">Need to change details later?</p>
+                <a href="https://app.vcardqrcodegenerator.com/login" data-cta-location="post_branded_download"
+                  class="mt-2 inline-flex rounded-lg bg-cyan-600 px-4 py-2 text-sm font-bold text-white hover:bg-cyan-700">Use an editable dynamic QR</a>
+              </div>
             </div>
 
             <!-- Guarantee -->
@@ -611,6 +616,7 @@
       const logoUploadInput = document.getElementById('logo-upload');
       const qrContainer = document.getElementById('qr-code-container');
       const loadingText = document.getElementById('loading-text');
+      const postBrandedDownloadCta = document.getElementById('postBrandedDownloadCta');
 
       const checkoutApiUrl = window.__CHECKOUT_API__;
       const tokenValidatorUrl = window.__TOKEN_VALIDATOR__;
@@ -1053,7 +1059,12 @@ END:VCARD`;
       };
 
       const handleCheckout = async () => {
-        gaTrackPro('clicked_pricing', proPlanParams);
+        gaTrackPro('clicked_pricing', {
+          ...proPlanParams,
+          cta_text: downloadBtn.textContent.trim().replace(/\s+/g, ' '),
+          cta_location: 'logo_page_paywall',
+          destination_url: checkoutApiUrl
+        });
 
         try {
           if (loadingText) {
@@ -1123,6 +1134,7 @@ END:VCARD`;
         }
         gaTrackPro('pro_download_branded_qr', { event_category: 'pro_funnel', event_label: 'branded_qr_downloaded' });
         qrCode.download({ name: 'branded-vcard-qr', extension: 'png' });
+        postBrandedDownloadCta?.classList.remove('hidden');
         // 24-hour access window is preserved so the user can re-download during that window.
       });
 

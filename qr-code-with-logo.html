@@ -511,6 +511,11 @@
               <p id="pricing-info" class="text-center text-xs text-gray-500">
                 Preview uses sample data. Payment unlocks your final branded QR download.
               </p>
+              <div id="postBrandedDownloadCta" class="hidden rounded-lg border border-cyan-200 bg-cyan-50 p-4 text-center">
+                <p class="text-sm font-semibold text-cyan-950">Need to change details later?</p>
+                <a href="https://app.vcardqrcodegenerator.com/login" data-cta-location="post_branded_download"
+                  class="mt-2 inline-flex rounded-lg bg-cyan-600 px-4 py-2 text-sm font-bold text-white hover:bg-cyan-700">Use an editable dynamic QR</a>
+              </div>
             </div>
 
             <div class="flex items-center gap-2 text-xs text-gray-400">
@@ -665,6 +670,7 @@
       const qrContainer = document.getElementById('qr-code-container');
       const loadingText = document.getElementById('loading-text');
       const pricingInfo = document.getElementById('pricing-info');
+      const postBrandedDownloadCta = document.getElementById('postBrandedDownloadCta');
 
       const checkoutApiUrl = window.__CHECKOUT_API__;
       const tokenValidatorUrl = window.__TOKEN_VALIDATOR__;
@@ -1096,7 +1102,12 @@
       });
 
       const handleCheckout = async () => {
-        gaTrackPro('clicked_pricing', proPlanParams);
+        gaTrackPro('clicked_pricing', {
+          ...proPlanParams,
+          cta_text: downloadBtn.textContent.trim().replace(/\s+/g, ' '),
+          cta_location: 'logo_page_paywall',
+          destination_url: checkoutApiUrl
+        });
         try {
           if (loadingText) {
             loadingText.classList.remove('hidden');
@@ -1145,6 +1156,7 @@
         }
         gaTrackPro('pro_download_branded_qr', { event_category: 'pro_funnel', event_label: 'branded_qr_downloaded' });
         qrCode.download({ name: 'branded-qr', extension: 'png' });
+        postBrandedDownloadCta?.classList.remove('hidden');
       });
 
       updateQRCode();

@@ -8,6 +8,13 @@
   <meta name="description"
     content="Learn how to create, manage, and track Dynamic QR Codes. Update your vCard contact info anytime without reprinting. View scan analytics, manage plans, and more." />
   <link rel="canonical" href="https://www.vcardqrcodegenerator.com/dynamic-qr-guide.html" />
+  <script src="/consent.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E90B41BNEH"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-E90B41BNEH');
+  </script>
+  <script src="/analytics.js"></script>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
@@ -282,7 +289,7 @@
 <body>
   <div class="nav-links">
     <a href="index.html">← Back to Generator</a>
-    <a href="https://app.vcardqrcodegenerator.com">Open Dynamic QR App</a>
+    <a href="https://app.vcardqrcodegenerator.com" data-cta-location="guide_header">Open Dynamic QR App</a>
     <a href="contact.html">Contact</a>
   </div>
 
@@ -607,7 +614,7 @@
   <div class="cta-box">
     <h3>Ready to Get Started?</h3>
     <p>Create your first Dynamic QR code today and never worry about outdated contact info again.</p>
-    <a href="https://app.vcardqrcodegenerator.com">Create Dynamic QR Code →</a>
+    <a href="https://app.vcardqrcodegenerator.com" data-cta-location="guide_bottom">Create editable QR code</a>
   </div>
 
   <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 12px; font-size: 0.9rem; color: #666; text-align: center;">
@@ -622,9 +629,21 @@
 
   <div class="nav-links">
     <a href="index.html">← Back to Generator</a>
-    <a href="https://app.vcardqrcodegenerator.com">Open Dynamic QR App</a>
+    <a href="https://app.vcardqrcodegenerator.com" data-cta-location="guide_footer">Open Dynamic QR App</a>
     <a href="contact.html">Contact Us</a>
   </div>
+  <script>
+    document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"]').forEach(function(link) {
+      link.addEventListener('click', function() {
+        window.VcardAnalytics?.trackEvent('clicked_dynamic_qr_cta', {
+          cta_text: link.textContent.trim().replace(/\s+/g, ' '),
+          cta_location: link.dataset.ctaLocation || 'dynamic_guide',
+          source_page: window.location.pathname,
+          destination_url: link.href
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
