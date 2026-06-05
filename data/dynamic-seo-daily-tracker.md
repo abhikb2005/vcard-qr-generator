@@ -49,6 +49,7 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 | 2026-06-02 | editable qr code for marketing campaign | `/blog/editable-qr-code-for-marketing-campaign/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-06-03 | dynamic qr code for local business | `/blog/dynamic-qr-code-for-local-business/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-06-04 | dynamic qr code for restaurant menu | `/blog/dynamic-qr-code-for-restaurant-menu/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
+| 2026-06-05 | dynamic qr code for real estate sign | `/blog/dynamic-qr-code-for-real-estate-sign/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 
 ## Directory Submission Rules
 
