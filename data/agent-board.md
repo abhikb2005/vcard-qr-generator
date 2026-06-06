@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-06-07 | Codex | Updated LinkedIn strategy to a two-post weekly cadence: one persona lead-capture story and one technical QR story with narrative angle, plus a required CTA rule for every post. | `data/linkedin-dynamic-qr-posting-strategy.md`, `data/agent-board.md` |
 | 2026-06-07 | Codex | Replaced the LinkedIn strategy with a fictionalized persona-story engine focused on realistic lead-capture scenarios, offline attention leaks, QR next steps, and ethical/composite-story guardrails. | `data/linkedin-dynamic-qr-posting-strategy.md`, `data/agent-board.md` |
 | 2026-06-07 | Codex | Revised the LinkedIn dynamic QR posting strategy based on the first analytics export: shifted from direct utility posts to story-led technical storytelling, clarified cadence, visual rules, CTAs, and measurement interpretation. | `data/linkedin-dynamic-qr-posting-strategy.md`, `data/agent-board.md` |
 | 2026-06-06 | Codex | Published a fresh dynamic QR guide for appointment cards after the daily engine fell back to an exhausted topic, updated discovery files, tracker, and added new dynamic SEO seeds. | `blog/dynamic-qr-code-for-appointment-cards/index.html`, `blog_index.json`, `sitemap.xml`, `scripts/dynamic_seo_daily.py`, `data/dynamic-seo-daily-tracker.md`, `data/agent-board.md` |

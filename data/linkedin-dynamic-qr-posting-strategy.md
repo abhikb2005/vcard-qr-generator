@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-07
 
-Purpose: grow the vCard QR Code Generator LinkedIn company page and drive qualified interest in dynamic QR codes through realistic persona-led stories about lead capture, offline marketing, and physical-to-digital follow-up.
+Purpose: grow the vCard QR Code Generator LinkedIn company page and drive qualified interest in dynamic QR codes through two weekly story formats: realistic persona-led lead-capture stories and technical QR stories with a narrative hook.
 
 ## Current Read From Analytics
 
@@ -22,7 +22,10 @@ Conclusion: the page does not yet have enough baseline distribution for direct u
 
 Old bias: technical trivia, QR history, and general QR education.
 
-New bias: fictionalized persona stories about how realistic small-business operators use QR codes to capture more leads from physical moments.
+New bias: two posts per week.
+
+- One fictionalized persona story about how realistic small-business operators use QR codes to capture more leads from physical moments.
+- One technical QR story that starts with a scene, question, or contradiction before explaining how QR codes work.
 
 These are not fake case studies. Treat them as fictional or composite scenarios built from common business situations. Do not invent real customer names, fake testimonials, exact revenue claims, or unverifiable performance numbers.
 
@@ -84,18 +87,29 @@ Preferred disclosure style:
 - "Here is the kind of scenario QR codes are good at..."
 - "Fictional example, real problem..."
 
-## Content Mix
+## Weekly Content Mix
 
 For the next 30 days, use this mix:
 
 | Type | Share | Goal |
 |---|---:|---|
-| Fictional persona lead-capture stories | 55% | Make QR use cases concrete and memorable |
-| Offline marketing teardown stories | 20% | Show the leak between attention and follow-up |
-| Practical QR setup lessons | 15% | Build trust and execution confidence |
-| Product bridge posts | 10% | Move interested readers toward dynamic QR codes |
+| Fictional persona lead-capture stories | 50% | Make QR use cases concrete and commercially relevant |
+| Technical QR stories | 35% | Make QR codes interesting enough to stop scrolling |
+| Practical QR setup lessons | 10% | Build trust and execution confidence |
+| Direct product bridge posts | 5% | Move interested readers toward dynamic QR codes |
 
 Direct product pitches stay rare. The story should carry the post.
+
+## Weekly Cadence
+
+Use 2 posts per week until the page has more baseline reach.
+
+Recommended cadence:
+
+- Tuesday, 11:00-11:45 AM IST: persona lead-capture story.
+- Thursday, 11:00-11:45 AM IST: technical QR story with a storytelling angle.
+
+Avoid posting multiple posts on the same day while the page is tiny. If backup scheduling is needed, schedule ahead, but keep the quality bar identical.
 
 ## Persona Library
 
@@ -114,9 +128,24 @@ Use personas where lead capture or follow-up is visibly painful:
 | Local workshop host | Poster or handout | Attendees do not register interest | Scan to event signup |
 | D2C brand | Packaging insert | Buyers do not leave reviews or join list | Scan to care guide, review, warranty, reorder |
 
+## Technical Story Library
+
+Technical posts should still feel like stories. Do not open with definitions. Open with a question, odd setting, visible object, or contradiction.
+
+| Technical Topic | Story Angle | Business Bridge |
+|---|---|---|
+| Finder patterns | The three big squares are not decoration | Scanning only works when the handoff is easy to recognize |
+| Error correction | A damaged QR code can still work, but a bad campaign cannot | Test real printed assets before ordering in volume |
+| Static vs dynamic encoding | A static QR code prints the destination into reality | Use static for permanent details, dynamic for changeable destinations |
+| QR version/size | The more data you cram in, the denser the code gets | Shorter/dynamic URLs can be easier to scan on small printed assets |
+| Quiet zone | The empty space around a QR code is doing work | Design choices affect scan reliability |
+| Contrast | A pretty QR code can become unreadable | Brand styling should not defeat scanning |
+| Scan destination | The code can work perfectly and the campaign can still fail | The page after the scan needs one job |
+| Per-asset tracking | One QR code for every flyer creates a reporting blob | Separate codes make offline attribution cleaner |
+
 ## Story Formula
 
-Most posts should follow this structure:
+Persona posts should follow this structure:
 
 1. Hook with the business situation.
 2. Introduce the persona and offline moment.
@@ -144,6 +173,30 @@ The QR code just makes the next step obvious while the interest is still warm.
 Physical attention -> captured lead.
 ```
 
+Technical posts should follow this structure:
+
+1. Open in the middle of a scene, question, or contradiction.
+2. Name the visible QR detail or scanning behavior.
+3. Explain the technical mechanism simply.
+4. Connect it to a real printed-marketing mistake.
+5. End with a practical CTA.
+
+Example shape:
+
+```text
+The three big squares are not there to look official.
+
+They are how the scanner finds the code.
+
+[technical explanation]
+
+That is the small lesson for marketing:
+
+If the handoff is hard to recognize, the campaign leaks before it starts.
+
+Before printing in volume, test the code on the real asset.
+```
+
 ## Hooks To Prefer
 
 Use hooks that make a specific operator feel seen:
@@ -156,6 +209,15 @@ Use hooks that make a specific operator feel seen:
 - "A van wrap can create interest. It cannot capture that interest by itself."
 - "A flyer without a next step is just expensive paper with ambition."
 - "The lead was warm for about 12 seconds. Then life continued."
+
+Use technical hooks that create a knowledge gap:
+
+- "The three big squares are doing more work than the rest of the QR code gets credit for."
+- "A QR code can survive damage. Your campaign may not."
+- "A static QR code is a promise your future URL has to keep."
+- "The blank space around a QR code is not wasted space."
+- "The prettier the QR code gets, the more suspicious I become."
+- "A QR code can scan perfectly and still fail completely."
 
 Avoid hooks that sound like generic SaaS copy:
 
@@ -190,31 +252,18 @@ For carousels:
 - Use story beats, not bullet dumps.
 - Last slide: practical lesson + soft CTA.
 
-## Cadence
-
-Use 3 posts per week until the page has more baseline reach.
-
-Recommended cadence:
-
-- Tuesday: persona story.
-- Thursday: offline marketing teardown or lead-capture lesson.
-- Saturday: lighter persona story or visual carousel.
-
-Avoid posting multiple posts on the same day while the page is tiny. If backup scheduling is needed, schedule ahead, but keep the quality bar identical.
-
 ## Posting Times
 
 Use India-friendly business timing while still catching some global overlap:
 
 - Tuesday: 11:00-11:45 AM IST.
 - Thursday: 11:00-11:45 AM IST.
-- Saturday: 10:30-11:30 AM IST.
 
 Retest after 30 posts. Current analytics are too small to optimize by time of day.
 
 ## CTA Rules
 
-Most posts should end with an operational CTA, not a signup CTA.
+Every post should have a CTA. The earlier drafts underused CTAs because they overcorrected away from sounding salesy. Going forward, every post gets a clear next action, but most CTAs should be operational rather than hard signup pushes.
 
 Use soft CTAs:
 
@@ -223,6 +272,8 @@ Use soft CTAs:
 - "If the destination may change later, use a dynamic QR code."
 - "Create a separate QR code for each printed asset if you want cleaner attribution."
 - "Do not ask the customer to remember you later. Give them a next step now."
+- "Before printing in volume, test the QR code on the real material."
+- "Check whether your QR destination has one job or five."
 
 Use direct product CTAs sparingly:
 
@@ -264,25 +315,25 @@ For important posts:
 ## Next 15 Post Themes
 
 1. Realtor open-house sign: lots of attention, no captured leads.
-2. Wedding photographer at a bridal expo: busy booth, weak follow-up list.
-3. Consultant at a conference: business cards do not equal booked calls.
-4. Restaurant table tent: attention at the table, missed loyalty signup.
-5. Fitness trainer poster: interest in the gym, no assessment booking.
-6. Salon reception sign: happy clients leave without reviews or rebooking.
-7. Home-service invoice: the best referral moment is after the job is done.
-8. D2C packaging insert: buyers scan for care instructions, then join the list.
-9. Event sponsor banner: brand visibility without lead capture is hard to measure.
-10. Real estate flyer: one QR code per property beats one generic homepage code.
-11. Dentist reception poster: directions, prep notes, and follow-up booking.
-12. Workshop handout: attendees need one action before they leave the room.
-13. Repair van QR code: neighborhood attention can become quote requests.
-14. Cafe counter card: Wi-Fi, menu, offer, and list signup should not fight.
-15. Freelancer portfolio card: save contact first, book call second.
+2. The three big squares are not decoration: finder patterns and scan recognition.
+3. Wedding photographer at a bridal expo: busy booth, weak follow-up list.
+4. A damaged QR code can still work: error correction and why design testing matters.
+5. Consultant at a conference: business cards do not equal booked calls.
+6. Static QR codes print the destination into reality.
+7. Restaurant table tent: attention at the table, missed loyalty signup.
+8. The blank space around a QR code is doing work.
+9. Fitness trainer poster: interest in the gym, no assessment booking.
+10. A pretty QR code can become unreadable.
+11. Salon reception sign: happy clients leave without reviews or rebooking.
+12. One QR code for every flyer creates a reporting blob.
+13. Home-service invoice: the best referral moment is after the job is done.
+14. The code can scan perfectly and the campaign can still fail.
+15. D2C packaging insert: buyers scan for care instructions, then join the list.
 
 ## Operating Rule
 
 Every future LinkedIn draft should pass this check before scheduling:
 
-Can the reader picture the offline moment and the lead being lost?
+Can the reader picture the scene, understand the small tension, and see the next action?
 
-If no, rewrite the post around a clearer persona, scene, and next step.
+If no, rewrite the post around a clearer opening scene, business leak or technical detail, and CTA.
