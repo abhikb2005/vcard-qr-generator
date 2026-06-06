@@ -165,6 +165,36 @@ TOPICS = [
         "title": "Dynamic QR Code for Real Estate Signs",
         "description": "Use dynamic QR codes on real estate signs and flyers to route visitors to updated property pages, contact cards, and booking links.",
     },
+    {
+        "keyword": "dynamic qr code for appointment cards",
+        "slug": "dynamic-qr-code-for-appointment-cards",
+        "title": "Dynamic QR Code for Appointment Cards: Booking Links That Can Change",
+        "description": "Learn how dynamic QR codes help appointment cards stay useful for booking links, rescheduling pages, contact details, reminders, and local service follow-up.",
+    },
+    {
+        "keyword": "dynamic qr code for service business",
+        "slug": "dynamic-qr-code-for-service-business",
+        "title": "Dynamic QR Code for Service Businesses: Bookings, Reviews, and Follow-Up",
+        "description": "Use dynamic QR codes for service business appointment cards, invoices, vehicles, flyers, reviews, and repeat bookings.",
+    },
+    {
+        "keyword": "dynamic qr code for salon",
+        "slug": "dynamic-qr-code-for-salon",
+        "title": "Dynamic QR Code for Salons: Booking Links, Menus, and Reviews",
+        "description": "Learn how salons can use dynamic QR codes for booking pages, service menus, appointment cards, reviews, and local promotions.",
+    },
+    {
+        "keyword": "dynamic qr code for clinics",
+        "slug": "dynamic-qr-code-for-clinics",
+        "title": "Dynamic QR Code for Clinics: Appointment Links and Patient Instructions",
+        "description": "Use dynamic QR codes for clinic appointment cards, intake forms, directions, preparation instructions, and approved follow-up pages.",
+    },
+    {
+        "keyword": "dynamic qr code for repair business",
+        "slug": "dynamic-qr-code-for-repair-business",
+        "title": "Dynamic QR Code for Repair Businesses: Service Calls and Follow-Up",
+        "description": "Use dynamic QR codes on invoices, appointment cards, vehicles, and service reminders for booking, support, and repeat work.",
+    },
 ]
 
 
