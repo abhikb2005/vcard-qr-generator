@@ -1,5 +1,26 @@
 # AGENTS.md — Instructions for AI Agents
 
+## Mandatory Startup Protocol
+
+Before doing anything else in this repo, read:
+
+```text
+.repo-state/AGENT_START_HERE.md
+```
+
+If that file is missing, stop and ask the user to restore the repo-state instructions. Do not start coding from memory.
+
+Every new agent session must:
+
+1. Run `git status -sb`.
+2. Confirm the active branch.
+3. Check existing branches and stashes for related work.
+4. Work on `main` only if it is clean and aligned with `origin/main`.
+5. Avoid creating a branch or worktree unless the task truly requires it.
+6. If a branch/worktree is created, document its purpose and cleanup condition before ending.
+
+If there are already branches in progress, inspect and reuse the relevant branch instead of creating another parallel branch. Do not delete, overwrite, reset, rebase, or merge existing branches without explicit user approval.
+
 > **This file provides context and rules for any AI agent (Amp, Cursor, Copilot, Claude Code, etc.) working on this repository.**
 > Read this file before making any changes.
 
