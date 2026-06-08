@@ -7,6 +7,7 @@ const BASE_URL = 'https://vcardqrcodegenerator.com';
 const SITE_URL = 'https://www.vcardqrcodegenerator.com';
 const DODO_BASE_URL = 'https://live.dodopayments.com';
 const LEGACY_STATIC_LOGO_CHECKOUT_URL = 'https://dodo-create-checkout.abhikb2005.workers.dev/';
+const CHECKOUT_DIAGNOSTICS_TOKEN = 'codex_checkout_debug_20260608';
 const STATIC_LOGO_PLANS = {
   logo_vcard_one_time: {
     plan_id: 'logo_vcard_one_time',
@@ -1160,6 +1161,7 @@ async function createStaticLogoCheckout(request, env) {
 
   const email = String(body.email || '').trim();
   const name = String(body.name || '').trim();
+  const diagnosticsEnabled = body.diagnostics === CHECKOUT_DIAGNOSTICS_TOKEN;
   const checkoutBody = {
     product_cart: [{
       product_id: productId,
@@ -1191,12 +1193,13 @@ async function createStaticLogoCheckout(request, env) {
       body: JSON.stringify(checkoutBody),
     });
   } catch (error) {
-    console.warn('static_logo_checkout_direct_fetch_error', {
+    const diagnosticError = {
       message: error instanceof Error ? error.message : 'unknown_fetch_error',
-    });
+    };
+    console.warn('static_logo_checkout_direct_fetch_error', diagnosticError);
     const fallbackCheckout = await createLegacyStaticLogoCheckout(body, plan);
     if (fallbackCheckout) {
-      return json({
+      const payload = {
         success: true,
         checkout_url: fallbackCheckout.checkout_url,
         checkout_id: fallbackCheckout.checkout_id,
@@ -1206,7 +1209,11 @@ async function createStaticLogoCheckout(request, env) {
         currency: plan.currency,
         provider: fallbackCheckout.provider,
         fallback: true,
-      }, 200, { 'cache-control': 'no-store' });
+      };
+      if (diagnosticsEnabled) {
+        payload.direct_checkout_error = diagnosticError;
+      }
+      return json(payload, 200, { 'cache-control': 'no-store' });
     }
 
     return json({
@@ -1217,16 +1224,17 @@ async function createStaticLogoCheckout(request, env) {
 
   if (!response.ok) {
     const upstreamText = await response.text().catch(() => '');
-    console.warn('static_logo_checkout_direct_rejected', {
+    const diagnosticError = {
       upstream_status: response.status,
       upstream_error: safeDodoCheckoutError(upstreamText),
       plan_id: plan.plan_id,
       product_configured: Boolean(productId),
-    });
+    };
+    console.warn('static_logo_checkout_direct_rejected', diagnosticError);
 
     const fallbackCheckout = await createLegacyStaticLogoCheckout(body, plan);
     if (fallbackCheckout) {
-      return json({
+      const payload = {
         success: true,
         checkout_url: fallbackCheckout.checkout_url,
         checkout_id: fallbackCheckout.checkout_id,
@@ -1236,7 +1244,11 @@ async function createStaticLogoCheckout(request, env) {
         currency: plan.currency,
         provider: fallbackCheckout.provider,
         fallback: true,
-      }, 200, { 'cache-control': 'no-store' });
+      };
+      if (diagnosticsEnabled) {
+        payload.direct_checkout_error = diagnosticError;
+      }
+      return json(payload, 200, { 'cache-control': 'no-store' });
     }
 
     return json({
