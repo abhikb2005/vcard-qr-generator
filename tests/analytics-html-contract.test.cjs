@@ -36,8 +36,14 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
   assert.match(html, /generationId !== brandedGenerationId/);
   assert.match(html, /Promise\.resolve\(updateResult\)/);
   assert.match(html, /__PAYMENT_VERIFY_API__/);
+  assert.match(html, /\/payment\/create-checkout/);
+  assert.doesNotMatch(html, /dodo-create-checkout\.abhikb2005\.workers\.dev/);
   assert.match(html, /verifyDodoPayment/);
   assert.match(html, /pro_verified_unlock/);
+  assert.match(html, /pending_logo_checkout/);
+  assert.match(html, /checkout_id/);
+  assert.match(html, /payment-recovery/);
+  assert.match(html, /Do not pay again/);
   assert.doesNotMatch(html, /paymentId && status === 'succeeded'\)\s*\{[\s\S]{0,240}localStorage\.setItem\('pro_unlocked_until'/);
   assert.match(html, /postBrandedDownloadCta/);
   assert.match(html, /Need to change details later\?/);
@@ -114,6 +120,9 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
   const success = read('success.html');
   assert.match(success, /payment\/verify/);
   assert.match(success, /pro_verified_unlock/);
+  assert.match(success, /pending_logo_checkout/);
+  assert.match(success, /checkout_id/);
+  assert.match(success, /do not pay again/i);
   assert.match(success, /trackPurchase/);
   assert.match(success, /pro_payment_success/);
   assert.doesNotMatch(success, /trackEvent\('payment_success'[\s\S]*purchase_tracked: false/);
@@ -122,8 +131,13 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
 {
   const worker = read('workers/router.js');
   assert.match(worker, /\/payment\/verify/);
+  assert.match(worker, /\/payment\/create-checkout/);
+  assert.match(worker, /\/checkouts/);
+  assert.match(worker, /checkout_id/);
   assert.match(worker, /DODO_BASE_URL/);
+  assert.match(worker, /lookupPath/);
   assert.match(worker, /\/payments\/\$\{encodeURIComponent\(paymentId\)\}/);
+  assert.match(worker, /\/checkouts\/\$\{encodeURIComponent\(checkoutId\)\}/);
   assert.match(worker, /String\(env\.DODO_API_KEY \|\| env\.DODO_PAYMENTS_API_KEY \|\| ''\)\.trim\(\)/);
   assert.match(worker, /catch \{\s*return json\(\{\s*success: false,\s*status: 'verification_failed'/);
   assert.match(worker, /status === 'succeeded'/);

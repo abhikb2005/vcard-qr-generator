@@ -24,52 +24,95 @@
 <body>
   <div class="card">
     <h1>Payment complete</h1>
-    <p>We're unlocking Pro features for this browser.</p>
-    <p class="muted">You'll be redirected in a moment...</p>
+    <p id="status-message">We're unlocking Pro features for this browser.</p>
+    <p id="status-detail" class="muted">You'll be redirected in a moment...</p>
+    <p id="support-action" class="muted" style="display:none;">If you already paid, do not pay again. Email <a href="mailto:support@vcardqrcodegenerator.com?subject=Logo%20QR%20payment%20unlock%20help">support@vcardqrcodegenerator.com</a> with your Dodo receipt or payment ID.</p>
   </div>
 
   <script>
     (async function () {
+      var pendingCheckoutKey = 'pending_logo_checkout';
+      var unlockKey = 'pro_verified_unlock';
+      var statusMessage = document.getElementById('status-message');
+      var statusDetail = document.getElementById('status-detail');
+      var supportAction = document.getElementById('support-action');
+
+      function failOpenForSupport(message) {
+        if (statusMessage) statusMessage.textContent = 'Payment verification needs attention';
+        if (statusDetail) statusDetail.textContent = message;
+        if (supportAction) supportAction.style.display = 'block';
+      }
+
+      function getPendingCheckout() {
+        try {
+          return JSON.parse(localStorage.getItem(pendingCheckoutKey) || 'null');
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function clearPendingCheckout() {
+        try {
+          localStorage.removeItem(pendingCheckoutKey);
+        } catch (e) {}
+      }
+
+      async function verifyPayment(reference, planId) {
+        var body = { plan_id: planId };
+        if (reference.payment_id) body.payment_id = reference.payment_id;
+        if (reference.checkout_id) body.checkout_id = reference.checkout_id;
+        var response = await fetch('https://vcardqrcodegenerator.com/payment/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        var json = await response.json();
+        if (!json.success) throw new Error(json.status || 'verification_failed');
+        return json;
+      }
+
       try {
         var params = new URLSearchParams(window.location.search);
-        var transactionId = params.get('payment_id') || params.get('transaction_id') || params.get('session_id') || params.get('token');
         var planId = params.get('plan_id') || 'logo_vcard_one_time';
+        var pending = getPendingCheckout();
+        var paymentId = params.get('payment_id') || params.get('transaction_id');
+        var checkoutId = params.get('checkout_id') || params.get('checkout_session_id') || params.get('session_id') || (pending && pending.plan_id === planId ? pending.checkout_id : null);
         var planName = planId === 'logo_generic_one_time' ? 'Generic Logo QR Code' : 'Logo vCard QR Code';
+        var targetPage = pending && pending.source_page
+          ? pending.source_page
+          : (planId === 'logo_generic_one_time' ? '/qr-code-with-logo.html' : '/logo-qr-code.html');
         var payment = null;
-        if (params.get('payment_id')) {
-          var response = await fetch('https://vcardqrcodegenerator.com/payment/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ payment_id: params.get('payment_id'), plan_id: planId })
-          });
-          var json = await response.json();
-          if (json.success) payment = json;
-        } else if (transactionId) {
-          payment = {
-            payment_id: transactionId,
-            value: 4.99,
-            currency: 'USD',
-            plan_id: planId,
-            plan_name: planName,
-            status: 'succeeded'
-          };
+
+        if (paymentId) {
+          payment = await verifyPayment({ payment_id: paymentId }, planId);
+        } else if (checkoutId) {
+          payment = await verifyPayment({ checkout_id: checkoutId }, planId);
+        } else {
+          failOpenForSupport('Dodo returned without a payment reference. Please email support with your receipt so access can be restored.');
+          return;
         }
 
-        if (payment && window.VcardAnalytics) {
+        if (payment) {
           var value = typeof payment.value === 'number' ? payment.value : 4.99;
           var currency = payment.currency || 'USD';
           planId = payment.plan_id || planId;
           planName = payment.plan_name || planName;
-          localStorage.setItem('pro_verified_unlock', JSON.stringify({
-            payment_id: payment.payment_id || transactionId,
+          localStorage.setItem(unlockKey, JSON.stringify({
+            payment_id: payment.payment_id || paymentId || checkoutId,
             plan_id: planId,
             value: value,
             currency: currency,
             status: payment.status || 'succeeded',
             expires_at: Date.now() + 24 * 60 * 60 * 1000
           }));
+          clearPendingCheckout();
+        }
+
+        if (payment && window.VcardAnalytics) {
+          var value = typeof payment.value === 'number' ? payment.value : 4.99;
+          var currency = payment.currency || 'USD';
           var purchaseTracked = window.VcardAnalytics.trackPurchase({
-            transaction_id: payment.payment_id || transactionId,
+            transaction_id: payment.payment_id || paymentId || checkoutId,
             value: value,
             currency: currency,
             plan_id: planId,
@@ -87,7 +130,7 @@
           });
           if (purchaseTracked !== false) {
             window.VcardAnalytics.trackEvent('pro_payment_success', {
-              transaction_id: payment.payment_id || transactionId,
+              transaction_id: payment.payment_id || paymentId || checkoutId,
               value: value,
               currency: currency,
               plan_id: planId,
@@ -98,10 +141,13 @@
             });
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        failOpenForSupport('Dodo has not confirmed the payment to this browser yet. Refresh once in a minute; if it remains locked, email support with your receipt or payment ID.');
+        return;
+      }
 
       setTimeout(function () {
-        window.location.replace('/logo-qr-code.html');
+        window.location.replace(targetPage);
       }, 800);
     })();
   </script>

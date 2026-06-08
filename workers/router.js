@@ -12,14 +12,17 @@ const STATIC_LOGO_PLANS = {
     plan_name: 'Logo vCard QR Code',
     fallback_value: 4.99,
     currency: 'USD',
+    product_env: 'DODO_LOGO_VCARD_PRODUCT_ID',
   },
   logo_generic_one_time: {
     plan_id: 'logo_generic_one_time',
     plan_name: 'Generic Logo QR Code',
     fallback_value: 4.99,
     currency: 'USD',
+    product_env: 'DODO_LOGO_GENERIC_PRODUCT_ID',
   },
 };
+const FALLBACK_STATIC_LOGO_PRODUCT_ID = 'pdt_ROmfPNXoSRQ16tKgZWURT';
 
 const CORS_HEADERS = {
   'access-control-allow-origin': '*',
@@ -1046,22 +1049,147 @@ function paymentStatus(payment) {
   return String(payment?.status || payment?.payment_status || payment?.data?.status || '').toLowerCase();
 }
 
-async function verifyStaticLogoPayment(request, env) {
+function checkoutPaymentId(checkout) {
+  return checkout?.payment_id
+    || checkout?.data?.payment_id
+    || checkout?.payment?.payment_id
+    || null;
+}
+
+function staticLogoPlan(planId) {
+  return STATIC_LOGO_PLANS[planId] || STATIC_LOGO_PLANS.logo_vcard_one_time;
+}
+
+function staticLogoProductId(env, plan) {
+  return String(env[plan.product_env] || env.DODO_LICENSE_PRODUCT_ID || FALLBACK_STATIC_LOGO_PRODUCT_ID).trim();
+}
+
+function allowedStaticLogoProductIds(env, plan) {
+  return [
+    staticLogoProductId(env, plan),
+    env.DODO_LOGO_VCARD_PRODUCT_ID,
+    env.DODO_LOGO_GENERIC_PRODUCT_ID,
+    env.DODO_LICENSE_PRODUCT_ID,
+    FALLBACK_STATIC_LOGO_PRODUCT_ID,
+  ].filter(Boolean);
+}
+
+async function createStaticLogoCheckout(request, env) {
   if (request.method !== 'POST') {
-    return apiError('method_not_allowed', 'Use POST for payment verification.', 405, 'Send a JSON body with payment_id and plan_id.', {}, { 'cache-control': 'no-store' });
+    return apiError('method_not_allowed', 'Use POST for checkout creation.', 405, 'Send a JSON body with plan_id.', {}, { 'cache-control': 'no-store' });
   }
 
   let body = {};
   try {
     body = await request.json();
   } catch {
-    return apiError('invalid_json', 'Request body must be valid JSON.', 400, 'Send { "payment_id": "...", "plan_id": "..." }.', {}, { 'cache-control': 'no-store' });
+    return apiError('invalid_json', 'Request body must be valid JSON.', 400, 'Send { "plan_id": "logo_vcard_one_time" }.', {}, { 'cache-control': 'no-store' });
+  }
+
+  const plan = staticLogoPlan(body.plan_id);
+  const productId = staticLogoProductId(env, plan);
+  const dodoApiKey = String(env.DODO_API_KEY || env.DODO_PAYMENTS_API_KEY || '').trim();
+  if (!dodoApiKey) {
+    return apiError('payment_checkout_unavailable', 'Checkout is not configured.', 500, 'Set DODO_API_KEY on the Worker.', {}, { 'cache-control': 'no-store' });
+  }
+
+  const email = String(body.email || '').trim();
+  const name = String(body.name || '').trim();
+  const checkoutBody = {
+    product_cart: [{
+      product_id: productId,
+      quantity: 1,
+    }],
+    metadata: {
+      plan_id: plan.plan_id,
+      source_page: String(body.source_page || '').slice(0, 200),
+    },
+    return_url: `${SITE_URL}/success.html?plan_id=${encodeURIComponent(plan.plan_id)}`,
+  };
+
+  if (email) {
+    checkoutBody.customer = {
+      email,
+      name: name || email.split('@')[0],
+    };
+  }
+
+  let response;
+  try {
+    response = await fetch(`${DODO_BASE_URL}/checkouts`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${dodoApiKey}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(checkoutBody),
+    });
+  } catch {
+    return json({
+      success: false,
+      status: 'checkout_failed',
+    }, 502, { 'cache-control': 'no-store' });
+  }
+
+  if (!response.ok) {
+    return json({
+      success: false,
+      status: 'checkout_failed',
+    }, 502, { 'cache-control': 'no-store' });
+  }
+
+  let checkout;
+  try {
+    checkout = await response.json();
+  } catch {
+    return json({
+      success: false,
+      status: 'checkout_failed',
+    }, 502, { 'cache-control': 'no-store' });
+  }
+
+  if (!checkout.checkout_url) {
+    return json({
+      success: false,
+      status: 'checkout_missing_url',
+    }, 502, { 'cache-control': 'no-store' });
+  }
+
+  return json({
+    success: true,
+    checkout_url: checkout.checkout_url,
+    checkout_id: checkout.checkout_id || checkout.id || null,
+    plan_id: plan.plan_id,
+    plan_name: plan.plan_name,
+    value: plan.fallback_value,
+    currency: plan.currency,
+  }, 200, { 'cache-control': 'no-store' });
+}
+
+async function verifyStaticLogoPayment(request, env) {
+  if (request.method !== 'POST') {
+    return apiError('method_not_allowed', 'Use POST for payment verification.', 405, 'Send a JSON body with payment_id or checkout_id and plan_id.', {}, { 'cache-control': 'no-store' });
+  }
+
+  let body = {};
+  try {
+    body = await request.json();
+  } catch {
+    return apiError('invalid_json', 'Request body must be valid JSON.', 400, 'Send { "payment_id": "...", "plan_id": "..." } or { "checkout_id": "...", "plan_id": "..." }.', {}, { 'cache-control': 'no-store' });
   }
 
   const paymentId = String(body.payment_id || '').trim();
-  const plan = STATIC_LOGO_PLANS[body.plan_id] || STATIC_LOGO_PLANS.logo_vcard_one_time;
-  if (!/^pay_[A-Za-z0-9_-]+$/.test(paymentId)) {
+  const checkoutId = String(body.checkout_id || body.checkout_session_id || body.session_id || '').trim();
+  const plan = staticLogoPlan(body.plan_id);
+  if (paymentId && !/^pay_[A-Za-z0-9_-]+$/.test(paymentId)) {
     return apiError('invalid_payment_id', 'A valid Dodo payment_id is required.', 400, 'Use the payment_id returned by Dodo after checkout.', {}, { 'cache-control': 'no-store' });
+  }
+  if (checkoutId && !/^cks_[A-Za-z0-9_-]+$/.test(checkoutId)) {
+    return apiError('invalid_checkout_id', 'A valid Dodo checkout_id is required.', 400, 'Use the checkout_id returned by Dodo checkout creation.', {}, { 'cache-control': 'no-store' });
+  }
+  if (!paymentId && !checkoutId) {
+    return apiError('missing_payment_reference', 'A payment_id or checkout_id is required.', 400, 'Send the Dodo payment_id or checkout_id for verification.', {}, { 'cache-control': 'no-store' });
   }
 
   const dodoApiKey = String(env.DODO_API_KEY || env.DODO_PAYMENTS_API_KEY || '').trim();
@@ -1071,7 +1199,10 @@ async function verifyStaticLogoPayment(request, env) {
 
   let response;
   try {
-    response = await fetch(`${DODO_BASE_URL}/payments/${encodeURIComponent(paymentId)}`, {
+    const lookupPath = paymentId
+      ? `/payments/${encodeURIComponent(paymentId)}`
+      : `/checkouts/${encodeURIComponent(checkoutId)}`;
+    response = await fetch(`${DODO_BASE_URL}${lookupPath}`, {
       headers: {
         Authorization: `Bearer ${dodoApiKey}`,
         Accept: 'application/json',
@@ -1081,7 +1212,8 @@ async function verifyStaticLogoPayment(request, env) {
     return json({
       success: false,
       status: 'verification_failed',
-      payment_id: paymentId,
+      payment_id: paymentId || null,
+      checkout_id: checkoutId || null,
     }, 200, { 'cache-control': 'no-store' });
   }
 
@@ -1089,7 +1221,8 @@ async function verifyStaticLogoPayment(request, env) {
     return json({
       success: false,
       status: 'verification_failed',
-      payment_id: paymentId,
+      payment_id: paymentId || null,
+      checkout_id: checkoutId || null,
     }, 200, { 'cache-control': 'no-store' });
   }
 
@@ -1100,19 +1233,22 @@ async function verifyStaticLogoPayment(request, env) {
     return json({
       success: false,
       status: 'verification_failed',
-      payment_id: paymentId,
+      payment_id: paymentId || null,
+      checkout_id: checkoutId || null,
     }, 200, { 'cache-control': 'no-store' });
   }
   const status = paymentStatus(payment);
   const productId = paymentProductId(payment);
-  const allowedProductIds = [env.DODO_LICENSE_PRODUCT_ID, 'pdt_ROmfPNXoSRQ16tKgZWURT'].filter(Boolean);
+  const allowedProductIds = allowedStaticLogoProductIds(env, plan);
   const productAllowed = !productId || allowedProductIds.includes(productId);
   const succeeded = status === 'succeeded' && productAllowed;
+  const resolvedPaymentId = payment.payment_id || checkoutPaymentId(payment) || paymentId || checkoutId;
 
   return json({
     success: succeeded,
     status,
-    payment_id: payment.payment_id || paymentId,
+    payment_id: resolvedPaymentId,
+    checkout_id: checkoutId || payment.checkout_session_id || null,
     product_id: productId,
     value: amountFromPayment(payment, plan.fallback_value),
     currency: String(payment.currency || plan.currency).toUpperCase(),
@@ -1162,6 +1298,10 @@ export default {
 
     if (url.pathname === '/payment/verify') {
       return verifyStaticLogoPayment(request, env);
+    }
+
+    if (url.pathname === '/payment/create-checkout') {
+      return createStaticLogoCheckout(request, env);
     }
 
     if (url.pathname === '/openapi.json' || url.pathname === '/api/openapi.json') {

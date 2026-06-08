@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-06-08 | Codex | Hardened static logo QR paid unlock flow: added same-domain Dodo checkout creation route, switched vCard/generic logo pages off the legacy checkout Worker, preserved checkout IDs for post-payment verification, added visible "do not pay again" recovery guidance, and extended contract checks. | `workers/router.js`, `wrangler.toml`, `logo-qr-code.html`, `qr-code-with-logo.html`, `success.html`, `tests/analytics-html-contract.test.cjs`, `data/agent-board.md` |
 | 2026-06-07 | Codex | Updated LinkedIn strategy to a two-post weekly cadence: one persona lead-capture story and one technical QR story with narrative angle, plus a required CTA rule for every post. | `data/linkedin-dynamic-qr-posting-strategy.md`, `data/agent-board.md` |
 | 2026-06-07 | Codex | Replaced the LinkedIn strategy with a fictionalized persona-story engine focused on realistic lead-capture scenarios, offline attention leaks, QR next steps, and ethical/composite-story guardrails. | `data/linkedin-dynamic-qr-posting-strategy.md`, `data/agent-board.md` |
 | 2026-06-07 | Codex | Revised the LinkedIn dynamic QR posting strategy based on the first analytics export: shifted from direct utility posts to story-led technical storytelling, clarified cadence, visual rules, CTAs, and measurement interpretation. | `data/linkedin-dynamic-qr-posting-strategy.md`, `data/agent-board.md` |
@@ -227,6 +228,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 | User dashboard + auth | Antigravity | In progress |
 | Dynamic vCard profiles | Antigravity | In progress |
 | orank agent-readiness gaps: developer docs, OpenAPI, API, MCP manifest | Codex | Complete |
+| Static logo QR paid-unlock hardening: replace legacy checkout token return with same-domain Dodo checkout creation + visible recovery path | Codex | Implemented locally on `codex/payment-unlock-hardening`; cleanup after review/merge |
 
 [2026-02-26] **Antigravity -> Codex**: `DONE ADSENSE-REMEDIATION-JOB-01`.
 Remediation completed successfully. Autopilot paused, legal artifacts sanitized, and homepage content depth substantially improved.

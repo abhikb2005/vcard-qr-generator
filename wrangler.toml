@@ -8,6 +8,8 @@ routes = [
   { pattern = "www.vcardqrcodegenerator.com/", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/payment/verify", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "www.vcardqrcodegenerator.com/payment/verify", zone_name = "vcardqrcodegenerator.com" },
+  { pattern = "vcardqrcodegenerator.com/payment/create-checkout", zone_name = "vcardqrcodegenerator.com" },
+  { pattern = "www.vcardqrcodegenerator.com/payment/create-checkout", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/ads.txt", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/v1/*", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/api", zone_name = "vcardqrcodegenerator.com" },
@@ -25,6 +27,9 @@ routes = [
 
 [vars]
 DODO_LICENSE_PRODUCT_ID = "pdt_ROmfPNXoSRQ16tKgZWURT"
+# Optional per-page overrides. If unset, both static logo pages use DODO_LICENSE_PRODUCT_ID.
+# DODO_LOGO_VCARD_PRODUCT_ID = "pdt_..."
+# DODO_LOGO_GENERIC_PRODUCT_ID = "pdt_..."
 
 # Secrets (set via `wrangler secret put ...`):
 # - DODO_WEBHOOK_SECRET
