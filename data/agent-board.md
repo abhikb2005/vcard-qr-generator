@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-06-08 | Codex | After the Dodo key was replaced and direct checkout succeeded, hardened the direct checkout response to parse and return the Dodo `cks_...` session ID from `checkout_url` when Dodo omits a separate `checkout_id` field. | `workers/router.js`, `tests/analytics-html-contract.test.cjs`, `data/agent-board.md` |
 | 2026-06-08 | Codex | Removed the temporary guarded checkout diagnostic response after identifying the direct Dodo root cause as a 401 from the configured Worker/GitHub `DODO_API_KEY`; safe server-side logging remains. | `workers/router.js`, `data/agent-board.md` |
 | 2026-06-08 | Codex | Fixed direct static logo Dodo checkout creation after diagnostics showed Cloudflare rejected the outbound Authorization header as an invalid header value; Worker now strips hidden control characters from Dodo secret values before using them in outbound headers. | `workers/router.js`, `tests/analytics-html-contract.test.cjs`, `data/agent-board.md` |
 | 2026-06-08 | Codex | Added a guarded checkout diagnostic response path for Codex-only live debugging: normal users see unchanged checkout responses, while the explicit diagnostic token returns sanitized direct-Dodo rejection details alongside the working fallback checkout. | `workers/router.js`, `data/agent-board.md` |

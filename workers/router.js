@@ -1276,7 +1276,7 @@ async function createStaticLogoCheckout(request, env) {
   return json({
     success: true,
     checkout_url: checkout.checkout_url,
-    checkout_id: checkout.checkout_id || checkout.id || null,
+    checkout_id: checkout.checkout_id || checkout.id || checkoutIdFromUrl(checkout.checkout_url) || null,
     plan_id: plan.plan_id,
     plan_name: plan.plan_name,
     value: plan.fallback_value,

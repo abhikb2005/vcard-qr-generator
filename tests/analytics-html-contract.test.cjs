@@ -135,6 +135,7 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
   assert.match(worker, /\/checkouts/);
   assert.match(worker, /LEGACY_STATIC_LOGO_CHECKOUT_URL/);
   assert.match(worker, /checkoutIdFromUrl/);
+  assert.match(worker, /checkout\.checkout_id \|\| checkout\.id \|\| checkoutIdFromUrl\(checkout\.checkout_url\)/);
   assert.match(worker, /provider: fallbackCheckout\.provider/);
   assert.match(worker, /checkout_id/);
   assert.match(worker, /DODO_BASE_URL/);
