@@ -1061,6 +1061,23 @@ function checkoutIdFromUrl(checkoutUrl) {
   return String(checkoutUrl || '').match(/\/session\/(cks_[A-Za-z0-9_-]+)/)?.[1] || null;
 }
 
+function safeDodoCheckoutError(rawText) {
+  const text = String(rawText || '').slice(0, 800);
+  if (!text) return '';
+
+  try {
+    const parsed = JSON.parse(text);
+    const error = parsed.error || parsed;
+    return JSON.stringify({
+      code: error.code || parsed.code || null,
+      message: error.message || parsed.message || null,
+      status: error.status || parsed.status || null,
+    });
+  } catch {
+    return text.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, '[email]').slice(0, 300);
+  }
+}
+
 function staticLogoPlan(planId) {
   return STATIC_LOGO_PLANS[planId] || STATIC_LOGO_PLANS.logo_vcard_one_time;
 }
@@ -1173,7 +1190,10 @@ async function createStaticLogoCheckout(request, env) {
       },
       body: JSON.stringify(checkoutBody),
     });
-  } catch {
+  } catch (error) {
+    console.warn('static_logo_checkout_direct_fetch_error', {
+      message: error instanceof Error ? error.message : 'unknown_fetch_error',
+    });
     const fallbackCheckout = await createLegacyStaticLogoCheckout(body, plan);
     if (fallbackCheckout) {
       return json({
@@ -1196,6 +1216,14 @@ async function createStaticLogoCheckout(request, env) {
   }
 
   if (!response.ok) {
+    const upstreamText = await response.text().catch(() => '');
+    console.warn('static_logo_checkout_direct_rejected', {
+      upstream_status: response.status,
+      upstream_error: safeDodoCheckoutError(upstreamText),
+      plan_id: plan.plan_id,
+      product_configured: Boolean(productId),
+    });
+
     const fallbackCheckout = await createLegacyStaticLogoCheckout(body, plan);
     if (fallbackCheckout) {
       return json({
