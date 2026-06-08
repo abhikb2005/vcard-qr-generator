@@ -52,6 +52,7 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 | 2026-06-05 | dynamic qr code for real estate sign | `/blog/dynamic-qr-code-for-real-estate-sign/` | GSC blocked: RefreshError; GA4 blocked: RefreshError; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-06-06 | dynamic qr code for appointment cards | `/blog/dynamic-qr-code-for-appointment-cards/` | Automation logged fallback after dynamic seed exhaustion; Codex published a fresh appointment-card dynamic QR guide | StartupStash action card prepared | Published by Codex | Directory submission remains manual; StartupStash is today's prepared action card | Next queue item |
 | 2026-06-07 | dynamic qr code for service business | `/blog/dynamic-qr-code-for-service-business/` | GSC live rows: 500; GA4 landing rows: 9; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
+| 2026-06-08 | dynamic qr code for repair business | `/blog/dynamic-qr-code-for-repair-business/` | GSC live rows: 500; GA4 landing rows: 10; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 
 ## Directory Submission Rules
 
