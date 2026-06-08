@@ -100,7 +100,16 @@ Before doing ANY work, read **`data/agent-board.md`**. This is a shared message 
 - Bulk QR Code: free for CSV upload
 - Never reference Stripe — payment is through **Dodo Payments**
 
-### 9. Escalation Policy (Standing)
+### 9. Payment and Cloudflare Debugging
+- Static logo checkout currently has a same-domain Worker route at `/payment/create-checkout`. If direct Dodo checkout creation fails, the Worker may use the existing legacy checkout Worker as a compatibility fallback.
+- Do **not** treat checkout changes as verified from local tests alone. Verify the live endpoint creates a Dodo checkout session and that `/payment/verify` fails closed for unpaid/fake IDs.
+- For root-cause analysis of Dodo checkout failures, get one of these before changing production logic:
+  - Dodo dashboard/API access that can inspect checkout/payment failures, product IDs, and API key scope.
+  - Cloudflare Worker tail/log access for the production Worker.
+- Cloudflare `wrangler tail` can fail if the logged-in token lacks account membership/user-detail access. If that happens, ask the user to re-auth Wrangler or provide an API token with Workers Tail read access.
+- Never commit Dodo API keys, Cloudflare tokens, webhook secrets, or customer payment data. Use Wrangler/GitHub secrets only.
+
+### 10. Escalation Policy (Standing)
 - For critical remediation jobs assigned by Codex, the execution agent has a maximum of **3 attempts**.
 - An attempt counts when the execution agent posts `DONE ...` and Codex verification fails.
 - On the **3rd failed verification**, the execution agent must stop editing implementation files and move to standby.
