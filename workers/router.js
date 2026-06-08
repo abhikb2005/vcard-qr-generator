@@ -7,7 +7,6 @@ const BASE_URL = 'https://vcardqrcodegenerator.com';
 const SITE_URL = 'https://www.vcardqrcodegenerator.com';
 const DODO_BASE_URL = 'https://live.dodopayments.com';
 const LEGACY_STATIC_LOGO_CHECKOUT_URL = 'https://dodo-create-checkout.abhikb2005.workers.dev/';
-const CHECKOUT_DIAGNOSTICS_TOKEN = 'codex_checkout_debug_20260608';
 const STATIC_LOGO_PLANS = {
   logo_vcard_one_time: {
     plan_id: 'logo_vcard_one_time',
@@ -1167,7 +1166,6 @@ async function createStaticLogoCheckout(request, env) {
 
   const email = String(body.email || '').trim();
   const name = String(body.name || '').trim();
-  const diagnosticsEnabled = body.diagnostics === CHECKOUT_DIAGNOSTICS_TOKEN;
   const checkoutBody = {
     product_cart: [{
       product_id: productId,
@@ -1216,9 +1214,6 @@ async function createStaticLogoCheckout(request, env) {
         provider: fallbackCheckout.provider,
         fallback: true,
       };
-      if (diagnosticsEnabled) {
-        payload.direct_checkout_error = diagnosticError;
-      }
       return json(payload, 200, { 'cache-control': 'no-store' });
     }
 
@@ -1251,9 +1246,6 @@ async function createStaticLogoCheckout(request, env) {
         provider: fallbackCheckout.provider,
         fallback: true,
       };
-      if (diagnosticsEnabled) {
-        payload.direct_checkout_error = diagnosticError;
-      }
       return json(payload, 200, { 'cache-control': 'no-store' });
     }
 
