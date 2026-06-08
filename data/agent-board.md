@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-06-08 | Codex | Fixed direct static logo Dodo checkout creation after diagnostics showed Cloudflare rejected the outbound Authorization header as an invalid header value; Worker now strips hidden control characters from Dodo secret values before using them in outbound headers. | `workers/router.js`, `tests/analytics-html-contract.test.cjs`, `data/agent-board.md` |
 | 2026-06-08 | Codex | Added a guarded checkout diagnostic response path for Codex-only live debugging: normal users see unchanged checkout responses, while the explicit diagnostic token returns sanitized direct-Dodo rejection details alongside the working fallback checkout. | `workers/router.js`, `data/agent-board.md` |
 | 2026-06-08 | Codex | Added safe Cloudflare Worker diagnostics for direct Dodo static logo checkout failures: logs sanitized upstream status/error only, then keeps the existing legacy checkout fallback. | `workers/router.js`, `data/agent-board.md` |
 | 2026-06-08 | Codex | Added repo-wide payment/Cloudflare debugging guidance after the static logo checkout incident: live checkout verification is required, Dodo/Cloudflare auth is needed for upstream root-cause analysis, and secrets/customer payment data must stay out of Git. | `AGENTS.md`, `data/agent-board.md` |

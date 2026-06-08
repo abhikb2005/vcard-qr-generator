@@ -1051,6 +1051,12 @@ function paymentStatus(payment) {
   return String(payment?.status || payment?.payment_status || payment?.data?.status || '').toLowerCase();
 }
 
+function dodoApiKey(env) {
+  return String(env.DODO_API_KEY || env.DODO_PAYMENTS_API_KEY || '')
+    .replace(/[\u0000-\u001F\u007F]/g, '')
+    .trim();
+}
+
 function checkoutPaymentId(checkout) {
   return checkout?.payment_id
     || checkout?.data?.payment_id
@@ -1154,8 +1160,8 @@ async function createStaticLogoCheckout(request, env) {
 
   const plan = staticLogoPlan(body.plan_id);
   const productId = staticLogoProductId(env, plan);
-  const dodoApiKey = String(env.DODO_API_KEY || env.DODO_PAYMENTS_API_KEY || '').trim();
-  if (!dodoApiKey) {
+  const dodoApiKeyValue = dodoApiKey(env);
+  if (!dodoApiKeyValue) {
     return apiError('payment_checkout_unavailable', 'Checkout is not configured.', 500, 'Set DODO_API_KEY on the Worker.', {}, { 'cache-control': 'no-store' });
   }
 
@@ -1186,7 +1192,7 @@ async function createStaticLogoCheckout(request, env) {
     response = await fetch(`${DODO_BASE_URL}/checkouts`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${dodoApiKey}`,
+        Authorization: `Bearer ${dodoApiKeyValue}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
@@ -1311,8 +1317,8 @@ async function verifyStaticLogoPayment(request, env) {
     return apiError('missing_payment_reference', 'A payment_id or checkout_id is required.', 400, 'Send the Dodo payment_id or checkout_id for verification.', {}, { 'cache-control': 'no-store' });
   }
 
-  const dodoApiKey = String(env.DODO_API_KEY || env.DODO_PAYMENTS_API_KEY || '').trim();
-  if (!dodoApiKey) {
+  const dodoApiKeyValue = dodoApiKey(env);
+  if (!dodoApiKeyValue) {
     return apiError('payment_verification_unavailable', 'Payment verification is not configured.', 500, 'Set DODO_API_KEY on the Worker.', {}, { 'cache-control': 'no-store' });
   }
 
@@ -1323,7 +1329,7 @@ async function verifyStaticLogoPayment(request, env) {
       : `/checkouts/${encodeURIComponent(checkoutId)}`;
     response = await fetch(`${DODO_BASE_URL}${lookupPath}`, {
       headers: {
-        Authorization: `Bearer ${dodoApiKey}`,
+        Authorization: `Bearer ${dodoApiKeyValue}`,
         Accept: 'application/json',
       },
     });
