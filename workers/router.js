@@ -6,6 +6,7 @@ const API_VERSION = '2026-05-21';
 const BASE_URL = 'https://vcardqrcodegenerator.com';
 const SITE_URL = 'https://www.vcardqrcodegenerator.com';
 const DODO_BASE_URL = 'https://live.dodopayments.com';
+const LEGACY_STATIC_LOGO_CHECKOUT_URL = 'https://dodo-create-checkout.abhikb2005.workers.dev/';
 const STATIC_LOGO_PLANS = {
   logo_vcard_one_time: {
     plan_id: 'logo_vcard_one_time',
@@ -1056,6 +1057,10 @@ function checkoutPaymentId(checkout) {
     || null;
 }
 
+function checkoutIdFromUrl(checkoutUrl) {
+  return String(checkoutUrl || '').match(/\/session\/(cks_[A-Za-z0-9_-]+)/)?.[1] || null;
+}
+
 function staticLogoPlan(planId) {
   return STATIC_LOGO_PLANS[planId] || STATIC_LOGO_PLANS.logo_vcard_one_time;
 }
@@ -1072,6 +1077,49 @@ function allowedStaticLogoProductIds(env, plan) {
     env.DODO_LICENSE_PRODUCT_ID,
     FALLBACK_STATIC_LOGO_PRODUCT_ID,
   ].filter(Boolean);
+}
+
+async function createLegacyStaticLogoCheckout(body, plan) {
+  let response;
+  try {
+    response = await fetch(LEGACY_STATIC_LOGO_CHECKOUT_URL, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        plan_id: plan.plan_id,
+        source_page: String(body.source_page || '').slice(0, 200),
+        email: String(body.email || '').trim(),
+        name: String(body.name || '').trim(),
+      }),
+    });
+  } catch {
+    return null;
+  }
+
+  if (!response.ok) {
+    return null;
+  }
+
+  let checkout;
+  try {
+    checkout = await response.json();
+  } catch {
+    return null;
+  }
+
+  const checkoutUrl = String(checkout.checkout_url || '').trim();
+  if (!/^https:\/\/checkout\.dodopayments\.com\/session\/cks_[A-Za-z0-9_-]+/.test(checkoutUrl)) {
+    return null;
+  }
+
+  return {
+    checkout_url: checkoutUrl,
+    checkout_id: checkout.checkout_id || checkout.id || checkoutIdFromUrl(checkoutUrl),
+    provider: 'legacy_worker',
+  };
 }
 
 async function createStaticLogoCheckout(request, env) {
@@ -1126,6 +1174,21 @@ async function createStaticLogoCheckout(request, env) {
       body: JSON.stringify(checkoutBody),
     });
   } catch {
+    const fallbackCheckout = await createLegacyStaticLogoCheckout(body, plan);
+    if (fallbackCheckout) {
+      return json({
+        success: true,
+        checkout_url: fallbackCheckout.checkout_url,
+        checkout_id: fallbackCheckout.checkout_id,
+        plan_id: plan.plan_id,
+        plan_name: plan.plan_name,
+        value: plan.fallback_value,
+        currency: plan.currency,
+        provider: fallbackCheckout.provider,
+        fallback: true,
+      }, 200, { 'cache-control': 'no-store' });
+    }
+
     return json({
       success: false,
       status: 'checkout_failed',
@@ -1133,9 +1196,25 @@ async function createStaticLogoCheckout(request, env) {
   }
 
   if (!response.ok) {
+    const fallbackCheckout = await createLegacyStaticLogoCheckout(body, plan);
+    if (fallbackCheckout) {
+      return json({
+        success: true,
+        checkout_url: fallbackCheckout.checkout_url,
+        checkout_id: fallbackCheckout.checkout_id,
+        plan_id: plan.plan_id,
+        plan_name: plan.plan_name,
+        value: plan.fallback_value,
+        currency: plan.currency,
+        provider: fallbackCheckout.provider,
+        fallback: true,
+      }, 200, { 'cache-control': 'no-store' });
+    }
+
     return json({
       success: false,
       status: 'checkout_failed',
+      upstream_status: response.status,
     }, 502, { 'cache-control': 'no-store' });
   }
 
