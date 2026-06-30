@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-06-30 | Codex | Implemented the approval-gated compliant outreach pilot and Rs 3,000 Google Search preparation: local-only 30-lead store, permanent suppression controls, five-new-contact daily cap, three-touch scheduling, positive/unsubscribe/legal response handling, campaign pause on legal threat, read-only Keyword Planner forecast workflow, paused import CSVs, and contract tests. No contact data was committed; no email was sent and no ad spend occurred. | `.gitignore`, `scripts/outreach_campaign.py`, `scripts/google_ads_pilot_forecast.py`, `.github/workflows/google-ads-pilot-forecast.yml`, `docs/outreach/compliant-outreach-pilot.md`, `docs/google-ads/`, `tests/test_outreach_campaign.py`, `tests/test_google_ads_pilot.py`, `data/agent-board.md` |
 | 2026-06-08 | Codex | After the Dodo key was replaced and direct checkout succeeded, hardened the direct checkout response to parse and return the Dodo `cks_...` session ID from `checkout_url` when Dodo omits a separate `checkout_id` field. | `workers/router.js`, `tests/analytics-html-contract.test.cjs`, `data/agent-board.md` |
 | 2026-06-08 | Codex | Removed the temporary guarded checkout diagnostic response after identifying the direct Dodo root cause as a 401 from the configured Worker/GitHub `DODO_API_KEY`; safe server-side logging remains. | `workers/router.js`, `data/agent-board.md` |
 | 2026-06-08 | Codex | Fixed direct static logo Dodo checkout creation after diagnostics showed Cloudflare rejected the outbound Authorization header as an invalid header value; Worker now strips hidden control characters from Dodo secret values before using them in outbound headers. | `workers/router.js`, `tests/analytics-html-contract.test.cjs`, `data/agent-board.md` |
@@ -227,6 +228,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Task | Claimed By | Status |
 |------|-----------|--------|
+| Compliant outreach pilot + Rs 3,000 Google Search campaign preparation | Codex | Implemented locally on `codex/outreach-paid-acquisition`; awaiting sender postal address, first five-lead approval, Ads OAuth, conversion validation, and forecast gate; no sends or spend yet |
 | Competitor blog #5: QRFY (Feb 26) | Amp | Planned |
 | Competitor blogs #6–32 | Amp | Planned (see `data/competitor-blog-schedule.md`) |
 | Weekly GSC check (next: Mar 3) | Amp | Recurring |

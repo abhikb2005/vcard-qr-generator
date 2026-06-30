@@ -1,0 +1,3 @@
+Campaign,Campaign Type,Status,Budget,Budget type,Bid strategy type,Networks,Languages,Final URL
+VCardQR_Dynamic_Search_Pilot,Search,Paused,210,Daily,Manual CPC,Google Search,English,https://app.vcardqrcodegenerator.com/login
+VCardQR_Logo_Search_Pilot,Search,Paused,90,Daily,Manual CPC,Google Search,English,https://www.vcardqrcodegenerator.com/logo-qr-code.html

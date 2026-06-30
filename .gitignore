@@ -4,3 +4,5 @@ __pycache__/
 .agent/
 mcp-gsc/
 .seo-engine/
+.private/outreach/
+.private/google-ads/

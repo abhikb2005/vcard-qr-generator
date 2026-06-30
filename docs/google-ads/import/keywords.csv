@@ -1,0 +1,16 @@
+Campaign,Ad group,Keyword,Match type,Status,Final URL
+VCardQR_Dynamic_Search_Pilot,Editable vCard QR,dynamic vcard qr code,Exact,Enabled,https://app.vcardqrcodegenerator.com/login
+VCardQR_Dynamic_Search_Pilot,Editable vCard QR,dynamic vcard qr code,Phrase,Enabled,https://app.vcardqrcodegenerator.com/login
+VCardQR_Dynamic_Search_Pilot,Editable vCard QR,editable vcard qr code,Exact,Enabled,https://app.vcardqrcodegenerator.com/login
+VCardQR_Dynamic_Search_Pilot,Editable vCard QR,editable vcard qr code,Phrase,Enabled,https://app.vcardqrcodegenerator.com/login
+VCardQR_Dynamic_Search_Pilot,Editable vCard QR,update vcard qr code after printing,Exact,Enabled,https://app.vcardqrcodegenerator.com/login
+VCardQR_Dynamic_Search_Pilot,Business Card Tracking,dynamic qr code for business card,Exact,Enabled,https://app.vcardqrcodegenerator.com/login
+VCardQR_Dynamic_Search_Pilot,Business Card Tracking,dynamic qr code for business card,Phrase,Enabled,https://app.vcardqrcodegenerator.com/login
+VCardQR_Dynamic_Search_Pilot,Business Card Tracking,trackable business card qr code,Exact,Enabled,https://app.vcardqrcodegenerator.com/login
+VCardQR_Dynamic_Search_Pilot,Business Card Tracking,editable business card qr code,Exact,Enabled,https://app.vcardqrcodegenerator.com/login
+VCardQR_Logo_Search_Pilot,Logo vCard QR,vcard qr code with logo,Exact,Enabled,https://www.vcardqrcodegenerator.com/logo-qr-code.html
+VCardQR_Logo_Search_Pilot,Logo vCard QR,vcard qr code with logo,Phrase,Enabled,https://www.vcardqrcodegenerator.com/logo-qr-code.html
+VCardQR_Logo_Search_Pilot,Logo vCard QR,branded vcard qr code,Exact,Enabled,https://www.vcardqrcodegenerator.com/logo-qr-code.html
+VCardQR_Logo_Search_Pilot,Logo vCard QR,custom vcard qr code,Exact,Enabled,https://www.vcardqrcodegenerator.com/logo-qr-code.html
+VCardQR_Logo_Search_Pilot,Logo vCard QR,business card qr code with logo,Exact,Enabled,https://www.vcardqrcodegenerator.com/logo-qr-code.html
+VCardQR_Logo_Search_Pilot,Logo vCard QR,business card qr code with logo,Phrase,Enabled,https://www.vcardqrcodegenerator.com/logo-qr-code.html
