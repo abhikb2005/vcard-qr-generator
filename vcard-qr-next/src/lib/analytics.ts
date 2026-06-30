@@ -85,8 +85,25 @@ export function trackPurchase(params: AnalyticsParams & { transaction_id?: strin
         return false
     }
 
-    trackEvent('purchase', params)
-    trackEvent('payment_success', params)
+    const normalizedParams = { ...params }
+    const value = Number(normalizedParams.value)
+    if (Number.isFinite(value) && value >= 0) {
+        normalizedParams.value = value
+        normalizedParams.currency = String(normalizedParams.currency || 'USD').toUpperCase()
+        if (Array.isArray(normalizedParams.items)) {
+            normalizedParams.items = normalizedParams.items.map((item) => {
+                const normalizedItem = { ...(item as Record<string, unknown>) }
+                const quantity = Number(normalizedItem.quantity)
+                normalizedItem.quantity = Number.isFinite(quantity) && quantity > 0 ? quantity : 1
+                const price = Number(normalizedItem.price)
+                normalizedItem.price = Number.isFinite(price) ? price : value / Number(normalizedItem.quantity)
+                return normalizedItem
+            })
+        }
+    }
+
+    trackEvent('purchase', normalizedParams)
+    trackEvent('payment_success', normalizedParams)
     markPurchaseSent(transactionId)
     return true
 }

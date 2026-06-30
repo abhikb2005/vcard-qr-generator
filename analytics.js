@@ -65,7 +65,7 @@
   }
 
   function trackPurchase(purchaseParams) {
-    var params = purchaseParams || {};
+    var params = Object.assign({}, purchaseParams || {});
     var transactionId = params.transaction_id;
     if (!transactionId) {
       trackEvent('payment_success', Object.assign({ purchase_tracked: false }, params));
@@ -75,6 +75,25 @@
     if (hasSentPurchase(transactionId)) {
       debug('purchase_skipped_duplicate', { transaction_id: transactionId });
       return false;
+    }
+
+    var value = Number(params.value);
+    if (Number.isFinite(value) && value >= 0) {
+      params.value = value;
+      params.currency = String(params.currency || 'USD').toUpperCase();
+      if (Array.isArray(params.items)) {
+        params.items = params.items.map(function (item) {
+          var normalizedItem = Object.assign({}, item);
+          var quantity = Number(normalizedItem.quantity);
+          normalizedItem.quantity = Number.isFinite(quantity) && quantity > 0 ? quantity : 1;
+          if (!Number.isFinite(Number(normalizedItem.price))) {
+            normalizedItem.price = value / normalizedItem.quantity;
+          } else {
+            normalizedItem.price = Number(normalizedItem.price);
+          }
+          return normalizedItem;
+        });
+      }
     }
 
     trackEvent('purchase', params);

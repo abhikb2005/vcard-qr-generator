@@ -46,6 +46,10 @@ function setupWindow(gtag) {
   assert.strictEqual(analytics.trackPurchase(params), true);
   assert.strictEqual(analytics.trackPurchase(params), false);
   assert.deepStrictEqual(calls.map((call) => call[1]), ['purchase', 'payment_success']);
+  assert.strictEqual(calls[0][2].value, 4.99);
+  assert.strictEqual(calls[0][2].currency, 'USD');
+  assert.strictEqual(calls[0][2].items[0].price, 4.99);
+  assert.strictEqual(calls[0][2].items[0].quantity, 1);
 }
 
 console.log('analytics helper tests passed');
