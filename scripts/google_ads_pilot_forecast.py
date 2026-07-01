@@ -57,7 +57,9 @@ def account_currency(client, customer_id: str) -> str:
     return next(iter(response)).customer.currency_code
 
 
-def forecast_campaign(client, customer_id: str, campaign_name: str) -> dict[str, object]:
+def forecast_campaign(
+    client, customer_id: str, campaign_name: str, geo_id: str, max_cpc_inr: int
+) -> dict[str, object]:
     keywords = [row for row in read_rows(KEYWORDS_FILE) if row["Campaign"] == campaign_name]
     negatives = [row for row in read_rows(NEGATIVES_FILE) if row["Campaign"] == campaign_name]
     if not keywords:
@@ -65,8 +67,8 @@ def forecast_campaign(client, customer_id: str, campaign_name: str) -> dict[str,
 
     googleads_service = client.get_service("GoogleAdsService")
     campaign = client.get_type("CampaignToForecast")
-    campaign.bidding_strategy.manual_cpc_bidding_strategy.max_cpc_bid_micros = 30_000_000
-    campaign.geo_target_constants.append(googleads_service.geo_target_constant_path("2840"))
+    campaign.bidding_strategy.manual_cpc_bidding_strategy.max_cpc_bid_micros = max_cpc_inr * 1_000_000
+    campaign.geo_target_constants.append(googleads_service.geo_target_constant_path(geo_id))
     campaign.language_constants.append(googleads_service.language_constant_path("1000"))
 
     groups: dict[str, object] = {}
@@ -94,6 +96,7 @@ def forecast_campaign(client, customer_id: str, campaign_name: str) -> dict[str,
     metrics = response.campaign_forecast_metrics
     return {
         "campaign": campaign_name,
+        "max_cpc_inr": max_cpc_inr,
         "keywords": len(keywords),
         "campaign_negatives": len(negatives),
         "period": {
@@ -111,28 +114,45 @@ def main() -> int:
     client = load_client()
     customer_id = os.environ["GOOGLE_ADS_CUSTOMER_ID"].replace("-", "")
     currency = account_currency(client, customer_id)
-    campaigns = [
+    campaign_names = [
         "VCardQR_Dynamic_Search_Pilot",
         "VCardQR_Logo_Search_Pilot",
     ]
-    forecasts = [forecast_campaign(client, customer_id, name) for name in campaigns]
-    clicks = sum(float(item["clicks"]) for item in forecasts)
-    cost_micros = sum(int(item["cost_micros"]) for item in forecasts)
-    cost = cost_micros / 1_000_000
-    gate = currency == "INR" and clicks >= 30 and cost <= 3000
+    markets = {"United States": "2840", "India": "2356"}
+    scenarios = []
+    for market, geo_id in markets.items():
+        for max_cpc_inr in (30, 60, 100, 150):
+            forecasts = [
+                forecast_campaign(client, customer_id, name, geo_id, max_cpc_inr)
+                for name in campaign_names
+            ]
+            clicks = sum(float(item["clicks"]) for item in forecasts)
+            cost = sum(int(item["cost_micros"]) for item in forecasts) / 1_000_000
+            scenarios.append(
+                {
+                    "market": market,
+                    "geo_id": geo_id,
+                    "max_cpc_inr": max_cpc_inr,
+                    "total_clicks": clicks,
+                    "total_cost": cost,
+                    "launch_gate": "pass" if clicks >= 30 and cost <= 3000 else "fail",
+                    "campaigns": forecasts,
+                }
+            )
+    passing = [scenario for scenario in scenarios if scenario["launch_gate"] == "pass"]
+    gate = currency == "INR" and bool(passing)
     report = {
         "generated_on": date.today().isoformat(),
         "customer_currency": currency,
         "forecast_days": 10,
-        "total_clicks": clicks,
-        "total_cost": cost,
         "launch_gate": "pass" if gate else "fail",
         "gate_requirements": {
             "currency": "INR",
             "minimum_clicks": 30,
             "maximum_cost": 3000,
         },
-        "campaigns": forecasts,
+        "recommended_scenario": min(passing, key=lambda item: item["total_cost"]) if passing else None,
+        "scenarios": scenarios,
         "note": "Forecast only. No campaign was created or changed.",
     }
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
