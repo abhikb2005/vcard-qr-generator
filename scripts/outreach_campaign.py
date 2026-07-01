@@ -218,7 +218,7 @@ def is_suppressed(email: str, suppressed: tuple[set[str], set[str]]) -> bool:
 
 def utm_url(lead: dict[str, str], product: str) -> str:
     if product == "dynamic":
-        base = "https://app.vcardqrcodegenerator.com/login"
+        base = "https://www.vcardqrcodegenerator.com/dynamic-qr-code-generator.html"
     else:
         base = "https://www.vcardqrcodegenerator.com/logo-qr-code.html"
     query = urlencode(
@@ -240,7 +240,7 @@ def unsubscribe_link(sender_email: str, lead: dict[str, str]) -> str:
 
 def message_for(lead: dict[str, str], touch: int, sender: dict[str, str]) -> str:
     first_name = lead.get("contact_name", "").strip().split(" ")[0] or "there"
-    product = "dynamic" if lead["segment"] == "conference_exhibitor" else "logo"
+    product = "logo" if lead["segment"] == "print_partner" else "dynamic"
     destination = utm_url(lead, product)
     if lead["segment"] == "print_partner":
         angle = (
@@ -254,8 +254,9 @@ def message_for(lead: dict[str, str], touch: int, sender: dict[str, str]) -> str
         )
     else:
         angle = (
-            "Your open-house activity creates a natural use for a QR that lets visitors save the brokerage contact in one scan. "
-            "The branded version is a $4.99 one-time purchase with no subscription."
+            "Your open-house activity creates a natural use for an editable vCard QR that lets visitors save the listing agent in one scan. "
+            "The same printed code can keep working when agent details or the follow-up destination changes, with scan analytics included. "
+            "I can create a complimentary preview for one agent or open house."
         )
 
     if touch == 1:
@@ -263,18 +264,32 @@ def message_for(lead: dict[str, str], touch: int, sender: dict[str, str]) -> str
         body = f"I found {lead['business_name']} through {lead['business_reason']}.\n\n{angle}\n\nRelevant option: {destination}"
     elif touch == 2:
         subject = f"Re: QR contact handoff for {lead['business_name']}"
-        body = (
-            "A practical detail I should have included: the QR output is designed for print, "
-            "and the contact data stays in the browser for static vCards.\n\n"
-            f"Here is the relevant option again: {destination}"
-        )
+        if product == "dynamic":
+            body = (
+                "A practical example: one printed QR can keep pointing to the right agent contact even after a phone number, "
+                "listing assignment, or follow-up link changes. I am happy to prepare a complimentary preview for one real use case.\n\n"
+                f"Here is the editable option: {destination}"
+            )
+        else:
+            body = (
+                "A practical detail I should have included: the QR output is designed for print, "
+                "and the contact data stays in the browser for static vCards.\n\n"
+                f"Here is the relevant option again: {destination}"
+            )
     elif touch == 3:
         subject = f"Closing the loop: {lead['business_name']}"
-        body = (
-            "I will close the loop after this note. If a branded static QR is enough, the one-time option is $4.99. "
-            "If the printed destination needs future edits or scan analytics, the dynamic plan is the better fit.\n\n"
-            f"Details: {destination}"
-        )
+        if product == "dynamic":
+            body = (
+                "I will close the loop after this note. If updating a printed agent QR or measuring scans would help your team, "
+                "the editable plan starts at $5 per month.\n\n"
+                f"Details: {destination}"
+            )
+        else:
+            body = (
+                "I will close the loop after this note. If a branded static QR is enough, the one-time option is $4.99. "
+                "If the printed destination needs future edits or scan analytics, the dynamic plan is the better fit.\n\n"
+                f"Details: {destination}"
+            )
     else:
         raise CampaignError("touch must be 1, 2, or 3")
 

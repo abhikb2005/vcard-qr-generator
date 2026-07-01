@@ -83,6 +83,20 @@ class OutreachCampaignTests(unittest.TestCase):
         self.assertIn("123 Business Street", draft)
         self.assertIn("Advertisement / commercial message", draft)
 
+    def test_real_estate_draft_routes_to_editable_subscription(self):
+        row = lead()
+        row["segment"] = "real_estate_brokerage"
+        row["business_name"] = "Example Realty LLC"
+        row["business_reason"] = "its public open-house page"
+        write_csv(self.paths.leads, LEAD_FIELDS, [row])
+        set_approval(self.paths, ["lead-1"])
+        prepare(self.paths, date(2026, 7, 1), 5, "real_estate_brokerage")
+        draft = next(self.paths.drafts.rglob("*.txt")).read_text(encoding="utf-8")
+        self.assertIn("dynamic-qr-code-generator.html?", draft)
+        self.assertIn("editable vCard QR", draft)
+        self.assertIn("complimentary preview", draft)
+        self.assertNotIn("$4.99", draft)
+
     def test_unsubscribe_suppresses_and_stops_followups(self):
         write_csv(self.paths.leads, LEAD_FIELDS, [lead(status="contacted")])
         record_response(self.paths, "lead-1", "unsubscribe", "Requested removal")
