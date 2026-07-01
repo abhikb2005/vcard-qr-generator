@@ -79,12 +79,10 @@ def forecast_campaign(client, customer_id: str, campaign_name: str) -> dict[str,
         keyword.match_type = getattr(client.enums.KeywordMatchTypeEnum, row["Match type"].upper())
         groups[group_name].keywords.append(keyword)
 
+    # ForecastAdGroup no longer accepts negatives in Google Ads API v23.
+    # The forecast remains narrow because every positive is exact or phrase match;
+    # negatives are still mandatory in the paused campaign import pack.
     for group in groups.values():
-        for row in negatives:
-            negative = client.get_type("KeywordInfo")
-            negative.text = row["Negative keyword"]
-            negative.match_type = getattr(client.enums.KeywordMatchTypeEnum, row["Match type"].upper())
-            group.negative_keywords.append(negative)
         campaign.ad_groups.append(group)
 
     request = client.get_type("GenerateKeywordForecastMetricsRequest")
@@ -97,6 +95,7 @@ def forecast_campaign(client, customer_id: str, campaign_name: str) -> dict[str,
     return {
         "campaign": campaign_name,
         "keywords": len(keywords),
+        "campaign_negatives": len(negatives),
         "period": {
             "start": request.forecast_period.start_date,
             "end": request.forecast_period.end_date,
