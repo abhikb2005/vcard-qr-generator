@@ -101,8 +101,6 @@ def forecast_campaign(client, customer_id: str, campaign_name: str) -> dict[str,
             "end": request.forecast_period.end_date,
         },
         "clicks": float(metrics.clicks or 0),
-        "impressions": float(metrics.impressions or 0),
-        "ctr": float(metrics.click_through_rate or 0),
         "average_cpc_micros": int(metrics.average_cpc_micros or 0),
         "cost_micros": int(metrics.cost_micros or 0),
     }
