@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 import os
+import time
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -122,10 +123,13 @@ def main() -> int:
     scenarios = []
     for market, geo_id in markets.items():
         for max_cpc_inr in (30, 60, 100, 150):
-            forecasts = [
-                forecast_campaign(client, customer_id, name, geo_id, max_cpc_inr)
-                for name in campaign_names
-            ]
+            forecasts = []
+            for name in campaign_names:
+                if scenarios or forecasts:
+                    time.sleep(6)
+                forecasts.append(
+                    forecast_campaign(client, customer_id, name, geo_id, max_cpc_inr)
+                )
             clicks = sum(float(item["clicks"]) for item in forecasts)
             cost = sum(int(item["cost_micros"]) for item in forecasts) / 1_000_000
             scenarios.append(
