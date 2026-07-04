@@ -78,6 +78,7 @@ Purpose: one blog post and one directory/backlink action per day to promote Dyna
 | 2026-07-01 | what qr code type for vcard with updates | `/blog/what-qr-code-type-for-vcard-with-updates/` | GSC live rows: 500; GA4 landing rows: 7; Keyword Planner blocked: RefreshError; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-07-02 | what qr code type for vcard with updates | `/blog/what-qr-code-type-for-vcard-with-updates/` | GSC live rows: 500; GA4 landing rows: 5; Keyword Planner blocked: GoogleAdsException; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 | 2026-07-03 | what qr code type for vcard with updates | `/blog/what-qr-code-type-for-vcard-with-updates/` | GSC live rows: 500; GA4 landing rows: 6; Keyword Planner blocked: GoogleAdsException; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
+| 2026-07-04 | what qr code type for vcard with updates | `/blog/what-qr-code-type-for-vcard-with-updates/` | GSC live rows: 500; GA4 landing rows: 6; Keyword Planner blocked: GoogleAdsException; AdSense blocked: RefreshError | StartupStash action card prepared | Published by automation | Directory submission may require browser login/captcha | Next queue item |
 
 ## Directory Submission Rules
 
