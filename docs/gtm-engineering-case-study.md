@@ -1,475 +1,154 @@
-# From Traffic to Revenue Truth: Building a Measurable GTM Engine for a vCard QR Product
+# GTM Engineering Case Study: From QR Utility to Measurable Revenue Funnel
 
-> **Status:** Living case study. The product, instrumentation, and experiments described here are live; outcome metrics will be updated as enough production data accumulates.
+> Publication status: implementation and deployment claims are tied to repository evidence. No conversion rate, revenue, traffic, uplift, or statistical result is claimed without a corresponding production report or screenshot.
 
-I built [vCard QR Code Generator](https://www.vcardqrcodegenerator.com/) as a useful product, but traffic alone was not enough. I needed to know whether visitors were actually receiving value, where commercial intent appeared, whether payments were real, and which parts of the funnel were invisible or misleading.
+This publication pass is documentation-only; it does not modify production application behavior.
 
-That changed the project from “a QR-code website with analytics” into a live GTM Engineering lab.
+## Recruiter Summary
 
-The work now spans:
+**Role demonstrated:** GTM Engineer / Growth Engineer with product analytics and revenue-systems ownership.
 
-- weekly SEO performance reporting;
-- product-level event instrumentation;
-- explicit activation and monetization definitions;
-- verified payment handling;
-- upgrade-CTA attribution;
-- value-moment upsells;
-- deployment and production verification;
-- documentation designed to become reusable playbooks, teaching material, or automation later.
+**Systems used:** Static HTML and JavaScript, Next.js, GA4, Google Search Console reporting, Dodo Payments, Cloudflare Workers, GitHub Actions, and contract tests.
 
-This case study explains the system, the mistakes, the fixes, and what I am testing next.
+**Work demonstrated:** Designed an event taxonomy around real product states, hardened QR-generation error semantics, attributed upgrade intent across a multi-page funnel, verified payments server-side before revenue tracking, protected purchase events from refresh duplication, and placed CTAs at measurable value moments.
 
----
+## Executive Overview
 
-## 1. The original problem
+The product combines a free static vCard QR generator, a paid branded/logo QR workflow, a dynamic/editable QR application, and a bulk QR workflow. The GTM engineering problem was not simply adding more analytics calls. It was making each event represent a distinct business truth:
 
-The product already had search traffic, landing pages, GA4, Search Console data, a free static vCard QR generator, a paid branded/logo flow, a dynamic QR application, and a bulk workflow.
+- a QR output really exists;
+- a user downloaded the free or paid output;
+- a visitor expressed upgrade intent;
+- checkout actually started;
+- payment was verified by Dodo;
+- premium access was activated;
+- paid value was delivered.
 
-But the measurement model was weak.
+The implementation is documented in [`docs/analytics-events.md`](./analytics-events.md), with static-site and Next.js analytics helpers designed to no-op safely when analytics is blocked.
 
-A page view could not answer:
+## Architecture
 
-- Did the QR actually generate?
-- Did the user download it?
-- Did the user click an editable/dynamic QR offer?
-- Did they merely visit pricing, or did checkout actually start?
-- Was payment verified by the payment provider?
-- Did the paid user receive the promised branded QR output?
-- Was an apparent generation error real, or merely an async render delay?
-
-Without those distinctions, optimization becomes guesswork. Worse, a dashboard can look precise while encoding the wrong product reality.
-
-The GTM Engineering objective was therefore:
-
-> Turn search, product, upgrade, checkout, payment, and delivery activity into a trustworthy revenue funnel.
-
----
-
-## 2. The product surface
-
-The current product ecosystem includes four major user journeys.
-
-### Free static vCard QR
-
-A visitor enters contact information, generates a vCard QR code, and downloads it.
-
-### Branded/logo QR
-
-A user pays a one-time fee, uploads a logo, generates a branded QR code, and downloads the result.
-
-### Dynamic/editable QR
-
-A user creates an account and uses an editable QR workflow so the destination can change later without reprinting the physical QR code.
-
-### Bulk QR workflow
-
-A user generates multiple QR assets from bulk data, with paid export tiers and a possible path into editable/team QR use cases.
-
-These are not one funnel. They share traffic and intent signals, but each has a different value moment and monetization path.
-
----
-
-## 3. The measurement architecture
-
-The working system is:
-
-```text
-Search demand
-    ↓
-Landing page / article / tool page
-    ↓
-QR generation
-    ↓
-Download or branded output
-    ↓
-Upgrade CTA
-    ↓
-Pricing interest
-    ↓
-Checkout start
-    ↓
-Verified payment
-    ↓
-Paid value delivery
-    ↓
-GA4 + weekly reporting + experiment log
+```mermaid
+flowchart LR
+    A[SEO traffic] --> B[Landing pages and guides]
+    B --> C[QR generation]
+    C --> D[Free QR download]
+    D --> E[Upgrade CTA]
+    E --> F[Pricing or checkout intent]
+    F --> G[Dodo checkout]
+    G --> H[Cloudflare Worker payment verification]
+    H --> I[Verified payment and premium unlock]
+    I --> J[Branded or paid download]
+    C --> K[GA4 and reporting]
+    D --> K
+    E --> K
+    F --> K
+    H --> K
+    I --> K
+    J --> K
 ```
 
-The event taxonomy is documented in [`docs/analytics-events.md`](./analytics-events.md).
+The same model applies to the dynamic/editable QR route, where the upgrade CTA hands the user to the SaaS application rather than the static logo checkout.
 
-The important design principle is that each event represents a distinct business truth.
+## Funnel Event Model
 
-| Funnel stage | Canonical event(s) | Meaning |
+| Funnel stage | Canonical event | Business meaning |
 |---|---|---|
-| Product creation | `generated_qr_code` | A settled static QR output exists |
-| Free value realization | `download_qr` | The user took the free output away |
-| Dynamic/editable intent | `clicked_dynamic_qr_cta` | The user expressed interest in an editable QR workflow |
-| Pricing intent | `clicked_pricing` | The user clicked a paid landing, pricing, upgrade, or plan CTA |
-| Checkout intent | `pro_checkout_start` | A real checkout session was created |
-| Revenue conversion | `purchase`, `payment_success` | Payment was verified |
-| Premium activation | `pro_payment_success` | Paid access was successfully activated |
-| Paid value realization | `pro_download_branded_qr` | The paid user downloaded the branded output |
-| Unrecovered friction | `error_qr_generation` | QR generation genuinely failed and did not recover |
+| Product creation | `generated_qr_code` / `generated_branded_qr_code` | A settled QR output exists after the current generation state completes. |
+| Free value realization | `download_qr` | The visitor downloaded the free output. |
+| Dynamic intent | `clicked_dynamic_qr_cta` | The visitor clicked an editable/dynamic QR handoff. |
+| Pricing intent | `clicked_pricing` | The visitor clicked a paid landing, pricing, upgrade, logo, or plan CTA. |
+| Checkout intent | `pro_checkout_start` | A checkout session was successfully created. |
+| Revenue conversion | `purchase` / `payment_success` | Payment success was confirmed by the verification path. |
+| Premium activation | `pro_payment_success` | The paid browser flow was unlocked after verification. |
+| Paid value realization | `pro_download_branded_qr` | The user downloaded the branded output after paid activation. |
+| Unrecovered friction | `error_qr_generation` | A real generation/rendering failure remained after recovery logic. |
 
-This separation matters because `clicked_pricing` is not revenue, `pro_checkout_start` is not revenue, and even `pro_download_branded_qr` is not the authoritative payment event. It is paid value realization after verified unlock.
+`clicked_pricing`, `pro_checkout_start`, and `pro_download_branded_qr` are intentionally not treated as equivalent to revenue. The first two represent intent; the last represents fulfillment after payment. `purchase` is the recommended GA4 revenue event.
 
----
+## Verified Before/After Results
 
-## 4. Defining activation properly
+This table reports implementation changes, not business-performance metrics. “Verified” means the behavior is supported by committed code, tests, documentation, or deployment records listed in the evidence column.
 
-The initial temptation was to treat page views or form starts as activation. That would have been convenient and wrong.
+| Area | Before | After | Verification basis |
+|---|---|---|---|
+| QR generation tracking | Page views, form activity, or generation attempts did not clearly express that a settled static or branded QR output existed. | `generated_qr_code` and `generated_branded_qr_code` fire after the relevant output settles, with QR type and output availability parameters. | [`index.html`](../index.html), [`logo-qr-code.html`](../logo-qr-code.html), [`qr-code-with-logo.html`](../qr-code-with-logo.html), [`tests/analytics-html-contract.test.cjs`](../tests/analytics-html-contract.test.cjs) |
+| Error tracking | Async render timing and stale attempts could be confused with real QR-generation failures. | `error_qr_generation` is reserved for unrecovered failures and carries `qr_type`, `source_page`, `error_stage`, `error_message`, and `recovered: false`. | [`docs/analytics-events.md`](./analytics-events.md), generation guards in [`index.html`](../index.html) and branded pages, contract tests |
+| Payment verification | A success-looking return URL or browser state was not sufficient proof of a completed payment. | `/payment/verify` asks the Cloudflare Worker to verify the payment with Dodo before premium unlock or revenue tracking. | [`workers/router.js`](../workers/router.js), [`success.html`](../success.html), [`docs/analytics-events.md`](./analytics-events.md) |
+| CTA attribution | Dynamic, pricing, blog, bulk, logo, and dashboard CTAs had missing, weak, or legacy attribution. | `clicked_dynamic_qr_cta` is canonical; `clicked_pricing` carries CTA location, text, destination, source page, and logo intent where applicable. | [`index.html`](../index.html), [`bulk-qr-code.html`](../bulk-qr-code.html), [`dynamic-qr-guide.html`](../dynamic-qr-guide.html), [`blogs/index.html`](../blogs/index.html), blog templates, [`DashboardClient.tsx`](../vcard-qr-next/src/app/dashboard/DashboardClient.tsx) |
+| Revenue-event integrity | Checkout intent and payment success could be conflated, and refreshes could risk duplicate revenue events. | `purchase` and `payment_success` follow verified payment; purchase tracking uses transaction-id idempotency. | [`analytics.js`](../analytics.js), [`vcard-qr-next/src/lib/analytics.ts`](../vcard-qr-next/src/lib/analytics.ts), [`success.html`](../success.html), [`tests/analytics-helper.test.cjs`](../tests/analytics-helper.test.cjs) |
+| Value-moment CTA placement | The free journey had limited prompts after a user generated or downloaded a QR. | Dynamic, logo, branded-download, and team-editable prompts appear after generation, download, branded download, or bulk export. | `postGenerateCta` and `postDownloadCta` in [`index.html`](../index.html); `postBrandedDownloadCta` in logo pages; `postBulkExportCta` in [`bulk-qr-code.html`](../bulk-qr-code.html) |
 
-For this product, the working definitions are:
+## What Is Verified and What Is Not Claimed
 
-### Free activation
+The repository and deployment records support these claims:
 
-```text
-generated_qr_code + download_qr
-```
+- the event names and parameters are implemented in the static and SaaS code paths;
+- generation success and error handling use settled-state and retry-aware logic;
+- Dodo payment verification is performed through a Worker secret-backed path;
+- purchase tracking includes transaction-id idempotency;
+- the Day 4 CTA changes were committed to `main` and deployed through the Pages and Worker workflows;
+- the documentation and contract tests describe the intended taxonomy.
 
-The QR exists, and the user takes it away.
+This case study does not claim a conversion uplift, revenue increase, SEO improvement, or statistically significant experiment result. Those require a defined observation window and an attached production report.
 
-### Monetization intent
+## Evidence
 
-```text
-clicked_dynamic_qr_cta
-OR clicked_pricing
-OR pro_checkout_start
-```
+The following image paths are publication placeholders. Add the screenshots only after removing personal data, payment identifiers, customer information, and unrelated browser context.
 
-These signals have different strengths, but all indicate movement beyond free static usage.
+### SEO reporting
 
-### Revenue conversion
+![SEO report placeholder](assets/gtm-case-study/seo-report.png)
 
-```text
-purchase
-OR payment_success
-```
+*Caption: The SEO report should prove the reporting workflow and date ranges used to select GTM priorities. It must not be presented as proof of revenue impact unless it includes a linked product-funnel report.*
 
-The payment provider has confirmed a successful transaction.
+Repository path: `docs/assets/gtm-case-study/seo-report.png`
 
-### Premium activation
+### GA4 Realtime
 
-```text
-verified payment
-+ pro_logo_upload
-+ generated_branded_qr_code
-+ pro_download_branded_qr
-```
+![GA4 Realtime placeholder](assets/gtm-case-study/ga4-realtime.png)
 
-The user paid, used the paid feature, generated the branded output, and downloaded it.
+*Caption: The GA4 Realtime screenshot should show a fresh static, branded, or CTA journey and the observed canonical event names. It proves event receipt for that test session, not a population-level conversion rate.*
 
-### Paid value realization
+Repository path: `docs/assets/gtm-case-study/ga4-realtime.png`
 
-```text
-verified payment + pro_download_branded_qr
-```
+### Payment verification
 
-This is the clearest evidence that the paid promise was fulfilled.
+![Payment verification placeholder](assets/gtm-case-study/payment-verification.png)
 
----
+*Caption: The payment-verification screenshot should show a sanitized successful verification response or deployment/log evidence that Dodo verification is reached. It must not expose API keys, payment secrets, customer data, or full transaction identifiers.*
 
-## 5. The first instrumentation failure: false QR errors
+Repository path: `docs/assets/gtm-case-study/payment-verification.png`
 
-After adding explicit QR-generation events, GA4 showed an alarming result: `error_qr_generation` was firing repeatedly even during successful journeys.
+### CTA audit
 
-The first implementation checked for a rendered canvas or SVG after a fixed delay. Normal asynchronous rendering could therefore look like a failure, even if the QR appeared and downloaded shortly afterward.
+![CTA audit placeholder](assets/gtm-case-study/cta-audit.png)
 
-A retry-based fix reduced the noise but did not eliminate it.
+*Caption: The CTA audit screenshot should show the page, visible copy, destination, event name, and attribution parameters for representative dynamic and pricing CTAs.*
 
-The deeper problem was stale page-level state:
+Repository path: `docs/assets/gtm-case-study/cta-audit.png`
 
-- QR generation ran on input changes;
-- older timers and catches could report against outdated attempts;
-- `generated_qr_code` could fire repeatedly while a user typed;
-- a successful later attempt did not invalidate analytics from an earlier attempt.
+## Source and Deployment Evidence
 
-The final fix introduced a settled-state model:
-
-- only the latest generation attempt can report analytics;
-- success is debounced until the QR state settles;
-- stale attempts are ignored;
-- errors fire only for the latest unrecovered failure;
-- empty forms, previews, validation warnings, retries, and successful downloads do not count as generation errors.
-
-The production verification then showed the intended behavior:
-
-```text
-Static journey:
-generated_qr_code: 1
-download_qr: 1
-error_qr_generation: 0
-
-Branded journey:
-pro_logo_upload: 1
-generated_branded_qr_code: 1
-pro_download_branded_qr: 1
-error_qr_generation: 0
-```
-
-The broader lesson is simple:
-
-> Analytics correctness depends on application state semantics, not merely on adding tracking calls.
-
----
-
-## 6. The second failure: client-side payment assumptions
-
-The original branded QR flow could trust client-side return parameters and browser state too much. A URL containing a payment identifier and a success-looking status should never be authoritative proof of revenue.
-
-The payment flow was rebuilt around verified payment handling:
-
-1. The browser receives a payment return.
-2. The payment ID is sent to `/payment/verify`.
-3. A Cloudflare Worker queries Dodo Payments.
-4. The Worker confirms the actual payment status.
-5. Only a verified success creates `pro_verified_unlock`.
-6. Only then can the browser emit `purchase`, `payment_success`, and `pro_payment_success`.
-7. The transaction ID is stored for idempotency so refreshing the success page does not duplicate the purchase event.
-
-A forged URL such as:
-
-```text
-?payment_id=pay_fake_123&status=succeeded
-```
-
-now fails closed. It does not unlock premium access and does not emit revenue events.
-
-This produced a much cleaner funnel:
-
-| Stage | Event |
-|---|---|
-| User explores paid offer | `clicked_pricing` |
-| Checkout session begins | `pro_checkout_start` |
-| Dodo verifies payment | `purchase`, `payment_success` |
-| Premium browser state activates | `pro_payment_success` |
-| User downloads paid output | `pro_download_branded_qr` |
-
-The key distinction is between **intent**, **verified revenue**, and **fulfilled paid value**.
-
----
-
-## 7. Auditing every upgrade CTA
-
-Once the funnel was measurable, the next question was not “How do I add more CTAs?” It was:
-
-> Where does the product already ask users to upgrade, and can those transitions be attributed correctly?
-
-A repository-wide audit found several classes of problems.
-
-### Visible but untracked CTAs
-
-Examples included:
-
-- bulk-page editable QR handoffs;
-- dynamic QR guide CTAs;
-- blog logo CTAs;
-- dynamic blog CTAs;
-- dashboard pricing-modal openers;
-- legacy activation paths.
-
-### Tracked but weak copy
-
-Examples included:
-
-- “Buy”;
-- “Try dynamic QR codes”;
-- “Sign In / Dynamic vCards”;
-- “Need an Editable QR Code?”;
-- plan-centric upgrade labels with no stated outcome.
-
-### Missing CTAs at value moments
-
-The most important gap was timing. The free static QR journey had no explicit post-generation or post-download message explaining why an editable QR might matter.
-
-That is the point at which the user understands the asset and may start thinking about printing it.
-
-The Day 4 implementation added or improved CTAs such as:
-
-- “Create editable QR codes”;
-- “Need to edit after printing?”;
-- “Unlock 50 exports”;
-- “Start Starter: 5 editable QRs”;
-- post-generation editable QR prompts;
-- post-download dynamic QR prompts;
-- post-download logo upsells;
-- post-bulk-export team/editable QR prompts.
-
-The canonical tracking events are now:
-
-- `clicked_dynamic_qr_cta` for editable/dynamic QR handoffs;
-- `clicked_pricing` for paid/logo/pricing interest;
-- `pro_checkout_start` only after a checkout session actually exists.
-
-Production GA4 verification confirmed the new CTA events firing across homepage, logo, bulk, dynamic, and blog journeys.
-
----
-
-## 8. Weekly SEO reporting as the operating cadence
-
-The project already had a Python script that compares Search Console and GA4 performance week over week.
-
-A baseline report compared:
-
-```text
-Previous: 2026-05-05 to 2026-05-11
-Current:  2026-05-12 to 2026-05-18
-```
-
-It showed:
-
-- clicks declining from 27 to 21;
-- impressions roughly flat at about 4,960;
-- CTR declining from 0.55% to 0.42%;
-- average position worsening from 12.4 to 15.5;
-- homepage performance weakening;
-- the bulk page improving despite fewer impressions;
-- logo-related visibility increasing without clicks.
-
-The value of the report is not the numbers alone. It turns raw data into operating decisions:
-
-- protect and learn from the bulk-page bright spot;
-- diagnose homepage decline;
-- run a SERP title/meta pass for logo-related pages;
-- connect SEO movement to downstream activation and monetization events.
-
-The longer-term goal is to connect the weekly SEO report to product-funnel metrics so a page can be evaluated by more than rankings or clicks.
-
----
-
-## 9. What has been built so far
-
-### Production systems
-
-- Weekly Python-based SEO comparison report
-- GA4 product-event taxonomy
-- Settled-state static and branded QR instrumentation
-- Dynamic/editable CTA attribution
-- Pricing and checkout-intent tracking
-- Dodo payment verification through a Cloudflare Worker
-- Idempotent purchase tracking
-- Paid unlock and paid-value delivery events
-- Value-moment CTAs across static, logo, bulk, dynamic, and blog journeys
-- Documentation and contract tests
-
-### Publicly defensible claims
-
-- The static and branded QR journeys have explicit generation and download events.
-- Revenue events require verified payment rather than trusting return parameters.
-- Purchase events are protected against duplicate firing on refresh.
-- Upgrade CTA events are visible in production GA4.
-- The event model distinguishes intent, checkout, revenue, activation, delivery, and friction.
-
-### Claims intentionally deferred
-
-I am not yet claiming:
-
-- a specific conversion-rate uplift from the CTA changes;
-- meaningful revenue growth from the new funnel;
-- an SEO uplift caused by the instrumentation work;
-- statistically significant differences between CTA variants;
-- a validated best ICP.
-
-Those require production data over time, not screenshots from a test session.
-
----
-
-## 10. What I would do next
-
-The next experiments are designed to connect the measurement foundation to revenue.
-
-### ICP-specific landing pages
-
-Build and compare pages for:
-
-- real estate agents;
-- freelancers and consultants;
-- small businesses;
-- event speakers;
-- teams needing bulk or editable QR management.
-
-### CTA performance reporting
-
-Measure CTA conversion rates by:
-
-- page;
-- CTA location;
-- copy;
-- user journey stage;
-- source channel;
-- free activation status.
-
-### Pricing and offer tests
-
-Test:
-
-- one-time branded QR pricing;
-- different value framing;
-- dynamic QR plan positioning;
-- outcome-based plan copy;
-- done-for-you QR setup as a service layer.
-
-### Search-to-revenue reporting
-
-Connect:
-
-```text
-Search query
-→ landing page
-→ QR generation
-→ download
-→ upgrade click
-→ checkout
-→ verified payment
-→ paid download
-```
-
-### Outbound GTM experiments
-
-Use one narrowly defined ICP, enrich prospects, generate personalized outreach, and measure the full path from message to product activation and payment.
-
----
-
-## 11. Why this is GTM Engineering
-
-This project is not primarily about adding GA4 events or changing button copy.
-
-It is about designing a revenue system in which:
-
-- traffic signals lead to prioritized experiments;
-- product events represent real user value;
-- commercial intent is separated from revenue;
-- payment is independently verified;
-- paid value delivery is measurable;
-- failures are classified correctly;
-- every intervention creates evidence for the next decision.
-
-That is the operating definition I use for GTM Engineering:
-
-> Building the technical and analytical systems that turn demand, product behavior, and commercial signals into repeatable revenue decisions.
-
----
-
-## 12. Evidence and source material
-
+- [Analytics taxonomy](./analytics-events.md)
+- [Analytics contract tests](../tests/analytics-html-contract.test.cjs)
+- [Analytics helper tests](../tests/analytics-helper.test.cjs)
+- [Cloudflare Worker deployment workflow](../.github/workflows/deploy-workers.yml)
+- [Day 4 CTA implementation commit](https://github.com/abhikb2005/vcard-qr-generator/commit/a5b0a80)
+- [Pages deployment run for the Day 4 commit](https://github.com/abhikb2005/vcard-qr-generator/actions/runs/26831213243)
+- [Worker deployment run for the Day 4 commit](https://github.com/abhikb2005/vcard-qr-generator/actions/runs/26831215283)
+- [Repository commit history](https://github.com/abhikb2005/vcard-qr-generator/commits/main)
+- [GitHub deployments](https://github.com/abhikb2005/vcard-qr-generator/deployments)
 - [Live product](https://www.vcardqrcodegenerator.com/)
-- [Repository](https://github.com/abhikb2005/vcard-qr-generator)
-- [Analytics event taxonomy](./analytics-events.md)
-- [Project agent board](../data/agent-board.md)
 
-Planned additions:
+## GTM Engineering Takeaway
 
-- architecture diagram;
-- cropped GA4 Realtime screenshots;
-- weekly SEO report screenshot;
-- before/after CTA inventory;
-- timeline of key commits and deployments;
-- updated production metrics after a meaningful observation window.
+The core work was not adding isolated tracking calls. It was aligning product state, payment truth, CTA intent, and reporting vocabulary so that each step can be analyzed without overstating what it proves.
 
----
+That creates a foundation for later GTM work:
 
-## Closing note
-
-I started with a working QR product and a traffic report. The more important work was making the system tell the truth.
-
-The project now has a measurable path from search demand to product value, upgrade intent, verified payment, and paid output delivery. The next stage is not more instrumentation for its own sake. It is using that foundation to run better GTM experiments and compound revenue learning.
+- compare CTA copy and placement by page and journey stage;
+- connect search landing pages to activated product behavior;
+- distinguish pricing interest from verified revenue;
+- measure paid value realization separately from payment;
+- add conversion metrics only after a defined production observation window.
