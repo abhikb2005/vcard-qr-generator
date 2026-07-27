@@ -7,6 +7,13 @@
     "date": "2026-07-27"
   },
   {
+    "slug": "generate-bulk-vcard-qr-codes-from-excel",
+    "title": "Bulk QR Code Generator From Excel: Free vCard CSV Guide (2026)",
+    "description": "Convert an Excel contact list to CSV, then generate bulk vCard QR codes for your team or event. Includes columns, export steps, and print checks.",
+    "url": "/blog/generate-bulk-vcard-qr-codes-from-excel/",
+    "date": "2026-07-27"
+  },
+  {
     "slug": "dynamic-qr-code-for-clinics",
     "title": "Dynamic QR Code for Clinics: Appointment Links and Patient Instructions (2026)",
     "description": "Use dynamic QR codes for clinic appointment cards, intake forms, directions, preparation instructions, and approved follow-up pages.",
@@ -565,13 +572,6 @@
     "description": "Add a QR code to your resume to impress recruiters and share your contact info instantly. Free generator, ATS-safe tips & placement guide.",
     "url": "/blog/qr-code-on-resume/",
     "date": "2026-02-03"
-  },
-  {
-    "slug": "generate-bulk-vcard-qr-codes-from-excel",
-    "title": "Bulk QR Code Generator From Excel: Free vCard CSV Guide (2026)",
-    "description": "Convert an Excel contact list to CSV, then generate bulk vCard QR codes for your team or event. Includes columns, export steps, and print checks.",
-    "url": "/blog/generate-bulk-vcard-qr-codes-from-excel/",
-    "date": "2026-07-27"
   },
   {
     "slug": "how-to-scan-vcard-qr-code-android-iphone",
