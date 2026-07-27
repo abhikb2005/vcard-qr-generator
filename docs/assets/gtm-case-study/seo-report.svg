@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1576" height="1609" viewBox="0 0 1576 1609">
+  <title>Weekly SEO baseline comparison from Google Search Console</title>
+  <desc>Sanitized comparison of 5–11 May 2026 and 12–18 May 2026 showing clicks, impressions, CTR, average position, charts, and queries.</desc>
+  <rect width="1576" height="1609" fill="white"/>
+  <text x="38" y="52" font-family="Arial, sans-serif" font-size="34" font-weight="700">Weekly SEO baseline — Google Search Console</text>
+  <text x="38" y="96" font-family="Arial, sans-serif" font-size="24" font-weight="700">Week 1: 5–11 May 2026</text>
+  <rect x="38" y="120" width="720" height="250" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="66" y="165" font-family="Arial, sans-serif" font-size="18" fill="#475569">Total clicks</text>
+  <text x="66" y="210" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#2563eb">27</text>
+  <text x="250" y="165" font-family="Arial, sans-serif" font-size="18" fill="#475569">Total impressions</text>
+  <text x="250" y="210" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#7c3aed">4.95k</text>
+  <text x="485" y="165" font-family="Arial, sans-serif" font-size="18" fill="#475569">Average CTR</text>
+  <text x="485" y="210" font-family="Arial, sans-serif" font-size="42" font-weight="700">0.5%</text>
+  <text x="66" y="280" font-family="Arial, sans-serif" font-size="18" fill="#475569">Average position</text>
+  <text x="66" y="325" font-family="Arial, sans-serif" font-size="42" font-weight="700">12.4</text>
+  <text x="250" y="280" font-family="Arial, sans-serif" font-size="18" fill="#475569">Top query examples</text>
+  <text x="250" y="315" font-family="Arial, sans-serif" font-size="20">vcard qr generator</text>
+  <text x="250" y="345" font-family="Arial, sans-serif" font-size="20">free vcard qr code generator</text>
+  <rect x="790" y="120" width="748" height="250" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="820" y="165" font-family="Arial, sans-serif" font-size="18" fill="#475569">Observed pattern</text>
+  <polyline points="830,320 930,285 1030,220 1130,280 1230,295 1330,255 1495,315" fill="none" stroke="#2563eb" stroke-width="5"/>
+  <polyline points="830,205 930,205 1030,215 1130,230 1230,215 1330,205 1495,180" fill="none" stroke="#7c3aed" stroke-width="5"/>
+  <text x="820" y="350" font-family="Arial, sans-serif" font-size="16" fill="#475569">Clicks varied while impressions remained broadly stable.</text>
+
+  <line x1="38" y1="415" x2="1538" y2="415" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="38" y="465" font-family="Arial, sans-serif" font-size="24" font-weight="700">Week 2: 12–18 May 2026</text>
+  <rect x="38" y="490" width="720" height="250" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="66" y="535" font-family="Arial, sans-serif" font-size="18" fill="#475569">Total clicks</text>
+  <text x="66" y="580" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#2563eb">21</text>
+  <text x="250" y="535" font-family="Arial, sans-serif" font-size="18" fill="#475569">Total impressions</text>
+  <text x="250" y="580" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#7c3aed">4.96k</text>
+  <text x="485" y="535" font-family="Arial, sans-serif" font-size="18" fill="#475569">Average CTR</text>
+  <text x="485" y="580" font-family="Arial, sans-serif" font-size="42" font-weight="700">0.4%</text>
+  <text x="66" y="650" font-family="Arial, sans-serif" font-size="18" fill="#475569">Average position</text>
+  <text x="66" y="695" font-family="Arial, sans-serif" font-size="42" font-weight="700">15.5</text>
+  <text x="250" y="650" font-family="Arial, sans-serif" font-size="18" fill="#475569">Top query examples</text>
+  <text x="250" y="685" font-family="Arial, sans-serif" font-size="20">vcard generator</text>
+  <text x="250" y="715" font-family="Arial, sans-serif" font-size="20">bulk vcard qr code generator</text>
+  <rect x="790" y="490" width="748" height="250" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="820" y="535" font-family="Arial, sans-serif" font-size="18" fill="#475569">Observed pattern</text>
+  <polyline points="830,690 930,560 1030,600 1130,660 1230,715 1330,690 1495,545" fill="none" stroke="#2563eb" stroke-width="5"/>
+  <polyline points="830,585 930,590 1030,605 1130,610 1230,650 1330,645 1495,640" fill="none" stroke="#7c3aed" stroke-width="5"/>
+  <text x="820" y="720" font-family="Arial, sans-serif" font-size="16" fill="#475569">Impressions held, while clicks, CTR, and ranking weakened.</text>
+
+  <rect x="38" y="790" width="1500" height="700" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="68" y="850" font-family="Arial, sans-serif" font-size="28" font-weight="700">Baseline comparison</text>
+  <line x1="68" y1="885" x2="1508" y2="885" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="80" y="930" font-family="Arial, sans-serif" font-size="20" font-weight="700">Metric</text>
+  <text x="500" y="930" font-family="Arial, sans-serif" font-size="20" font-weight="700">5–11 May</text>
+  <text x="850" y="930" font-family="Arial, sans-serif" font-size="20" font-weight="700">12–18 May</text>
+  <text x="1180" y="930" font-family="Arial, sans-serif" font-size="20" font-weight="700">Change</text>
+  <line x1="68" y1="950" x2="1508" y2="950" stroke="#e2e8f0"/>
+  <text x="80" y="1000" font-family="Arial, sans-serif" font-size="22">Clicks</text><text x="500" y="1000" font-family="Arial, sans-serif" font-size="22">27</text><text x="850" y="1000" font-family="Arial, sans-serif" font-size="22">21</text><text x="1180" y="1000" font-family="Arial, sans-serif" font-size="22">−6</text>
+  <line x1="68" y1="1030" x2="1508" y2="1030" stroke="#e2e8f0"/>
+  <text x="80" y="1080" font-family="Arial, sans-serif" font-size="22">Impressions</text><text x="500" y="1080" font-family="Arial, sans-serif" font-size="22">4.95k</text><text x="850" y="1080" font-family="Arial, sans-serif" font-size="22">4.96k</text><text x="1180" y="1080" font-family="Arial, sans-serif" font-size="22">Broadly flat</text>
+  <line x1="68" y1="1110" x2="1508" y2="1110" stroke="#e2e8f0"/>
+  <text x="80" y="1160" font-family="Arial, sans-serif" font-size="22">CTR</text><text x="500" y="1160" font-family="Arial, sans-serif" font-size="22">0.5%</text><text x="850" y="1160" font-family="Arial, sans-serif" font-size="22">0.4%</text><text x="1180" y="1160" font-family="Arial, sans-serif" font-size="22">−0.1 pp</text>
+  <line x1="68" y1="1190" x2="1508" y2="1190" stroke="#e2e8f0"/>
+  <text x="80" y="1240" font-family="Arial, sans-serif" font-size="22">Average position</text><text x="500" y="1240" font-family="Arial, sans-serif" font-size="22">12.4</text><text x="850" y="1240" font-family="Arial, sans-serif" font-size="22">15.5</text><text x="1180" y="1240" font-family="Arial, sans-serif" font-size="22">Worsened by 3.1</text>
+  <line x1="68" y1="1270" x2="1508" y2="1270" stroke="#e2e8f0"/>
+  <text x="80" y="1330" font-family="Arial, sans-serif" font-size="22" font-weight="700">Interpretation</text>
+  <text x="80" y="1380" font-family="Arial, sans-serif" font-size="22">Search visibility remained nearly flat, but fewer impressions converted into clicks.</text>
+  <text x="80" y="1420" font-family="Arial, sans-serif" font-size="22">This became the baseline for page-level CTR, ranking, and landing-page experiments.</text>
+  <text x="38" y="1565" font-family="Arial, sans-serif" font-size="16" fill="#64748b">Source: sanitized Google Search Console screenshots supplied for the GTM Engineering learning log.</text>
+</svg>
