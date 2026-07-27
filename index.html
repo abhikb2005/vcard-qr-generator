@@ -736,6 +736,7 @@
       let lastGeneratedQrPayload = '';
       let staticGenerationId = 0;
       let lastRenderedStaticGenerationId = 0;
+      let lastFailedStaticGenerationId = 0;
       let pendingStaticSuccessTimer = null;
       let pendingStaticFailureTimer = null;
 
@@ -757,13 +758,15 @@
         if (downloadBtn.hasAttribute('disabled')) return;
         if (!qrCodeElement.querySelector('canvas')) {
           event.preventDefault();
-          gaTrack('error_qr_generation', {
-            qr_type: 'static_vcard',
-            source_page: window.location.pathname,
-            error_stage: 'download',
-            error_message: 'QR canvas unavailable at download',
-            recovered: false
-          });
+          if (lastFailedStaticGenerationId === staticGenerationId) {
+            gaTrack('error_qr_generation', {
+              qr_type: 'static_vcard',
+              source_page: window.location.pathname,
+              error_stage: 'download',
+              error_message: 'QR canvas unavailable after unrecovered generation failure',
+              recovered: false
+            });
+          }
           return;
         }
         // Optionally include field completeness to see quality of downloads
@@ -824,6 +827,7 @@
         pendingStaticSuccessTimer = setTimeout(() => {
           if (generationId !== staticGenerationId || lastGeneratedQrPayload === vCardString) return;
           lastGeneratedQrPayload = vCardString;
+          lastFailedStaticGenerationId = 0;
           gaTrack('generated_qr_code', {
             qr_type: 'static_vcard',
             source_page: window.location.pathname,
@@ -834,11 +838,18 @@
         }, 700);
       };
 
-      const scheduleStaticFailure = (generationId, errorStage, errorMessage) => {
+      const scheduleStaticFailure = (vCardString, generationId, errorStage, errorMessage, allowLateRenderCheck = false) => {
         if (pendingStaticFailureTimer) clearTimeout(pendingStaticFailureTimer);
         pendingStaticFailureTimer = setTimeout(() => {
           if (generationId !== staticGenerationId) return;
           if (lastRenderedStaticGenerationId === generationId) return;
+          if (allowLateRenderCheck && qrCodeElement.querySelector('canvas')) {
+            lastRenderedStaticGenerationId = generationId;
+            lastFailedStaticGenerationId = 0;
+            if (vCardString) scheduleStaticSuccess(vCardString, generationId);
+            return;
+          }
+          lastFailedStaticGenerationId = generationId;
           gaTrack('error_qr_generation', {
             qr_type: 'static_vcard',
             source_page: window.location.pathname,
@@ -864,7 +875,7 @@
           return;
         }
 
-        scheduleStaticFailure(generationId, 'rendering', 'QR canvas was not rendered');
+        scheduleStaticFailure(vCardString, generationId, 'rendering', 'QR canvas was not rendered', true);
       };
 
       // Instantiate QRCode object
@@ -907,6 +918,7 @@
       // Generate QR Code from form values
       const generateQRCode = () => {
         const generationId = ++staticGenerationId;
+        let vCardString = '';
         try {
           const fullName = document.getElementById('fullName').value.trim();
           if (!fullName) {
@@ -915,6 +927,7 @@
             updateUIState(false);
             lastGeneratedQrPayload = '';
             lastRenderedStaticGenerationId = 0;
+            lastFailedStaticGenerationId = 0;
             return;
           }
           updateUIState(true);
@@ -927,13 +940,13 @@
           const firstName = nameParts.shift() || '';
           const lastName = nameParts.join(' ') || '';
 
-          const vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
+          vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
           qrcode.makeCode(vCardString);
           setTimeout(() => verifyStaticQrRendered(vCardString, generationId), 100);
         } catch (error) {
           try { qrcode.clear(); } catch (clearError) {}
           const message = window.VcardAnalytics?.sanitizeError(error) || 'QR generation failed';
-          scheduleStaticFailure(generationId, 'generation', message);
+          scheduleStaticFailure(vCardString, generationId, 'generation', message);
         }
       };
 

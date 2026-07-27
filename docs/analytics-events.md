@@ -61,13 +61,15 @@ Production Dodo verification is served by the `vcard-qr-generator-api` Cloudflar
 
 `error_qr_generation` is reserved for unrecovered failures only. Static and branded inline generators guard each attempt with a generation id, so stale render checks or catches from older input states must not send this event after a newer generation succeeds. Use `error_stage` to identify where the failure happened:
 
+Rendering retries perform a final output check before the delayed failure event is emitted. If a canvas/SVG appears during that final grace window, the attempt is treated as recovered and `error_qr_generation` is suppressed. Download clicks also require the latest generation to have already been marked as an unrecovered failure, so a click while the QR is still rendering must not emit an error.
+
 - `validation`: only for unrecoverable validation blockers, not normal empty form states or duplicate-alias warnings.
 - `generation`: QR data creation or persistence failed and the user could not continue.
 - `rendering`: the QR output did not appear after retrying async rendering.
-- `download`: the QR existed but export/download failed.
+- `download`: the latest QR generation was already marked as an unrecovered failure, and the QR output is still missing when the user attempts to download.
 - `unknown`: use only when the stage cannot be safely classified.
 
-Set `recovered: false` for `error_qr_generation`. If a delayed render or retry succeeds, do not send `error_qr_generation`; use a separate retry/debug event only if needed. Empty initial state, locked previews, field validation warnings, duplicate aliases, old render timers, and successful downloads are not generation errors.
+Set `recovered: false` for `error_qr_generation`. If a delayed render or retry succeeds, do not send `error_qr_generation`; use a separate retry/debug event only if needed. Empty initial state, locked previews, field validation warnings, duplicate aliases, old render timers, successful downloads, and clicks before the current QR output has finished rendering are not generation errors.
 
 ## GA4 Realtime Test Journeys
 
