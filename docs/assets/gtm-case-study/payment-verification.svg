@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000">
+<rect width="1400" height="1000" fill="#fff"/>
+<text x="60" y="70" font-family="Arial" font-size="34" font-weight="700">Payment verification evidence</text>
+<text x="60" y="115" font-family="Arial" font-size="20" fill="#475569">Safe synthetic tests; no customer data or production secrets</text>
+<g font-family="Arial">
+<rect x="60" y="160" width="1280" height="165" rx="16" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="95" y="210" font-size="24" font-weight="700">1. Live fake payment ID check</text>
+<text x="95" y="252" font-size="20">Result: success=False; status=verification_failed</text>
+<text x="95" y="292" font-size="20" fill="#166534">Production verification failed closed for an unrecognized synthetic payment reference.</text>
+
+<rect x="60" y="355" width="1280" height="180" rx="16" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="95" y="405" font-size="24" font-weight="700">2. Forged URL parameter check</text>
+<text x="95" y="447" font-size="20">logo-qr-code.html — ServerVerification=True; DirectQueryUnlock=False</text>
+<text x="95" y="482" font-size="20">qr-code-with-logo.html — ServerVerification=True; DirectQueryUnlock=False</text>
+<text x="95" y="515" font-size="20" fill="#166534">A success-looking query string cannot write premium unlock state without verification.</text>
+
+<rect x="60" y="565" width="1280" height="220" rx="16" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="95" y="615" font-size="24" font-weight="700">3. Mocked verified payment event sequence</text>
+<text x="95" y="660" font-size="20">purchase</text>
+<text x="95" y="695" font-size="20">payment_success</text>
+<text x="95" y="730" font-size="20">pro_payment_success</text>
+<text x="700" y="660" font-size="20">Refresh: purchase tracking returned false</text>
+<text x="700" y="695" font-size="20">Purchase count after refresh: 1</text>
+<text x="95" y="765" font-size="20" fill="#166534">Verified payment events emitted once and refresh did not duplicate purchase.</text>
+
+<rect x="60" y="815" width="1280" height="100" rx="16" fill="#ecfdf5" stroke="#86efac"/>
+<text x="95" y="860" font-size="22" font-weight="700" fill="#166534">Tests passed: analytics helper and HTML analytics contract suites</text>
+<text x="95" y="895" font-size="18" fill="#166534">The live check used only a synthetic payment reference; verified-payment events were mocked locally.</text>
+</g>
+<text x="60" y="965" font-family="Arial" font-size="16" fill="#64748b">Publication-safe reconstruction of the payment verification evidence log.</text>
+</svg>
