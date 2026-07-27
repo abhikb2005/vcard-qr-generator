@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="980" viewBox="0 0 1500 980">
+<rect width="1500" height="980" fill="#fff"/>
+<text x="60" y="70" font-family="Arial" font-size="34" font-weight="700">CTA audit — before and after</text>
+<text x="60" y="115" font-family="Arial" font-size="20" fill="#475569">Representative examples from the production CTA attribution cleanup</text>
+<rect x="60" y="160" width="1380" height="700" rx="18" fill="#f8fafc" stroke="#cbd5e1"/>
+<g font-family="Arial">
+<text x="95" y="215" font-size="20" font-weight="700">Journey</text>
+<text x="360" y="215" font-size="20" font-weight="700">Before</text>
+<text x="760" y="215" font-size="20" font-weight="700">After</text>
+<text x="1160" y="215" font-size="20" font-weight="700">Canonical event</text>
+<line x1="90" y1="240" x2="1410" y2="240" stroke="#cbd5e1" stroke-width="2"/>
+
+<text x="95" y="295" font-size="20">Dynamic app handoff</text>
+<text x="360" y="295" font-size="20">“Sign In / Dynamic vCards”</text>
+<text x="760" y="295" font-size="20">“Create editable QR codes”</text>
+<text x="1160" y="295" font-size="18">clicked_dynamic_qr_cta</text>
+<line x1="90" y1="325" x2="1410" y2="325" stroke="#e2e8f0"/>
+
+<text x="95" y="385" font-size="20">Dynamic guide CTA</text>
+<text x="360" y="385" font-size="20">“Try dynamic QR codes”</text>
+<text x="760" y="385" font-size="20">“Create an editable QR code”</text>
+<text x="1160" y="385" font-size="18">clicked_dynamic_qr_cta</text>
+<line x1="90" y1="415" x2="1410" y2="415" stroke="#e2e8f0"/>
+
+<text x="95" y="475" font-size="20">Bulk paid CTA</text>
+<text x="360" y="475" font-size="20">“Buy”</text>
+<text x="760" y="475" font-size="20">“Unlock 50 exports”</text>
+<text x="1160" y="475" font-size="18">clicked_pricing</text>
+<line x1="90" y1="505" x2="1410" y2="505" stroke="#e2e8f0"/>
+
+<text x="95" y="565" font-size="20">Post-generation moment</text>
+<text x="360" y="565" font-size="20">No dedicated CTA</text>
+<text x="760" y="565" font-size="20">Editable QR upsell after output exists</text>
+<text x="1160" y="565" font-size="18">clicked_dynamic_qr_cta</text>
+<line x1="90" y1="595" x2="1410" y2="595" stroke="#e2e8f0"/>
+
+<text x="95" y="655" font-size="20">Post-download moment</text>
+<text x="360" y="655" font-size="20">No measured next step</text>
+<text x="760" y="655" font-size="20">Dynamic and logo upgrade prompts</text>
+<text x="1160" y="655" font-size="18">dynamic + pricing events</text>
+<line x1="90" y1="685" x2="1410" y2="685" stroke="#e2e8f0"/>
+
+<text x="95" y="745" font-size="20">Blog attribution</text>
+<text x="360" y="745" font-size="20">Missing or legacy event names</text>
+<text x="760" y="745" font-size="20">Standardized source and location fields</text>
+<text x="1160" y="745" font-size="18">canonical CTA events</text>
+</g>
+<rect x="90" y="795" width="1320" height="110" rx="12" fill="#ecfdf5" stroke="#86efac"/>
+<text x="120" y="842" font-family="Arial" font-size="22" font-weight="700" fill="#166534">Outcome</text>
+<text x="120" y="880" font-family="Arial" font-size="20" fill="#166534">Upgrade intent became measurable by page, copy, location, destination, and journey stage.</text>
+<text x="60" y="945" font-family="Arial" font-size="16" fill="#64748b">Sanitized reconstruction from the Day 4 CTA inventory and production implementation.</text>
+</svg>
