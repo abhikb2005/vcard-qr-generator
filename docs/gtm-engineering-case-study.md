@@ -98,11 +98,11 @@ The following image paths are publication placeholders. Add the screenshots only
 
 ### SEO reporting
 
-![SEO report placeholder](assets/gtm-case-study/seo-report.png)
+![Sanitized weekly SEO baseline comparison](assets/gtm-case-study/seo-report.svg)
 
-*Caption: The SEO report should prove the reporting workflow and date ranges used to select GTM priorities. It must not be presented as proof of revenue impact unless it includes a linked product-funnel report.*
+*Caption: Sanitized Google Search Console evidence for 5–11 May 2026 versus 12–18 May 2026. Impressions were broadly flat, while clicks, CTR, and average position weakened, establishing the baseline used to select subsequent GTM experiments. This is evidence of the reporting workflow and decision baseline, not proof of revenue impact.*
 
-Repository path: `docs/assets/gtm-case-study/seo-report.png`
+Repository path: `docs/assets/gtm-case-study/seo-report.svg`
 
 ### GA4 Realtime
 
