@@ -736,6 +736,7 @@
       let lastGeneratedQrPayload = '';
       let staticGenerationId = 0;
       let lastRenderedStaticGenerationId = 0;
+      let lastFailedStaticGenerationId = 0;
       let pendingStaticSuccessTimer = null;
       let pendingStaticFailureTimer = null;
 
@@ -757,13 +758,15 @@
         if (downloadBtn.hasAttribute('disabled')) return;
         if (!qrCodeElement.querySelector('canvas')) {
           event.preventDefault();
-          gaTrack('error_qr_generation', {
-            qr_type: 'static_vcard',
-            source_page: window.location.pathname,
-            error_stage: 'download',
-            error_message: 'QR canvas unavailable at download',
-            recovered: false
-          });
+          if (lastFailedStaticGenerationId === staticGenerationId) {
+            gaTrack('error_qr_generation', {
+              qr_type: 'static_vcard',
+              source_page: window.location.pathname,
+              error_stage: 'download',
+              error_message: 'QR canvas unavailable after unrecovered generation failure',
+              recovered: false
+            });
+          }
           return;
         }
         // Optionally include field completeness to see quality of downloads
@@ -824,6 +827,7 @@
         pendingStaticSuccessTimer = setTimeout(() => {
           if (generationId !== staticGenerationId || lastGeneratedQrPayload === vCardString) return;
           lastGeneratedQrPayload = vCardString;
+          lastFailedStaticGenerationId = 0;
           gaTrack('generated_qr_code', {
             qr_type: 'static_vcard',
             source_page: window.location.pathname,
@@ -841,9 +845,11 @@
           if (lastRenderedStaticGenerationId === generationId) return;
           if (allowLateRenderCheck && qrCodeElement.querySelector('canvas')) {
             lastRenderedStaticGenerationId = generationId;
+            lastFailedStaticGenerationId = 0;
             if (vCardString) scheduleStaticSuccess(vCardString, generationId);
             return;
           }
+          lastFailedStaticGenerationId = generationId;
           gaTrack('error_qr_generation', {
             qr_type: 'static_vcard',
             source_page: window.location.pathname,
@@ -921,6 +927,7 @@
             updateUIState(false);
             lastGeneratedQrPayload = '';
             lastRenderedStaticGenerationId = 0;
+            lastFailedStaticGenerationId = 0;
             return;
           }
           updateUIState(true);

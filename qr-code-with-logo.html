@@ -693,6 +693,7 @@
       let lastBrandedQrSignature = '';
       let brandedGenerationId = 0;
       let lastRenderedBrandedGenerationId = 0;
+      let lastFailedBrandedGenerationId = 0;
       let pendingBrandedSuccessTimer = null;
       let pendingBrandedFailureTimer = null;
 
@@ -1031,6 +1032,7 @@
         pendingBrandedSuccessTimer = setTimeout(() => {
           if (generationId !== brandedGenerationId || lastBrandedQrSignature === signature) return;
           lastBrandedQrSignature = signature;
+          lastFailedBrandedGenerationId = 0;
           gaTrackPro('generated_branded_qr_code', {
             qr_type: qrType,
             source_page: window.location.pathname,
@@ -1048,9 +1050,11 @@
           if (lastRenderedBrandedGenerationId === generationId) return;
           if (allowLateRenderCheck && qrContainer.querySelector('canvas, svg')) {
             lastRenderedBrandedGenerationId = generationId;
+            lastFailedBrandedGenerationId = 0;
             if (signature) scheduleBrandedSuccess(signature, qrType, generationId);
             return;
           }
+          lastFailedBrandedGenerationId = generationId;
           gaTrackPro('error_qr_generation', {
             qr_type: qrType,
             source_page: window.location.pathname,
@@ -1223,13 +1227,15 @@
           return;
         }
         if (!qrContainer.querySelector('canvas, svg')) {
-          gaTrackPro('error_qr_generation', {
-            qr_type: `branded_${currentType}`,
-            source_page: window.location.pathname,
-            error_stage: 'download',
-            error_message: 'Branded QR output unavailable at download',
-            recovered: false
-          });
+          if (lastFailedBrandedGenerationId === brandedGenerationId) {
+            gaTrackPro('error_qr_generation', {
+              qr_type: `branded_${currentType}`,
+              source_page: window.location.pathname,
+              error_stage: 'download',
+              error_message: 'Branded QR output unavailable after unrecovered generation failure',
+              recovered: false
+            });
+          }
           return;
         }
         gaTrackPro('pro_download_branded_qr', { event_category: 'pro_funnel', event_label: 'branded_qr_downloaded' });
