@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+<rect width="1400" height="900" fill="#fff"/>
+<text x="60" y="70" font-family="Arial" font-size="34" font-weight="700">GA4 Realtime — production event receipt</text>
+<text x="60" y="115" font-family="Arial" font-size="20" fill="#475569">Sanitized summary from the production Realtime test session</text>
+<rect x="60" y="165" width="1280" height="620" rx="18" fill="#f8fafc" stroke="#cbd5e1"/>
+<text x="100" y="225" font-family="Arial" font-size="22" font-weight="700">Observed canonical events</text>
+<g font-family="Arial" font-size="26">
+<text x="120" y="295">clicked_dynamic_qr_cta</text><text x="1180" y="295" text-anchor="end" font-weight="700">3</text>
+<line x1="110" y1="320" x2="1290" y2="320" stroke="#e2e8f0"/>
+<text x="120" y="375">clicked_pricing</text><text x="1180" y="375" text-anchor="end" font-weight="700">2</text>
+<line x1="110" y1="400" x2="1290" y2="400" stroke="#e2e8f0"/>
+<text x="120" y="455">generated_qr_code</text><text x="1180" y="455" text-anchor="end" font-weight="700">1</text>
+<line x1="110" y1="480" x2="1290" y2="480" stroke="#e2e8f0"/>
+<text x="120" y="535">download_qr</text><text x="1180" y="535" text-anchor="end" font-weight="700">1</text>
+</g>
+<rect x="100" y="600" width="1200" height="130" rx="12" fill="#ecfdf5" stroke="#86efac"/>
+<text x="130" y="650" font-family="Arial" font-size="22" font-weight="700" fill="#166534">What this proves</text>
+<text x="130" y="692" font-family="Arial" font-size="20" fill="#166534">Production journeys emitted the canonical CTA, generation, and download events in GA4 Realtime.</text>
+<text x="60" y="840" font-family="Arial" font-size="16" fill="#64748b">Source: sanitized GA4 Realtime screenshots captured during the Day 4 production verification.</text>
+</svg>
