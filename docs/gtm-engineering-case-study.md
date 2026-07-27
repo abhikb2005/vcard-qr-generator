@@ -94,7 +94,7 @@ This case study does not claim a conversion uplift, revenue increase, SEO improv
 
 ## Evidence
 
-The following image paths are publication placeholders. Add the screenshots only after removing personal data, payment identifiers, customer information, and unrelated browser context.
+All evidence below is sanitized for public use. The assets omit personal data, payment identifiers, customer information, and unrelated browser context.
 
 ### SEO reporting
 
@@ -106,27 +106,27 @@ Repository path: `docs/assets/gtm-case-study/seo-report.svg`
 
 ### GA4 Realtime
 
-![GA4 Realtime placeholder](assets/gtm-case-study/ga4-realtime.png)
+![Sanitized GA4 Realtime evidence](assets/gtm-case-study/ga4-realtime.svg)
 
-*Caption: The GA4 Realtime screenshot should show a fresh static, branded, or CTA journey and the observed canonical event names. It proves event receipt for that test session, not a population-level conversion rate.*
+*Caption: Sanitized GA4 Realtime evidence from the Day 4 production verification. The test session received `clicked_dynamic_qr_cta`, `clicked_pricing`, `generated_qr_code`, and `download_qr`. It proves event receipt for that session, not a population-level conversion rate.*
 
-Repository path: `docs/assets/gtm-case-study/ga4-realtime.png`
+Repository path: `docs/assets/gtm-case-study/ga4-realtime.svg`
 
 ### Payment verification
 
-![Payment verification placeholder](assets/gtm-case-study/payment-verification.png)
+![Sanitized payment verification evidence](assets/gtm-case-study/payment-verification.svg)
 
-*Caption: The payment-verification screenshot should show a sanitized successful verification response or deployment/log evidence that Dodo verification is reached. It must not expose API keys, payment secrets, customer data, or full transaction identifiers.*
+*Caption: Safe synthetic verification evidence showing that an unrecognized payment fails closed, forged success-looking URL parameters cannot unlock premium access, verified payment events emit once, and refresh does not duplicate `purchase`. The live check used only a synthetic payment reference; the verified event sequence was mocked locally.*
 
-Repository path: `docs/assets/gtm-case-study/payment-verification.png`
+Repository path: `docs/assets/gtm-case-study/payment-verification.svg`
 
 ### CTA audit
 
-![CTA audit placeholder](assets/gtm-case-study/cta-audit.png)
+![Sanitized CTA audit evidence](assets/gtm-case-study/cta-audit.svg)
 
-*Caption: The CTA audit screenshot should show the page, visible copy, destination, event name, and attribution parameters for representative dynamic and pricing CTAs.*
+*Caption: Representative before-and-after CTA audit showing outcome-based copy, value-moment placement, and canonical attribution for dynamic and pricing intent across homepage, bulk, guide, blog, and post-download journeys.*
 
-Repository path: `docs/assets/gtm-case-study/cta-audit.png`
+Repository path: `docs/assets/gtm-case-study/cta-audit.svg`
 
 ## Source and Deployment Evidence
 
@@ -135,6 +135,7 @@ Repository path: `docs/assets/gtm-case-study/cta-audit.png`
 - [Analytics helper tests](../tests/analytics-helper.test.cjs)
 - [Cloudflare Worker deployment workflow](../.github/workflows/deploy-workers.yml)
 - [Day 4 CTA implementation commit](https://github.com/abhikb2005/vcard-qr-generator/commit/a5b0a80)
+- [QR error-noise hardening merge commit](https://github.com/abhikb2005/vcard-qr-generator/commit/f0fba2f1351420acdcef7e7f325ee553ca989b7f)
 - [Pages deployment run for the Day 4 commit](https://github.com/abhikb2005/vcard-qr-generator/actions/runs/26831213243)
 - [Worker deployment run for the Day 4 commit](https://github.com/abhikb2005/vcard-qr-generator/actions/runs/26831215283)
 - [Repository commit history](https://github.com/abhikb2005/vcard-qr-generator/commits/main)
