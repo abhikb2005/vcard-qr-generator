@@ -14,6 +14,9 @@ function read(file) {
   assert.match(homepage, /lastRenderedStaticGenerationId/);
   assert.match(homepage, /scheduleStaticSuccess/);
   assert.match(homepage, /scheduleStaticFailure/);
+  assert.match(homepage, /const scheduleStaticFailure = \(vCardString, generationId, errorStage, errorMessage, allowLateRenderCheck = false\)/);
+  assert.match(homepage, /allowLateRenderCheck && qrCodeElement\.querySelector\('canvas'\)/);
+  assert.match(homepage, /scheduleStaticFailure\(vCardString, generationId, 'rendering', 'QR canvas was not rendered', true\)/);
   assert.match(homepage, /generationId !== staticGenerationId/);
   assert.match(homepage, /setTimeout\(\(\) => \{[\s\S]*generated_qr_code/);
   assert.match(homepage, /Create editable QR codes/);
@@ -33,6 +36,8 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
   assert.match(html, /lastRenderedBrandedGenerationId/);
   assert.match(html, /scheduleBrandedSuccess/);
   assert.match(html, /scheduleBrandedFailure/);
+  assert.match(html, /allowLateRenderCheck && qrContainer\.querySelector\('canvas, svg'\)/);
+  assert.match(html, /scheduleBrandedFailure\(signature, generationId/);
   assert.match(html, /generationId !== brandedGenerationId/);
   assert.match(html, /Promise\.resolve\(updateResult\)/);
   assert.match(html, /__PAYMENT_VERIFY_API__/);

@@ -61,6 +61,8 @@ Production Dodo verification is served by the `vcard-qr-generator-api` Cloudflar
 
 `error_qr_generation` is reserved for unrecovered failures only. Static and branded inline generators guard each attempt with a generation id, so stale render checks or catches from older input states must not send this event after a newer generation succeeds. Use `error_stage` to identify where the failure happened:
 
+Rendering retries perform a final output check before the delayed failure event is emitted. If a canvas/SVG appears during that final grace window, the attempt is treated as recovered and `error_qr_generation` is suppressed.
+
 - `validation`: only for unrecoverable validation blockers, not normal empty form states or duplicate-alias warnings.
 - `generation`: QR data creation or persistence failed and the user could not continue.
 - `rendering`: the QR output did not appear after retrying async rendering.

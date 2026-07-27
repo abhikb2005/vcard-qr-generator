@@ -1041,11 +1041,16 @@
         }, 700);
       };
 
-      const scheduleBrandedFailure = (generationId, qrType, errorStage, errorMessage) => {
+      const scheduleBrandedFailure = (signature, generationId, qrType, errorStage, errorMessage, allowLateRenderCheck = false) => {
         if (pendingBrandedFailureTimer) clearTimeout(pendingBrandedFailureTimer);
         pendingBrandedFailureTimer = setTimeout(() => {
           if (generationId !== brandedGenerationId) return;
           if (lastRenderedBrandedGenerationId === generationId) return;
+          if (allowLateRenderCheck && qrContainer.querySelector('canvas, svg')) {
+            lastRenderedBrandedGenerationId = generationId;
+            if (signature) scheduleBrandedSuccess(signature, qrType, generationId);
+            return;
+          }
           gaTrackPro('error_qr_generation', {
             qr_type: qrType,
             source_page: window.location.pathname,
@@ -1070,7 +1075,7 @@
           return;
         }
 
-        scheduleBrandedFailure(generationId, qrType, 'rendering', 'Branded QR output was not rendered');
+        scheduleBrandedFailure(signature, generationId, qrType, 'rendering', 'Branded QR output was not rendered', true);
       };
 
       const updateQRCode = () => {
@@ -1106,11 +1111,11 @@
 
           Promise.resolve(updateResult).then(verifyAfterUpdate).catch((error) => {
             const message = window.VcardAnalytics?.sanitizeError(error) || 'Branded QR generation failed';
-            scheduleBrandedFailure(generationId, qrType, 'generation', message);
+            scheduleBrandedFailure('', generationId, qrType, 'generation', message);
           });
         } catch (error) {
           const message = window.VcardAnalytics?.sanitizeError(error) || 'Branded QR generation failed';
-          scheduleBrandedFailure(generationId, `branded_${currentType}`, 'generation', message);
+          scheduleBrandedFailure('', generationId, `branded_${currentType}`, 'generation', message);
         }
       };
 
