@@ -24,6 +24,35 @@ const STATIC_LOGO_PLANS = {
   },
 };
 const FALLBACK_STATIC_LOGO_PRODUCT_ID = 'pdt_ROmfPNXoSRQ16tKgZWURT';
+const STATIC_BULK_PLANS = {
+  bulk_starter: {
+    plan_id: 'bulk_starter',
+    plan_name: 'Starter Batch',
+    fallback_value: 9,
+    currency: 'USD',
+    product_env: 'DODO_BULK_STARTER_PRODUCT_ID',
+    fallback_product_id: 'pdt_0NXPxlipsCiIWgeLUcl6M',
+    return_path: '/bulk-qr-code.html',
+  },
+  bulk_growth: {
+    plan_id: 'bulk_growth',
+    plan_name: 'Growth Batch',
+    fallback_value: 19,
+    currency: 'USD',
+    product_env: 'DODO_BULK_GROWTH_PRODUCT_ID',
+    fallback_product_id: 'pdt_0NXPxyJkVPTIFnQ2bS5xM',
+    return_path: '/bulk-qr-code.html',
+  },
+  bulk_enterprise: {
+    plan_id: 'bulk_enterprise',
+    plan_name: 'Enterprise Batch',
+    fallback_value: 29,
+    currency: 'USD',
+    product_env: 'DODO_BULK_ENTERPRISE_PRODUCT_ID',
+    fallback_product_id: 'pdt_0NXPy4nZegDt6mQKDzlkX',
+    return_path: '/bulk-qr-code.html',
+  },
+};
 
 const CORS_HEADERS = {
   'access-control-allow-origin': '*',
@@ -1088,11 +1117,24 @@ function staticLogoPlan(planId) {
   return STATIC_LOGO_PLANS[planId] || STATIC_LOGO_PLANS.logo_vcard_one_time;
 }
 
+function staticPaidPlan(planId) {
+  if (!planId) return STATIC_LOGO_PLANS.logo_vcard_one_time;
+  return STATIC_LOGO_PLANS[planId] || STATIC_BULK_PLANS[planId] || null;
+}
+
 function staticLogoProductId(env, plan) {
-  return String(env[plan.product_env] || env.DODO_LICENSE_PRODUCT_ID || FALLBACK_STATIC_LOGO_PRODUCT_ID).trim();
+  return String(env[plan.product_env] || plan.fallback_product_id || env.DODO_LICENSE_PRODUCT_ID || FALLBACK_STATIC_LOGO_PRODUCT_ID).trim();
 }
 
 function allowedStaticLogoProductIds(env, plan) {
+  if (STATIC_BULK_PLANS[plan.plan_id]) {
+    return [
+      staticLogoProductId(env, plan),
+      env[plan.product_env],
+      plan.fallback_product_id,
+    ].filter(Boolean);
+  }
+
   return [
     staticLogoProductId(env, plan),
     env.DODO_LOGO_VCARD_PRODUCT_ID,
@@ -1157,7 +1199,10 @@ async function createStaticLogoCheckout(request, env) {
     return apiError('invalid_json', 'Request body must be valid JSON.', 400, 'Send { "plan_id": "logo_vcard_one_time" }.', {}, { 'cache-control': 'no-store' });
   }
 
-  const plan = staticLogoPlan(body.plan_id);
+  const plan = staticPaidPlan(body.plan_id);
+  if (!plan) {
+    return apiError('invalid_plan', 'The requested checkout plan is not available.', 400, 'Choose one of the plans displayed on this page.', {}, { 'cache-control': 'no-store' });
+  }
   const productId = staticLogoProductId(env, plan);
   const dodoApiKeyValue = dodoApiKey(env);
   if (!dodoApiKeyValue) {
@@ -1166,6 +1211,10 @@ async function createStaticLogoCheckout(request, env) {
 
   const email = String(body.email || '').trim();
   const name = String(body.name || '').trim();
+  const isBulkPlan = Boolean(STATIC_BULK_PLANS[plan.plan_id]);
+  if (isBulkPlan && (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
+    return apiError('billing_identity_required', 'Enter the billing name and email for this Bulk checkout.', 400, 'Billing details are separate from the contacts in your CSV.', {}, { 'cache-control': 'no-store' });
+  }
   const checkoutBody = {
     product_cart: [{
       product_id: productId,
@@ -1175,7 +1224,7 @@ async function createStaticLogoCheckout(request, env) {
       plan_id: plan.plan_id,
       source_page: String(body.source_page || '').slice(0, 200),
     },
-    return_url: `${SITE_URL}/success.html?plan_id=${encodeURIComponent(plan.plan_id)}`,
+    return_url: `${SITE_URL}${plan.return_path || '/success.html'}?plan_id=${encodeURIComponent(plan.plan_id)}`,
   };
 
   if (email) {
@@ -1201,7 +1250,7 @@ async function createStaticLogoCheckout(request, env) {
       message: error instanceof Error ? error.message : 'unknown_fetch_error',
     };
     console.warn('static_logo_checkout_direct_fetch_error', diagnosticError);
-    const fallbackCheckout = await createLegacyStaticLogoCheckout(body, plan);
+    const fallbackCheckout = isBulkPlan ? null : await createLegacyStaticLogoCheckout(body, plan);
     if (fallbackCheckout) {
       const payload = {
         success: true,
@@ -1233,7 +1282,7 @@ async function createStaticLogoCheckout(request, env) {
     };
     console.warn('static_logo_checkout_direct_rejected', diagnosticError);
 
-    const fallbackCheckout = await createLegacyStaticLogoCheckout(body, plan);
+    const fallbackCheckout = isBulkPlan ? null : await createLegacyStaticLogoCheckout(body, plan);
     if (fallbackCheckout) {
       const payload = {
         success: true,
@@ -1298,7 +1347,10 @@ async function verifyStaticLogoPayment(request, env) {
 
   const paymentId = String(body.payment_id || '').trim();
   const checkoutId = String(body.checkout_id || body.checkout_session_id || body.session_id || '').trim();
-  const plan = staticLogoPlan(body.plan_id);
+  const plan = staticPaidPlan(body.plan_id);
+  if (!plan) {
+    return apiError('invalid_plan', 'The requested payment plan is not available.', 400, 'Use a plan_id returned by checkout creation.', {}, { 'cache-control': 'no-store' });
+  }
   if (paymentId && !/^pay_[A-Za-z0-9_-]+$/.test(paymentId)) {
     return apiError('invalid_payment_id', 'A valid Dodo payment_id is required.', 400, 'Use the payment_id returned by Dodo after checkout.', {}, { 'cache-control': 'no-store' });
   }

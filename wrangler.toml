@@ -30,6 +30,9 @@ DODO_LICENSE_PRODUCT_ID = "pdt_ROmfPNXoSRQ16tKgZWURT"
 # Optional per-page overrides. If unset, both static logo pages use DODO_LICENSE_PRODUCT_ID.
 # DODO_LOGO_VCARD_PRODUCT_ID = "pdt_..."
 # DODO_LOGO_GENERIC_PRODUCT_ID = "pdt_..."
+# DODO_BULK_STARTER_PRODUCT_ID = "pdt_..."
+# DODO_BULK_GROWTH_PRODUCT_ID = "pdt_..."
+# DODO_BULK_ENTERPRISE_PRODUCT_ID = "pdt_..."
 
 # Secrets (set via `wrangler secret put ...`):
 # - DODO_WEBHOOK_SECRET
