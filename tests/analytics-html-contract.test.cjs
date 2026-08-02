@@ -76,6 +76,11 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
   assert.match(bulk, /Pay \$9 — unlock up to 50 QR codes/);
   assert.match(bulk, /Pay \$19 — unlock up to 500 QR codes/);
   assert.match(bulk, /Pay \$29 — unlock unlimited QR codes/);
+  assert.match(bulk, /selected_bulk_qr_variant/);
+  assert.match(bulk, /purchased_bulk_qr_plan/);
+  assert.match(bulk, /uploaded_bulk_qr_logo/);
+  assert.match(bulk, /downloaded_branded_bulk_qr_zip/);
+  assert.match(bulk, /trackPurchase\(\{/);
   assert.match(bulk, /postBulkExportCta/);
   assert.match(bulk, /Managing QR codes for a team\?/);
   assert.match(bulk, /clicked_dynamic_qr_cta/);

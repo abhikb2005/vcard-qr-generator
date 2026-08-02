@@ -52,6 +52,33 @@ const STATIC_BULK_PLANS = {
     fallback_product_id: 'pdt_0NXPy4nZegDt6mQKDzlkX',
     return_path: '/bulk-qr-code.html',
   },
+  bulk_starter_branded: {
+    plan_id: 'bulk_starter_branded',
+    plan_name: 'Branded Starter Batch',
+    fallback_value: 11.99,
+    currency: 'USD',
+    product_env: 'DODO_BULK_STARTER_BRANDED_PRODUCT_ID',
+    fallback_product_id: 'pdt_0NkVHsqRpn3qFO1JCkUL2',
+    return_path: '/bulk-qr-code.html',
+  },
+  bulk_growth_branded: {
+    plan_id: 'bulk_growth_branded',
+    plan_name: 'Branded Growth Batch',
+    fallback_value: 24.99,
+    currency: 'USD',
+    product_env: 'DODO_BULK_GROWTH_BRANDED_PRODUCT_ID',
+    fallback_product_id: 'pdt_0NkVI4WvuJNnjVyNZJHBX',
+    return_path: '/bulk-qr-code.html',
+  },
+  bulk_enterprise_branded: {
+    plan_id: 'bulk_enterprise_branded',
+    plan_name: 'Branded Enterprise Batch',
+    fallback_value: 39.99,
+    currency: 'USD',
+    product_env: 'DODO_BULK_ENTERPRISE_BRANDED_PRODUCT_ID',
+    fallback_product_id: 'pdt_0NkVIFPjrAglo4I6vrG1X',
+    return_path: '/bulk-qr-code.html',
+  },
 };
 
 const CORS_HEADERS = {

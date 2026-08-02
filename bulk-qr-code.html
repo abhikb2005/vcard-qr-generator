@@ -433,12 +433,26 @@
 
                                 <div class="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3" aria-labelledby="csv-reupload-heading">
                                     <p id="csv-reupload-heading" class="text-xs font-semibold text-amber-950">Why you’ll upload this CSV again after payment</p>
-                                    <p class="mt-1 text-xs leading-5 text-amber-900">We count its rows on this device to show the right export plan. Dodo then takes you to a secure payment page and returns you here, which reloads this page. To protect your contacts, we never upload or store your CSV—so please keep the same file handy to re-upload after payment. We check its row count again before enabling your download.</p>
+                                    <p class="mt-1 text-xs leading-5 text-amber-900">We count its rows on this device to show the right export plan. Dodo then takes you to a secure payment page and returns you here, which reloads this page. To protect your contacts, we never upload or store your CSV or logo—so please keep the same files handy to re-upload after payment. We check the CSV row count again before enabling your download.</p>
                                 </div>
 
                                 <div class="mt-5" aria-labelledby="plan-selection-heading">
-                                    <p id="plan-selection-heading" class="text-sm text-center font-semibold text-gray-900">Step 2: Choose and pay for your <span
+                                    <p id="plan-selection-heading" class="text-sm text-center font-semibold text-gray-900">Step 2: Choose your bulk QR type for <span
                                             id="countDisplay" class="font-bold">0</span> QR codes</p>
+                                    <div class="mt-3 grid gap-3 sm:grid-cols-2" role="radiogroup" aria-label="Bulk QR type">
+                                        <label class="cursor-pointer rounded-lg border-2 border-indigo-600 bg-indigo-50 p-3">
+                                            <input class="sr-only" type="radio" name="bulkVariant" value="standard" checked>
+                                            <span class="block text-sm font-semibold text-gray-900">Standard bulk QR</span>
+                                            <span class="block text-xs text-gray-600">Plain QR codes for every contact.</span>
+                                        </label>
+                                        <label class="cursor-pointer rounded-lg border border-gray-200 p-3">
+                                            <input class="sr-only" type="radio" name="bulkVariant" value="branded">
+                                            <span class="block text-sm font-semibold text-gray-900">Branded bulk QR <span class="text-indigo-700">+ logo</span></span>
+                                            <span class="block text-xs text-gray-600">One shared logo, added to every QR code after payment.</span>
+                                        </label>
+                                    </div>
+                                    <p id="brandingSelectionHint" class="mt-2 text-center text-xs text-gray-500">The branded option adds one logo to every QR code in this ZIP.</p>
+                                    <p class="mt-5 text-sm text-center font-semibold text-gray-900">Step 3: Choose and pay</p>
                                     <p id="billingCheckoutHint" class="mt-1 text-center text-xs text-gray-500" aria-live="polite">Complete Step 1 to enable a payment button.</p>
 
                                     <div class="mt-3 space-y-3">
@@ -446,12 +460,12 @@
                                         <div class="border rounded-lg p-3" id="tier1-card">
                                             <div class="flex items-start justify-between gap-3">
                                                 <div>
-                                                    <h4 class="font-semibold text-gray-900">Starter Batch</h4>
+                                                    <h4 class="font-semibold text-gray-900" id="tier1-name">Starter Batch</h4>
                                                     <p class="text-xs text-gray-500">Up to 50 codes</p>
                                                 </div>
-                                                <span class="font-bold text-gray-900">$9</span>
+                                                <span class="font-bold text-gray-900" id="tier1-price">$9</span>
                                             </div>
-                                            <button onclick="initiateCheckout('bulk_starter')" data-bulk-checkout-plan="bulk_starter" disabled
+                                            <button onclick="initiateCheckout('bulk_starter')" data-bulk-checkout-plan="bulk_starter" data-tier="starter" disabled
                                                 class="mt-3 min-h-[44px] w-full rounded bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50">Pay $9 — unlock up to 50 QR codes</button>
                                         </div>
 
@@ -459,12 +473,12 @@
                                         <div class="border rounded-lg p-3" id="tier2-card">
                                             <div class="flex items-start justify-between gap-3">
                                                 <div>
-                                                    <h4 class="font-semibold text-gray-900">Growth Batch</h4>
+                                                    <h4 class="font-semibold text-gray-900" id="tier2-name">Growth Batch</h4>
                                                     <p class="text-xs text-gray-500">Up to 500 codes</p>
                                                 </div>
-                                                <span class="font-bold text-gray-900">$19</span>
+                                                <span class="font-bold text-gray-900" id="tier2-price">$19</span>
                                             </div>
-                                            <button onclick="initiateCheckout('bulk_growth')" data-bulk-checkout-plan="bulk_growth" disabled
+                                            <button onclick="initiateCheckout('bulk_growth')" data-bulk-checkout-plan="bulk_growth" data-tier="growth" disabled
                                                 class="mt-3 min-h-[44px] w-full rounded bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50">Pay $19 — unlock up to 500 QR codes</button>
                                         </div>
 
@@ -472,12 +486,12 @@
                                         <div class="border rounded-lg p-3" id="tier3-card">
                                             <div class="flex items-start justify-between gap-3">
                                                 <div>
-                                                    <h4 class="font-semibold text-gray-900">Enterprise</h4>
+                                                    <h4 class="font-semibold text-gray-900" id="tier3-name">Enterprise</h4>
                                                     <p class="text-xs text-gray-500">Unlimited codes</p>
                                                 </div>
-                                                <span class="font-bold text-gray-900">$29</span>
+                                                <span class="font-bold text-gray-900" id="tier3-price">$29</span>
                                             </div>
-                                            <button onclick="initiateCheckout('bulk_enterprise')" data-bulk-checkout-plan="bulk_enterprise" disabled
+                                            <button onclick="initiateCheckout('bulk_enterprise')" data-bulk-checkout-plan="bulk_enterprise" data-tier="enterprise" disabled
                                                 class="mt-3 min-h-[44px] w-full rounded bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50">Pay $29 — unlock unlimited QR codes</button>
                                         </div>
                                     </div>
@@ -490,6 +504,12 @@
                                 <div class="bg-green-50 text-green-800 p-3 rounded-lg mb-4 text-sm text-center">
                                     Payment Verified! <br>
                                     <span class="text-xs text-green-600" id="limitMsg"></span>
+                                </div>
+                                <div id="brandLogoSetup" class="hidden mb-4 rounded-lg border border-indigo-200 bg-indigo-50 p-4">
+                                    <label for="bulkLogoInput" class="block text-sm font-semibold text-indigo-950">Upload the one logo for every QR code</label>
+                                    <p class="mt-1 text-xs leading-5 text-indigo-900">Your logo stays only on this device. Because Dodo returns to a fresh page after payment, upload it again here before downloading.</p>
+                                    <input id="bulkLogoInput" type="file" accept="image/png,image/jpeg,image/svg+xml" class="mt-3 block w-full text-sm text-indigo-950 file:mr-3 file:rounded file:border-0 file:bg-indigo-600 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-indigo-700">
+                                    <p id="bulkLogoStatus" class="mt-2 text-xs text-indigo-800" aria-live="polite">Choose a PNG, JPG, or SVG up to 5 MB.</p>
                                 </div>
                                 <button id="downloadZipBtn"
                                     class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md flex items-center justify-center gap-2">
@@ -616,15 +636,21 @@
 
             // Products
             const PRODUCTS = {
-                bulk_starter: { product_id: 'pdt_0NXPxlipsCiIWgeLUcl6M', limit: 50, plan_id: 'bulk_starter', plan_name: 'Starter Batch', value: 9, currency: 'USD' },
-                bulk_growth: { product_id: 'pdt_0NXPxyJkVPTIFnQ2bS5xM', limit: 500, plan_id: 'bulk_growth', plan_name: 'Growth Batch', value: 19, currency: 'USD' },
-                bulk_enterprise: { product_id: 'pdt_0NXPy4nZegDt6mQKDzlkX', limit: Infinity, plan_id: 'bulk_enterprise', plan_name: 'Enterprise', value: 29, currency: 'USD' }
+                bulk_starter: { product_id: 'pdt_0NXPxlipsCiIWgeLUcl6M', limit: 50, plan_id: 'bulk_starter', plan_name: 'Starter Batch', value: 9, currency: 'USD', branded: false },
+                bulk_growth: { product_id: 'pdt_0NXPxyJkVPTIFnQ2bS5xM', limit: 500, plan_id: 'bulk_growth', plan_name: 'Growth Batch', value: 19, currency: 'USD', branded: false },
+                bulk_enterprise: { product_id: 'pdt_0NXPy4nZegDt6mQKDzlkX', limit: Infinity, plan_id: 'bulk_enterprise', plan_name: 'Enterprise', value: 29, currency: 'USD', branded: false },
+                bulk_starter_branded: { product_id: 'pdt_0NkVHsqRpn3qFO1JCkUL2', limit: 50, plan_id: 'bulk_starter_branded', plan_name: 'Branded Starter Batch', value: 11.99, currency: 'USD', branded: true },
+                bulk_growth_branded: { product_id: 'pdt_0NkVI4WvuJNnjVyNZJHBX', limit: 500, plan_id: 'bulk_growth_branded', plan_name: 'Branded Growth Batch', value: 24.99, currency: 'USD', branded: true },
+                bulk_enterprise_branded: { product_id: 'pdt_0NkVIFPjrAglo4I6vrG1X', limit: Infinity, plan_id: 'bulk_enterprise_branded', plan_name: 'Branded Enterprise Batch', value: 39.99, currency: 'USD', branded: true }
             };
 
             let parsedData = [];
             let headers = [];
             let isPaid = false;
             let purchasedLimit = 0;
+            let purchasedBranding = false;
+            let selectedVariant = 'standard';
+            let bulkLogoDataUrl = '';
 
             // DOM Elements
             const dropZone = document.getElementById('dropZone');
@@ -648,6 +674,40 @@
             const billingEmail = document.getElementById('billingEmail');
             const checkoutButtons = Array.from(document.querySelectorAll('[data-bulk-checkout-plan]'));
             const billingCheckoutHint = document.getElementById('billingCheckoutHint');
+            const variantInputs = Array.from(document.querySelectorAll('input[name="bulkVariant"]'));
+            const brandLogoSetup = document.getElementById('brandLogoSetup');
+            const bulkLogoInput = document.getElementById('bulkLogoInput');
+            const bulkLogoStatus = document.getElementById('bulkLogoStatus');
+
+            function priceLabel(value) {
+                return Number.isInteger(value) ? `$${value}` : `$${value.toFixed(2)}`;
+            }
+
+            function applySelectedVariant() {
+                const suffix = selectedVariant === 'branded' ? '_branded' : '';
+                const names = { starter: 'Starter Batch', growth: 'Growth Batch', enterprise: 'Enterprise' };
+                const limits = { starter: 'up to 50 QR codes', growth: 'up to 500 QR codes', enterprise: 'unlimited QR codes' };
+                ['starter', 'growth', 'enterprise'].forEach((tier, index) => {
+                    const product = PRODUCTS[`bulk_${tier}${suffix}`];
+                    const cardNumber = index + 1;
+                    document.getElementById(`tier${cardNumber}-name`).textContent = selectedVariant === 'branded' ? `${names[tier]} + logo` : names[tier];
+                    document.getElementById(`tier${cardNumber}-price`).textContent = priceLabel(product.value);
+                    const button = document.querySelector(`[data-tier="${tier}"]`);
+                    button.dataset.bulkCheckoutPlan = product.plan_id;
+                    button.setAttribute('onclick', `initiateCheckout('${product.plan_id}')`);
+                    button.textContent = `Pay ${priceLabel(product.value)} — unlock ${limits[tier]}`;
+                });
+                document.querySelectorAll('input[name="bulkVariant"]').forEach((input) => {
+                    input.closest('label').classList.toggle('border-indigo-600', input.value === selectedVariant);
+                    input.closest('label').classList.toggle('bg-indigo-50', input.value === selectedVariant);
+                    input.closest('label').classList.toggle('border-2', input.value === selectedVariant);
+                    input.closest('label').classList.toggle('border-gray-200', input.value !== selectedVariant);
+                });
+                document.getElementById('brandingSelectionHint').textContent = selectedVariant === 'branded'
+                    ? 'After payment, upload one shared logo and it will be included in every QR code.'
+                    : 'Standard bulk QR codes do not include a logo.';
+                updateCheckoutButtons();
+            }
 
             function trackDynamicCta(link, location) {
                 window.VcardAnalytics?.trackEvent('clicked_dynamic_qr_cta', {
@@ -674,7 +734,13 @@
 
             billingName.addEventListener('input', updateCheckoutButtons);
             billingEmail.addEventListener('input', updateCheckoutButtons);
+            variantInputs.forEach((input) => input.addEventListener('change', () => {
+                selectedVariant = input.value;
+                window.VcardAnalytics?.trackEvent('selected_bulk_qr_variant', { variant: selectedVariant, source_page: window.location.pathname });
+                applySelectedVariant();
+            }));
             updateCheckoutButtons();
+            applySelectedVariant();
 
             // Sample CSV Download
             downloadSample.addEventListener('click', (e) => {
@@ -705,11 +771,17 @@
                 if (!product) throw new Error('Unknown bulk plan');
                 purchasedLimit = product.limit;
                 isPaid = true;
+                purchasedBranding = Boolean(product.branded);
+                selectedVariant = purchasedBranding ? 'branded' : 'standard';
                 localStorage.setItem('bulk_session', JSON.stringify({
                     expires: Date.now() + 1000 * 60 * 60,
                     limit: purchasedLimit,
-                    plan_id: product.plan_id
+                    plan_id: product.plan_id,
+                    branded: purchasedBranding
                 }));
+                const selectedInput = document.querySelector(`input[name="bulkVariant"][value="${selectedVariant}"]`);
+                if (selectedInput) selectedInput.checked = true;
+                applySelectedVariant();
             }
 
             // Check Payment Status (Dodo return first; legacy token return remains for existing checkouts.)
@@ -722,8 +794,21 @@
 
                 if (planId && PRODUCTS[planId] && (paymentId || checkoutId)) {
                     try {
-                        await verifyBulkPayment(paymentId ? { payment_id: paymentId } : { checkout_id: checkoutId }, planId);
+                        const verifiedPayment = await verifyBulkPayment(paymentId ? { payment_id: paymentId } : { checkout_id: checkoutId }, planId);
                         unlockBulkPlan(planId);
+                        window.VcardAnalytics?.trackPurchase({
+                            transaction_id: verifiedPayment.payment_id,
+                            value: verifiedPayment.value,
+                            currency: verifiedPayment.currency,
+                            payment_provider: 'dodo',
+                            payment_status: verifiedPayment.status,
+                            items: [{ item_id: planId, item_name: PRODUCTS[planId].plan_name, price: verifiedPayment.value, quantity: 1 }]
+                        });
+                        window.VcardAnalytics?.trackEvent('purchased_bulk_qr_plan', {
+                            plan_id: planId,
+                            bulk_variant: PRODUCTS[planId].branded ? 'branded' : 'standard',
+                            source_page: window.location.pathname
+                        });
                         ['plan_id', 'payment_id', 'checkout_id', 'checkout_session_id', 'session_id', 'status'].forEach((key) => url.searchParams.delete(key));
                         window.history.replaceState({}, document.title, url.pathname + url.search);
                     } catch (e) {
@@ -756,6 +841,11 @@
                 if (session && session.expires && session.expires > Date.now()) {
                     isPaid = true;
                     purchasedLimit = session.limit;
+                    purchasedBranding = Boolean(session.branded);
+                    selectedVariant = purchasedBranding ? 'branded' : 'standard';
+                    const selectedInput = document.querySelector(`input[name="bulkVariant"][value="${selectedVariant}"]`);
+                    if (selectedInput) selectedInput.checked = true;
+                    applySelectedVariant();
                 }
 
                 updateActionArea();
@@ -784,11 +874,35 @@
                     paywall.classList.add('hidden');
                     downloadArea.classList.remove('hidden');
                     limitMsg.textContent = `Limit: ${purchasedLimit === Infinity ? 'Unlimited' : purchasedLimit} codes`;
+                    brandLogoSetup.classList.toggle('hidden', !purchasedBranding);
+                    downloadZipBtn.disabled = purchasedBranding && !bulkLogoDataUrl;
+                    const downloadLabel = downloadZipBtn.querySelector('span');
+                    if (downloadLabel) downloadLabel.textContent = purchasedBranding && !bulkLogoDataUrl ? 'Upload logo to download' : 'Download .ZIP';
                 } else {
                     paywall.classList.remove('hidden');
                     downloadArea.classList.add('hidden');
                 }
             }
+
+            bulkLogoInput.addEventListener('change', () => {
+                const file = bulkLogoInput.files[0];
+                if (!file) return;
+                if (!['image/png', 'image/jpeg', 'image/svg+xml'].includes(file.type) || file.size > 5 * 1024 * 1024) {
+                    bulkLogoDataUrl = '';
+                    bulkLogoStatus.textContent = 'Please choose a PNG, JPG, or SVG smaller than 5 MB.';
+                    bulkLogoInput.value = '';
+                    updateActionArea();
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = () => {
+                    bulkLogoDataUrl = reader.result;
+                    bulkLogoStatus.textContent = `${file.name} is ready for every QR code.`;
+                    window.VcardAnalytics?.trackEvent('uploaded_bulk_qr_logo', { file_type: file.type, source_page: window.location.pathname });
+                    updateActionArea();
+                };
+                reader.readAsDataURL(file);
+            });
 
             // Drag & Drop
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -924,7 +1038,9 @@ END:VCARD`;
 
                 const qr = new QRCodeStyling({
                     width: 200, height: 200, type: 'svg', data: vCardData,
-                    imageOptions: { crossOrigin: 'anonymous', margin: 5 },
+                    image: purchasedBranding ? bulkLogoDataUrl : '',
+                    qrOptions: { errorCorrectionLevel: purchasedBranding ? 'H' : 'M' },
+                    imageOptions: { crossOrigin: 'anonymous', margin: 5, imageSize: 0.2 },
                     dotsOptions: { color: '#000000', type: 'rounded' }
                 });
 
@@ -948,6 +1064,7 @@ END:VCARD`;
                     plan_name: product.plan_name || 'Bulk QR plan',
                     value: product.value,
                     currency: product.currency || 'USD',
+                    bulk_variant: product.branded ? 'branded' : 'standard',
                     cta_text: btn.textContent.trim().replace(/\s+/g, ' '),
                     cta_location: 'bulk_paywall',
                     destination_url: `${PAYMENT_API_URL}/create-checkout`,
@@ -986,6 +1103,11 @@ END:VCARD`;
             };
 
             downloadZipBtn.addEventListener('click', async () => {
+                if (purchasedBranding && !bulkLogoDataUrl) {
+                    alert('Upload the logo that should appear in every QR code before downloading.');
+                    bulkLogoInput.focus();
+                    return;
+                }
                 downloadZipBtn.disabled = true;
                 downloadZipBtn.textContent = "Generating ZIP...";
 
@@ -1003,6 +1125,9 @@ END:VCARD`;
                     if (vCardData) {
                         const qr = new QRCodeStyling({
                             width: 512, height: 512, type: 'canvas', data: vCardData, // High res for download
+                            image: purchasedBranding ? bulkLogoDataUrl : '',
+                            qrOptions: { errorCorrectionLevel: purchasedBranding ? 'H' : 'M' },
+                            imageOptions: { crossOrigin: 'anonymous', margin: 5, imageSize: 0.2 },
                             dotsOptions: { color: '#000000', type: 'rounded' }
                         });
 
@@ -1022,6 +1147,11 @@ END:VCARD`;
 
                 downloadZipBtn.textContent = "Download .ZIP";
                 downloadZipBtn.disabled = false;
+                window.VcardAnalytics?.trackEvent(purchasedBranding ? 'downloaded_branded_bulk_qr_zip' : 'downloaded_bulk_qr_zip', {
+                    code_count: count,
+                    plan_id: JSON.parse(localStorage.getItem('bulk_session') || '{}').plan_id || '',
+                    source_page: window.location.pathname
+                });
                 postBulkExportCta?.classList.remove('hidden');
             });
 

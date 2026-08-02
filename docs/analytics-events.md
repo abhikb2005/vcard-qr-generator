@@ -16,6 +16,11 @@ This site uses `trackEvent(eventName, params = {})` from `/analytics.js` on the 
 | `download_qr` | Existing homepage QR download click. | `event_category`, `event_label`, `has_name` | Measures completion of the free static QR journey. | Yes |
 | `pro_logo_upload` | Existing logo upload event on paid/logo pages. | `event_category`, `event_label` | Measures branded QR customization intent. | No |
 | `pro_download_branded_qr` | Existing branded QR download click after the page is unlocked and a branded QR output is available. | `event_category`, `event_label` | Paid value realization. Measures the user actually receiving the premium branded QR output after payment activation. | Yes |
+| `selected_bulk_qr_variant` | A bulk customer changes between Standard and Branded bulk QR. | `variant`, `source_page` | Shows logo-feature interest before checkout without collecting the CSV or logo. | No |
+| `uploaded_bulk_qr_logo` | A paid branded-bulk customer selects the one shared logo for their batch. | `file_type`, `source_page` | Measures post-purchase setup; no logo file or customer data is sent to analytics. | No |
+| `purchased_bulk_qr_plan` | Dodo has verified a bulk plan on the return page. The standard `purchase` and `payment_success` events are sent alongside it. | `plan_id`, `bulk_variant`, `source_page` | Separates a verified standard vs branded bulk purchase in GTM/GA4 while keeping revenue in the recommended `purchase` event. | Yes |
+| `downloaded_branded_bulk_qr_zip` | A branded bulk ZIP has finished generating locally. | `code_count`, `plan_id`, `source_page` | Branded-bulk value realization. Contact data and images stay in the browser. | Yes |
+| `downloaded_bulk_qr_zip` | A standard bulk ZIP has finished generating locally. | `code_count`, `plan_id`, `source_page` | Standard-bulk value realization. Contact data stays in the browser. | Yes |
 | `pro_page_view` | Existing logo/pro page load event. | `event_category`, `event_label` | Preserves the current pro funnel baseline. | No |
 
 ## Purchase Idempotency
@@ -29,6 +34,7 @@ This site uses `trackEvent(eventName, params = {})` from `/analytics.js` on the 
 - Revenue conversion: `purchase` and `payment_success`.
 - Premium activation: `pro_payment_success` after Dodo payment verification or legacy license-token validation.
 - Paid value realization: `pro_download_branded_qr`.
+- Branded bulk journey: `selected_bulk_qr_variant` -> `clicked_pricing` -> `pro_checkout_start` -> `purchase`/`payment_success` plus `purchased_bulk_qr_plan` -> `uploaded_bulk_qr_logo` -> `downloaded_branded_bulk_qr_zip`.
 
 Do not use `clicked_pricing` or `pro_checkout_start` as revenue conversions. They are useful funnel steps, but no money has been confirmed yet.
 
@@ -79,3 +85,4 @@ Set `recovered: false` for `error_qr_generation`. If a delayed render or retry s
 4. Pricing/checkout: click a logo-page or bulk-page buy button, or an app dashboard upgrade plan. Expected events: `clicked_pricing`, then `pro_checkout_start` after a checkout URL is returned.
 5. Payment success: complete Dodo checkout and return with a stable `payment_id`. Expected events after Worker verification: `purchase`, `payment_success`, `pro_payment_success`; refresh should not duplicate `purchase`.
 6. Error noise check: repeat the homepage and logo journeys slowly and quickly, including initial page load, empty form state, style/color changes, logo upload, and download. Expected: no `error_qr_generation` unless the QR never renders after retries or generation throws.
+7. Branded bulk: select Branded bulk QR, begin checkout, return only after Dodo verifies it, upload a test logo, then download. Expected events: `selected_bulk_qr_variant`, `clicked_pricing`, `pro_checkout_start`, `purchase`, `payment_success`, `purchased_bulk_qr_plan`, `uploaded_bulk_qr_logo`, and `downloaded_branded_bulk_qr_zip`.
