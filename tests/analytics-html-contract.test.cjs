@@ -73,9 +73,9 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
 {
   const bulk = read('bulk-qr-code.html');
   assert.match(bulk, /Create editable team QR codes/);
-  assert.match(bulk, /Unlock 50 exports/);
-  assert.match(bulk, /Unlock 500 exports/);
-  assert.match(bulk, /Unlock unlimited exports/);
+  assert.match(bulk, /Pay \$9 — unlock up to 50 QR codes/);
+  assert.match(bulk, /Pay \$19 — unlock up to 500 QR codes/);
+  assert.match(bulk, /Pay \$29 — unlock unlimited QR codes/);
   assert.match(bulk, /postBulkExportCta/);
   assert.match(bulk, /Managing QR codes for a team\?/);
   assert.match(bulk, /clicked_dynamic_qr_cta/);

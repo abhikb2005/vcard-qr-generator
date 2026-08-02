@@ -420,55 +420,8 @@
 
                         <div class="mt-6 border-t pt-6" id="actionArea">
                             <div id="paywall" class="hidden">
-                                <p class="text-sm text-center text-gray-600 mb-4">Select a plan to download your <span
-                                        id="countDisplay" class="font-bold">0</span> QR codes:</p>
-
-                                <div class="space-y-3">
-                                    <!-- Tier 1: 0-50 -->
-                                    <div class="border rounded-lg p-3 hover:border-indigo-500 cursor-pointer transition flex justify-between items-center"
-                                        id="tier1-card">
-                                        <div>
-                                            <h4 class="font-semibold text-gray-900">Starter Batch</h4>
-                                            <p class="text-xs text-gray-500">Up to 50 codes</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="block font-bold text-gray-900">$9</span>
-                                            <button onclick="initiateCheckout('bulk_starter')"
-                                                class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Unlock 50 exports</button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Tier 2: 51-500 -->
-                                    <div class="border rounded-lg p-3 hover:border-indigo-500 cursor-pointer transition flex justify-between items-center"
-                                        id="tier2-card">
-                                        <div>
-                                            <h4 class="font-semibold text-gray-900">Growth Batch</h4>
-                                            <p class="text-xs text-gray-500">Up to 500 codes</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="block font-bold text-gray-900">$19</span>
-                                            <button onclick="initiateCheckout('bulk_growth')"
-                                                class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Unlock 500 exports</button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Tier 3: Unlimited -->
-                                    <div class="border rounded-lg p-3 hover:border-indigo-500 cursor-pointer transition flex justify-between items-center"
-                                        id="tier3-card">
-                                        <div>
-                                            <h4 class="font-semibold text-gray-900">Enterprise</h4>
-                                            <p class="text-xs text-gray-500">Unlimited codes</p>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="block font-bold text-gray-900">$29</span>
-                                            <button onclick="initiateCheckout('bulk_enterprise')"
-                                                class="text-xs bg-indigo-600 text-white px-2 py-1 rounded mt-1">Unlock unlimited exports</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mt-4 rounded-lg border border-indigo-100 bg-indigo-50 p-3">
-                                    <p class="text-xs font-semibold text-indigo-950">Billing details for checkout</p>
+                                <div class="rounded-lg border border-indigo-100 bg-indigo-50 p-3">
+                                    <p class="text-xs font-semibold text-indigo-950">Step 1: Billing details</p>
                                     <p class="mt-1 text-xs text-indigo-800">These are used only for payment. Your CSV contacts stay in your browser and are never used as your billing identity.</p>
                                     <label class="mt-3 block text-xs font-medium text-gray-700" for="billingName">Full name</label>
                                     <input id="billingName" type="text" autocomplete="name" required
@@ -478,7 +431,54 @@
                                         class="mt-1 w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 </div>
 
-                                <p class="text-xs text-gray-400 mt-4 text-center">Secure payment via Dodo Payments</p>
+                                <div class="mt-5" aria-labelledby="plan-selection-heading">
+                                    <p id="plan-selection-heading" class="text-sm text-center font-semibold text-gray-900">Step 2: Choose and pay for your <span
+                                            id="countDisplay" class="font-bold">0</span> QR codes</p>
+                                    <p id="billingCheckoutHint" class="mt-1 text-center text-xs text-gray-500" aria-live="polite">Complete Step 1 to enable a payment button.</p>
+
+                                    <div class="mt-3 space-y-3">
+                                        <!-- Tier 1: 0-50 -->
+                                        <div class="border rounded-lg p-3" id="tier1-card">
+                                            <div class="flex items-start justify-between gap-3">
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-900">Starter Batch</h4>
+                                                    <p class="text-xs text-gray-500">Up to 50 codes</p>
+                                                </div>
+                                                <span class="font-bold text-gray-900">$9</span>
+                                            </div>
+                                            <button onclick="initiateCheckout('bulk_starter')" data-bulk-checkout-plan="bulk_starter" disabled
+                                                class="mt-3 min-h-[44px] w-full rounded bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50">Pay $9 — unlock up to 50 QR codes</button>
+                                        </div>
+
+                                        <!-- Tier 2: 51-500 -->
+                                        <div class="border rounded-lg p-3" id="tier2-card">
+                                            <div class="flex items-start justify-between gap-3">
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-900">Growth Batch</h4>
+                                                    <p class="text-xs text-gray-500">Up to 500 codes</p>
+                                                </div>
+                                                <span class="font-bold text-gray-900">$19</span>
+                                            </div>
+                                            <button onclick="initiateCheckout('bulk_growth')" data-bulk-checkout-plan="bulk_growth" disabled
+                                                class="mt-3 min-h-[44px] w-full rounded bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50">Pay $19 — unlock up to 500 QR codes</button>
+                                        </div>
+
+                                        <!-- Tier 3: Unlimited -->
+                                        <div class="border rounded-lg p-3" id="tier3-card">
+                                            <div class="flex items-start justify-between gap-3">
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-900">Enterprise</h4>
+                                                    <p class="text-xs text-gray-500">Unlimited codes</p>
+                                                </div>
+                                                <span class="font-bold text-gray-900">$29</span>
+                                            </div>
+                                            <button onclick="initiateCheckout('bulk_enterprise')" data-bulk-checkout-plan="bulk_enterprise" disabled
+                                                class="mt-3 min-h-[44px] w-full rounded bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-50">Pay $29 — unlock unlimited QR codes</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="mt-4 text-center text-xs text-gray-500">Secure payment via Dodo Payments. After payment, you’ll return here automatically to download your ZIP.</p>
                             </div>
 
                             <div id="downloadArea" class="hidden">
@@ -641,6 +641,8 @@
             const downloadSample = document.getElementById('downloadSample');
             const billingName = document.getElementById('billingName');
             const billingEmail = document.getElementById('billingEmail');
+            const checkoutButtons = Array.from(document.querySelectorAll('[data-bulk-checkout-plan]'));
+            const billingCheckoutHint = document.getElementById('billingCheckoutHint');
 
             function trackDynamicCta(link, location) {
                 window.VcardAnalytics?.trackEvent('clicked_dynamic_qr_cta', {
@@ -654,6 +656,20 @@
             document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"]').forEach((link) => {
                 link.addEventListener('click', () => trackDynamicCta(link, 'bulk_page'));
             });
+
+            function updateCheckoutButtons() {
+                const billingReady = Boolean(billingName.value.trim()) && billingEmail.checkValidity();
+                checkoutButtons.forEach((button) => {
+                    button.disabled = !billingReady;
+                });
+                billingCheckoutHint.textContent = billingReady
+                    ? 'Choose a purple payment button below to continue securely with Dodo Payments.'
+                    : 'Complete Step 1 to enable a payment button.';
+            }
+
+            billingName.addEventListener('input', updateCheckoutButtons);
+            billingEmail.addEventListener('input', updateCheckoutButtons);
+            updateCheckoutButtons();
 
             // Sample CSV Download
             downloadSample.addEventListener('click', (e) => {
