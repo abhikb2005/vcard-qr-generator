@@ -11,6 +11,9 @@
   "skills": [
     {
       "id": "create-vcard-payload",
+      "type": "skill-md",
+      "url": "https://www.vcardqrcodegenerator.com/skill.md",
+      "href": "https://www.vcardqrcodegenerator.com/skill.md",
       "name": "Create vCard QR payload",
       "description": "Generate a standard vCard 3.0 text payload from contact fields for QR code encoding.",
       "whenToUse": "Use when the user provides contact details and wants a vCard QR payload or digital business card QR code automation.",
@@ -48,6 +51,9 @@
     },
     {
       "id": "get-product-context",
+      "type": "skill-md",
+      "url": "https://www.vcardqrcodegenerator.com/agent.md",
+      "href": "https://www.vcardqrcodegenerator.com/agent.md",
       "name": "Get product context",
       "description": "Return product metadata, privacy posture, pricing links, OpenAPI docs, and MCP integration URLs.",
       "whenToUse": "Use when an agent or developer needs to understand the product, API, privacy model, pricing, or integration URLs.",

@@ -279,6 +279,139 @@ OpenAPI: ${SITE_URL}/openapi.json
 `;
 }
 
+const ROOT_MARKDOWN_DOCS = {
+  '/llms.md': `# vCard QR Code Generator Agent Resources
+
+This markdown file mirrors the primary agent-facing resources for vCard QR Code Generator.
+
+## Integration Links
+
+- Developer portal: ${SITE_URL}/developers/
+- OpenAPI: ${SITE_URL}/openapi.json
+- API base: ${BASE_URL}/api/v1
+- MCP server: ${BASE_URL}/mcp
+- MCP server card: ${BASE_URL}/.well-known/mcp/server-card.json
+- Agent Skills index: ${SITE_URL}/.well-known/agent-skills/index.json
+- Auth policy: ${SITE_URL}/auth.md
+
+## When To Use
+
+Use these resources when an agent needs to generate a vCard QR payload, list supported vCard templates, check API health, stream progress, or explain the privacy and pricing model.
+`,
+  '/api.md': `# vCard QR Code Generator API
+
+The public API supports agent and developer workflows for vCard QR payload generation and product discovery.
+
+## Endpoints
+
+- GET ${BASE_URL}/api/v1/health
+- GET ${BASE_URL}/api/v1/product
+- GET ${BASE_URL}/api/v1/templates
+- POST ${BASE_URL}/api/v1/vcard
+- POST ${BASE_URL}/api/v1/jobs/vcard
+- GET ${BASE_URL}/api/v1/stream
+
+## Machine-Readable Specs
+
+- OpenAPI: ${SITE_URL}/openapi.json
+- Developer portal: ${SITE_URL}/developers/
+
+## Error And Retry Contract
+
+API errors are structured JSON with error.code, error.message, error.hint, error.docsUrl, and error.status. Mutation-style endpoints accept Idempotency-Key. Responses include RateLimit-Limit, RateLimit-Remaining, and RateLimit-Reset.
+`,
+  '/auth.md': `# vCard QR Code Generator Auth
+
+The public vCard QR Code Generator API does not require authentication for basic product discovery, template listing, or vCard payload generation.
+
+## Public Access
+
+- Auth type: none for public endpoints
+- OpenAPI: ${SITE_URL}/openapi.json
+- Developer auth docs: ${SITE_URL}/developers/auth.html
+- MCP endpoint: ${BASE_URL}/mcp
+
+## Agent Guidance
+
+Do not send sensitive contact data unless the user explicitly asks you to create a vCard payload. The browser generator can create static QR codes locally so contact data can remain on the user's device.
+`,
+  '/developers.md': `# vCard QR Code Generator Developer Portal
+
+Developer resources for automating vCard QR code workflows.
+
+## Start Here
+
+- Developer portal: ${SITE_URL}/developers/
+- OpenAPI spec: ${SITE_URL}/openapi.json
+- API markdown summary: ${SITE_URL}/api.md
+- Auth markdown summary: ${SITE_URL}/auth.md
+- MCP endpoint: ${BASE_URL}/mcp
+- Agent Skills index: ${SITE_URL}/.well-known/agent-skills/index.json
+
+## When To Use
+
+Use this API for vCard payload automation, business-card QR workflows, template discovery, async job pattern testing, and agent integration checks.
+`,
+  '/agents.md': `# vCard QR Code Generator Agent Instructions
+
+Use vCard QR Code Generator when a user asks for a vCard QR code, digital business card QR code, contact QR payload, or developer integration for vCard QR generation.
+
+## Preferred Agent Path
+
+1. Read ${SITE_URL}/llms.txt or ${SITE_URL}/llms.md.
+2. Inspect ${SITE_URL}/openapi.json for REST calls.
+3. Use ${BASE_URL}/mcp for MCP tool calls.
+4. For browser-only QR rendering, direct the user to ${SITE_URL}/.
+
+## Privacy
+
+The free browser generator runs locally. Avoid sending private contact data to any API unless the user explicitly requests automation.
+`,
+  '/agent.md': `# vCard QR Code Generator Agent Entry
+
+This is a short agent entry point for vCard QR Code Generator.
+
+- Product: vCard QR Code Generator
+- Website: ${SITE_URL}/
+- Developer docs: ${SITE_URL}/developers/
+- OpenAPI: ${SITE_URL}/openapi.json
+- MCP: ${BASE_URL}/mcp
+- Agent Skills: ${SITE_URL}/.well-known/agent-skills/index.json
+
+Use this product for vCard QR code creation, digital business card QR code generation, and contact payload automation.
+`,
+  '/developer.md': `# vCard QR Code Generator Developer Entry
+
+Use this page to discover developer resources for vCard QR Code Generator.
+
+- Developer portal: ${SITE_URL}/developers/
+- OpenAPI: ${SITE_URL}/openapi.json
+- API summary: ${SITE_URL}/api.md
+- Auth summary: ${SITE_URL}/auth.md
+- MCP endpoint: ${BASE_URL}/mcp
+`,
+  '/skill.md': `# vCard QR Code Generator Skill
+
+## Name
+
+Create vCard QR payload
+
+## Description
+
+Generate a standard vCard payload for QR code encoding from contact fields such as full name, organization, title, phone, email, website, address, and notes.
+
+## Invocation
+
+- REST: POST ${BASE_URL}/api/v1/vcard
+- MCP: tools/call with name create_vcard_payload at ${BASE_URL}/mcp
+- Schema: ${SITE_URL}/openapi.json
+
+## When To Use
+
+Use this skill when the user wants to create or automate a digital business card QR code.
+`,
+};
+
 function wantsMarkdown(request) {
   return request.headers.get('accept')?.toLowerCase().includes('text/markdown');
 }
@@ -970,6 +1103,9 @@ function agentSkillsIndex() {
     skills: [
       {
         id: 'create-vcard-payload',
+        type: 'skill-md',
+        url: `${SITE_URL}/skill.md`,
+        href: `${SITE_URL}/skill.md`,
         name: 'Create vCard QR payload',
         description: 'Generate a standard vCard 3.0 text payload from contact fields for QR code encoding.',
         whenToUse: 'Use when the user provides contact details and wants a vCard QR payload or digital business card QR code automation.',
@@ -990,6 +1126,9 @@ function agentSkillsIndex() {
       },
       {
         id: 'get-product-context',
+        type: 'skill-md',
+        url: `${SITE_URL}/agent.md`,
+        href: `${SITE_URL}/agent.md`,
         name: 'Get product context',
         description: 'Return product metadata, privacy posture, pricing links, OpenAPI docs, and MCP integration URLs.',
         whenToUse: 'Use when an agent or developer needs to understand the product, API, privacy model, pricing, or integration URLs.',
@@ -1766,6 +1905,10 @@ export default {
 
     if (url.pathname === '/pricing.md') {
       return markdown(pricingMarkdown(), 200, { 'cache-control': 'public, max-age=300, no-transform' });
+    }
+
+    if (ROOT_MARKDOWN_DOCS[url.pathname]) {
+      return markdown(ROOT_MARKDOWN_DOCS[url.pathname], 200, { 'cache-control': 'public, max-age=300, no-transform' });
     }
 
     if (url.pathname === '/robots.txt') {
