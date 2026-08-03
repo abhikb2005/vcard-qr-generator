@@ -142,9 +142,12 @@ function noTransform(response) {
     ? `${cacheControl}, no-transform`
     : 'public, max-age=300, no-transform');
   headers.append('link', `<${SITE_URL}/llms.txt>; rel="service-desc"; type="text/plain"`);
+  headers.append('link', `<${SITE_URL}/openapi.json>; rel="service-desc"; type="application/json"`);
   headers.append('link', `<${SITE_URL}/.well-known/ai-catalog.json>; rel="alternate"; type="application/json"`);
+  headers.append('link', `<${SITE_URL}/.well-known/agent-skills/index.json>; rel="alternate"; type="application/json"`);
   headers.append('link', `<${SITE_URL}/index.md>; rel="alternate"; type="text/markdown"`);
   headers.append('link', `<${SITE_URL}/pricing.md>; rel="pricing"; type="text/markdown"`);
+  headers.append('link', `<${BASE_URL}/mcp>; rel="mcp-server"`);
 
   return new Response(response.body, {
     status: response.status,
@@ -955,7 +958,7 @@ function agentDiscovery() {
 
 function agentSkillsIndex() {
   return {
-    $schema: 'https://agent-skills.org/schemas/v0.2.0/index.json',
+    $schema: 'https://schemas.agentskills.io/discovery/0.2.0/schema.json',
     version: '0.2.0',
     name: 'vCard QR Code Generator Agent Skills',
     publisher: {
@@ -963,11 +966,13 @@ function agentSkillsIndex() {
       domain: 'vcardqrcodegenerator.com',
       homepage: `${SITE_URL}/`,
     },
+    whenToUse: 'Use these skills when a user wants to create a vCard QR code, automate digital business card contact payloads, or inspect vCard QR Code Generator developer resources.',
     skills: [
       {
         id: 'create-vcard-payload',
         name: 'Create vCard QR payload',
         description: 'Generate a standard vCard 3.0 text payload from contact fields for QR code encoding.',
+        whenToUse: 'Use when the user provides contact details and wants a vCard QR payload or digital business card QR code automation.',
         tags: ['vcard', 'qr-code', 'business-card', 'contacts'],
         inputSchema: openApiSpec().components.schemas.VCardRequest,
         artifacts: [
@@ -987,6 +992,7 @@ function agentSkillsIndex() {
         id: 'get-product-context',
         name: 'Get product context',
         description: 'Return product metadata, privacy posture, pricing links, OpenAPI docs, and MCP integration URLs.',
+        whenToUse: 'Use when an agent or developer needs to understand the product, API, privacy model, pricing, or integration URLs.',
         tags: ['product', 'developer-docs', 'pricing', 'mcp'],
         inputSchema: { type: 'object', properties: {}, additionalProperties: false },
         artifacts: [
@@ -1743,7 +1749,7 @@ export default {
     }
 
     if (url.pathname === '/') {
-      if (wantsMarkdown(request)) {
+      if (url.searchParams.get('mode') === 'agent' || wantsMarkdown(request)) {
         return markdown(homepageMarkdown());
       }
       if (url.hostname === 'www.vcardqrcodegenerator.com') {

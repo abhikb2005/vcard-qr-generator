@@ -1,13 +1,18 @@
 # vCard QR Code Generator
 
-vCard QR Code Generator is a free, privacy-first tool for creating QR codes for business cards, resumes, email signatures, event badges, and professional networking.
+vCard QR Code Generator is a privacy-first tool for creating vCard QR codes for business cards, resumes, badges, email signatures, and professional contact sharing.
 
-Static QR generation happens in the browser, so contact details do not need to leave the user's device. Developers and AI agents can use the public API at `https://vcardqrcodegenerator.com` for product metadata, vCard payload generation, OpenAPI discovery, streaming progress events, and MCP tool discovery.
+## Developer Resources
 
-## Developer Links
-
-- Developer docs: https://www.vcardqrcodegenerator.com/developers/
+- Website: https://www.vcardqrcodegenerator.com/
+- Developer portal: https://www.vcardqrcodegenerator.com/developers/
 - OpenAPI spec: https://www.vcardqrcodegenerator.com/openapi.json
+- API index: https://vcardqrcodegenerator.com/api
+- MCP endpoint: https://vcardqrcodegenerator.com/mcp
 - MCP manifest: https://www.vcardqrcodegenerator.com/mcp/manifest.json
-- Rate limits and deprecation policy: https://www.vcardqrcodegenerator.com/developers/rate-limits.html
-- Agent instructions: https://www.vcardqrcodegenerator.com/AGENTS.md
+- Agent Skills index: https://www.vcardqrcodegenerator.com/.well-known/agent-skills/index.json
+- Pricing: https://www.vcardqrcodegenerator.com/pricing.md
+
+## When To Use
+
+Use vCard QR Code Generator when a user wants to create a static contact QR code, automate vCard payload creation, compare QR workflows for business cards, or inspect a lightweight public API that does not require authentication for basic payload generation.

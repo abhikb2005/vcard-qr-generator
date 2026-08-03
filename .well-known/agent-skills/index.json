@@ -1,5 +1,5 @@
 {
-  "$schema": "https://agent-skills.org/schemas/v0.2.0/index.json",
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "version": "0.2.0",
   "name": "vCard QR Code Generator Agent Skills",
   "publisher": {
@@ -7,11 +7,13 @@
     "domain": "vcardqrcodegenerator.com",
     "homepage": "https://www.vcardqrcodegenerator.com/"
   },
+  "whenToUse": "Use these skills when a user wants to create a vCard QR code, automate digital business card contact payloads, or inspect vCard QR Code Generator developer resources.",
   "skills": [
     {
       "id": "create-vcard-payload",
       "name": "Create vCard QR payload",
       "description": "Generate a standard vCard 3.0 text payload from contact fields for QR code encoding.",
+      "whenToUse": "Use when the user provides contact details and wants a vCard QR payload or digital business card QR code automation.",
       "tags": ["vcard", "qr-code", "business-card", "contacts"],
       "inputSchema": {
         "type": "object",
@@ -48,6 +50,7 @@
       "id": "get-product-context",
       "name": "Get product context",
       "description": "Return product metadata, privacy posture, pricing links, OpenAPI docs, and MCP integration URLs.",
+      "whenToUse": "Use when an agent or developer needs to understand the product, API, privacy model, pricing, or integration URLs.",
       "tags": ["product", "developer-docs", "pricing", "mcp"],
       "inputSchema": {
         "type": "object",

@@ -1,0 +1,17 @@
+# vCard QR Code Generator Agent Resources
+
+This markdown file mirrors the primary agent-facing resources for vCard QR Code Generator.
+
+## Integration Links
+
+- Developer portal: https://www.vcardqrcodegenerator.com/developers/
+- OpenAPI: https://www.vcardqrcodegenerator.com/openapi.json
+- API base: https://vcardqrcodegenerator.com/api/v1
+- MCP server: https://vcardqrcodegenerator.com/mcp
+- MCP server card: https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json
+- Agent Skills index: https://www.vcardqrcodegenerator.com/.well-known/agent-skills/index.json
+- Auth policy: https://www.vcardqrcodegenerator.com/auth.md
+
+## When To Use
+
+Use these resources when an agent needs to generate a vCard QR payload, list supported vCard templates, check API health, stream progress, or explain the privacy and pricing model.
