@@ -1,0 +1,70 @@
+{
+  "$schema": "https://agent-skills.org/schemas/v0.2.0/index.json",
+  "version": "0.2.0",
+  "name": "vCard QR Code Generator Agent Skills",
+  "publisher": {
+    "name": "vCard QR Code Generator",
+    "domain": "vcardqrcodegenerator.com",
+    "homepage": "https://www.vcardqrcodegenerator.com/"
+  },
+  "skills": [
+    {
+      "id": "create-vcard-payload",
+      "name": "Create vCard QR payload",
+      "description": "Generate a standard vCard 3.0 text payload from contact fields for QR code encoding.",
+      "tags": ["vcard", "qr-code", "business-card", "contacts"],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "Contact display name. Required."
+          },
+          "organization": { "type": "string" },
+          "title": { "type": "string" },
+          "phone": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "website": { "type": "string", "format": "uri" },
+          "address": { "type": "string" },
+          "note": { "type": "string" }
+        },
+        "required": ["fullName"],
+        "additionalProperties": false
+      },
+      "artifacts": [
+        {
+          "type": "openapi",
+          "url": "https://www.vcardqrcodegenerator.com/openapi.json",
+          "operationId": "createVCardPayloadApiAlias"
+        },
+        {
+          "type": "mcp-tool",
+          "url": "https://vcardqrcodegenerator.com/mcp",
+          "name": "create_vcard_payload"
+        }
+      ]
+    },
+    {
+      "id": "get-product-context",
+      "name": "Get product context",
+      "description": "Return product metadata, privacy posture, pricing links, OpenAPI docs, and MCP integration URLs.",
+      "tags": ["product", "developer-docs", "pricing", "mcp"],
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "artifacts": [
+        {
+          "type": "mcp-tool",
+          "url": "https://vcardqrcodegenerator.com/mcp",
+          "name": "get_product_context"
+        },
+        {
+          "type": "llms.txt",
+          "url": "https://www.vcardqrcodegenerator.com/llms.txt"
+        }
+      ]
+    }
+  ]
+}

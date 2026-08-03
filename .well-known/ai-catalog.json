@@ -21,7 +21,8 @@
       "identifier": "urn:air:vcardqrcodegenerator.com:server:mcp",
       "displayName": "vCard QR Code Generator MCP server",
       "type": "application/mcp-server-card+json",
-      "url": "https://vcardqrcodegenerator.com/mcp",
+      "url": "https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json",
+      "endpoint": "https://vcardqrcodegenerator.com/mcp",
       "capabilities": ["getProductContext", "createVCardPayload"],
       "representativeQueries": [
         "use MCP to create a vCard payload",

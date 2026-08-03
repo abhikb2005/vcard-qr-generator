@@ -953,13 +953,70 @@ function agentDiscovery() {
   };
 }
 
+function agentSkillsIndex() {
+  return {
+    $schema: 'https://agent-skills.org/schemas/v0.2.0/index.json',
+    version: '0.2.0',
+    name: 'vCard QR Code Generator Agent Skills',
+    publisher: {
+      name: 'vCard QR Code Generator',
+      domain: 'vcardqrcodegenerator.com',
+      homepage: `${SITE_URL}/`,
+    },
+    skills: [
+      {
+        id: 'create-vcard-payload',
+        name: 'Create vCard QR payload',
+        description: 'Generate a standard vCard 3.0 text payload from contact fields for QR code encoding.',
+        tags: ['vcard', 'qr-code', 'business-card', 'contacts'],
+        inputSchema: openApiSpec().components.schemas.VCardRequest,
+        artifacts: [
+          {
+            type: 'openapi',
+            url: `${SITE_URL}/openapi.json`,
+            operationId: 'createVCardPayloadApiAlias',
+          },
+          {
+            type: 'mcp-tool',
+            url: `${BASE_URL}/mcp`,
+            name: 'create_vcard_payload',
+          },
+        ],
+      },
+      {
+        id: 'get-product-context',
+        name: 'Get product context',
+        description: 'Return product metadata, privacy posture, pricing links, OpenAPI docs, and MCP integration URLs.',
+        tags: ['product', 'developer-docs', 'pricing', 'mcp'],
+        inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+        artifacts: [
+          {
+            type: 'mcp-tool',
+            url: `${BASE_URL}/mcp`,
+            name: 'get_product_context',
+          },
+          {
+            type: 'llms.txt',
+            url: `${SITE_URL}/llms.txt`,
+          },
+        ],
+      },
+    ],
+  };
+}
+
 function mcpServerCard() {
   return {
     name: 'vcard-qr-code-generator',
     displayName: 'vCard QR Code Generator MCP',
     description: 'Public MCP tools for vCard QR Code Generator product context and vCard contact payload creation.',
     version: API_VERSION,
+    protocol: 'mcp',
+    protocolVersion: '2025-03-26',
+    transportType: 'streamable_http',
     serverUrl: `${BASE_URL}/mcp`,
+    endpoint: `${BASE_URL}/mcp`,
+    manifestUrl: `${SITE_URL}/mcp/manifest.json`,
     homepage: `${SITE_URL}/`,
     docsUrl: `${SITE_URL}/developers/`,
     openApiUrl: `${SITE_URL}/openapi.json`,
@@ -1000,7 +1057,8 @@ function aiCatalog() {
         identifier: 'urn:air:vcardqrcodegenerator.com:server:mcp',
         displayName: 'vCard QR Code Generator MCP server',
         type: 'application/mcp-server-card+json',
-        url: `${BASE_URL}/mcp`,
+        url: `${BASE_URL}/.well-known/mcp/server-card.json`,
+        endpoint: `${BASE_URL}/mcp`,
         capabilities: ['getProductContext', 'createVCardPayload'],
         representativeQueries: [
           'use MCP to create a vCard payload',
@@ -1727,6 +1785,10 @@ export default {
       return json(agentDiscovery(), 200, { 'cache-control': 'public, max-age=300' });
     }
 
+    if (url.pathname === '/.well-known/agent-skills/index.json') {
+      return json(agentSkillsIndex(), 200, { 'cache-control': 'public, max-age=300' });
+    }
+
     if (url.pathname === '/.well-known/ai-plugin.json') {
       return json(aiPluginManifest(), 200, { 'cache-control': 'public, max-age=300' });
     }
@@ -1826,10 +1888,16 @@ export default {
     if (url.pathname === '/.well-known/mcp') {
       return json({
         name: 'vcard-qr-code-generator',
+        displayName: 'vCard QR Code Generator MCP',
+        protocol: 'mcp',
+        protocolVersion: '2025-03-26',
         url: `${BASE_URL}/mcp`,
+        endpoint: `${BASE_URL}/mcp`,
         transport: 'streamable_http',
+        transportType: 'streamable_http',
         manifest: `${SITE_URL}/mcp/manifest.json`,
         openapi: `${SITE_URL}/openapi.json`,
+        serverCard: `${BASE_URL}/.well-known/mcp/server-card.json`,
       });
     }
 

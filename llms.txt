@@ -18,6 +18,7 @@
 - [Rate limits and deprecation policy](https://www.vcardqrcodegenerator.com/developers/rate-limits.html)
 - [Digital business card QR code generator guide](https://www.vcardqrcodegenerator.com/guides/digital-business-card-qr-code-generator/)
 - [OpenAPI spec](https://www.vcardqrcodegenerator.com/openapi.json)
+- [Agent Skills index](https://www.vcardqrcodegenerator.com/.well-known/agent-skills/index.json)
 - [MCP manifest](https://www.vcardqrcodegenerator.com/mcp/manifest.json)
 - [Well-known MCP discovery](https://www.vcardqrcodegenerator.com/.well-known/mcp)
 - [MCP server card](https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json)
