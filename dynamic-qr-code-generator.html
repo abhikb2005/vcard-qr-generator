@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dynamic QR Code Generator for Events and Business Cards</title>
+  <title>Dynamic vCard QR Code Generator - Editable Business Cards & Scan Analytics</title>
   <meta name="description"
-    content="Create a dynamic QR code you can edit after printing. Perfect for event tables, business cards, flyers, and signs that need to keep working after details change." />
+    content="Create an editable vCard QR code for business cards, events, and print. Update your destination after printing and see scan analytics from $5 per month." />
   <link rel="canonical" href="https://www.vcardqrcodegenerator.com/dynamic-qr-code-generator.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Dynamic QR Code Generator for Events and Business Cards" />
+  <meta property="og:title" content="Dynamic vCard QR Codes for Editable Business Cards" />
   <meta property="og:description"
-    content="Create a dynamic QR code you can edit after printing. Use it on event tables, business cards, flyers, and signs that need to keep working after details change." />
+    content="Update your vCard QR destination after printing, track scans, and choose a plan built for reusable business cards and print." />
   <meta property="og:url" content="https://www.vcardqrcodegenerator.com/dynamic-qr-code-generator.html" />
   <meta property="og:site_name" content="vCard QR Code Generator" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -22,19 +22,102 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-E90B41BNEH');
+    gtag('config', 'G-E90B41BNEH', {
+      linker: { domains: ['app.vcardqrcodegenerator.com'] }
+    });
+    function getDynamicAppUrl() {
+      var url = new URL('https://app.vcardqrcodegenerator.com/login');
+      url.searchParams.set('mode', 'signup');
+      url.searchParams.set('intent', 'dynamic_vcard');
+      var params = new URLSearchParams(window.location.search);
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_adgroup', 'utm_term', 'utm_content'].forEach(function (key) {
+        if (params.has(key)) url.searchParams.set(key, params.get(key));
+      });
+      return url.toString();
+    }
     function trackDynamicCta(location) {
       window.VcardAnalytics?.trackEvent('clicked_dynamic_qr_cta', {
         source_page: window.location.pathname,
         cta_location: location,
         cta_text: 'Create an editable QR code',
-        destination_url: 'https://app.vcardqrcodegenerator.com/login'
+        destination_url: getDynamicAppUrl()
       });
     }
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('[data-dynamic-app-link]').forEach(function (link) {
+        link.setAttribute('href', getDynamicAppUrl());
+      });
+    });
   </script>
   <script src="/analytics.js"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206702185649949"
-    crossorigin="anonymous"></script>
+  <!-- PPP (Purchase Power Parity) detection for paid dynamic plans -->
+  <script>
+    (function () {
+      const PPP_DISCOUNTS = {
+        'AF': 60, 'BD': 60, 'BF': 60, 'BI': 60, 'CF': 60, 'TD': 60, 'KM': 60, 'CD': 60,
+        'ER': 60, 'ET': 60, 'GM': 60, 'GN': 60, 'GW': 60, 'HT': 60, 'KP': 60, 'LR': 60,
+        'MG': 60, 'MW': 60, 'ML': 60, 'MR': 60, 'MZ': 60, 'NP': 60, 'NE': 60, 'RW': 60,
+        'SN': 60, 'SL': 60, 'SO': 60, 'SS': 60, 'SD': 60, 'SY': 60, 'TJ': 60, 'TZ': 60,
+        'TG': 60, 'UG': 60, 'YE': 60, 'ZM': 60, 'ZW': 60, 'MM': 60, 'LA': 60, 'KH': 60,
+        'DZ': 50, 'AO': 50, 'AM': 50, 'AZ': 50, 'BJ': 50, 'BT': 50, 'BO': 50, 'BW': 50,
+        'CM': 50, 'CV': 50, 'CG': 50, 'CI': 50, 'DJ': 50, 'EG': 50, 'SV': 50, 'GQ': 50,
+        'FJ': 50, 'GA': 50, 'GE': 50, 'GH': 50, 'GT': 50, 'GY': 50, 'HN': 50, 'IN': 50,
+        'ID': 50, 'IQ': 50, 'JM': 50, 'JO': 50, 'KZ': 50, 'KE': 50, 'KG': 50, 'LB': 50,
+        'LS': 50, 'LY': 50, 'MN': 50, 'MA': 50, 'NA': 50, 'NI': 50, 'NG': 50, 'PK': 50,
+        'PY': 50, 'PH': 50, 'MD': 50, 'LK': 50, 'SR': 50, 'SZ': 50, 'TN': 50, 'TM': 50,
+        'UA': 50, 'UZ': 50, 'VN': 50, 'PS': 50,
+        'AL': 40, 'AR': 40, 'BY': 40, 'BA': 40, 'BR': 40, 'BG': 40, 'CL': 40, 'CN': 40,
+        'CO': 40, 'CR': 40, 'HR': 40, 'DO': 40, 'EC': 40, 'MK': 40, 'HU': 40, 'IR': 40,
+        'MY': 40, 'MU': 40, 'MX': 40, 'ME': 40, 'PA': 40, 'PE': 40, 'RO': 40, 'RU': 40,
+        'RS': 40, 'ZA': 40, 'TH': 40, 'TR': 40, 'VE': 40,
+        'BH': 30, 'CZ': 30, 'EE': 30, 'GR': 30, 'LV': 30, 'LT': 30, 'MT': 30, 'OM': 30,
+        'PL': 30, 'PT': 30, 'QA': 30, 'SA': 30, 'SK': 30, 'SI': 30, 'TW': 30, 'AE': 30,
+        'UY': 30, 'CY': 30, 'KW': 30,
+        'BE': 20, 'FR': 20, 'DE': 20, 'HK': 20, 'IE': 20, 'IL': 20, 'IT': 20, 'JP': 20,
+        'KR': 20, 'NL': 20, 'NZ': 20, 'SG': 20, 'ES': 20, 'SE': 20, 'AT': 20, 'FI': 20
+      };
+      const COUNTRY_NAMES = {
+        'IN': 'India', 'PK': 'Pakistan', 'BD': 'Bangladesh', 'NG': 'Nigeria', 'EG': 'Egypt',
+        'VN': 'Vietnam', 'PH': 'Philippines', 'ID': 'Indonesia', 'BR': 'Brazil', 'MX': 'Mexico',
+        'AR': 'Argentina', 'CO': 'Colombia', 'TH': 'Thailand', 'MY': 'Malaysia', 'ZA': 'South Africa',
+        'TR': 'Turkey', 'PL': 'Poland', 'CZ': 'Czechia', 'RO': 'Romania', 'UA': 'Ukraine',
+        'RU': 'Russia', 'CN': 'China', 'KR': 'South Korea', 'JP': 'Japan', 'IT': 'Italy',
+        'BE': 'Belgium', 'NL': 'Netherlands', 'FR': 'France', 'DE': 'Germany', 'AT': 'Austria',
+        'SE': 'Sweden', 'FI': 'Finland', 'IE': 'Ireland', 'IL': 'Israel', 'NZ': 'New Zealand'
+      };
+      const COUPON_CODES = { 60: 'GLOBAL60', 50: 'GLOBAL50', 40: 'GLOBAL40', 30: 'GLOBAL30', 20: 'GLOBAL20' };
+
+      async function detectAndShowPPP() {
+        if (sessionStorage.getItem('ppp_dismissed')) return;
+        try {
+          const res = await fetch('https://ipapi.co/json/', { cache: 'default' });
+          const data = await res.json();
+          const countryCode = data.country_code;
+          const discount = PPP_DISCOUNTS[countryCode];
+          if (!discount) return;
+          const countryName = COUNTRY_NAMES[countryCode] || data.country_name || countryCode;
+          const coupon = COUPON_CODES[discount];
+          const banner = document.getElementById('ppp-banner');
+          const message = document.getElementById('ppp-message');
+          message.innerHTML = `Regional pricing available in <strong>${countryName}</strong>: use <strong class="bg-white/20 px-2 py-0.5 rounded font-mono">${coupon}</strong> for <strong>${discount}% off</strong> eligible paid plans.`;
+          banner.classList.remove('hidden');
+          window.VcardAnalytics?.trackEvent('ppp_banner_shown', {
+            event_category: 'ppp',
+            event_label: countryCode,
+            value: discount
+          });
+        } catch (e) {
+          console.log('PPP detection skipped');
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', detectAndShowPPP);
+      } else {
+        detectAndShowPPP();
+      }
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -51,8 +134,6 @@
     * {
       box-sizing: border-box;
     }
-    .ad-container { min-height: 100px; margin: 2rem 0; text-align: center; }
-
     body,
     nav,
     main,
@@ -125,16 +206,18 @@
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Dynamic QR Code Generator",
+    "name": "Dynamic vCard QR Code Generator",
     "url": "https://www.vcardqrcodegenerator.com/dynamic-qr-code-generator.html",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "All",
-    "description": "Dynamic QR code generator for event tables, business cards, flyers, and signs that need editable destinations after printing.",
+    "description": "Dynamic vCard QR code generator for editable business cards, printed campaigns, and scan analytics.",
     "offers": {
-      "@type": "Offer",
-      "price": "0",
+      "@type": "AggregateOffer",
+      "lowPrice": "0",
+      "highPrice": "19",
       "priceCurrency": "USD",
-      "description": "Free account access with paid upgrades for higher dynamic QR limits."
+      "offerCount": "4",
+      "description": "Free static QR access with paid dynamic QR plans for editable destinations and scan analytics."
     },
     "publisher": {
       "@type": "Organization",
@@ -177,6 +260,13 @@
 </head>
 
 <body class="bg-slate-50 text-slate-900">
+  <div id="ppp-banner" class="hidden bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-4 text-center text-sm">
+    <span id="ppp-message"></span>
+    <button
+      onclick="sessionStorage.setItem('ppp_dismissed','1');document.getElementById('ppp-banner').classList.add('hidden')"
+      class="ml-4 text-white/80 hover:text-white" aria-label="Dismiss regional pricing banner">x</button>
+  </div>
+
   <nav class="bg-white border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="font-bold text-xl text-indigo-600">vCard QR Generator</a>
@@ -192,14 +282,14 @@
   <header class="bg-gradient-to-br from-indigo-950 via-blue-900 to-cyan-800 text-white">
     <div class="max-w-6xl mx-auto px-6 py-16 lg:py-20 grid lg:grid-cols-[1.1fr_.9fr] gap-12 items-center">
       <div>
-        <p class="text-cyan-200 font-semibold">Editable QR codes for events, cards, flyers, and signs</p>
-        <h1 class="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight">Never Run Out of Business Cards at an Event Again</h1>
+        <p class="text-cyan-200 font-semibold">Editable vCard QR codes for business cards, events, and print</p>
+        <h1 class="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight">Dynamic vCard QR Codes That Stay Editable After Printing</h1>
         <p class="mt-6 text-xl text-blue-100 leading-relaxed">
           Put one dynamic QR code on your table, sign, badge, flyer, or printed card. Visitors can scan it to get your
           latest contact details, booking page, offer, or collection, even after the printed piece is already out there.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row gap-4">
-          <a href="https://app.vcardqrcodegenerator.com/login" onclick="trackDynamicCta('hero')"
+          <a href="https://app.vcardqrcodegenerator.com/login?mode=signup&amp;intent=dynamic_vcard" data-dynamic-app-link onclick="trackDynamicCta('hero')"
             class="inline-flex justify-center rounded-lg bg-cyan-400 px-6 py-4 font-bold text-slate-950 hover:bg-cyan-300">
             Create an editable QR code
           </a>
@@ -213,6 +303,11 @@
           </a>
         </div>
         <p class="mt-4 text-sm text-blue-200">One printed QR code. Update the destination whenever your details or offer changes.</p>
+        <div class="mt-6 grid sm:grid-cols-3 gap-3 text-sm text-blue-100">
+          <div class="rounded-lg border border-white/20 bg-white/10 px-4 py-3">Editable destination</div>
+          <div class="rounded-lg border border-white/20 bg-white/10 px-4 py-3">Scan analytics</div>
+          <div class="rounded-lg border border-white/20 bg-white/10 px-4 py-3">Built for printed assets</div>
+        </div>
       </div>
       <div class="bg-white/10 border border-white/20 rounded-2xl p-6 shadow-2xl">
         <div class="bg-white text-slate-900 rounded-xl p-6">
@@ -229,12 +324,6 @@
   </header>
 
   <main class="max-w-5xl mx-auto px-6 py-12">
-    <div class="ad-container">
-      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949"
-        data-ad-slot="7438060059" data-ad-format="auto" data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-
     <section class="grid md:grid-cols-3 gap-6">
       <div class="bg-white border border-slate-200 rounded-xl p-6">
         <h2 class="font-bold text-xl">Editable after printing</h2>
@@ -247,6 +336,36 @@
       <div class="bg-white border border-slate-200 rounded-xl p-6">
         <h2 class="font-bold text-xl">Scan visibility</h2>
         <p class="mt-3 text-slate-600">See whether people actually scan your code and which assets deserve more attention.</p>
+      </div>
+    </section>
+
+    <section class="mt-12 bg-white border border-slate-200 rounded-2xl p-8">
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-8 items-start">
+        <div>
+          <p class="text-sm font-semibold text-cyan-200">Dashboard proof</p>
+          <h2 class="mt-2 text-3xl font-bold">What you get after signup</h2>
+          <p class="mt-4 text-slate-300">
+            Dynamic QR codes use a hosted short link so you can change the destination after printing and see scan
+            activity from your dashboard.
+          </p>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div class="rounded-xl border border-slate-200 p-5">
+            <p class="text-sm font-semibold text-cyan-200">Create</p>
+            <h3 class="mt-2 font-bold text-lg">Reusable QR code</h3>
+            <p class="mt-2 text-sm text-slate-300">Generate one code for cards, signs, flyers, booths, or packaging.</p>
+          </div>
+          <div class="rounded-xl border border-slate-200 p-5">
+            <p class="text-sm font-semibold text-cyan-200">Edit</p>
+            <h3 class="mt-2 font-bold text-lg">Change destination</h3>
+            <p class="mt-2 text-sm text-slate-300">Point scans to a new contact profile, booking page, offer, or URL.</p>
+          </div>
+          <div class="rounded-xl border border-slate-200 p-5">
+            <p class="text-sm font-semibold text-cyan-200">Measure</p>
+            <h3 class="mt-2 font-bold text-lg">Scan analytics</h3>
+            <p class="mt-2 text-sm text-slate-300">Use scan counts and dashboard activity to learn what gets attention.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -269,6 +388,43 @@
           </tbody>
         </table>
       </div>
+    </section>
+
+    <section class="mt-12 bg-white border border-slate-200 rounded-2xl p-8">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div>
+          <p class="text-sm font-semibold text-cyan-200">Pricing clarity</p>
+          <h2 class="mt-2 text-3xl font-bold">Start free, upgrade only when the QR code must stay editable</h2>
+          <p class="mt-4 text-slate-300 max-w-3xl">
+            Use the free static vCard generator when your details are final. Choose a dynamic plan when you need edit
+            access, scan analytics, and more reusable printed codes.
+          </p>
+        </div>
+        <a href="https://app.vcardqrcodegenerator.com/login?mode=signup&amp;intent=dynamic_vcard" data-dynamic-app-link onclick="trackDynamicCta('pricing')"
+          class="inline-flex justify-center rounded-lg bg-cyan-400 px-6 py-4 font-bold text-slate-950 hover:bg-cyan-300">
+          View dynamic plans
+        </a>
+      </div>
+      <div class="mt-8 grid md:grid-cols-3 gap-5">
+        <div class="rounded-xl border border-slate-200 p-6">
+          <h3 class="text-xl font-bold">Starter</h3>
+          <p class="mt-2 text-3xl font-extrabold">$5/mo</p>
+          <p class="mt-3 text-sm text-slate-300">For a few reusable business card or event QR codes.</p>
+        </div>
+        <div class="rounded-xl border border-cyan-300 p-6">
+          <h3 class="text-xl font-bold">Growth</h3>
+          <p class="mt-2 text-3xl font-extrabold">$9/mo</p>
+          <p class="mt-3 text-sm text-slate-300">For teams, campaigns, and multiple printed placements.</p>
+        </div>
+        <div class="rounded-xl border border-slate-200 p-6">
+          <h3 class="text-xl font-bold">Business</h3>
+          <p class="mt-2 text-3xl font-extrabold">$19/mo</p>
+          <p class="mt-3 text-sm text-slate-300">For higher-volume dynamic QR use across business assets.</p>
+        </div>
+      </div>
+      <p class="mt-5 text-sm text-slate-400">
+        Paid checkout is handled by Dodo Payments. Regional coupon codes may be available through the banner above.
+      </p>
     </section>
 
     <section class="mt-12 grid lg:grid-cols-[.9fr_1.1fr] gap-8 items-start">
@@ -297,23 +453,32 @@
       </div>
     </section>
 
+    <section class="mt-12 bg-white border border-slate-200 rounded-2xl p-8">
+      <h2 class="text-3xl font-bold">Privacy and tracking, plainly</h2>
+      <div class="mt-6 grid md:grid-cols-2 gap-6 text-slate-300">
+        <p>
+          Static vCard QR codes are generated in your browser. They are best when the contact details never need to
+          change and you do not need scan analytics.
+        </p>
+        <p>
+          Dynamic QR codes need a hosted short link so edits and analytics can work. That is what lets you keep one
+          printed QR code while changing where scanners go later.
+        </p>
+      </div>
+    </section>
+
     <section class="mt-12 rounded-2xl bg-slate-900 text-white p-8 text-center">
       <h2 class="text-3xl font-bold">Create an editable QR code today</h2>
       <p class="mt-4 text-slate-300 max-w-2xl mx-auto">
         Start with the free static generator when your details are permanent. Use the dynamic dashboard when you need
         a reusable QR code that can change after printing.
       </p>
-      <a href="https://app.vcardqrcodegenerator.com/login" onclick="trackDynamicCta('bottom')"
+      <a href="https://app.vcardqrcodegenerator.com/login?mode=signup&amp;intent=dynamic_vcard" data-dynamic-app-link onclick="trackDynamicCta('bottom')"
         class="mt-6 inline-flex justify-center rounded-lg bg-cyan-400 px-6 py-4 font-bold text-slate-950 hover:bg-cyan-300">
         Create an editable QR code
       </a>
     </section>
 
-    <div class="ad-container">
-      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1206702185649949"
-        data-ad-slot="7438060059" data-ad-format="auto" data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
   </main>
 
   <footer class="bg-slate-950 text-slate-400 py-10 text-center">

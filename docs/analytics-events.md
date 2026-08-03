@@ -40,7 +40,7 @@ Do not use `clicked_pricing` or `pro_checkout_start` as revenue conversions. The
 
 ## Day 4 CTA Attribution
 
-Dynamic/editable QR CTAs must send `clicked_dynamic_qr_cta` with `cta_text`, `cta_location`, `destination_url`, and `source_page`. The old `dynamic_qr_cta_click` name is deprecated and should not be emitted by live pages or templates.
+Dynamic/editable QR CTAs must send `clicked_dynamic_qr_cta` with `cta_text`, `cta_location`, `destination_url`, and `source_page`. The old `dynamic_qr_cta_click` name is deprecated and should not be emitted by live pages or templates. The static marketing site and `app.vcardqrcodegenerator.com` both configure GA4 linker domains so a `_gl` handoff can preserve a session across the subscription journey; campaign parameters are also retained by the dynamic landing CTA.
 
 Current high-value `cta_location` values include:
 

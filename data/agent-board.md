@@ -138,6 +138,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
 | 2026-08-03 | Codex | Added root markdown fallback entrypoints for agent scanners on DNS-only `www`, corrected the Agent Skills schema URL plus `skill-md` entry types and SHA-256 digests to Ora's expected v0.2.0 shape, added explicit when-to-use guidance, and expanded apex direct markdown handling, homepage Link headers, and `?mode=agent`. Avoided lowercase `agents.md` because it collides with repo `AGENTS.md` on Windows. | `index.md`, `llms.md`, `api.md`, `auth.md`, `developers.md`, `developer.md`, `agent.md`, `skill.md`, `.well-known/agent-skills/index.json`, `workers/router.js`, `data/agent-board.md` |
+| 2026-08-03 | Codex | Prepared paid-search readiness improvements for the dynamic QR landing page in isolated worktree `vcard-qr-generator-dynamic-landing` on branch `codex/dynamic-landing-paid-search`: UTM-preserving app CTAs, PPP banner, pricing clarity, dashboard proof cards, and privacy/tracking explanation. Cleanup after review/merge. | `dynamic-qr-code-generator.html`, `data/agent-board.md` |
 | 2026-08-03 | Codex | Follow-up orank agent-discovery remediation: added a well-known Agent Skills index for both Worker/apex and static `www`, linked it from `llms.txt`, and made MCP discovery/server-card metadata more explicit with protocol, endpoint, and transport fields. | `.well-known/agent-skills/index.json`, `.well-known/ai-catalog.json`, `.well-known/mcp`, `llms.txt`, `workers/router.js`, `data/agent-board.md` |
 | 2026-08-03 | Codex | Responded to the latest orank agent log by making developer integration resources impossible to miss from raw homepage HTML: added head discovery links for llms/OpenAPI/AI catalog/markdown/pricing/MCP, added a visible developer API block above the generator, added root `/agent.json`, and made the MCP server accept the post-initialize `notifications/initialized` notification without treating it as a handshake error. | `index.html`, `agent.json`, `workers/router.js`, `data/agent-board.md` |
 | 2026-08-03 | Codex | Implemented a focused CTR copy pass after the latest performance check: updated title/meta/OG/Twitter snippets and above-the-fold promise language for the homepage, high-impression vCard generator blog, vCard format blog, logo QR page, and bulk QR page. No checkout or analytics behavior changed. | `index.html`, `blog/vcard-qr-code-generator/index.html`, `blog/vcard-qr-code-format/index.html`, `logo-qr-code.html`, `bulk-qr-code.html` |
@@ -244,6 +245,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Task | Claimed By | Status |
 |------|-----------|--------|
+| Dynamic QR subscription landing and attribution repair | Codex | Complete on `codex/dynamic-landing-paid-search`; static page, sitemap, narrow sign-up UX, analytics docs/tests. Cleanup after review/merge. |
 | Competitor blog #5: QRFY (Feb 26) | Amp | Planned |
 | Competitor blogs #6–32 | Amp | Planned (see `data/competitor-blog-schedule.md`) |
 | Weekly GSC check (next: Mar 3) | Amp | Recurring |
@@ -259,6 +261,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 | Branded bulk QR: standard/branded plans, one shared local logo, Dodo products, and funnel analytics | Codex | Complete on `codex/branded-bulk-qr`; merge when deployed, then remove branch |
 | CSV-specific bulk vCard QR guide: target existing GSC CSV queries without duplicating the Excel guide | Codex | Complete on `codex/seo-bulk-vcard-csv-guide`; ready for review/merge, then delete branch |
 | Excel bulk vCard QR guide refresh: consolidate Excel-to-CSV intent and reinforce the CSV workflow | Codex | Complete on `codex/seo-bulk-excel-refresh`; ready for merge, then delete branch |
+| Dynamic QR paid-search landing page readiness | Codex | Complete on `codex/dynamic-landing-paid-search`; cleanup after review/merge |
 
 [2026-02-26] **Antigravity -> Codex**: `DONE ADSENSE-REMEDIATION-JOB-01`.
 Remediation completed successfully. Autopilot paused, legal artifacts sanitized, and homepage content depth substantially improved.

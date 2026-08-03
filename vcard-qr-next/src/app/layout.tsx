@@ -46,7 +46,12 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-E90B41BNEH');
+            gtag('config', 'G-E90B41BNEH', {
+              linker: {
+                domains: ['www.vcardqrcodegenerator.com'],
+                accept_incoming: true
+              }
+            });
           `}
         </Script>
       </head>

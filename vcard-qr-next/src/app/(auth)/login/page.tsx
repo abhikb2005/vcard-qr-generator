@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { AlertCircle } from 'lucide-react'
@@ -13,7 +13,12 @@ export default function LoginPage() {
     const [message, setMessage] = useState<string | null>(null)
 
     const router = useRouter()
+    const [isSignUp, setIsSignUp] = useState(false)
     const supabase = createClient()
+
+    useEffect(() => {
+        setIsSignUp(new URLSearchParams(window.location.search).get('mode') === 'signup')
+    }, [])
 
     async function handleGoogleLogin() {
         setLoading(true)
@@ -29,8 +34,7 @@ export default function LoginPage() {
         }
     }
 
-    async function handleSignIn(e: React.FormEvent) {
-        e.preventDefault()
+    async function handleSignIn() {
         setLoading(true)
         setError(null)
         setMessage(null)
@@ -47,15 +51,14 @@ export default function LoginPage() {
                 router.push('/dashboard')
                 router.refresh()
             }
-        } catch (err) {
+        } catch {
             setError('An unexpected error occurred')
         } finally {
             setLoading(false)
         }
     }
 
-    async function handleSignUp(e: React.FormEvent) {
-        e.preventDefault()
+    async function handleSignUp() {
         setLoading(true)
         setError(null)
         setMessage(null)
@@ -76,11 +79,20 @@ export default function LoginPage() {
             } else {
                 setMessage('Check your email for the confirmation link.')
             }
-        } catch (err) {
+        } catch {
             setError('An unexpected error occurred')
         } finally {
             setLoading(false)
         }
+    }
+
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault()
+        if (isSignUp) {
+            await handleSignUp()
+            return
+        }
+        await handleSignIn()
     }
 
     return (
@@ -88,15 +100,16 @@ export default function LoginPage() {
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-100">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Sign in to your account
+                        {isSignUp ? 'Create your editable QR account' : 'Sign in to your account'}
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        Or{' '}
+                        {isSignUp ? 'Already have an account?' : 'New here?'}{' '}
                         <button
-                            onClick={(e) => handleSignUp(e)}
+                            type="button"
+                            onClick={() => setIsSignUp(!isSignUp)}
                             className="font-medium text-indigo-600 hover:text-indigo-500"
                         >
-                            sign up for free
+                            {isSignUp ? 'sign in' : 'sign up for free'}
                         </button>
                     </p>
                 </div>
@@ -152,7 +165,7 @@ export default function LoginPage() {
                     </div>
                 </div>
 
-                <form className="mt-8 space-y-6" onSubmit={handleSignIn}>
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label htmlFor="email-address" className="sr-only">
@@ -194,7 +207,7 @@ export default function LoginPage() {
                             disabled={loading}
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
                         >
-                            {loading ? 'Processing...' : 'Sign in'}
+                            {loading ? 'Processing...' : isSignUp ? 'Create free account' : 'Sign in'}
                         </button>
                     </div>
                 </form>
