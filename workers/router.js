@@ -127,6 +127,20 @@ function markdown(body, status = 200, extraHeaders = {}) {
   });
 }
 
+function noTransform(response) {
+  const headers = new Headers(response.headers);
+  const cacheControl = headers.get('cache-control');
+  headers.set('cache-control', cacheControl && cacheControl.length > 0
+    ? `${cacheControl}, no-transform`
+    : 'public, max-age=300, no-transform');
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 function apiError(code, message, status = 400, hint = 'See the developer docs for valid request formats.', extra = {}, extraHeaders = {}) {
   return json({
     error: {
@@ -1466,9 +1480,14 @@ export default {
         return markdown(homepageMarkdown());
       }
       if (url.hostname === 'www.vcardqrcodegenerator.com') {
-        return fetch(`${SITE_URL}/index.html`, request);
+        const response = await fetch(new Request(`${SITE_URL}/index.html`, request));
+        return noTransform(response);
       }
       return Response.redirect(`${SITE_URL}/`, 301);
+    }
+
+    if (url.hostname === 'vcardqrcodegenerator.com' && (url.pathname === '/robots.txt' || url.pathname === '/sitemap.xml')) {
+      return fetch(new Request(`${SITE_URL}${url.pathname}`, request));
     }
 
     if (url.pathname === '/ads.txt') {

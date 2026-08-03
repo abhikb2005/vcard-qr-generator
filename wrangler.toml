@@ -11,6 +11,8 @@ routes = [
   { pattern = "vcardqrcodegenerator.com/payment/create-checkout", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "www.vcardqrcodegenerator.com/payment/create-checkout", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/ads.txt", zone_name = "vcardqrcodegenerator.com" },
+  { pattern = "vcardqrcodegenerator.com/robots.txt", zone_name = "vcardqrcodegenerator.com" },
+  { pattern = "vcardqrcodegenerator.com/sitemap.xml", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/v1/*", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/api", zone_name = "vcardqrcodegenerator.com" },
   { pattern = "vcardqrcodegenerator.com/api/*", zone_name = "vcardqrcodegenerator.com" },
