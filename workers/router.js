@@ -1659,8 +1659,11 @@ export default {
       if (wantsMarkdown(request)) {
         return markdown(homepageMarkdown());
       }
-      if (url.hostname === 'www.vcardqrcodegenerator.com' || url.hostname === 'vcardqrcodegenerator.com') {
+      if (url.hostname === 'www.vcardqrcodegenerator.com') {
         return homepageHtml(request);
+      }
+      if (url.hostname === 'vcardqrcodegenerator.com') {
+        return Response.redirect(`${SITE_URL}/`, 301);
       }
     }
 
