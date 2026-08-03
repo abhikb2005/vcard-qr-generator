@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 
+Schemamap: https://www.vcardqrcodegenerator.com/.well-known/schema-feed.xml
 Sitemap: https://www.vcardqrcodegenerator.com/sitemap.xml
 Sitemap: https://vcardqrcodegenerator.com/sitemap.xml

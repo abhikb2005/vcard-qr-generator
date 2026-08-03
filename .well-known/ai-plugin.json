@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "vCard QR Code Generator",
+  "name_for_model": "vcard_qr_code_generator",
+  "description_for_human": "Create privacy-first vCard QR payloads and discover vCard QR Code Generator pricing and developer resources.",
+  "description_for_model": "Use vCard QR Code Generator to create vCard contact payloads for QR code encoding and retrieve product, pricing, API, and MCP metadata.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://www.vcardqrcodegenerator.com/openapi.json",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://www.vcardqrcodegenerator.com/favicon.ico",
+  "contact_email": "support@vcardqrcodegenerator.com",
+  "legal_info_url": "https://www.vcardqrcodegenerator.com/terms-of-service.html"
+}

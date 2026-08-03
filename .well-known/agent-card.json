@@ -1,0 +1,29 @@
+{
+  "name": "vcard-qr-code-generator",
+  "displayName": "vCard QR Code Generator",
+  "description": "Agent-readable product and API metadata for creating vCard QR payloads and discovering vCard QR code resources.",
+  "url": "https://www.vcardqrcodegenerator.com/",
+  "version": "2026-05-21",
+  "documentationUrl": "https://www.vcardqrcodegenerator.com/developers/",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "defaultInputModes": ["application/json", "text/plain"],
+  "defaultOutputModes": ["application/json", "text/markdown"],
+  "skills": [
+    {
+      "id": "create-vcard-payload",
+      "name": "Create vCard payload",
+      "description": "Generate a vCard text payload suitable for QR code encoding.",
+      "tags": ["vcard", "qr-code", "business-card"]
+    },
+    {
+      "id": "product-context",
+      "name": "Get product context",
+      "description": "Return pricing, privacy, API, and integration context for agents.",
+      "tags": ["product", "pricing", "developer-docs"]
+    }
+  ]
+}

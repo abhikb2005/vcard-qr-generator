@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemamap xmlns="https://nlweb.ai/schemas/schemamap">
+  <url>
+    <loc>https://www.vcardqrcodegenerator.com/</loc>
+    <schema>SoftwareApplication</schema>
+  </url>
+  <url>
+    <loc>https://www.vcardqrcodegenerator.com/developers/</loc>
+    <schema>APIReference</schema>
+  </url>
+  <url>
+    <loc>https://www.vcardqrcodegenerator.com/pricing.md</loc>
+    <schema>Product</schema>
+  </url>
+</schemamap>

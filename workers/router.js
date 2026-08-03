@@ -100,7 +100,7 @@ const RATE_LIMIT_HEADERS = {
 const ROBOTS_TXT = `User-agent: *
 Allow: /
 
-Schemamap: ${SITE_URL}/.well-known/schema-feed.json
+Schemamap: ${SITE_URL}/.well-known/schema-feed.xml
 Sitemap: ${SITE_URL}/sitemap.xml
 Sitemap: ${BASE_URL}/sitemap.xml
 `;
@@ -1081,6 +1081,25 @@ function schemaFeed() {
   };
 }
 
+function schemaFeedXml() {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<schemamap xmlns="https://nlweb.ai/schemas/schemamap">
+  <url>
+    <loc>${SITE_URL}/</loc>
+    <schema>SoftwareApplication</schema>
+  </url>
+  <url>
+    <loc>${SITE_URL}/developers/</loc>
+    <schema>APIReference</schema>
+  </url>
+  <url>
+    <loc>${SITE_URL}/pricing.md</loc>
+    <schema>Product</schema>
+  </url>
+</schemamap>
+`;
+}
+
 function a2aAgentCard() {
   return {
     name: 'vcard-qr-code-generator',
@@ -1704,6 +1723,17 @@ export default {
 
     if (url.pathname === '/.well-known/schema-feed.json') {
       return json(schemaFeed(), 200, { 'cache-control': 'public, max-age=300' });
+    }
+
+    if (url.pathname === '/.well-known/schema-feed.xml') {
+      const headers = {
+        'content-type': 'application/xml; charset=utf-8',
+        'cache-control': 'public, max-age=300',
+      };
+      if (request.method === 'HEAD') {
+        return new Response(null, { status: 200, headers });
+      }
+      return new Response(schemaFeedXml(), { status: 200, headers });
     }
 
     if (url.hostname === 'vcardqrcodegenerator.com' && url.pathname === '/sitemap.xml') {
