@@ -97,6 +97,13 @@ const RATE_LIMIT_HEADERS = {
   'x-ratelimit-reset': '60',
 };
 
+const ROBOTS_TXT = `User-agent: *
+Allow: /
+
+Sitemap: ${SITE_URL}/sitemap.xml
+Sitemap: ${BASE_URL}/sitemap.xml
+`;
+
 function notFound() {
   return apiError('not_found', 'Not found', 404, 'Check the API path and use the OpenAPI spec for supported routes.');
 }
@@ -230,6 +237,32 @@ Static QR generation runs in the browser, so contact data does not need to leave
 - MCP manifest: ${SITE_URL}/mcp/manifest.json
 - Rate limits and deprecation policy: ${SITE_URL}/developers/rate-limits.html
 - llms.txt: ${SITE_URL}/llms.txt
+`;
+}
+
+function pricingMarkdown() {
+  return `# vCard QR Code Generator pricing
+
+## Free browser generator
+
+- Price: $0
+- Use case: create static vCard QR codes in the browser.
+- Privacy: contact data stays on the user's device for the free web generator.
+
+## Logo QR Code
+
+- Price: $4.99 one-time
+- Use case: add a logo to a vCard or generic QR code.
+- Checkout provider: Dodo Payments.
+
+## Bulk QR Code
+
+- Standard CSV upload: free for browser-side batch generation.
+- Branded bulk plans: one-time paid batches for adding a shared logo locally after payment verification.
+- Checkout provider: Dodo Payments.
+
+Developer docs: ${SITE_URL}/developers/
+OpenAPI: ${SITE_URL}/openapi.json
 `;
 }
 
@@ -933,6 +966,78 @@ function mcpServerCard() {
   };
 }
 
+function aiCatalog() {
+  return {
+    version: '1.0',
+    publisher: {
+      name: 'vCard QR Code Generator',
+      url: SITE_URL,
+    },
+    resources: [
+      {
+        id: 'urn:vcardqrcodegenerator:openapi',
+        name: 'vCard QR Code Generator OpenAPI spec',
+        type: 'openapi',
+        url: `${SITE_URL}/openapi.json`,
+        mediaType: 'application/json',
+      },
+      {
+        id: 'urn:vcardqrcodegenerator:mcp',
+        name: 'vCard QR Code Generator MCP server',
+        type: 'mcp',
+        url: `${BASE_URL}/mcp`,
+        mediaType: 'application/json',
+      },
+      {
+        id: 'urn:vcardqrcodegenerator:llms',
+        name: 'vCard QR Code Generator llms.txt',
+        type: 'llms.txt',
+        url: `${SITE_URL}/llms.txt`,
+        mediaType: 'text/plain',
+      },
+      {
+        id: 'urn:vcardqrcodegenerator:pricing',
+        name: 'vCard QR Code Generator pricing',
+        type: 'pricing',
+        url: `${SITE_URL}/pricing.md`,
+        mediaType: 'text/markdown',
+      },
+    ],
+  };
+}
+
+function a2aAgentCard() {
+  return {
+    name: 'vcard-qr-code-generator',
+    displayName: 'vCard QR Code Generator',
+    description: 'Agent-readable product and API metadata for creating vCard QR payloads and discovering vCard QR code resources.',
+    url: SITE_URL,
+    version: API_VERSION,
+    documentationUrl: `${SITE_URL}/developers/`,
+    capabilities: {
+      streaming: true,
+      pushNotifications: false,
+      stateTransitionHistory: false,
+    },
+    defaultInputModes: ['application/json', 'text/plain'],
+    defaultOutputModes: ['application/json', 'text/markdown'],
+    skills: [
+      {
+        id: 'create-vcard-payload',
+        name: 'Create vCard payload',
+        description: 'Generate a vCard text payload suitable for QR code encoding.',
+        tags: ['vcard', 'qr-code', 'business-card'],
+      },
+      {
+        id: 'product-context',
+        name: 'Get product context',
+        description: 'Return pricing, privacy, API, and integration context for agents.',
+        tags: ['product', 'pricing', 'developer-docs'],
+      },
+    ],
+  };
+}
+
 function apiIndex() {
   return {
     name: 'vCard QR Code Generator API',
@@ -1486,7 +1591,34 @@ export default {
       return Response.redirect(`${SITE_URL}/`, 301);
     }
 
-    if (url.hostname === 'vcardqrcodegenerator.com' && (url.pathname === '/robots.txt' || url.pathname === '/sitemap.xml')) {
+    if (url.pathname === '/index.md') {
+      return markdown(homepageMarkdown());
+    }
+
+    if (url.pathname === '/pricing.md') {
+      return markdown(pricingMarkdown(), 200, { 'cache-control': 'public, max-age=300, no-transform' });
+    }
+
+    if (url.pathname === '/robots.txt') {
+      const headers = {
+        'content-type': 'text/plain; charset=utf-8',
+        'cache-control': 'public, max-age=300, no-transform',
+      };
+      if (request.method === 'HEAD') {
+        return new Response(null, { status: 200, headers });
+      }
+      return new Response(ROBOTS_TXT, { status: 200, headers });
+    }
+
+    if (url.pathname === '/.well-known/ai-catalog.json') {
+      return json(aiCatalog(), 200, { 'cache-control': 'public, max-age=300' });
+    }
+
+    if (url.pathname === '/.well-known/agent-card.json') {
+      return json(a2aAgentCard(), 200, { 'cache-control': 'public, max-age=300' });
+    }
+
+    if (url.hostname === 'vcardqrcodegenerator.com' && url.pathname === '/sitemap.xml') {
       return fetch(new Request(`${SITE_URL}${url.pathname}`, request));
     }
 
