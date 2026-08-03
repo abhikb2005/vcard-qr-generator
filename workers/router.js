@@ -1260,6 +1260,16 @@ async function handleMcp(request) {
     });
   }
 
+  if (rpc.method === 'notifications/initialized') {
+    return new Response(null, {
+      status: 202,
+      headers: {
+        ...CORS_HEADERS,
+        'cache-control': 'no-store',
+      },
+    });
+  }
+
   if (rpc.method === 'tools/list') {
     return json({
       jsonrpc: '2.0',

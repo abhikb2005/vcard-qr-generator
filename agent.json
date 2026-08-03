@@ -1,0 +1,28 @@
+{
+  "name": "vCard QR Code Generator",
+  "url": "https://www.vcardqrcodegenerator.com/",
+  "description": "Privacy-first vCard QR code generator for business cards, networking, resumes, badges, and branded contact sharing.",
+  "capabilities": [
+    "create static vCard QR payloads",
+    "explain vCard QR code use cases",
+    "provide product metadata for AI agents",
+    "return structured JSON errors",
+    "stream progress with Server-Sent Events"
+  ],
+  "developer": {
+    "docs": "https://www.vcardqrcodegenerator.com/developers/",
+    "openapi": "https://www.vcardqrcodegenerator.com/openapi.json",
+    "auth": "https://www.vcardqrcodegenerator.com/developers/auth.html",
+    "webhooks": "https://www.vcardqrcodegenerator.com/developers/webhooks.html",
+    "streaming": "https://www.vcardqrcodegenerator.com/developers/streaming.html"
+  },
+  "mcp": {
+    "transport": "streamable_http",
+    "url": "https://vcardqrcodegenerator.com/mcp",
+    "manifest": "https://www.vcardqrcodegenerator.com/mcp/manifest.json"
+  },
+  "llms": {
+    "summary": "https://www.vcardqrcodegenerator.com/llms.txt",
+    "full": "https://www.vcardqrcodegenerator.com/llms-full.txt"
+  }
+}
