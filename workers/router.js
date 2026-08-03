@@ -100,6 +100,7 @@ const RATE_LIMIT_HEADERS = {
 const ROBOTS_TXT = `User-agent: *
 Allow: /
 
+Schemamap: ${SITE_URL}/.well-known/schema-feed.json
 Sitemap: ${SITE_URL}/sitemap.xml
 Sitemap: ${BASE_URL}/sitemap.xml
 `;
@@ -140,6 +141,10 @@ function noTransform(response) {
   headers.set('cache-control', cacheControl && cacheControl.length > 0
     ? `${cacheControl}, no-transform`
     : 'public, max-age=300, no-transform');
+  headers.append('link', `<${SITE_URL}/llms.txt>; rel="service-desc"; type="text/plain"`);
+  headers.append('link', `<${SITE_URL}/.well-known/ai-catalog.json>; rel="alternate"; type="application/json"`);
+  headers.append('link', `<${SITE_URL}/index.md>; rel="alternate"; type="text/markdown"`);
+  headers.append('link', `<${SITE_URL}/pricing.md>; rel="pricing"; type="text/markdown"`);
 
   return new Response(response.body, {
     status: response.status,
@@ -238,6 +243,11 @@ Static QR generation runs in the browser, so contact data does not need to leave
 - Rate limits and deprecation policy: ${SITE_URL}/developers/rate-limits.html
 - llms.txt: ${SITE_URL}/llms.txt
 `;
+}
+
+async function homepageHtml(request) {
+  const response = await fetch(new Request(`${SITE_URL}/index.html`, request));
+  return noTransform(response);
 }
 
 function pricingMarkdown() {
@@ -968,39 +978,84 @@ function mcpServerCard() {
 
 function aiCatalog() {
   return {
-    version: '1.0',
-    publisher: {
-      name: 'vCard QR Code Generator',
-      url: SITE_URL,
+    specVersion: '1.0',
+    host: {
+      displayName: 'vCard QR Code Generator',
+      identifier: 'vcardqrcodegenerator.com',
     },
-    resources: [
+    entries: [
       {
-        id: 'urn:vcardqrcodegenerator:openapi',
-        name: 'vCard QR Code Generator OpenAPI spec',
-        type: 'openapi',
+        identifier: 'urn:ai:vcardqrcodegenerator.com:api:openapi',
+        displayName: 'vCard QR Code Generator OpenAPI spec',
+        type: 'application/openapi+json',
         url: `${SITE_URL}/openapi.json`,
-        mediaType: 'application/json',
+        description: 'REST API specification for vCard payload generation, templates, jobs, streaming, and MCP discovery.',
       },
       {
-        id: 'urn:vcardqrcodegenerator:mcp',
-        name: 'vCard QR Code Generator MCP server',
-        type: 'mcp',
+        identifier: 'urn:ai:vcardqrcodegenerator.com:mcp:server',
+        displayName: 'vCard QR Code Generator MCP server',
+        type: 'application/mcp-server+json',
         url: `${BASE_URL}/mcp`,
-        mediaType: 'application/json',
+        description: 'HTTP MCP server exposing product context and vCard payload creation tools.',
       },
       {
-        id: 'urn:vcardqrcodegenerator:llms',
-        name: 'vCard QR Code Generator llms.txt',
-        type: 'llms.txt',
+        identifier: 'urn:ai:vcardqrcodegenerator.com:doc:llms',
+        displayName: 'vCard QR Code Generator llms.txt',
+        type: 'text/plain',
         url: `${SITE_URL}/llms.txt`,
-        mediaType: 'text/plain',
+        description: 'Agent-readable summary of the product, API, MCP, policies, and developer resources.',
       },
       {
-        id: 'urn:vcardqrcodegenerator:pricing',
-        name: 'vCard QR Code Generator pricing',
-        type: 'pricing',
+        identifier: 'urn:ai:vcardqrcodegenerator.com:doc:pricing',
+        displayName: 'vCard QR Code Generator pricing',
+        type: 'text/markdown',
         url: `${SITE_URL}/pricing.md`,
-        mediaType: 'text/markdown',
+        description: 'Machine-readable pricing for free, logo, and bulk vCard QR workflows.',
+      },
+    ],
+    collections: [],
+  };
+}
+
+function aiPluginManifest() {
+  return {
+    schema_version: 'v1',
+    name_for_human: 'vCard QR Code Generator',
+    name_for_model: 'vcard_qr_code_generator',
+    description_for_human: 'Create privacy-first vCard QR payloads and discover vCard QR Code Generator pricing and developer resources.',
+    description_for_model: 'Use vCard QR Code Generator to create vCard contact payloads for QR code encoding and retrieve product, pricing, API, and MCP metadata.',
+    auth: { type: 'none' },
+    api: {
+      type: 'openapi',
+      url: `${SITE_URL}/openapi.json`,
+      is_user_authenticated: false,
+    },
+    logo_url: `${SITE_URL}/favicon.ico`,
+    contact_email: 'support@vcardqrcodegenerator.com',
+    legal_info_url: `${SITE_URL}/terms-of-service.html`,
+  };
+}
+
+function schemaFeed() {
+  return {
+    version: '2026-08-03',
+    name: 'vCard QR Code Generator schema feed',
+    url: `${SITE_URL}/.well-known/schema-feed.json`,
+    items: [
+      {
+        type: 'SoftwareApplication',
+        url: SITE_URL,
+        schemaUrl: `${SITE_URL}/`,
+      },
+      {
+        type: 'APIReference',
+        url: `${SITE_URL}/developers/`,
+        schemaUrl: `${SITE_URL}/openapi.json`,
+      },
+      {
+        type: 'Product',
+        url: `${SITE_URL}/pricing.md`,
+        schemaUrl: `${SITE_URL}/pricing.md`,
       },
     ],
   };
@@ -1584,15 +1639,13 @@ export default {
       if (wantsMarkdown(request)) {
         return markdown(homepageMarkdown());
       }
-      if (url.hostname === 'www.vcardqrcodegenerator.com') {
-        const response = await fetch(new Request(`${SITE_URL}/index.html`, request));
-        return noTransform(response);
+      if (url.hostname === 'www.vcardqrcodegenerator.com' || url.hostname === 'vcardqrcodegenerator.com') {
+        return homepageHtml(request);
       }
-      return Response.redirect(`${SITE_URL}/`, 301);
     }
 
     if (url.pathname === '/index.md') {
-      return markdown(homepageMarkdown());
+      return markdown(homepageMarkdown(), 200, { 'cache-control': 'public, max-age=300, no-transform' });
     }
 
     if (url.pathname === '/pricing.md') {
@@ -1616,6 +1669,18 @@ export default {
 
     if (url.pathname === '/.well-known/agent-card.json') {
       return json(a2aAgentCard(), 200, { 'cache-control': 'public, max-age=300' });
+    }
+
+    if (url.pathname === '/.well-known/agent.json') {
+      return json(agentDiscovery(), 200, { 'cache-control': 'public, max-age=300' });
+    }
+
+    if (url.pathname === '/.well-known/ai-plugin.json') {
+      return json(aiPluginManifest(), 200, { 'cache-control': 'public, max-age=300' });
+    }
+
+    if (url.pathname === '/.well-known/schema-feed.json') {
+      return json(schemaFeed(), 200, { 'cache-control': 'public, max-age=300' });
     }
 
     if (url.hostname === 'vcardqrcodegenerator.com' && url.pathname === '/sitemap.xml') {
