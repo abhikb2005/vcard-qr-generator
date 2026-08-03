@@ -1682,7 +1682,7 @@ export default {
         return homepageHtml(request);
       }
       if (url.hostname === 'vcardqrcodegenerator.com') {
-        return Response.redirect(`${SITE_URL}/`, 301);
+        return homepageHtml(request);
       }
     }
 
