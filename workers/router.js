@@ -1778,6 +1778,10 @@ export default {
       return json(agentDiscovery());
     }
 
+    if (url.hostname === 'vcardqrcodegenerator.com') {
+      return Response.redirect(`${SITE_URL}${url.pathname}${url.search}`, 301);
+    }
+
     return notFound();
   },
 };
