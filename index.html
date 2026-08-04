@@ -49,21 +49,51 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "vCard QR Code Generator",
-      "url": "https://www.vcardqrcodegenerator.com/",
-      "applicationCategory": "Utility",
-      "operatingSystem": "All",
-      "description": "Free vCard QR code generator for business cards that lets people scan and save your contact without typing.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "author": {
-        "@type": "Person",
-        "name": "Abilash K B"
-      }
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.vcardqrcodegenerator.com/#organization",
+          "name": "vCard QR Code Generator",
+          "url": "https://www.vcardqrcodegenerator.com/",
+          "logo": "https://www.vcardqrcodegenerator.com/favicon.ico",
+          "sameAs": [
+            "https://github.com/abhikb2005/vcard-qr-generator"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "email": "support@vcardqrcodegenerator.com",
+            "url": "https://www.vcardqrcodegenerator.com/contact.html"
+          }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://www.vcardqrcodegenerator.com/#software",
+          "name": "vCard QR Code Generator",
+          "url": "https://www.vcardqrcodegenerator.com/",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": "Free vCard QR code generator for business cards that lets people scan and save your contact without typing.",
+          "creator": {
+            "@id": "https://www.vcardqrcodegenerator.com/#organization"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "TechArticle",
+          "@id": "https://www.vcardqrcodegenerator.com/developers/#developer-portal",
+          "headline": "vCard QR Code Generator Developer API Docs",
+          "url": "https://www.vcardqrcodegenerator.com/developers/",
+          "about": ["OpenAPI", "MCP server", "vCard QR code API", "AI agent integration", "JSON error responses"],
+          "publisher": {
+            "@id": "https://www.vcardqrcodegenerator.com/#organization"
+          }
+        }
+      ]
     }
     </script>
   <!-- Tailwind and QRCode Library -->

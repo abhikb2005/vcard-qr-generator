@@ -11,6 +11,7 @@ This markdown file mirrors the primary agent-facing resources for vCard QR Code 
 - MCP server card: https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json
 - Agent Skills index: https://www.vcardqrcodegenerator.com/.well-known/agent-skills/index.json
 - Auth policy: https://www.vcardqrcodegenerator.com/auth.md
+- JSON error example: https://vcardqrcodegenerator.com/api/v1/errors/example
 
 ## When To Use
 

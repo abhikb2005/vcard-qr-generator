@@ -10,6 +10,7 @@ The public API supports agent and developer workflows for vCard QR payload gener
 - `POST https://vcardqrcodegenerator.com/api/v1/vcard`
 - `POST https://vcardqrcodegenerator.com/api/v1/jobs/vcard`
 - `GET https://vcardqrcodegenerator.com/api/v1/stream`
+- `GET https://vcardqrcodegenerator.com/api/v1/errors/example`
 
 ## Machine-Readable Specs
 
@@ -19,3 +20,5 @@ The public API supports agent and developer workflows for vCard QR payload gener
 ## Error And Retry Contract
 
 API errors are structured JSON with `error.code`, `error.message`, `error.hint`, `error.docsUrl`, and `error.status`. Mutation-style endpoints accept `Idempotency-Key`. Responses include `RateLimit-Limit`, `RateLimit-Remaining`, and `RateLimit-Reset`.
+
+Use `GET https://vcardqrcodegenerator.com/api/v1/errors/example` to verify the JSON error shape without sending invalid data.

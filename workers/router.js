@@ -135,6 +135,18 @@ function markdown(body, status = 200, extraHeaders = {}) {
   });
 }
 
+function html(body, status = 200, extraHeaders = {}) {
+  return new Response(body, {
+    status,
+    headers: {
+      'content-type': 'text/html; charset=utf-8',
+      'cache-control': 'public, max-age=300, no-transform',
+      ...CORS_HEADERS,
+      ...extraHeaders,
+    },
+  });
+}
+
 function noTransform(response) {
   const headers = new Headers(response.headers);
   const cacheControl = headers.get('cache-control');
@@ -253,6 +265,113 @@ async function homepageHtml(request) {
   return noTransform(response);
 }
 
+function homepageStructuredData() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/#organization`,
+        name: 'vCard QR Code Generator',
+        url: `${SITE_URL}/`,
+        logo: `${SITE_URL}/favicon.ico`,
+        sameAs: ['https://github.com/abhikb2005/vcard-qr-generator'],
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          email: 'support@vcardqrcodegenerator.com',
+          url: `${SITE_URL}/contact.html`,
+        },
+      },
+      {
+        '@type': 'SoftwareApplication',
+        '@id': `${SITE_URL}/#software`,
+        name: 'vCard QR Code Generator',
+        url: `${SITE_URL}/`,
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        description: 'Privacy-first vCard QR code generator for business cards, badges, resumes, email signatures, and digital contact sharing.',
+        creator: { '@id': `${SITE_URL}/#organization` },
+        offers: [
+          {
+            '@type': 'Offer',
+            name: 'Free static vCard QR code generator',
+            price: '0',
+            priceCurrency: 'USD',
+            url: `${SITE_URL}/`,
+          },
+          {
+            '@type': 'Offer',
+            name: 'Logo QR Code one-time upgrade',
+            price: '4.99',
+            priceCurrency: 'USD',
+            url: `${SITE_URL}/logo-qr-code.html`,
+          },
+        ],
+      },
+      {
+        '@type': 'TechArticle',
+        '@id': `${SITE_URL}/developers/#developer-portal`,
+        headline: 'vCard QR Code Generator Developer API Docs',
+        url: `${SITE_URL}/developers/`,
+        about: ['OpenAPI', 'MCP server', 'vCard QR code API', 'AI agent integration', 'JSON error responses'],
+        publisher: { '@id': `${SITE_URL}/#organization` },
+      },
+    ],
+  };
+}
+
+function agentSafeHomepageHtml() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vCard QR Code Generator - Developer API, OpenAPI, MCP, and Free Contact QR Tool</title>
+  <meta name="description" content="Create free vCard QR codes and integrate with vCard QR Code Generator developer resources, OpenAPI, MCP tools, auth docs, webhooks, sandbox examples, and JSON API errors.">
+  <link rel="canonical" href="${SITE_URL}/">
+  <link rel="service-desc" href="${SITE_URL}/llms.txt" type="text/plain">
+  <link rel="service-desc" href="${SITE_URL}/openapi.json" type="application/json">
+  <link rel="alternate" href="${SITE_URL}/index.md" type="text/markdown">
+  <link rel="alternate" href="${SITE_URL}/developers/" type="text/html">
+  <link rel="alternate" href="${SITE_URL}/.well-known/agent-skills/index.json" type="application/json">
+  <link rel="mcp-server" href="${BASE_URL}/mcp">
+  <script type="application/ld+json">${JSON.stringify(homepageStructuredData())}</script>
+</head>
+<body>
+  <main>
+    <h1>vCard QR Code Generator</h1>
+    <p>vCard QR Code Generator creates privacy-first contact QR codes for business cards, digital business cards, resumes, badges, and email signatures.</p>
+    <h2>Developer API and Agent Resources</h2>
+    <p>Agents can integrate with the public REST API, OpenAPI spec, MCP server, markdown docs, JSON error contract, and sandbox-style test endpoints without requiring API keys for basic vCard payload generation.</p>
+    <ul>
+      <li><a href="${SITE_URL}/developers/">Developer portal</a></li>
+      <li><a href="${SITE_URL}/api-docs.html">vcardqrcodegenerator API docs</a></li>
+      <li><a href="${SITE_URL}/openapi.json">OpenAPI spec</a></li>
+      <li><a href="${SITE_URL}/developers/auth.html">Auth docs and API key policy</a></li>
+      <li><a href="${SITE_URL}/developers/webhooks.html">Webhooks docs</a></li>
+      <li><a href="${SITE_URL}/developers/rate-limits.html">Rate limits and deprecation policy</a></li>
+      <li><a href="${BASE_URL}/api/v1/health">API health check</a></li>
+      <li><a href="${BASE_URL}/api/v1/errors/example">JSON error response example</a></li>
+      <li><a href="${BASE_URL}/mcp">Streamable HTTP MCP endpoint</a></li>
+      <li><a href="${SITE_URL}/llms.txt">llms.txt</a></li>
+      <li><a href="${SITE_URL}/index.md">Markdown homepage fallback</a></li>
+    </ul>
+    <h2>JSON Error Contract</h2>
+    <p>API errors return application/json with error.code, error.message, error.hint, error.docsUrl, and error.status so agents can recover without parsing HTML.</p>
+    <h2>Sandbox and API Keys</h2>
+    <p>The public sandbox-style endpoints do not require API keys: use GET /api/v1/health, GET /api/v1/product, GET /api/v1/templates, and POST /api/v1/vcard with sample contact data.</p>
+    <p><a href="${SITE_URL}/">Open the full browser generator</a>.</p>
+  </main>
+</body>
+</html>`;
+}
+
+async function proxyStaticPage(request, path) {
+  const response = await fetch(new Request(`${SITE_URL}${path}`, request));
+  return noTransform(response);
+}
+
 function pricingMarkdown() {
   return `# vCard QR Code Generator pricing
 
@@ -293,6 +412,7 @@ This markdown file mirrors the primary agent-facing resources for vCard QR Code 
 - MCP server card: ${BASE_URL}/.well-known/mcp/server-card.json
 - Agent Skills index: ${SITE_URL}/.well-known/agent-skills/index.json
 - Auth policy: ${SITE_URL}/auth.md
+- JSON error example: ${BASE_URL}/api/v1/errors/example
 
 ## When To Use
 
@@ -310,6 +430,7 @@ The public API supports agent and developer workflows for vCard QR payload gener
 - POST ${BASE_URL}/api/v1/vcard
 - POST ${BASE_URL}/api/v1/jobs/vcard
 - GET ${BASE_URL}/api/v1/stream
+- GET ${BASE_URL}/api/v1/errors/example
 
 ## Machine-Readable Specs
 
@@ -319,6 +440,8 @@ The public API supports agent and developer workflows for vCard QR payload gener
 ## Error And Retry Contract
 
 API errors are structured JSON with error.code, error.message, error.hint, error.docsUrl, and error.status. Mutation-style endpoints accept Idempotency-Key. Responses include RateLimit-Limit, RateLimit-Remaining, and RateLimit-Reset.
+
+Use GET ${BASE_URL}/api/v1/errors/example to verify the JSON error shape without sending invalid data.
 `,
   '/auth.md': `# vCard QR Code Generator Auth
 
@@ -590,6 +713,24 @@ function openApiSpec() {
             '200': {
               description: 'Product metadata for AI agents and developers',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/ProductContext' } } },
+            },
+          },
+        },
+      },
+      '/api/v1/errors/example': {
+        get: {
+          operationId: 'getJsonErrorExample',
+          summary: 'Get a structured JSON error example',
+          description: 'Returns a deliberate structured JSON error response for agent recovery and parser tests.',
+          responses: {
+            '400': {
+              description: 'Structured JSON error example',
+              headers: {
+                'RateLimit-Limit': { $ref: '#/components/headers/RateLimitLimit' },
+                'RateLimit-Remaining': { $ref: '#/components/headers/RateLimitRemaining' },
+                'RateLimit-Reset': { $ref: '#/components/headers/RateLimitReset' },
+              },
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
           },
         },
@@ -1897,7 +2038,9 @@ export default {
         return homepageHtml(request);
       }
       if (url.hostname === 'vcardqrcodegenerator.com') {
-        return homepageHtml(request);
+        return html(agentSafeHomepageHtml(), 200, {
+          link: `<${SITE_URL}/llms.txt>; rel="service-desc"; type="text/plain", <${SITE_URL}/openapi.json>; rel="service-desc"; type="application/json", <${SITE_URL}/developers/>; rel="alternate"; type="text/html", <${SITE_URL}/index.md>; rel="alternate"; type="text/markdown", <${BASE_URL}/mcp>; rel="mcp-server"`,
+        });
       }
     }
 
@@ -1911,6 +2054,26 @@ export default {
 
     if (ROOT_MARKDOWN_DOCS[url.pathname]) {
       return markdown(ROOT_MARKDOWN_DOCS[url.pathname], 200, { 'cache-control': 'public, max-age=300, no-transform' });
+    }
+
+    if (url.hostname === 'vcardqrcodegenerator.com' && (url.pathname === '/developers' || url.pathname === '/developers/')) {
+      return proxyStaticPage(request, '/developers/');
+    }
+
+    if (url.hostname === 'vcardqrcodegenerator.com' && url.pathname.startsWith('/developers/')) {
+      return proxyStaticPage(request, url.pathname);
+    }
+
+    if (url.hostname === 'vcardqrcodegenerator.com' && (url.pathname === '/docs/api' || url.pathname === '/docs/api/')) {
+      return proxyStaticPage(request, '/docs/api/');
+    }
+
+    if (url.hostname === 'vcardqrcodegenerator.com' && url.pathname === '/api-docs.html') {
+      return proxyStaticPage(request, '/api-docs.html');
+    }
+
+    if (url.hostname === 'vcardqrcodegenerator.com' && (url.pathname === '/brand/vcardqrcodegenerator' || url.pathname === '/brand/vcardqrcodegenerator/')) {
+      return proxyStaticPage(request, '/brand/vcardqrcodegenerator/');
     }
 
     if (url.pathname === '/robots.txt') {
@@ -2026,6 +2189,19 @@ export default {
 
     if (apiPath === '/v1/stream') {
       return streamProgress(url);
+    }
+
+    if (apiPath === '/v1/errors/example') {
+      return apiError('example_error', 'This is a structured JSON error example for agent recovery tests.', 400, 'Use error.code for branching and error.hint for remediation guidance.', {
+        details: {
+          expectedContentType: 'application/json',
+          retryable: false,
+        },
+      });
+    }
+
+    if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/v1/')) {
+      return apiError('api_route_not_found', 'API route not found.', 404, 'Use /api, /api/v1/health, /api/v1/product, /api/v1/templates, /api/v1/vcard, /api/v1/jobs/vcard, or /api/v1/errors/example.');
     }
 
     if (url.pathname === '/mcp' || url.pathname === '/mcp/') {

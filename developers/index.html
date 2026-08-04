@@ -142,6 +142,12 @@
     </section>
 
     <section class="max-w-5xl mx-auto px-6 py-8">
+      <h2 class="text-2xl font-bold">API Keys and Sandbox</h2>
+      <p class="mt-3 text-slate-700">No API key is required for the public sandbox-style endpoints used by agents to test integration behavior. Use <code>GET https://vcardqrcodegenerator.com/api/v1/health</code>, <code>GET https://vcardqrcodegenerator.com/api/v1/product</code>, <code>GET https://vcardqrcodegenerator.com/api/v1/templates</code>, and <code>POST https://vcardqrcodegenerator.com/api/v1/vcard</code> with sample contact data.</p>
+      <p class="mt-3 text-slate-700">For error recovery tests, call <code>GET https://vcardqrcodegenerator.com/api/v1/errors/example</code>. It returns a structured JSON error response with an error code, message, hint, docs URL, status, and details object.</p>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 py-8">
       <h2 class="text-2xl font-bold">Integration Guides</h2>
       <ul class="mt-4 space-y-3 text-slate-700">
         <li><a class="font-semibold text-blue-700" href="/blog/canva-qr-alternative/">Canva QR Code Generator Alternative</a> for business card QR use cases.</li>
