@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-08-11 | Codex | Fixed Nick Launches badge detection for apex-domain scanners by adding the badge link/image and structured sameAs URL to the Worker-served apex homepage shell. | `workers/router.js`, `data/agent-board.md` |
 | 2026-08-11 | Codex | Added the Nick Launches featured badge to the homepage footer trust-badge area beside the existing Uneed badge and prepared it for live publication. | `index.html`, `data/agent-board.md` |
 | 2026-08-11 | Codex | Started task 1 from the six-item orank follow-up list: fixed the MCP handshake path by making `/.well-known/mcp` route POST JSON-RPC requests through the same handler as `/mcp`, while preserving GET discovery JSON. Branch purpose: MCP handshake remediation; cleanup after merge. | `workers/router.js`, `data/agent-board.md` |
 | 2026-08-11 | Codex | Completed the Day 8 GA4 funnel baseline audit and documentation. Confirmed event semantics and payment-verification paths, selected `purchase` as the canonical verified-revenue event, separated activation and paid value realization, specified a closed user-based six-step Funnel Exploration, documented legacy-token limitations, formulas, QA checks, evidence requirements, and next-experiment decision rules. No production application behavior changed. | `docs/gtm-engineering/day-8-funnel-baseline.md`, `data/agent-board.md` |

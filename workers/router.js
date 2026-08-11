@@ -279,6 +279,7 @@ function homepageStructuredData() {
           'https://github.com/abhikb2005',
           'https://github.com/abhikb2005/vcard-qr-generator',
           'https://www.uneed.best/tool/vcard-qr-code-generator',
+          'https://nicklaunches.com/products/vcard-qr-code-generator/?utm_source=vcardqrcodegenerator.com&utm_medium=badge&utm_campaign=featured',
         ],
         address: {
           '@type': 'PostalAddress',
@@ -403,6 +404,11 @@ function agentSafeHomepageHtml() {
     <p>API errors return application/json with error.code, error.message, error.hint, error.docsUrl, and error.status so agents can recover without parsing HTML.</p>
     <h2>Sandbox and API Keys</h2>
     <p>The public sandbox-style endpoints do not require API keys: use GET /api/v1/health, GET /api/v1/product, GET /api/v1/templates, and POST /api/v1/vcard with sample contact data.</p>
+    <p>
+      <a href="https://nicklaunches.com/products/vcard-qr-code-generator/?utm_source=vcardqrcodegenerator.com&utm_medium=badge&utm_campaign=featured" target="_blank" rel="noopener">
+        <img src="https://nicklaunches.com/badges/featured-dark.png" alt="vCard QR Code Generator on Nick Launches" width="244" height="56">
+      </a>
+    </p>
     <p><a href="${SITE_URL}/">Open the full browser generator</a>.</p>
   </main>
 </body>
