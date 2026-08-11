@@ -2311,6 +2311,10 @@ export default {
       return json(mcpManifest());
     }
 
+    if (url.pathname === '/.well-known/mcp' && request.method === 'POST') {
+      return handleMcp(request);
+    }
+
     if (url.pathname === '/.well-known/mcp') {
       return json({
         name: 'vcard-qr-code-generator',
