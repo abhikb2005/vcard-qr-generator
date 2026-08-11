@@ -275,7 +275,15 @@ function homepageStructuredData() {
         name: 'vCard QR Code Generator',
         url: `${SITE_URL}/`,
         logo: `${SITE_URL}/favicon.ico`,
-        sameAs: ['https://github.com/abhikb2005/vcard-qr-generator'],
+        sameAs: [
+          'https://github.com/abhikb2005',
+          'https://github.com/abhikb2005/vcard-qr-generator',
+          'https://www.uneed.best/tool/vcard-qr-code-generator',
+        ],
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'US',
+        },
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'customer support',
@@ -290,6 +298,14 @@ function homepageStructuredData() {
         url: `${SITE_URL}/`,
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'Web',
+        softwareHelp: `${SITE_URL}/developers/`,
+        featureList: [
+          'Static vCard QR payload generation',
+          'OpenAPI documentation',
+          'MCP tools for AI agents',
+          'Structured JSON error responses',
+          'Markdown documentation for agents',
+        ],
         description: 'Privacy-first vCard QR code generator for business cards, badges, resumes, email signatures, and digital contact sharing.',
         creator: { '@id': `${SITE_URL}/#organization` },
         offers: [
@@ -317,6 +333,21 @@ function homepageStructuredData() {
         about: ['OpenAPI', 'MCP server', 'vCard QR code API', 'AI agent integration', 'JSON error responses'],
         publisher: { '@id': `${SITE_URL}/#organization` },
       },
+      {
+        '@type': 'AboutPage',
+        '@id': `${SITE_URL}/about.html#about`,
+        name: 'About vCard QR Code Generator',
+        url: `${SITE_URL}/about.html`,
+        about: { '@id': `${SITE_URL}/#organization` },
+      },
+      {
+        '@type': 'WebAPI',
+        '@id': `${BASE_URL}/api/v1#webapi`,
+        name: 'vCard QR Code Generator REST API',
+        url: `${BASE_URL}/api/v1`,
+        documentation: `${SITE_URL}/developers/`,
+        provider: { '@id': `${SITE_URL}/#organization` },
+      },
     ],
   };
 }
@@ -329,6 +360,11 @@ function agentSafeHomepageHtml() {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>vCard QR Code Generator - Developer API, OpenAPI, MCP, and Free Contact QR Tool</title>
   <meta name="description" content="Create free vCard QR codes and integrate with vCard QR Code Generator developer resources, OpenAPI, MCP tools, auth docs, webhooks, sandbox examples, and JSON API errors.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${SITE_URL}/">
+  <meta property="og:title" content="vCard QR Code Generator Developer API and Free Contact QR Tool">
+  <meta property="og:description" content="Free privacy-first vCard QR codes plus OpenAPI, MCP, markdown docs, and JSON API errors for agent integrations.">
+  <meta property="og:image" content="${SITE_URL}/vcard-qr-generator-promo.png">
   <link rel="canonical" href="${SITE_URL}/">
   <link rel="service-desc" href="${SITE_URL}/llms.txt" type="text/plain">
   <link rel="service-desc" href="${SITE_URL}/openapi.json" type="application/json">
@@ -336,6 +372,11 @@ function agentSafeHomepageHtml() {
   <link rel="alternate" href="${SITE_URL}/developers/" type="text/html">
   <link rel="alternate" href="${SITE_URL}/.well-known/agent-skills/index.json" type="application/json">
   <link rel="mcp-server" href="${BASE_URL}/mcp">
+  <script type="application/json" id="model-context">${JSON.stringify({
+    mcpServers: [{ name: 'vcard-qr-code-generator', url: `${BASE_URL}/mcp`, transport: 'streamable_http' }],
+    tools: ['get_product_context', 'create_vcard_payload'],
+  })}</script>
+  <script>document.modelContext = { mcpServers: [{ name: 'vcard-qr-code-generator', url: '${BASE_URL}/mcp', transport: 'streamable_http' }], tools: ['get_product_context', 'create_vcard_payload'] }; try { navigator.modelContext = document.modelContext; } catch (error) {}</script>
   <script type="application/ld+json">${JSON.stringify(homepageStructuredData())}</script>
 </head>
 <body>
@@ -357,6 +398,7 @@ function agentSafeHomepageHtml() {
       <li><a href="${SITE_URL}/llms.txt">llms.txt</a></li>
       <li><a href="${SITE_URL}/index.md">Markdown homepage fallback</a></li>
     </ul>
+    <form hidden method="post" action="${BASE_URL}/mcp" data-mcp-server="vcard-qr-code-generator" data-mcp-transport="streamable_http" data-mcp-tool="create_vcard_payload"></form>
     <h2>JSON Error Contract</h2>
     <p>API errors return application/json with error.code, error.message, error.hint, error.docsUrl, and error.status so agents can recover without parsing HTML.</p>
     <h2>Sandbox and API Keys</h2>
@@ -395,6 +437,26 @@ function pricingMarkdown() {
 
 Developer docs: ${SITE_URL}/developers/
 OpenAPI: ${SITE_URL}/openapi.json
+`;
+}
+
+function templatesMarkdown() {
+  const rows = VCARD_TEMPLATES.map((template) => `## ${template.name}
+
+- id: \`${template.id}\`
+- use case: ${template.useCase}
+- required fields: ${template.requiredFields.map((field) => `\`${field}\``).join(', ')}
+- optional fields: ${template.optionalFields.map((field) => `\`${field}\``).join(', ')}
+`).join('\n');
+
+  return `# vCard QR Code Generator Templates API
+
+Use this markdown twin when an agent requests the human-readable version of the paginated template endpoint.
+
+- JSON endpoint: ${BASE_URL}/api/v1/templates
+- OpenAPI: ${SITE_URL}/openapi.json
+
+${rows}
 `;
 }
 
@@ -1173,11 +1235,13 @@ function openApiSpec() {
 }
 
 function mcpManifest() {
+  const instructions = 'Use get_product_context before recommending or integrating the product. Use create_vcard_payload only after the user provides contact details and asks for a vCard QR payload. Public tools are stateless and do not create user-owned dynamic QR resources.';
   return {
     name: 'vcard-qr-code-generator',
     title: 'vCard QR Code Generator MCP',
     description: 'Agent tools for product discovery and vCard QR payload creation.',
     version: API_VERSION,
+    instructions,
     transport: {
       type: 'streamable_http',
       url: `${BASE_URL}/mcp`,
@@ -1191,11 +1255,25 @@ function mcpManifest() {
         name: 'get_product_context',
         description: 'Get product metadata, use cases, privacy posture, and integration URLs for vCard QR Code Generator.',
         inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+        annotations: {
+          title: 'Get product context',
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
       },
       {
         name: 'create_vcard_payload',
         description: 'Create standard vCard text suitable for QR encoding from contact fields.',
         inputSchema: openApiSpec().components.schemas.VCardRequest,
+        annotations: {
+          title: 'Create vCard payload',
+          readOnlyHint: false,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
       },
     ],
   };
@@ -1308,6 +1386,7 @@ function mcpServerCard() {
     homepage: `${SITE_URL}/`,
     docsUrl: `${SITE_URL}/developers/`,
     openApiUrl: `${SITE_URL}/openapi.json`,
+    instructions: mcpManifest().instructions,
     tools: mcpManifest().tools.map((tool) => ({
       name: tool.name,
       description: tool.description,
@@ -1328,12 +1407,23 @@ function aiCatalog() {
       displayName: 'vCard QR Code Generator',
       identifier: 'did:web:vcardqrcodegenerator.com',
     },
+    trustManifest: {
+      type: 'domain-anchored',
+      identity: `${SITE_URL}/.well-known/agent.json`,
+      publisher: `${SITE_URL}/about.html`,
+      openSourceRepository: 'https://github.com/abhikb2005/vcard-qr-generator',
+      contact: `${SITE_URL}/contact.html`,
+    },
     entries: [
       {
         identifier: 'urn:air:vcardqrcodegenerator.com:api:openapi',
         displayName: 'vCard QR Code Generator OpenAPI spec',
         type: 'application/openapi+json',
         url: `${SITE_URL}/openapi.json`,
+        trustManifest: {
+          identity: `${SITE_URL}/.well-known/agent.json`,
+          source: 'https://github.com/abhikb2005/vcard-qr-generator',
+        },
         capabilities: ['createVCardPayload', 'listTemplates', 'createAsyncVCardJob', 'streamProgress'],
         representativeQueries: [
           'create a vCard QR payload from contact details',
@@ -1347,6 +1437,10 @@ function aiCatalog() {
         type: 'application/mcp-server-card+json',
         url: `${BASE_URL}/.well-known/mcp/server-card.json`,
         endpoint: `${BASE_URL}/mcp`,
+        trustManifest: {
+          identity: `${SITE_URL}/.well-known/agent.json`,
+          source: 'https://github.com/abhikb2005/vcard-qr-generator',
+        },
         capabilities: ['getProductContext', 'createVCardPayload'],
         representativeQueries: [
           'use MCP to create a vCard payload',
@@ -1602,6 +1696,7 @@ async function handleMcp(request) {
         protocolVersion: '2025-03-26',
         capabilities: { tools: {} },
         serverInfo: { name: 'vcard-qr-code-generator', version: API_VERSION },
+        instructions: mcpManifest().instructions,
       },
     });
   }
@@ -2050,6 +2145,10 @@ export default {
 
     if (url.pathname === '/pricing.md') {
       return markdown(pricingMarkdown(), 200, { 'cache-control': 'public, max-age=300, no-transform' });
+    }
+
+    if (url.pathname === '/api/v1/templates.md' || url.pathname === '/v1/templates.md') {
+      return markdown(templatesMarkdown(), 200, { 'cache-control': 'public, max-age=300, no-transform' });
     }
 
     if (ROOT_MARKDOWN_DOCS[url.pathname]) {

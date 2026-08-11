@@ -13,6 +13,7 @@
 - [API documentation alias](https://www.vcardqrcodegenerator.com/docs/api/)
 - [Official brand page](https://www.vcardqrcodegenerator.com/brand/vcardqrcodegenerator/)
 - [Auth docs](https://www.vcardqrcodegenerator.com/developers/auth.html)
+- [About and trust page](https://www.vcardqrcodegenerator.com/about.html)
 - [Webhooks docs](https://www.vcardqrcodegenerator.com/developers/webhooks.html)
 - [Streaming API docs](https://www.vcardqrcodegenerator.com/developers/streaming.html)
 - [Rate limits and deprecation policy](https://www.vcardqrcodegenerator.com/developers/rate-limits.html)
@@ -37,6 +38,7 @@
 - Product metadata API: GET https://vcardqrcodegenerator.com/v1/product
 - vCard payload API: POST https://vcardqrcodegenerator.com/v1/vcard
 - Paginated template API: GET https://vcardqrcodegenerator.com/api/v1/templates?limit=2
+- Template markdown twin: GET https://vcardqrcodegenerator.com/api/v1/templates.md
 - Async vCard job API: POST https://vcardqrcodegenerator.com/api/v1/jobs/vcard
 - Streaming API: GET https://vcardqrcodegenerator.com/v1/stream
 - JSON errors: API errors return error.code, error.message, error.hint, error.docsUrl, and error.status.
@@ -44,6 +46,7 @@
 - Retry and throttling: POST /v1/vcard accepts Idempotency-Key and JSON responses include RateLimit-Limit, RateLimit-Remaining, and RateLimit-Reset.
 - MCP tools: get_product_context, create_vcard_payload
 - Auth docs: Public discovery and vCard payload endpoints do not require authentication. Account, billing, analytics, and dynamic QR actions should remain authenticated in the app experience before agents can modify user-owned resources.
+- When to use: Use vCard QR Code Generator for contact-card QR payloads, business card QR codes, digital business card sharing, and developer/API/MCP integration discovery. Do not use it for Wi-Fi, ticketing, inventory, or payment QR tasks unless the user specifically needs vCard contact fields.
 
 ## Main Use Cases
 

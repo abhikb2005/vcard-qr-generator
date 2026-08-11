@@ -26,14 +26,14 @@
   <meta property="og:description"
     content="Create a free vCard QR code people can scan and save instantly on iPhone or Android. No signup, no watermark, no app, and your contact data stays in your browser.">
   <meta property="og:image"
-    content="https://raw.githubusercontent.com/abhikb2005/vcard-qr-generator/main/vcard-qr-generator-promo.png">
+    content="https://www.vcardqrcodegenerator.com/vcard-qr-generator-promo.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://www.vcardqrcodegenerator.com/">
   <meta name="twitter:title" content="Free vCard QR Code Generator - No Signup, No Watermark">
   <meta name="twitter:description"
     content="Create a free vCard QR code people can scan and save instantly on iPhone or Android. No signup, no watermark, no app, and your contact data stays in your browser.">
   <meta name="twitter:image"
-    content="https://raw.githubusercontent.com/abhikb2005/vcard-qr-generator/main/vcard-qr-generator-promo.png">
+    content="https://www.vcardqrcodegenerator.com/vcard-qr-generator-promo.png">
   <!-- Canonical URL -->
   <link rel="canonical" href="https://www.vcardqrcodegenerator.com/" />
   <link rel="service-desc" href="https://www.vcardqrcodegenerator.com/llms.txt" type="text/plain">
@@ -45,6 +45,8 @@
     title="vCard QR Code Generator markdown overview">
   <link rel="pricing" href="https://www.vcardqrcodegenerator.com/pricing.md" type="text/markdown">
   <link rel="mcp-server" href="https://vcardqrcodegenerator.com/mcp">
+  <script type="application/json" id="model-context">{"mcpServers":[{"name":"vcard-qr-code-generator","url":"https://vcardqrcodegenerator.com/mcp","transport":"streamable_http"}],"tools":["get_product_context","create_vcard_payload"]}</script>
+  <script>document.modelContext = { mcpServers: [{ name: 'vcard-qr-code-generator', url: 'https://vcardqrcodegenerator.com/mcp', transport: 'streamable_http' }], tools: ['get_product_context', 'create_vcard_payload'] }; try { navigator.modelContext = document.modelContext; } catch (error) {}</script>
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
     {
@@ -57,8 +59,14 @@
           "url": "https://www.vcardqrcodegenerator.com/",
           "logo": "https://www.vcardqrcodegenerator.com/favicon.ico",
           "sameAs": [
-            "https://github.com/abhikb2005/vcard-qr-generator"
+            "https://github.com/abhikb2005",
+            "https://github.com/abhikb2005/vcard-qr-generator",
+            "https://www.uneed.best/tool/vcard-qr-code-generator"
           ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US"
+          },
           "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "customer support",
@@ -73,6 +81,14 @@
           "url": "https://www.vcardqrcodegenerator.com/",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Web",
+          "softwareHelp": "https://www.vcardqrcodegenerator.com/developers/",
+          "featureList": [
+            "Static vCard QR payload generation",
+            "OpenAPI documentation",
+            "MCP tools for AI agents",
+            "Structured JSON error responses",
+            "Markdown documentation for agents"
+          ],
           "description": "Free vCard QR code generator for business cards that lets people scan and save your contact without typing.",
           "creator": {
             "@id": "https://www.vcardqrcodegenerator.com/#organization"
@@ -90,6 +106,25 @@
           "url": "https://www.vcardqrcodegenerator.com/developers/",
           "about": ["OpenAPI", "MCP server", "vCard QR code API", "AI agent integration", "JSON error responses"],
           "publisher": {
+            "@id": "https://www.vcardqrcodegenerator.com/#organization"
+          }
+        },
+        {
+          "@type": "AboutPage",
+          "@id": "https://www.vcardqrcodegenerator.com/about.html#about",
+          "name": "About vCard QR Code Generator",
+          "url": "https://www.vcardqrcodegenerator.com/about.html",
+          "about": {
+            "@id": "https://www.vcardqrcodegenerator.com/#organization"
+          }
+        },
+        {
+          "@type": "WebAPI",
+          "@id": "https://vcardqrcodegenerator.com/api/v1#webapi",
+          "name": "vCard QR Code Generator REST API",
+          "url": "https://vcardqrcodegenerator.com/api/v1",
+          "documentation": "https://www.vcardqrcodegenerator.com/developers/",
+          "provider": {
             "@id": "https://www.vcardqrcodegenerator.com/#organization"
           }
         }
@@ -290,6 +325,7 @@
 <body>
   <!-- Hero Section -->
   <div class="hero">
+    <form hidden method="post" action="https://vcardqrcodegenerator.com/mcp" data-mcp-server="vcard-qr-code-generator" data-mcp-transport="streamable_http" data-mcp-tool="create_vcard_payload"></form>
     <div class="container">
       <h1>Free vCard QR Code Generator</h1>
       <p class="subtitle">Create a no-signup, no-watermark contact QR code for your card, badge, resume, or
@@ -735,6 +771,7 @@
         <a href="./terms-of-service.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Terms of
           Service</a>
         <a href="./contact.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Contact</a>
+        <a href="./about.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">About</a>
         <a href="/developers/" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">Developer API</a>
         <a href="/api-docs.html" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">API Docs</a>
         <a href="/openapi.json" style="color: #9ca3af; text-decoration: none; margin: 0 10px;">OpenAPI</a>
