@@ -4,12 +4,23 @@
     "displayName": "vCard QR Code Generator",
     "identifier": "did:web:vcardqrcodegenerator.com"
   },
+  "trustManifest": {
+    "type": "domain-anchored",
+    "identity": "https://www.vcardqrcodegenerator.com/.well-known/agent.json",
+    "publisher": "https://www.vcardqrcodegenerator.com/about.html",
+    "openSourceRepository": "https://github.com/abhikb2005/vcard-qr-generator",
+    "contact": "https://www.vcardqrcodegenerator.com/contact.html"
+  },
   "entries": [
     {
       "identifier": "urn:air:vcardqrcodegenerator.com:api:openapi",
       "displayName": "vCard QR Code Generator OpenAPI spec",
       "type": "application/openapi+json",
       "url": "https://www.vcardqrcodegenerator.com/openapi.json",
+      "trustManifest": {
+        "identity": "https://www.vcardqrcodegenerator.com/.well-known/agent.json",
+        "source": "https://github.com/abhikb2005/vcard-qr-generator"
+      },
       "capabilities": ["createVCardPayload", "listTemplates", "createAsyncVCardJob", "streamProgress"],
       "representativeQueries": [
         "create a vCard QR payload from contact details",
@@ -23,6 +34,10 @@
       "type": "application/mcp-server-card+json",
       "url": "https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json",
       "endpoint": "https://vcardqrcodegenerator.com/mcp",
+      "trustManifest": {
+        "identity": "https://www.vcardqrcodegenerator.com/.well-known/agent.json",
+        "source": "https://github.com/abhikb2005/vcard-qr-generator"
+      },
       "capabilities": ["getProductContext", "createVCardPayload"],
       "representativeQueries": [
         "use MCP to create a vCard payload",

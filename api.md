@@ -7,6 +7,7 @@ The public API supports agent and developer workflows for vCard QR payload gener
 - `GET https://vcardqrcodegenerator.com/api/v1/health`
 - `GET https://vcardqrcodegenerator.com/api/v1/product`
 - `GET https://vcardqrcodegenerator.com/api/v1/templates`
+- `GET https://vcardqrcodegenerator.com/api/v1/templates.md`
 - `POST https://vcardqrcodegenerator.com/api/v1/vcard`
 - `POST https://vcardqrcodegenerator.com/api/v1/jobs/vcard`
 - `GET https://vcardqrcodegenerator.com/api/v1/stream`

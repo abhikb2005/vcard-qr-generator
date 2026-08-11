@@ -7,7 +7,7 @@
     "domain": "vcardqrcodegenerator.com",
     "homepage": "https://www.vcardqrcodegenerator.com/"
   },
-  "whenToUse": "Use these skills when a user wants to create a vCard QR code, automate digital business card contact payloads, or inspect vCard QR Code Generator developer resources.",
+  "whenToUse": "Use these skills when a user asks to create a vCard QR payload, automate digital business card contact sharing, compare vCard QR tooling, or inspect vCard QR Code Generator developer resources. Do not use them for unrelated QR types such as Wi-Fi, payments, inventory, or ticketing unless the user explicitly wants contact-card vCard data.",
   "skills": [
     {
       "id": "create-vcard-payload",
