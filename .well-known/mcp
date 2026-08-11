@@ -10,5 +10,6 @@
   "manifest": "https://www.vcardqrcodegenerator.com/mcp/manifest.json",
   "openapi": "https://www.vcardqrcodegenerator.com/openapi.json",
   "streaming": "https://vcardqrcodegenerator.com/v1/stream",
-  "serverCard": "https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json"
+  "serverCard": "https://vcardqrcodegenerator.com/.well-known/mcp/server-card.json",
+  "instructions": "Use this Streamable HTTP MCP server for vCard QR Code Generator product context and vCard contact payload creation."
 }
