@@ -137,6 +137,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-08-23 | Codex | Implemented clean Orank canonicalization correction on branch `codex/orank-canonical-www`: apex public paths route through the Worker and redirect permanently to matching `www` URLs, apex sitemap redirects to the preferred sitemap, robots advertises only the `www` sitemap, and the old apex-only agent homepage shell was removed while MCP/API/well-known handlers remain ahead of canonical redirects. Cleanup after merge/deploy verification. | `workers/router.js`, `wrangler.toml`, `robots.txt`, `sitemap.xml`, `data/agent-board.md` |
 | 2026-08-11 | Codex | Fixed Nick Launches badge detection for apex-domain scanners by adding the badge link/image and structured sameAs URL to the Worker-served apex homepage shell. | `workers/router.js`, `data/agent-board.md` |
 | 2026-08-11 | Codex | Added the Nick Launches featured badge to the homepage footer trust-badge area beside the existing Uneed badge and prepared it for live publication. | `index.html`, `data/agent-board.md` |
 | 2026-08-11 | Codex | Started task 1 from the six-item orank follow-up list: fixed the MCP handshake path by making `/.well-known/mcp` route POST JSON-RPC requests through the same handler as `/mcp`, while preserving GET discovery JSON. Branch purpose: MCP handshake remediation; cleanup after merge. | `workers/router.js`, `data/agent-board.md` |
