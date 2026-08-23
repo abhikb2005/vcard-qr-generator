@@ -102,7 +102,6 @@ Allow: /
 
 Schemamap: ${SITE_URL}/.well-known/schema-feed.xml
 Sitemap: ${SITE_URL}/sitemap.xml
-Sitemap: ${BASE_URL}/sitemap.xml
 `;
 
 function notFound() {
@@ -166,6 +165,10 @@ function noTransform(response) {
     statusText: response.statusText,
     headers,
   });
+}
+
+function redirectToPreferredHost(url) {
+  return Response.redirect(`${SITE_URL}${url.pathname}${url.search}`, 301);
 }
 
 function apiError(code, message, status = 400, hint = 'See the developer docs for valid request formats.', extra = {}, extraHeaders = {}) {
@@ -351,73 +354,6 @@ function homepageStructuredData() {
       },
     ],
   };
-}
-
-function agentSafeHomepageHtml() {
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>vCard QR Code Generator - Developer API, OpenAPI, MCP, and Free Contact QR Tool</title>
-  <meta name="description" content="Create free vCard QR codes and integrate with vCard QR Code Generator developer resources, OpenAPI, MCP tools, auth docs, webhooks, sandbox examples, and JSON API errors.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="${SITE_URL}/">
-  <meta property="og:title" content="vCard QR Code Generator Developer API and Free Contact QR Tool">
-  <meta property="og:description" content="Free privacy-first vCard QR codes plus OpenAPI, MCP, markdown docs, and JSON API errors for agent integrations.">
-  <meta property="og:image" content="${SITE_URL}/vcard-qr-generator-promo.png">
-  <link rel="canonical" href="${SITE_URL}/">
-  <link rel="service-desc" href="${SITE_URL}/llms.txt" type="text/plain">
-  <link rel="service-desc" href="${SITE_URL}/openapi.json" type="application/json">
-  <link rel="alternate" href="${SITE_URL}/index.md" type="text/markdown">
-  <link rel="alternate" href="${SITE_URL}/developers/" type="text/html">
-  <link rel="alternate" href="${SITE_URL}/.well-known/agent-skills/index.json" type="application/json">
-  <link rel="mcp-server" href="${BASE_URL}/mcp">
-  <script type="application/json" id="model-context">${JSON.stringify({
-    mcpServers: [{ name: 'vcard-qr-code-generator', url: `${BASE_URL}/mcp`, transport: 'streamable_http' }],
-    tools: ['get_product_context', 'create_vcard_payload'],
-  })}</script>
-  <script>document.modelContext = { mcpServers: [{ name: 'vcard-qr-code-generator', url: '${BASE_URL}/mcp', transport: 'streamable_http' }], tools: ['get_product_context', 'create_vcard_payload'] }; try { navigator.modelContext = document.modelContext; } catch (error) {}</script>
-  <script type="application/ld+json">${JSON.stringify(homepageStructuredData())}</script>
-</head>
-<body>
-  <main>
-    <h1>vCard QR Code Generator</h1>
-    <p>vCard QR Code Generator creates privacy-first contact QR codes for business cards, digital business cards, resumes, badges, and email signatures.</p>
-    <h2>Developer API and Agent Resources</h2>
-    <p>Agents can integrate with the public REST API, OpenAPI spec, MCP server, markdown docs, JSON error contract, and sandbox-style test endpoints without requiring API keys for basic vCard payload generation.</p>
-    <ul>
-      <li><a href="${SITE_URL}/developers/">Developer portal</a></li>
-      <li><a href="${SITE_URL}/api-docs.html">vcardqrcodegenerator API docs</a></li>
-      <li><a href="${SITE_URL}/openapi.json">OpenAPI spec</a></li>
-      <li><a href="${SITE_URL}/developers/auth.html">Auth docs and API key policy</a></li>
-      <li><a href="${SITE_URL}/developers/webhooks.html">Webhooks docs</a></li>
-      <li><a href="${SITE_URL}/developers/rate-limits.html">Rate limits and deprecation policy</a></li>
-      <li><a href="${BASE_URL}/api/v1/health">API health check</a></li>
-      <li><a href="${BASE_URL}/api/v1/errors/example">JSON error response example</a></li>
-      <li><a href="${BASE_URL}/mcp">Streamable HTTP MCP endpoint</a></li>
-      <li><a href="${SITE_URL}/llms.txt">llms.txt</a></li>
-      <li><a href="${SITE_URL}/index.md">Markdown homepage fallback</a></li>
-    </ul>
-    <form hidden method="post" action="${BASE_URL}/mcp" data-mcp-server="vcard-qr-code-generator" data-mcp-transport="streamable_http" data-mcp-tool="create_vcard_payload"></form>
-    <h2>JSON Error Contract</h2>
-    <p>API errors return application/json with error.code, error.message, error.hint, error.docsUrl, and error.status so agents can recover without parsing HTML.</p>
-    <h2>Sandbox and API Keys</h2>
-    <p>The public sandbox-style endpoints do not require API keys: use GET /api/v1/health, GET /api/v1/product, GET /api/v1/templates, and POST /api/v1/vcard with sample contact data.</p>
-    <p>
-      <a href="https://nicklaunches.com/products/vcard-qr-code-generator/?utm_source=vcardqrcodegenerator.com&utm_medium=badge&utm_campaign=featured" target="_blank" rel="noopener">
-        <img src="https://nicklaunches.com/badges/featured-dark.png" alt="vCard QR Code Generator on Nick Launches" width="244" height="56">
-      </a>
-    </p>
-    <p><a href="${SITE_URL}/">Open the full browser generator</a>.</p>
-  </main>
-</body>
-</html>`;
-}
-
-async function proxyStaticPage(request, path) {
-  const response = await fetch(new Request(`${SITE_URL}${path}`, request));
-  return noTransform(response);
 }
 
 function pricingMarkdown() {
@@ -2132,16 +2068,14 @@ export default {
     }
 
     if (url.pathname === '/') {
+      if (url.hostname === 'vcardqrcodegenerator.com') {
+        return redirectToPreferredHost(url);
+      }
       if (url.searchParams.get('mode') === 'agent' || wantsMarkdown(request)) {
         return markdown(homepageMarkdown());
       }
       if (url.hostname === 'www.vcardqrcodegenerator.com') {
         return homepageHtml(request);
-      }
-      if (url.hostname === 'vcardqrcodegenerator.com') {
-        return html(agentSafeHomepageHtml(), 200, {
-          link: `<${SITE_URL}/llms.txt>; rel="service-desc"; type="text/plain", <${SITE_URL}/openapi.json>; rel="service-desc"; type="application/json", <${SITE_URL}/developers/>; rel="alternate"; type="text/html", <${SITE_URL}/index.md>; rel="alternate"; type="text/markdown", <${BASE_URL}/mcp>; rel="mcp-server"`,
-        });
       }
     }
 
@@ -2159,26 +2093,6 @@ export default {
 
     if (ROOT_MARKDOWN_DOCS[url.pathname]) {
       return markdown(ROOT_MARKDOWN_DOCS[url.pathname], 200, { 'cache-control': 'public, max-age=300, no-transform' });
-    }
-
-    if (url.hostname === 'vcardqrcodegenerator.com' && (url.pathname === '/developers' || url.pathname === '/developers/')) {
-      return proxyStaticPage(request, '/developers/');
-    }
-
-    if (url.hostname === 'vcardqrcodegenerator.com' && url.pathname.startsWith('/developers/')) {
-      return proxyStaticPage(request, url.pathname);
-    }
-
-    if (url.hostname === 'vcardqrcodegenerator.com' && (url.pathname === '/docs/api' || url.pathname === '/docs/api/')) {
-      return proxyStaticPage(request, '/docs/api/');
-    }
-
-    if (url.hostname === 'vcardqrcodegenerator.com' && url.pathname === '/api-docs.html') {
-      return proxyStaticPage(request, '/api-docs.html');
-    }
-
-    if (url.hostname === 'vcardqrcodegenerator.com' && (url.pathname === '/brand/vcardqrcodegenerator' || url.pathname === '/brand/vcardqrcodegenerator/')) {
-      return proxyStaticPage(request, '/brand/vcardqrcodegenerator/');
     }
 
     if (url.pathname === '/robots.txt') {
@@ -2228,7 +2142,7 @@ export default {
     }
 
     if (url.hostname === 'vcardqrcodegenerator.com' && url.pathname === '/sitemap.xml') {
-      return fetch(new Request(`${SITE_URL}${url.pathname}`, request));
+      return redirectToPreferredHost(url);
     }
 
     if (url.pathname === '/ads.txt') {
@@ -2346,7 +2260,7 @@ export default {
     }
 
     if (url.hostname === 'vcardqrcodegenerator.com') {
-      return Response.redirect(`${SITE_URL}${url.pathname}${url.search}`, 301);
+      return redirectToPreferredHost(url);
     }
 
     return notFound();
