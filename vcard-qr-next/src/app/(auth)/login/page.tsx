@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { AlertCircle } from 'lucide-react'
+import { trackEvent } from '@/lib/analytics'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -14,18 +15,38 @@ export default function LoginPage() {
 
     const router = useRouter()
     const [isSignUp, setIsSignUp] = useState(false)
+    const [customerSegment, setCustomerSegment] = useState('')
     const supabase = createClient()
 
     useEffect(() => {
-        setIsSignUp(new URLSearchParams(window.location.search).get('mode') === 'signup')
+        const params = new URLSearchParams(window.location.search)
+        setIsSignUp(params.get('mode') === 'signup')
+        setCustomerSegment(params.get('segment') || '')
     }, [])
+
+    const isEventManager = customerSegment === 'event_manager'
+    const dashboardPath = isEventManager ? '/dashboard?segment=event_manager' : '/dashboard'
+    const authCallbackUrl = () => {
+        const callback = new URL('/auth/callback', location.origin)
+        callback.searchParams.set('next', dashboardPath)
+        return callback.toString()
+    }
+
+    const trackSignupIntent = (method: 'email' | 'google') => {
+        trackEvent('dynamic_qr_signup_started', {
+            signup_method: method,
+            customer_segment: customerSegment || 'unspecified',
+            landing_intent: new URLSearchParams(window.location.search).get('intent') || 'unspecified'
+        })
+    }
 
     async function handleGoogleLogin() {
         setLoading(true)
+        if (isSignUp) trackSignupIntent('google')
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${location.origin}/auth/callback`,
+                redirectTo: authCallbackUrl(),
             },
         })
         if (error) {
@@ -48,7 +69,7 @@ export default function LoginPage() {
             if (error) {
                 setError(error.message)
             } else {
-                router.push('/dashboard')
+                router.push(dashboardPath)
                 router.refresh()
             }
         } catch {
@@ -64,11 +85,12 @@ export default function LoginPage() {
         setMessage(null)
 
         try {
+            trackSignupIntent('email')
             const { error, data } = await supabase.auth.signUp({
                 email,
                 password,
                 options: {
-                    emailRedirectTo: `${location.origin}/auth/callback`,
+                    emailRedirectTo: authCallbackUrl(),
                 },
             })
 
@@ -100,16 +122,18 @@ export default function LoginPage() {
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-100">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        {isSignUp ? 'Create your editable QR account' : 'Sign in to your account'}
+                        {isSignUp ? (isEventManager ? 'Create your event QR account' : 'Create your editable QR account') : 'Sign in to your account'}
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        {isSignUp ? 'Already have an account?' : 'New here?'}{' '}
+                        {isSignUp && isEventManager ? 'Create one QR for free, then upgrade only if you need more editable event QR codes and scan analytics.' : isSignUp ? 'Already have an account?' : 'New here?'}
+                    </p>
+                    <p className="mt-2 text-center text-sm text-gray-600">
                         <button
                             type="button"
                             onClick={() => setIsSignUp(!isSignUp)}
                             className="font-medium text-indigo-600 hover:text-indigo-500"
                         >
-                            {isSignUp ? 'sign in' : 'sign up for free'}
+                            {isSignUp ? 'Sign in instead' : 'Sign up for free'}
                         </button>
                     </p>
                 </div>
@@ -207,7 +231,7 @@ export default function LoginPage() {
                             disabled={loading}
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
                         >
-                            {loading ? 'Processing...' : isSignUp ? 'Create free account' : 'Sign in'}
+                            {loading ? 'Processing...' : isSignUp ? (isEventManager ? 'Create free event QR account' : 'Create free account') : 'Sign in'}
                         </button>
                     </div>
                 </form>

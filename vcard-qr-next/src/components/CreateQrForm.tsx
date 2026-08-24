@@ -12,7 +12,7 @@ const generateShortId = (length: number = 6) => {
     return Array.from(array, byte => byte.toString(36).padStart(2, '0')).join('').substring(0, length);
 }
 
-export default function CreateQrForm({ userId }: { userId: string }) {
+export default function CreateQrForm({ userId, customerSegment = '' }: { userId: string, customerSegment?: string }) {
     const [url, setUrl] = useState('')
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(false)
@@ -59,7 +59,13 @@ export default function CreateQrForm({ userId }: { userId: string }) {
                 qr_type: 'dynamic_url',
                 source_page: window.location.pathname,
                 has_logo: false,
-                output_available: true
+                output_available: true,
+                customer_segment: customerSegment || 'unspecified'
+            })
+            trackEvent('dynamic_qr_created', {
+                qr_type: 'dynamic_url',
+                source_page: window.location.pathname,
+                customer_segment: customerSegment || 'unspecified'
             })
             setUrl('')
             setName('')
@@ -77,9 +83,9 @@ export default function CreateQrForm({ userId }: { userId: string }) {
             <div className="p-6 bg-gradient-to-r from-indigo-50 to-white border-b border-gray-100">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
                     <PlusIcon className="w-5 h-5 text-indigo-600" />
-                    Create New Dynamic QR
+                    {customerSegment === 'event_manager' ? 'Create Your Event QR' : 'Create New Dynamic QR'}
                 </h3>
-                <p className="text-sm text-gray-500 mt-1">Shorten a URL and track its scans.</p>
+                <p className="text-sm text-gray-500 mt-1">{customerSegment === 'event_manager' ? 'Paste the live agenda, venue map, registration, or sponsor page. You can change it later.' : 'Shorten a URL and track its scans.'}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-5">
@@ -99,7 +105,7 @@ export default function CreateQrForm({ userId }: { userId: string }) {
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             className="block w-full rounded-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2.5 transition ease-in-out duration-150 text-gray-900 bg-white"
-                            placeholder="example.com"
+                            placeholder={customerSegment === 'event_manager' ? 'your-event-page.com' : 'example.com'}
                         />
                     </div>
                 </div>
@@ -119,7 +125,7 @@ export default function CreateQrForm({ userId }: { userId: string }) {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className="block w-full rounded-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2.5 transition ease-in-out duration-150 text-gray-900 bg-white"
-                            placeholder="My Portfolio"
+                            placeholder={customerSegment === 'event_manager' ? 'August event registration' : 'My Portfolio'}
                         />
                     </div>
                 </div>
@@ -142,7 +148,7 @@ export default function CreateQrForm({ userId }: { userId: string }) {
                             Created!
                         </>
                     ) : (
-                        'Create Dynamic QR Code'
+                        customerSegment === 'event_manager' ? 'Create Event QR Code' : 'Create Dynamic QR Code'
                     )}
                 </button>
             </form>

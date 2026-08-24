@@ -99,6 +99,9 @@ for (const file of ['logo-qr-code.html', 'qr-code-with-logo.html']) {
   const dynamicLanding = read('dynamic-qr-code-generator.html');
   assert.match(dynamicLanding, /Create an editable QR code/);
   assert.match(dynamicLanding, /clicked_dynamic_qr_cta/);
+  assert.match(dynamicLanding, /dynamic_event_manager/);
+  assert.match(dynamicLanding, /customer_segment: 'event_manager'/);
+  assert.match(dynamicLanding, /landing_variant: 'event_manager'/);
   assert.match(dynamicLanding, /mode=signup/);
   assert.match(dynamicLanding, /linker: \{ domains: \['app\.vcardqrcodegenerator\.com'\] \}/);
   assert.doesNotMatch(dynamicLanding, /dynamic_qr_cta_click/);

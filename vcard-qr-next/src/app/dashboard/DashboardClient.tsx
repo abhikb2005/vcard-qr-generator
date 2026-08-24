@@ -39,6 +39,7 @@ export default function DashboardClient() {
     const supabase = createClient()
     const router = useRouter()
     const searchParams = useSearchParams()
+    const customerSegment = searchParams.get('segment') === 'event_manager' ? 'event_manager' : ''
 
     useEffect(() => {
         async function getData() {
@@ -334,7 +335,7 @@ export default function DashboardClient() {
 
                             {/* Logic to gate standard URL QRs too if needed. Assuming same limit. */}
                             {user && !isLimitReached ? (
-                                <CreateQrForm userId={user.id} />
+                                <CreateQrForm userId={user.id} customerSegment={customerSegment} />
                             ) : (
                                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center">
                                     <WalletIcon className="w-12 h-12 text-gray-300 mx-auto mb-3" />
