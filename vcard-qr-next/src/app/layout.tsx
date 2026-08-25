@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/globals.css";
-import Script from 'next/script';
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "vCard QR Code Generator Pro — Premium Digital Business Cards",
-  description: "Create and manage your professional digital business cards with dynamic QR codes. Update your info anytime, track scans, and more.",
+  title: "Editable Dynamic QR Codes — Print Once, Update Anytime",
+  description:
+    "Create editable dynamic QR codes for events, cards, and signs. Update the destination after printing and see scan activity from one dashboard.",
 };
 
 export default function RootLayout({

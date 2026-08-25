@@ -375,7 +375,7 @@
       <div class="mt-8 flex flex-wrap justify-center gap-4">
         <a href="/blogs/"
           class="relative z-20 inline-flex items-center px-4 py-2 rounded-md font-semibold bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Blogs</a>
-        <a href="https://app.vcardqrcodegenerator.com/login"
+        <a href="/dynamic-qr-code-generator.html?intent=dynamic_event_manager&amp;segment=event_manager&amp;landing_variant=homepage_editable_qr" data-dynamic-qr-cta="homepage_editable_qr"
           class="relative z-20 inline-flex items-center px-4 py-2 rounded-md font-semibold bg-white text-indigo-600 border border-transparent hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Create editable QR codes
         </a>
@@ -877,7 +877,7 @@
         });
       });
 
-      document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"]').forEach((link) => {
+      document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"], a[data-dynamic-qr-cta]').forEach((link) => {
         link.addEventListener('click', () => {
           gaTrack('clicked_dynamic_qr_cta', {
             cta_text: normalizedText(link),
