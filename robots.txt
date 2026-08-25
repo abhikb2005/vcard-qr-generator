@@ -4,4 +4,5 @@ Allow: /
 Schemamap: https://www.vcardqrcodegenerator.com/.well-known/schema-feed.xml
 
 
+
 Sitemap: https://www.vcardqrcodegenerator.com/sitemap.xml
