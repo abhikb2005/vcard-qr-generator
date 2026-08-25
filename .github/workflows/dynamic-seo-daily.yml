@@ -45,6 +45,8 @@ jobs:
           ADSENSE_REFRESH_TOKEN: ${{ secrets.ADSENSE_REFRESH_TOKEN }}
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
         run: python scripts/dynamic_seo_daily.py
+      - name: Verify canonical sitemap host
+        run: node --test tests/sitemap-canonical.test.cjs
       - name: Commit and push changes
         run: |
           if [[ -n "$(git status --porcelain)" ]]; then

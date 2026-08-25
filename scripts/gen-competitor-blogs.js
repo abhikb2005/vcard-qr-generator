@@ -464,7 +464,7 @@ competitors.forEach(c => {
 let sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 competitors.forEach(c => {
   if (!sitemap.includes(c.slug)) {
-    const entry = `  <url>\n    <loc>https://vcardqrcodegenerator.com/blog/${c.slug}/</loc>\n    <lastmod>${c.date}T00:00:00+00:00</lastmod>\n  </url>\n</urlset>`;
+    const entry = `  <url>\n    <loc>https://www.vcardqrcodegenerator.com/blog/${c.slug}/</loc>\n    <lastmod>${c.date}T00:00:00+00:00</lastmod>\n  </url>\n</urlset>`;
     sitemap = sitemap.replace('</urlset>', entry);
   }
 });

@@ -248,9 +248,9 @@ def _write_sitemap(posts: List[Post]) -> None:
 def _ensure_robots():
     line = f"Sitemap: {SITE}/sitemap.xml"
     if ROBOTS.exists():
-        txt = ROBOTS.read_text(encoding="utf-8")
-        if line not in txt:
-            ROBOTS.write_text((txt.rstrip() + "\n" + line + "\n"), encoding="utf-8")
+        lines = ROBOTS.read_text(encoding="utf-8").splitlines()
+        non_sitemap_lines = [item for item in lines if not item.lower().startswith("sitemap:")]
+        ROBOTS.write_text("\n".join([*non_sitemap_lines, "", line, ""]), encoding="utf-8")
     else:
         ROBOTS.write_text(line + "\n", encoding="utf-8")
 
