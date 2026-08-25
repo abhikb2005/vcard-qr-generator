@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, ArrowLeft, CheckCircle2, QrCode, Sparkles } from 'lucide-react'
 import { trackEvent } from '@/lib/analytics'
 
 export default function LoginPage() {
@@ -26,6 +26,23 @@ export default function LoginPage() {
 
     const isEventManager = customerSegment === 'event_manager'
     const dashboardPath = isEventManager ? '/dashboard?segment=event_manager' : '/dashboard'
+    const experience = isEventManager
+        ? {
+            eyebrow: 'Built for solo event managers',
+            title: 'Keep every printed event QR useful.',
+            description: 'Create one QR for your event, update the destination when plans change, and see what attendees actually scan.',
+            benefits: ['Update your agenda, venue map, or registration page after printing', 'Use the same QR on invitations, signs, badges, and table tents', 'Start with one free dynamic QR before deciding to upgrade'],
+            accountTitle: 'Create your event QR account',
+            accountDescription: 'Make your first QR free. Upgrade only when you need more editable codes and scan analytics.'
+        }
+        : {
+            eyebrow: 'Editable QR codes that keep working',
+            title: 'Print once. Update whenever you need.',
+            description: 'Create a dynamic QR code, change its destination later, and track the scan activity from one simple dashboard.',
+            benefits: ['Keep printed cards, flyers, and signs useful after details change', 'Point scans to the newest page without reprinting', 'Start with one free dynamic QR before deciding to upgrade'],
+            accountTitle: 'Create your editable QR account',
+            accountDescription: 'Create your first dynamic QR free, then upgrade only when you need more codes or scan analytics.'
+        }
     const authCallbackUrl = () => {
         const callback = new URL('/auth/callback', location.origin)
         callback.searchParams.set('next', dashboardPath)
@@ -118,133 +135,131 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-                <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        {isSignUp ? (isEventManager ? 'Create your event QR account' : 'Create your editable QR account') : 'Sign in to your account'}
-                    </h2>
-                    <p className="mt-2 text-center text-sm text-gray-600">
-                        {isSignUp && isEventManager ? 'Create one QR for free, then upgrade only if you need more editable event QR codes and scan analytics.' : isSignUp ? 'Already have an account?' : 'New here?'}
-                    </p>
-                    <p className="mt-2 text-center text-sm text-gray-600">
-                        <button
-                            type="button"
-                            onClick={() => setIsSignUp(!isSignUp)}
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                        >
-                            {isSignUp ? 'Sign in instead' : 'Sign up for free'}
-                        </button>
-                    </p>
-                </div>
-
-                {error && (
-                    <div className="bg-red-50 p-4 rounded-md flex items-start">
-                        <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-3" />
-                        <p className="text-sm text-red-700">{error}</p>
+        <main className="min-h-screen bg-slate-950 p-4 sm:p-6 lg:p-8">
+            <div className="mx-auto grid min-h-[calc(100vh-2rem)] max-w-7xl overflow-hidden rounded-[2rem] border border-white/10 bg-white shadow-2xl shadow-slate-950/50 lg:grid-cols-[1.08fr_.92fr]">
+                <section className="relative overflow-hidden bg-gradient-to-br from-indigo-700 via-indigo-700 to-cyan-700 px-7 py-9 text-white sm:px-10 lg:flex lg:flex-col lg:justify-between lg:p-14">
+                    <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-cyan-300/20 blur-3xl" aria-hidden="true" />
+                    <div className="absolute -bottom-24 -left-20 h-72 w-72 rounded-full bg-violet-400/20 blur-3xl" aria-hidden="true" />
+                    <div className="relative">
+                        <a href="https://www.vcardqrcodegenerator.com/" className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-700">
+                            <QrCode className="h-4 w-4" aria-hidden="true" />
+                            vCard QR Pro
+                        </a>
+                        <p className="mt-12 text-sm font-bold uppercase tracking-[0.18em] text-cyan-100">{experience.eyebrow}</p>
+                        <h1 className="mt-4 max-w-xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">{experience.title}</h1>
+                        <p className="mt-6 max-w-xl text-lg leading-8 text-indigo-50">{experience.description}</p>
                     </div>
-                )}
 
-                {message && (
-                    <div className="bg-green-50 p-4 rounded-md">
-                        <p className="text-sm text-green-700">{message}</p>
+                    <div className="relative mt-10 space-y-4 lg:mt-0">
+                        {experience.benefits.map((benefit) => (
+                            <div key={benefit} className="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+                                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-cyan-200" aria-hidden="true" />
+                                <p className="text-sm leading-6 text-white">{benefit}</p>
+                            </div>
+                        ))}
                     </div>
-                )}
+                </section>
 
-                <div className="space-y-4">
-                    <button
-                        onClick={handleGoogleLogin}
-                        disabled={loading}
-                        className="w-full flex justify-center items-center gap-3 py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200"
-                    >
-                        <svg className="w-5 h-5" viewBox="0 0 24 24">
-                            <path
-                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                                fill="#4285F4"
-                            />
-                            <path
-                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                                fill="#34A853"
-                            />
-                            <path
-                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
-                                fill="#FBBC05"
-                            />
-                            <path
-                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                                fill="#EA4335"
-                            />
-                            <path d="M1 1h22v22H1z" fill="none" />
-                        </svg>
-                        Continue with Google
-                    </button>
-
-                    <div className="relative my-6">
-                        <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-gray-200"></div>
+                <section className="flex items-center bg-white px-6 py-9 sm:px-10 lg:px-14">
+                    <div className="mx-auto w-full max-w-md">
+                        <div className="flex items-center gap-2 text-sm font-semibold text-indigo-700">
+                            <Sparkles className="h-4 w-4" aria-hidden="true" />
+                            {isSignUp ? 'Start with a free QR' : 'Welcome back'}
                         </div>
-                        <div className="relative flex justify-center text-sm">
-                            <span className="px-2 bg-white text-gray-500">Or continue with email</span>
-                        </div>
-                    </div>
-                </div>
+                        <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                            {isSignUp ? experience.accountTitle : 'Sign in to your dashboard'}
+                        </h2>
+                        <p className="mt-3 text-base leading-7 text-slate-600">
+                            {isSignUp ? experience.accountDescription : 'Manage your editable QR codes, destinations, and scan activity.'}
+                        </p>
 
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="rounded-md shadow-sm -space-y-px">
-                        <div>
-                            <label htmlFor="email-address" className="sr-only">
-                                Email address
-                            </label>
-                            <input
-                                id="email-address"
-                                name="email"
-                                type="email"
-                                autoComplete="email"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Email address"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="password" className="sr-only">
-                                Password
-                            </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autoComplete="current-password"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                    </div>
+                        {error && (
+                            <div role="alert" className="mt-6 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                                <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" aria-hidden="true" />
+                                <p>{error}</p>
+                            </div>
+                        )}
 
-                    <div>
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                        >
-                            {loading ? 'Processing...' : isSignUp ? (isEventManager ? 'Create free event QR account' : 'Create free account') : 'Sign in'}
-                        </button>
-                    </div>
-                </form>
+                        {message && (
+                            <div role="status" aria-live="polite" className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-6 text-emerald-800">
+                                {message} You can close this page after confirming your email.
+                            </div>
+                        )}
 
-                <div className="text-center mt-6">
-                    <a
-                        href="https://www.vcardqrcodegenerator.com/"
-                        className="inline-flex w-full items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                        Back to Main Site
-                    </a>
-                </div>
+                        <div className="mt-8">
+                            <button
+                                onClick={handleGoogleLogin}
+                                disabled={loading}
+                                className="flex min-h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-400 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                                <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" />
+                                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                                </svg>
+                                Continue with Google
+                            </button>
+
+                            <div className="my-7 flex items-center gap-4" aria-hidden="true">
+                                <div className="h-px flex-1 bg-slate-200" />
+                                <span className="text-xs font-medium uppercase tracking-wider text-slate-400">or use email</span>
+                                <div className="h-px flex-1 bg-slate-200" />
+                            </div>
+                        </div>
+
+                        <form className="space-y-5" onSubmit={handleSubmit}>
+                            <div>
+                                <label htmlFor="email-address" className="mb-2 block text-sm font-semibold text-slate-800">Email address</label>
+                                <input
+                                    id="email-address"
+                                    name="email"
+                                    type="email"
+                                    autoComplete="email"
+                                    required
+                                    className="block min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                                    placeholder="you@example.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="password" className="mb-2 block text-sm font-semibold text-slate-800">Password</label>
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    autoComplete={isSignUp ? 'new-password' : 'current-password'}
+                                    required
+                                    minLength={6}
+                                    className="block min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 placeholder:text-slate-400 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                                    placeholder={isSignUp ? 'Create a password (6+ characters)' : 'Enter your password'}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="flex min-h-12 w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                                {loading ? 'Please wait…' : isSignUp ? (isEventManager ? 'Create my free event QR account' : 'Create my free account') : 'Sign in to dashboard'}
+                            </button>
+                        </form>
+
+                        <div className="mt-7 border-t border-slate-200 pt-6 text-center text-sm text-slate-600">
+                            {isSignUp ? 'Already have an account?' : 'New to dynamic QR codes?'}{' '}
+                            <button type="button" onClick={() => setIsSignUp(!isSignUp)} className="font-bold text-indigo-700 underline decoration-indigo-300 underline-offset-4 transition hover:text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
+                                {isSignUp ? 'Sign in instead' : 'Create a free account'}
+                            </button>
+                        </div>
+                        <a href="https://www.vcardqrcodegenerator.com/" className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
+                            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                            Back to vCard QR Generator
+                        </a>
+                    </div>
+                </section>
             </div>
-        </div>
+        </main>
     )
 }
