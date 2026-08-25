@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import logging
 import re
 from pathlib import Path
 from typing import Iterable
@@ -11,6 +12,8 @@ from jinja2 import Template
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
 TEMPLATE_DIR = ROOT / "templates"
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 DOMAIN_TOKENS = ("vcard", "contact", "business", "phone", "email", "address", "vcf")
 
@@ -105,21 +108,31 @@ def filter_relevant(words: Iterable[str]) -> list[str]:
 def load_txt_lines(path: Path) -> list[str]:
     if not path.exists():
         return []
-    with path.open("r", encoding="utf-8", errors="ignore") as handle:
-        return [line.strip() for line in handle if line.strip()]
+    try:
+        with path.open("r", encoding="utf-8", errors="ignore") as handle:
+            return [line.strip() for line in handle if line.strip()]
+    except OSError as exc:
+        logging.warning("Could not read seed text file %s: %s", path, exc)
+        return []
 
 
 def load_csv_col(path: Path) -> list[str]:
     if not path.exists():
         return []
     values: list[str] = []
-    with path.open("r", encoding="utf-8", newline="") as handle:
-        reader = csv.reader(handle)
-        header = next(reader, None)
-        for row in reader:
-            if not row:
-                continue
-            values.append(row[0])
+    try:
+        with path.open("r", encoding="utf-8", newline="") as handle:
+            reader = csv.reader(handle)
+            next(reader, None)
+            for line_number, row in enumerate(reader, start=2):
+                try:
+                    if not row:
+                        continue
+                    values.append(row[0])
+                except Exception as exc:
+                    logging.warning("Skipping malformed seed row %s in %s: %s", line_number, path, exc)
+    except (csv.Error, OSError, UnicodeError) as exc:
+        logging.warning("Could not read seed CSV %s: %s", path, exc)
     return values
 
 
@@ -162,8 +175,12 @@ def load_seeds() -> list[str]:
 
 
 def render_page(template_path: Path, context: dict) -> str:
-    template = Template(template_path.read_text(encoding="utf-8"))
-    return template.render(**context)
+    try:
+        template = Template(template_path.read_text(encoding="utf-8"))
+        return template.render(**context)
+    except Exception as exc:
+        logging.warning("Could not render template %s for %s: %s", template_path, context.get("slug", "unknown"), exc)
+        raise
 
 
 def make_faq(seed: str) -> list[dict[str, str]]:

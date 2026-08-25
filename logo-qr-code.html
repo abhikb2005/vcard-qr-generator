@@ -695,22 +695,32 @@
       }
 
       function saveVerifiedUnlock(payment) {
-        const expiresAt = Date.now() + 24 * 60 * 60 * 1000;
-        localStorage.setItem(verifiedUnlockStorageKey, JSON.stringify({
-          payment_id: payment.payment_id || payment.transaction_id,
-          plan_id: payment.plan_id || proPlanParams.plan_id,
-          value: typeof payment.value === 'number' ? payment.value : proPlanParams.value,
-          currency: payment.currency || proPlanParams.currency,
-          status: payment.status || 'succeeded',
-          expires_at: expiresAt
-        }));
+        try {
+          const expiresAt = Date.now() + 24 * 60 * 60 * 1000;
+          localStorage.setItem(verifiedUnlockStorageKey, JSON.stringify({
+            payment_id: payment.payment_id || payment.transaction_id,
+            plan_id: payment.plan_id || proPlanParams.plan_id,
+            value: typeof payment.value === 'number' ? payment.value : proPlanParams.value,
+            currency: payment.currency || proPlanParams.currency,
+            status: payment.status || 'succeeded',
+            expires_at: expiresAt
+          }));
+        } catch (error) {
+          // Pro UI remains locked when browser storage is unavailable.
+        }
       }
 
       function hasVerifiedUnlock() {
         try {
-          const unlock = JSON.parse(localStorage.getItem(verifiedUnlockStorageKey) || 'null');
+          const rawUnlock = localStorage.getItem(verifiedUnlockStorageKey);
+          const unlock = rawUnlock ? JSON.parse(rawUnlock) : null;
           return !!(unlock && unlock.payment_id && unlock.status === 'succeeded' && unlock.expires_at > Date.now());
         } catch (error) {
+          try {
+            localStorage.removeItem(verifiedUnlockStorageKey);
+          } catch (storageError) {
+            // Ignore cleanup failures; the safe fallback is a locked Pro UI.
+          }
           return false;
         }
       }

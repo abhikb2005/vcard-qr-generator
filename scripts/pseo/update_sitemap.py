@@ -1,5 +1,6 @@
 from __future__ import annotations
 import json
+import logging
 import re
 import subprocess
 from dataclasses import dataclass
@@ -10,14 +11,16 @@ from xml.etree.ElementTree import Element, SubElement, tostring
 import xml.dom.minidom
 
 ROOT = Path(__file__).resolve().parents[2]
-SITE = "https://vcardqrcodegenerator.com"
-CANONICAL_HOST = "vcardqrcodegenerator.com"
+SITE = "https://www.vcardqrcodegenerator.com"
+CANONICAL_HOST = "www.vcardqrcodegenerator.com"
 CANONICAL_SCHEME = "https"
 MANIFEST = ROOT / "blog_index.json"
 SITEMAP = ROOT / "sitemap.xml"
 ROBOTS  = ROOT / "robots.txt"
 
 BLOG_DIRS = ["blog", "blogs"]  # scan both roots
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.IGNORECASE | re.DOTALL)
 META_DESC_RE = re.compile(
@@ -50,7 +53,8 @@ def _git_last_commit_iso(path: Path) -> str:
         ).strip()
         if iso:
             return iso
-    except Exception:
+    except Exception as exc:
+        logging.warning("Could not read git date for %s: %s", path, exc)
         pass
     return datetime.now(timezone.utc).isoformat()
 
@@ -66,7 +70,8 @@ def _load_manifest() -> Dict[str, Dict[str, str]]:
         return {}
     try:
         data = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    except Exception:
+    except Exception as exc:
+        logging.warning("Could not parse %s: %s", MANIFEST, exc)
         return {}
     out = {}
     if isinstance(data, list):
@@ -88,26 +93,26 @@ def _discover_posts() -> List[Post]:
             url = f"/{root_name}/{slug}/"
             try:
                 html = idx.read_text(encoding="utf-8")
-            except Exception:
-                html = ""
-            meta = _parse_html_meta(html)
-            prev = existing.get(slug, {})
-            # Preserve existing date when possible; else derive from git commit date
-            prev_date = prev.get("date", "")
-            if prev_date:
-                date_iso = prev_date[:10]
-            else:
-                commit_iso = _git_last_commit_iso(idx)
-                date_iso = commit_iso[:10]
-            posts.append(
-                Post(
-                    slug=slug,
-                    url=url,
-                    title=meta["title"] or prev.get("title") or slug.replace("-", " ").title(),
-                    description=meta["description"] or prev.get("description", ""),
-                    date=date_iso,
+                meta = _parse_html_meta(html)
+                prev = existing.get(slug, {})
+                # Preserve existing date when possible; else derive from git commit date
+                prev_date = prev.get("date", "")
+                if prev_date:
+                    date_iso = prev_date[:10]
+                else:
+                    commit_iso = _git_last_commit_iso(idx)
+                    date_iso = commit_iso[:10]
+                posts.append(
+                    Post(
+                        slug=slug,
+                        url=url,
+                        title=meta["title"] or prev.get("title") or slug.replace("-", " ").title(),
+                        description=meta["description"] or prev.get("description", ""),
+                        date=date_iso,
+                    )
                 )
-            )
+            except Exception as exc:
+                logging.warning("Skipping malformed post at %s: %s", idx, exc)
     # Sort newest first by date
     posts.sort(key=lambda p: p.date, reverse=True)
     return posts
@@ -132,7 +137,8 @@ def _load_existing_sitemap_lastmods() -> Dict[str, str]:
         return {}
     try:
         text = SITEMAP.read_text(encoding="utf-8")
-    except Exception:
+    except Exception as exc:
+        logging.warning("Could not read existing sitemap lastmods from %s: %s", SITEMAP, exc)
         return {}
 
     lastmods: Dict[str, str] = {}
@@ -188,11 +194,14 @@ def _write_sitemap(posts: List[Post]) -> None:
     def include(path: Path) -> None:
         if not path.exists():
             return
-        loc = normalize_url(path)
-        if loc in seen:
-            return
-        seen.add(loc)
-        _add_url(urlset, loc, existing_lastmods.get(loc) or file_lastmod_iso(path))
+        try:
+            loc = normalize_url(path)
+            if loc in seen:
+                return
+            seen.add(loc)
+            _add_url(urlset, loc, existing_lastmods.get(loc) or file_lastmod_iso(path))
+        except Exception as exc:
+            logging.warning("Skipping sitemap path %s: %s", path, exc)
 
     include(ROOT / "index.html")
     include(ROOT / "privacy-policy.html")
@@ -215,14 +224,21 @@ def _write_sitemap(posts: List[Post]) -> None:
         ]
         for candidate in candidate_paths:
             if candidate.exists():
-                include(candidate)
+                try:
+                    include(candidate)
+                except Exception as exc:
+                    logging.warning("Skipping sitemap candidate %s: %s", candidate, exc)
                 break
 
-    xml_string = tostring(urlset, 'utf-8')
-    dom = xml.dom.minidom.parseString(xml_string)
-    pretty_xml = dom.toprettyxml(indent="  ")
-    # Remove the extra XML declaration from minidom
-    pretty_xml = "\n".join(pretty_xml.split("\n")[1:])
+    try:
+        xml_string = tostring(urlset, 'utf-8')
+        dom = xml.dom.minidom.parseString(xml_string)
+        pretty_xml = dom.toprettyxml(indent="  ")
+        # Remove the extra XML declaration from minidom
+        pretty_xml = "\n".join(pretty_xml.split("\n")[1:])
+    except Exception as exc:
+        logging.warning("Could not render sitemap XML: %s", exc)
+        return
 
     SITEMAP.write_text(
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + pretty_xml,
@@ -239,10 +255,13 @@ def _ensure_robots():
         ROBOTS.write_text(line + "\n", encoding="utf-8")
 
 def main():
-    posts = _discover_posts()
-    _write_manifest(posts)
-    _write_sitemap(posts)
-    _ensure_robots()
+    try:
+        posts = _discover_posts()
+        _write_manifest(posts)
+        _write_sitemap(posts)
+        _ensure_robots()
+    except Exception as exc:
+        logging.warning("pSEO sitemap refresh skipped after unexpected error: %s", exc)
 
 if __name__ == "__main__":
     main()

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import os
 import re
 from datetime import datetime, timezone
@@ -18,6 +19,8 @@ ROOT = Path(__file__).resolve().parents[2]
 TEMPLATE_PATH = ROOT / "templates" / "pseo.html"
 OUTPUT_DIR = ROOT / "blog"
 MANIFEST_PATH = ROOT / "blog_index.json"
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 # --- helpers: content hashing -------------------------------------------------
 def hash_str(value: str) -> str:
@@ -96,7 +99,8 @@ def _load_existing_manifest() -> Dict[str, Dict[str, str]]:
         return {}
     try:
         data = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
-    except (json.JSONDecodeError, OSError):
+    except (json.JSONDecodeError, OSError) as exc:
+        logging.warning("Could not load existing blog manifest %s: %s", MANIFEST_PATH, exc)
         return {}
     result: Dict[str, Dict[str, str]] = {}
     if isinstance(data, list):
@@ -122,15 +126,19 @@ def _scan_blog_dir_for_posts() -> List[Dict[str, str]]:
             continue
         try:
             html = index_file.read_text(encoding="utf-8")
-        except OSError:
+        except OSError as exc:
+            logging.warning("Skipping unreadable generated page %s: %s", index_file, exc)
             continue
-        meta = _parse_html_metadata(html)
-        posts.append({
-            "slug": slug,
-            "title": meta.get("title") or slug.replace("-", " ").title(),
-            "description": meta.get("description", "") or "",
-            "url": f"/blog/{slug}/",
-        })
+        try:
+            meta = _parse_html_metadata(html)
+            posts.append({
+                "slug": slug,
+                "title": meta.get("title") or slug.replace("-", " ").title(),
+                "description": meta.get("description", "") or "",
+                "url": f"/blog/{slug}/",
+            })
+        except Exception as exc:
+            logging.warning("Skipping malformed generated page %s: %s", index_file, exc)
     return posts
 
 def _merge_manifest(existing: Dict[str, Dict[str, str]], scanned: List[Dict[str, str]]) -> List[Dict[str, str]]:
@@ -180,7 +188,11 @@ def main() -> None:
     min_samples = int(os.getenv("PSEO_MIN_SAMPLES", "2"))
     dry_run = os.getenv("PSEO_DRY_RUN", "0") == "1"
 
-    seeds = load_seeds()
+    try:
+        seeds = load_seeds()
+    except Exception as exc:
+        logging.warning("Could not load pSEO seed dataset: %s", exc)
+        return
     if not seeds:
         print("No seeds available after filtering.")
         return
@@ -188,11 +200,15 @@ def main() -> None:
     print(f"Loaded {len(seeds)} seeds")
 
     # clustering (kept for parity / debugging)
-    vectorizer = TfidfVectorizer(ngram_range=(1, 2), min_df=1)
-    matrix = vectorizer.fit_transform(seeds)
-    clustering = DBSCAN(metric="cosine", eps=eps, min_samples=min_samples)
-    labels = clustering.fit_predict(matrix)
-    cluster_count = len({label for label in labels if label >= 0})
+    try:
+        vectorizer = TfidfVectorizer(ngram_range=(1, 2), min_df=1)
+        matrix = vectorizer.fit_transform(seeds)
+        clustering = DBSCAN(metric="cosine", eps=eps, min_samples=min_samples)
+        labels = clustering.fit_predict(matrix)
+        cluster_count = len({label for label in labels if label >= 0})
+    except Exception as exc:
+        logging.warning("Could not cluster pSEO seeds; continuing without clusters: %s", exc)
+        cluster_count = 0
     print(f"DBSCAN clusters: {cluster_count} (eps={eps}, min_samples={min_samples})")
 
     slugs = [slugify(seed) for seed in seeds]
@@ -216,27 +232,30 @@ def main() -> None:
 
     # Generate/update pages
     for seed, slug in zip(seeds, slugs):
-        context = build_context(seed, slug)
-        html = render_page(TEMPLATE_PATH, context)
+        try:
+            context = build_context(seed, slug)
+            html = render_page(TEMPLATE_PATH, context)
 
-        page_dir = OUTPUT_DIR / slug
-        page_dir.mkdir(parents=True, exist_ok=True)
-        page_file = page_dir / "index.html"
+            page_dir = OUTPUT_DIR / slug
+            page_dir.mkdir(parents=True, exist_ok=True)
+            page_file = page_dir / "index.html"
 
-        new_hash = hash_str(html)
-        existing_hash = None
-        if page_file.exists():
-            existing_hash = hash_str(page_file.read_text(encoding="utf-8", errors="ignore"))
+            new_hash = hash_str(html)
+            existing_hash = None
+            if page_file.exists():
+                existing_hash = hash_str(page_file.read_text(encoding="utf-8", errors="ignore"))
 
-        if existing_hash == new_hash:
-            skipped += 1
-            continue
+            if existing_hash == new_hash:
+                skipped += 1
+                continue
 
-        page_file.write_text(html, encoding="utf-8")
-        if existing_hash is None:
-            created += 1
-        else:
-            updated += 1
+            page_file.write_text(html, encoding="utf-8")
+            if existing_hash is None:
+                created += 1
+            else:
+                updated += 1
+        except Exception as exc:
+            logging.warning("Skipping pSEO seed %r: %s", seed, exc)
 
     # Build/refresh manifest AFTER pages exist on disk
     existing_manifest = _load_existing_manifest()
