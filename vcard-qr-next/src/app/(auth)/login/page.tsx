@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { QRCodeCanvas } from "qrcode.react";
 import {
   AlertCircle,
   ArrowLeft,
@@ -278,27 +279,21 @@ export default function LoginPage() {
                 ) : (
                   <div className="mt-4 rounded-xl border border-indigo-200 bg-white p-4">
                     <div className="flex items-center gap-4">
-                      <div
-                        className="grid h-16 w-16 shrink-0 grid-cols-4 gap-0.5 rounded-md border-4 border-slate-950 bg-white p-1"
-                        aria-label="Illustrative QR preview"
-                      >
-                        {[1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1].map(
-                          (cell, index) => (
-                            <span
-                              key={index}
-                              className={cell ? "bg-slate-950" : "bg-white"}
-                              aria-hidden="true"
-                            />
-                          ),
-                        )}
+                      <div className="shrink-0 rounded-md border border-slate-200 bg-white p-1.5 shadow-sm">
+                        <QRCodeCanvas
+                          value={demoDestination || "https://your-event.com"}
+                          size={64}
+                          level="M"
+                          includeMargin={false}
+                          title="Live QR preview"
+                        />
                       </div>
                       <div>
                         <p className="text-sm font-bold text-slate-950">
-                          Demo QR created
+                          Live QR preview
                         </p>
                         <p className="mt-1 text-xs leading-5 text-slate-600">
-                          Imagine it&apos;s already printed on an invitation or
-                          sign.
+                          It regenerates as you change the link below.
                         </p>
                       </div>
                     </div>
@@ -328,8 +323,9 @@ export default function LoginPage() {
                         id="demo-destination-help"
                         className="mt-2 text-xs leading-5 text-slate-500"
                       >
-                        This is a safe preview only—nothing is saved or
-                        published.
+                        This safe preview changes with the URL. A real dynamic
+                        QR keeps one printed code and updates its destination
+                        behind the scenes.
                       </p>
                     </div>
 
@@ -347,7 +343,8 @@ export default function LoginPage() {
                           aria-live="polite"
                           className="text-sm font-semibold text-emerald-700"
                         >
-                          Updated—your printed QR would now open this new link.
+                          Preview regenerated. A saved dynamic QR would keep the
+                          printed code and update the destination instead.
                         </p>
                       )}
                     </div>
