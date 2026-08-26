@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 
-const DODO_API_KEY = process.env.DODO_PAYMENTS_API_KEY
+const DODO_API_KEY = process.env.DODO_PAYMENTS_API_KEY?.trim()
 const DODO_BASE_URL = 'https://live.dodopayments.com' // Using live mode as test mode was inconsistent
 
 export const DodoPayments = {
@@ -27,7 +27,7 @@ export const DodoPayments = {
             },
             body: JSON.stringify({
                 product_cart: [{
-                    product_id: productId,
+                    product_id: productId.trim(),
                     quantity: 1
                 }],
                 customer: {

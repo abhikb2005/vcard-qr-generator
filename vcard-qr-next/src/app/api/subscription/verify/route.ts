@@ -4,9 +4,9 @@ import { NextResponse } from 'next/server'
 
 // Map products back to plan names
 const getPlanFromProductId = (productId: string) => {
-    if (productId === process.env.DODO_PRODUCT_ID_STARTER) return 'starter'
-    if (productId === process.env.DODO_PRODUCT_ID_GROWTH) return 'growth'
-    if (productId === process.env.DODO_PRODUCT_ID_BUSINESS) return 'business'
+    if (productId === process.env.DODO_PRODUCT_ID_STARTER?.trim()) return 'starter'
+    if (productId === process.env.DODO_PRODUCT_ID_GROWTH?.trim()) return 'growth'
+    if (productId === process.env.DODO_PRODUCT_ID_BUSINESS?.trim()) return 'business'
     return 'free'
 }
 

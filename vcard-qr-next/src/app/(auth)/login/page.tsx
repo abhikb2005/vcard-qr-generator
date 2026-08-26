@@ -35,6 +35,7 @@ export default function LoginPage() {
 
   const router = useRouter();
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isPasswordRecovery, setIsPasswordRecovery] = useState(false);
   const [customerSegment, setCustomerSegment] = useState("");
   const supabase = createClient();
 
@@ -77,9 +78,9 @@ export default function LoginPage() {
         accountDescription:
           "Create your first dynamic QR free, then upgrade only when you need more codes or scan analytics.",
       };
-  const authCallbackUrl = () => {
+  const authCallbackUrl = (next = dashboardPath) => {
     const callback = new URL("/auth/callback", location.origin);
-    callback.searchParams.set("next", dashboardPath);
+    callback.searchParams.set("next", next);
     return callback.toString();
   };
 
@@ -95,6 +96,8 @@ export default function LoginPage() {
 
   async function handleGoogleLogin() {
     setLoading(true);
+    setError(null);
+    setMessage(null);
     if (isSignUp) trackSignupIntent("google");
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -165,8 +168,36 @@ export default function LoginPage() {
     }
   }
 
+  async function handlePasswordRecovery() {
+    setLoading(true);
+    setError(null);
+    setMessage(null);
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: authCallbackUrl("/auth/reset-password"),
+      });
+
+      if (error) {
+        setError(error.message);
+      } else {
+        setMessage(
+          "If an account exists for that email address, we’ve sent a password-reset link.",
+        );
+      }
+    } catch {
+      setError("An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (isPasswordRecovery) {
+      await handlePasswordRecovery();
+      return;
+    }
     if (isSignUp) {
       await handleSignUp();
       return;
@@ -242,15 +273,25 @@ export default function LoginPage() {
           <div className="mx-auto w-full max-w-md">
             <div className="flex items-center gap-2 text-sm font-semibold text-indigo-700">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
-              {isSignUp ? "Start with a free QR" : "Welcome back"}
+              {isPasswordRecovery
+                ? "Password recovery"
+                : isSignUp
+                  ? "Start with a free QR"
+                  : "Welcome back"}
             </div>
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-              {isSignUp ? experience.accountTitle : "Sign in to your dashboard"}
+              {isPasswordRecovery
+                ? "Reset your password"
+                : isSignUp
+                  ? experience.accountTitle
+                  : "Sign in to your dashboard"}
             </h2>
             <p className="mt-3 text-base leading-7 text-slate-600">
-              {isSignUp
-                ? experience.accountDescription
-                : "Manage your editable QR codes, destinations, and scan activity."}
+              {isPasswordRecovery
+                ? "Enter the email address you use to sign in. We’ll send you a secure link to choose a new password."
+                : isSignUp
+                  ? experience.accountDescription
+                  : "Manage your editable QR codes, destinations, and scan activity."}
             </p>
 
             {isSignUp && (
@@ -432,11 +473,12 @@ export default function LoginPage() {
                 aria-live="polite"
                 className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-6 text-emerald-800"
               >
-                {message} You can close this page after confirming your email.
+                {message}
+                {isSignUp && " You can close this page after confirming your email."}
               </div>
             )}
 
-            <div className="mt-8">
+            {!isPasswordRecovery && <div className="mt-8">
               <button
                 onClick={handleGoogleLogin}
                 disabled={loading}
@@ -470,7 +512,7 @@ export default function LoginPage() {
                 </span>
                 <div className="h-px flex-1 bg-slate-200" />
               </div>
-            </div>
+            </div>}
 
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div>
@@ -492,7 +534,7 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div>
+              {!isPasswordRecovery && <div>
                 <label
                   htmlFor="password"
                   className="mb-2 block text-sm font-semibold text-slate-800"
@@ -515,7 +557,20 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-              </div>
+                {!isSignUp && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsPasswordRecovery(true);
+                      setError(null);
+                      setMessage(null);
+                    }}
+                    className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-indigo-700 underline decoration-indigo-300 underline-offset-4 transition hover:text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                  >
+                    Forgot password?
+                  </button>
+                )}
+              </div>}
               <button
                 type="submit"
                 disabled={loading}
@@ -523,7 +578,9 @@ export default function LoginPage() {
               >
                 {loading
                   ? "Please wait…"
-                  : isSignUp
+                  : isPasswordRecovery
+                    ? "Send password-reset link"
+                    : isSignUp
                     ? isEventManager
                       ? "Create my free event QR account"
                       : "Create my free account"
@@ -532,15 +589,28 @@ export default function LoginPage() {
             </form>
 
             <div className="mt-7 border-t border-slate-200 pt-6 text-center text-sm text-slate-600">
-              {isSignUp
-                ? "Already have an account?"
-                : "New to dynamic QR codes?"}{" "}
+              {isPasswordRecovery
+                ? "Remembered your password?"
+                : isSignUp
+                  ? "Already have an account?"
+                  : "New to dynamic QR codes?"}{" "}
               <button
                 type="button"
-                onClick={() => setIsSignUp(!isSignUp)}
+                onClick={() => {
+                  if (isPasswordRecovery) {
+                    setIsPasswordRecovery(false);
+                    setIsSignUp(false);
+                  } else {
+                    setIsSignUp(!isSignUp);
+                  }
+                  setError(null);
+                  setMessage(null);
+                }}
                 className="font-bold text-indigo-700 underline decoration-indigo-300 underline-offset-4 transition hover:text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
               >
-                {isSignUp ? "Sign in instead" : "Create a free account"}
+                {isPasswordRecovery || isSignUp
+                  ? "Sign in instead"
+                  : "Create a free account"}
               </button>
             </div>
             <a
