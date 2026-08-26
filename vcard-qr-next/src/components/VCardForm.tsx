@@ -59,14 +59,15 @@ export default function VCardForm({ userId, initialData }: { userId: string, ini
         }
 
         const shortId = initialData?.short_code || generateShortId()
-        const publicProfileUrl = `${origin}/p/${shortId}`
+        const alias = formData.alias.trim()
+        const publicProfileUrl = `${origin}/p/${alias || shortId}`
 
         const payload = {
             user_id: userId,
             target_url: publicProfileUrl,
             name: `${formData.firstName} ${formData.lastName} (vCard)`.trim() || formData.organization,
             short_code: shortId,
-            alias: formData.alias || null,
+            alias: alias || null,
             vcard_data: formData
         }
 

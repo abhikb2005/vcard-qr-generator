@@ -1,5 +1,6 @@
 import { PSEOPage } from '@/types';
 import { createClient } from '@/utils/supabase/server';
+import { createClient as createSupabaseAdminClient } from '@supabase/supabase-js';
 
 export const dummyPages: PSEOPage[] = [
     {
@@ -114,13 +115,33 @@ export async function getRelatedSlugs(limit: number = 20): Promise<string[]> {
 }
 
 export async function getQRCodeByShortCode(shortCode: string) {
-    const supabase = await createClient();
+    return getQRCodeByPublicId(shortCode);
+}
+
+export async function getQRCodeByPublicId(publicId: string) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+
+    if (!supabaseUrl || !serviceRoleKey) {
+        console.error('Public vCard page is missing Supabase service-role configuration');
+        return null;
+    }
+
+    const supabase = createSupabaseAdminClient(supabaseUrl, serviceRoleKey);
     const { data, error } = await supabase
         .from('qr_codes')
         .select('*')
-        .eq('short_code', shortCode)
+        .eq('short_code', publicId)
         .single();
 
-    if (error) return null;
-    return data;
+    if (!error && data) return data;
+
+    const { data: aliasMatch, error: aliasError } = await supabase
+        .from('qr_codes')
+        .select('*')
+        .eq('alias', publicId)
+        .single();
+
+    if (aliasError) return null;
+    return aliasMatch;
 }

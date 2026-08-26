@@ -1,4 +1,4 @@
-import { getQRCodeByShortCode } from '@/data/dummy';
+import { getQRCodeByPublicId } from '@/data/dummy';
 import { notFound } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -30,7 +30,7 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
             }
         };
     } else {
-        qr = await getQRCodeByShortCode(id);
+        qr = await getQRCodeByPublicId(id);
     }
 
     if (!qr || !qr.vcard_data) {

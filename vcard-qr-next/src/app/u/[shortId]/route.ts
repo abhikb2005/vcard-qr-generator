@@ -11,17 +11,27 @@ async function hashIP(ip: string): Promise<string> {
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ shortId: string }> }) {
     const { shortId } = await params
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()
+
+    if (!supabaseUrl || !serviceRoleKey) {
+        console.error('Public QR redirect is missing Supabase service-role configuration')
+        return NextResponse.json(
+            { error: 'QR service is temporarily unavailable' },
+            { status: 503 }
+        )
+    }
     
     // Use Service Role admin client to bypass RLS for public scanning
     const supabaseAdmin = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!
+        supabaseUrl,
+        serviceRoleKey
     )
 
     // 1. Fetch the QR code mapping
     const { data: qr, error } = await supabaseAdmin
         .from('qr_codes')
-        .select('id, target_url, vcard_data')
+        .select('id, target_url, vcard_data, alias')
         .eq('short_code', shortId)
         .single()
 
@@ -68,7 +78,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // 3. Redirect Logic
     if (qr.vcard_data) {
         const origin = new URL(request.url).origin
-        return NextResponse.redirect(`${origin}/p/${shortId}`)
+        return NextResponse.redirect(`${origin}/p/${qr.alias || shortId}`)
     }
 
     // Otherwise, standard redirect
