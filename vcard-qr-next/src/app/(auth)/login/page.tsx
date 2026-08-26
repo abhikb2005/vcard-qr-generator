@@ -8,8 +8,6 @@ import {
   AlertCircle,
   ArrowLeft,
   CheckCircle2,
-  PencilLine,
-  PlayCircle,
   QrCode,
   RotateCcw,
   Sparkles,
@@ -22,12 +20,18 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const [demoStep, setDemoStep] = useState<"start" | "created" | "updated">(
-    "start",
-  );
+  const [demoStep, setDemoStep] = useState<"start" | "dashboard">("start");
+  const [demoName, setDemoName] = useState("August event registration");
   const [demoDestination, setDemoDestination] = useState(
     "https://your-event.com/agenda",
   );
+  const [savedDemoName, setSavedDemoName] = useState(
+    "August event registration",
+  );
+  const [savedDemoDestination, setSavedDemoDestination] = useState(
+    "https://your-event.com/agenda",
+  );
+  const [demoSaved, setDemoSaved] = useState(false);
 
   const router = useRouter();
   const [isSignUp, setIsSignUp] = useState(false);
@@ -170,13 +174,21 @@ export default function LoginPage() {
     await handleSignIn();
   }
 
+  const demoQrValue = "https://app.vcardqrcodegenerator.com/u/august-event";
+
   function startDemo() {
+    setDemoName("August event registration");
     setDemoDestination("https://your-event.com/agenda");
-    setDemoStep("created");
+    setSavedDemoName("August event registration");
+    setSavedDemoDestination("https://your-event.com/agenda");
+    setDemoSaved(false);
+    setDemoStep("dashboard");
   }
 
   function updateDemo() {
-    setDemoStep("updated");
+    setSavedDemoName(demoName || "Untitled event QR");
+    setSavedDemoDestination(demoDestination || "https://your-event.com");
+    setDemoSaved(true);
   }
 
   return (
@@ -248,21 +260,21 @@ export default function LoginPage() {
               >
                 <div className="flex items-start gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white">
-                    <PlayCircle className="h-5 w-5" aria-hidden="true" />
+                    <QrCode className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.14em] text-indigo-700">
-                      Try it first · no account needed
+                      Dashboard preview · no account needed
                     </p>
                     <h3
                       id="editable-qr-demo-title"
                       className="mt-1 text-lg font-bold text-slate-950"
                     >
-                      See how an editable QR works
+                      See what you can update
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-slate-600">
-                      Create a preview, then change where the same printed QR
-                      sends people.
+                      Your printed QR stays the same. In the dashboard, you
+                      update its name and the page where scans go.
                     </p>
                   </div>
                 </div>
@@ -274,47 +286,85 @@ export default function LoginPage() {
                     className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-bold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 sm:w-auto"
                   >
                     <QrCode className="h-4 w-4" aria-hidden="true" />
-                    Create a demo QR
+                    Open an event QR dashboard
                   </button>
                 ) : (
                   <div className="mt-4 rounded-xl border border-indigo-200 bg-white p-4">
-                    <div className="flex items-center gap-4">
-                      <div className="shrink-0 rounded-md border border-slate-200 bg-white p-1.5 shadow-sm">
-                        <QRCodeCanvas
-                          value={demoDestination || "https://your-event.com"}
-                          size={64}
-                          level="M"
-                          includeMargin={false}
-                          title="Live QR preview"
-                        />
-                      </div>
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                       <div>
                         <p className="text-sm font-bold text-slate-950">
-                          Live QR preview
+                          My QR codes
                         </p>
-                        <p className="mt-1 text-xs leading-5 text-slate-600">
-                          It regenerates as you change the link below.
+                        <p className="text-xs text-slate-500">
+                          Dashboard preview
                         </p>
                       </div>
+                      <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">
+                        Active
+                      </span>
+                    </div>
+
+                    <div className="mt-4 flex items-start gap-4">
+                      <div className="shrink-0 rounded-md border border-slate-200 bg-white p-1.5 shadow-sm">
+                        <QRCodeCanvas
+                          value={demoQrValue}
+                          size={72}
+                          level="M"
+                          includeMargin={false}
+                          title="Fixed example QR code"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold text-slate-950">
+                          Printed event QR
+                        </p>
+                        <p className="mt-1 text-xs leading-5 text-slate-600">
+                          This square stays fixed on your invitations, signs,
+                          and badges.
+                        </p>
+                        <p className="mt-2 truncate font-mono text-[11px] text-indigo-700">
+                          /u/august-event
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-5">
+                      <label
+                        htmlFor="demo-name"
+                        className="mb-2 block text-sm font-semibold text-slate-800"
+                      >
+                        QR name{" "}
+                        <span className="font-normal text-slate-500">
+                          (for your dashboard)
+                        </span>
+                      </label>
+                      <input
+                        id="demo-name"
+                        value={demoName}
+                        onChange={(event) => {
+                          setDemoName(event.target.value);
+                          setDemoSaved(false);
+                        }}
+                        className="block min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+                      />
                     </div>
 
                     <div className="mt-4">
                       <label
                         htmlFor="demo-destination"
-                        className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-800"
+                        className="mb-2 block text-sm font-semibold text-slate-800"
                       >
-                        <PencilLine
-                          className="h-4 w-4 text-indigo-600"
-                          aria-hidden="true"
-                        />
-                        Change its destination
+                        Destination URL{" "}
+                        <span className="font-normal text-slate-500">
+                          (where scans go)
+                        </span>
                       </label>
                       <input
                         id="demo-destination"
                         value={demoDestination}
                         onChange={(event) => {
                           setDemoDestination(event.target.value);
-                          setDemoStep("created");
+                          setDemoSaved(false);
                         }}
                         className="block min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
                         aria-describedby="demo-destination-help"
@@ -323,9 +373,8 @@ export default function LoginPage() {
                         id="demo-destination-help"
                         className="mt-2 text-xs leading-5 text-slate-500"
                       >
-                        This safe preview changes with the URL. A real dynamic
-                        QR keeps one printed code and updates its destination
-                        behind the scenes.
+                        Change this after printing to send attendees to a new
+                        agenda, venue map, registration page, or sponsor page.
                       </p>
                     </div>
 
@@ -335,16 +384,16 @@ export default function LoginPage() {
                         onClick={updateDemo}
                         className="inline-flex min-h-11 items-center justify-center rounded-lg bg-slate-950 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2"
                       >
-                        Update destination
+                        Save changes
                       </button>
-                      {demoStep === "updated" && (
+                      {demoSaved && (
                         <p
                           role="status"
                           aria-live="polite"
                           className="text-sm font-semibold text-emerald-700"
                         >
-                          Preview regenerated. A saved dynamic QR would keep the
-                          printed code and update the destination instead.
+                          Saved: “{savedDemoName}” now sends scans to{" "}
+                          {savedDemoDestination}. The printed QR did not change.
                         </p>
                       )}
                     </div>
@@ -354,11 +403,11 @@ export default function LoginPage() {
                 {demoStep !== "start" && (
                   <button
                     type="button"
-                    onClick={() => setDemoStep("start")}
+                    onClick={startDemo}
                     className="mt-3 inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-indigo-700 underline decoration-indigo-300 underline-offset-4 transition hover:text-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                   >
                     <RotateCcw className="h-4 w-4" aria-hidden="true" />
-                    Reset demo
+                    Restart dashboard preview
                   </button>
                 )}
               </section>
