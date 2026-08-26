@@ -26,12 +26,15 @@ export async function POST(request: Request) {
     }
 
     try {
+        const returnUrl = new URL('/dashboard', request.url)
+        returnUrl.searchParams.set('payment_verifying', 'true')
+
         const data = await DodoPayments.createCheckoutSession({
             productId,
             email: user.email!,
             name: user.user_metadata?.full_name,
             userId: user.id,
-            redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/dashboard?payment_verifying=true`
+            redirectUrl: returnUrl.toString()
         })
 
         return NextResponse.json({ url: data.checkout_url })

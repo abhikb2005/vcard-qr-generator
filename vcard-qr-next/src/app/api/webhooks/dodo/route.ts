@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
         const eventType = event.event || event.type
         
         const customerEmail = event.data?.customer?.email || event.data?.customer_email
-        let userId = event.data?.metadata?.userId || event.data?.custom_data?.userId
+        let userId = event.data?.metadata?.user_id || event.data?.metadata?.userId || event.data?.custom_data?.user_id || event.data?.custom_data?.userId
 
         // If Dodo didn't pass metadata back but gave us email, we fetch userId via auth.users (requires service role)
         if (!userId && customerEmail) {

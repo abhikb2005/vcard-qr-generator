@@ -82,19 +82,21 @@ export default function DashboardClient() {
 
             // Handle Payment Verification
             const sessionId = searchParams.get('session_id')
-            if (searchParams.get('payment_verifying') === 'true' && sessionId) {
+            const subscriptionId = searchParams.get('subscription_id')
+            if (searchParams.get('payment_verifying') === 'true' && (sessionId || subscriptionId)) {
                 setVerifyingPayment(true)
-                verifyPayment(sessionId)
+                verifyPayment({ sessionId, subscriptionId })
             }
         }
         getData()
     }, [router, supabase, searchParams])
 
-    const verifyPayment = async (sessionId: string) => {
+    const verifyPayment = async ({ sessionId, subscriptionId }: { sessionId: string | null, subscriptionId: string | null }) => {
         try {
             const res = await fetch('/api/subscription/verify', {
                 method: 'POST',
-                body: JSON.stringify({ sessionId })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionId, subscriptionId })
             })
             const json = await res.json()
             if (json.success) {
@@ -105,7 +107,7 @@ export default function DashboardClient() {
                     currency: json.currency || 'USD'
                 }
                 trackPurchase({
-                    transaction_id: json.payment_id || sessionId,
+                    transaction_id: json.payment_id || json.subscription_id || sessionId || subscriptionId,
                     value: json.value ?? planDetails.value,
                     currency: json.currency || planDetails.currency,
                     plan_id: planDetails.plan_id,

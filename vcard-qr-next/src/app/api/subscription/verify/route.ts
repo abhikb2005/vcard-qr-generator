@@ -26,13 +26,47 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { sessionId } = await request.json()
+    const { sessionId, subscriptionId } = await request.json()
 
-    if (!sessionId) {
-        return NextResponse.json({ error: 'Missing Session ID' }, { status: 400 })
+    if (!sessionId && !subscriptionId) {
+        return NextResponse.json({ error: 'Missing checkout or subscription ID' }, { status: 400 })
     }
 
     try {
+        if (subscriptionId) {
+            const subscriptionData = await DodoPayments.getSubscription(subscriptionId)
+            const subscriptionUserId = subscriptionData.metadata?.user_id || subscriptionData.metadata?.userId
+
+            if (subscriptionData.status !== 'active' || subscriptionUserId !== user.id) {
+                return NextResponse.json({ success: false, status: subscriptionData.status }, { status: 403 })
+            }
+
+            const plan = getPlanFromProductId(subscriptionData.product_id)
+            if (plan === 'free') {
+                return NextResponse.json({ success: false, error: 'Unknown subscription product' }, { status: 400 })
+            }
+
+            const { error } = await supabase
+                .from('profiles')
+                .update({
+                    subscription_plan: plan,
+                    subscription_status: 'active',
+                    period_end: subscriptionData.next_billing_date || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+                })
+                .eq('id', user.id)
+
+            if (error) throw error
+
+            return NextResponse.json({
+                success: true,
+                plan,
+                subscription_id: subscriptionId,
+                product_id: subscriptionData.product_id,
+                value: PLAN_PRICES[plan as keyof typeof PLAN_PRICES],
+                currency: (subscriptionData.currency || 'USD').toUpperCase()
+            })
+        }
+
         const sessionData = await DodoPayments.getCheckoutSessionStatus(sessionId)
 
         if (sessionData.payment_status === 'succeeded' && sessionData.payment_id) {

@@ -67,6 +67,24 @@ export const DodoPayments = {
         return response.json()
     },
 
+    async getSubscription(subscriptionId: string) {
+        if (!DODO_API_KEY) throw new Error('Missing DODO_PAYMENTS_API_KEY')
+
+        const response = await fetch(`${DODO_BASE_URL}/subscriptions/${subscriptionId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${DODO_API_KEY}`
+            }
+        })
+
+        if (!response.ok) {
+            const err = await response.text()
+            throw new Error(`Dodo API Error: ${err}`)
+        }
+
+        return response.json()
+    },
+
     async getPayment(paymentId: string) {
         if (!DODO_API_KEY) throw new Error('Missing DODO_PAYMENTS_API_KEY')
 
