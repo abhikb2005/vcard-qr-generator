@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
 function createSupabaseAdmin() {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()
 
     if (!supabaseUrl || !serviceRoleKey) {
         throw new Error('Missing Supabase admin configuration')
@@ -11,6 +11,14 @@ function createSupabaseAdmin() {
 
     // IMPORTANT: We use the service role key to bypass RLS in webhooks.
     return createClient(supabaseUrl, serviceRoleKey)
+}
+
+function getPlanFromProductId(productId?: string) {
+    const normalizedProductId = productId?.trim()
+    if (normalizedProductId === process.env.DODO_PRODUCT_ID_STARTER?.trim()) return 'starter'
+    if (normalizedProductId === process.env.DODO_PRODUCT_ID_GROWTH?.trim()) return 'growth'
+    if (normalizedProductId === process.env.DODO_PRODUCT_ID_BUSINESS?.trim()) return 'business'
+    return null
 }
 
 const hex = (buffer: ArrayBuffer) => [...new Uint8Array(buffer)].map((b) => b.toString(16).padStart(2, '0')).join('');
@@ -70,23 +78,29 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ received: true }) // Not a user-specific event we can hook to
         }
 
-        if (eventType === 'subscription.renewed' || eventType === 'payment.succeeded') {
+        if (eventType === 'subscription.active' || eventType === 'subscription.renewed' || eventType === 'payment.succeeded') {
             const nextBillingDate = event.data?.next_billing_date || event.data?.subscription?.next_billing_date
-            
-            await supabaseAdmin
+            const productId = event.data?.product_id || event.data?.subscription?.product_id
+            const plan = getPlanFromProductId(productId)
+            const { error } = await supabaseAdmin
                 .from('profiles')
                 .update({
+                    ...(plan ? { subscription_plan: plan } : {}),
                     subscription_status: 'active',
                     period_end: nextBillingDate ? new Date(nextBillingDate).toISOString() : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
                 })
                 .eq('id', userId)
+
+            if (error) throw error
         } else if (eventType === 'subscription.cancelled' || eventType === 'payment.failed') {
-            await supabaseAdmin
+            const { error } = await supabaseAdmin
                 .from('profiles')
                 .update({
                     subscription_status: eventType === 'payment.failed' ? 'past_due' : 'cancelled'
                 })
                 .eq('id', userId)
+
+            if (error) throw error
         }
 
         return NextResponse.json({ received: true })
