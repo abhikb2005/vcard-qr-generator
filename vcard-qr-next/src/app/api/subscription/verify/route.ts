@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/server'
+import { createClient as createSupabaseAdminClient } from '@supabase/supabase-js'
 import { DodoPayments } from '@/utils/dodo'
 import { NextResponse } from 'next/server'
 
@@ -17,6 +18,17 @@ const PLAN_PRICES = {
     free: 0
 }
 
+function createSupabaseAdmin() {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim()
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()
+
+    if (!supabaseUrl || !serviceRoleKey) {
+        throw new Error('Missing Supabase admin configuration')
+    }
+
+    return createSupabaseAdminClient(supabaseUrl, serviceRoleKey)
+}
+
 export async function POST(request: Request) {
     console.log('Verify Subscription Route')
     const supabase = await createClient()
@@ -33,6 +45,7 @@ export async function POST(request: Request) {
     }
 
     try {
+        const supabaseAdmin = createSupabaseAdmin()
         if (subscriptionId) {
             const subscriptionData = await DodoPayments.getSubscription(subscriptionId)
             const subscriptionUserId = subscriptionData.metadata?.user_id || subscriptionData.metadata?.userId
@@ -46,14 +59,14 @@ export async function POST(request: Request) {
                 return NextResponse.json({ success: false, error: 'Unknown subscription product' }, { status: 400 })
             }
 
-            const { error } = await supabase
+            const { error } = await supabaseAdmin
                 .from('profiles')
-                .update({
+                .upsert({
+                    id: user.id,
                     subscription_plan: plan,
                     subscription_status: 'active',
                     period_end: subscriptionData.next_billing_date || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-                })
-                .eq('id', user.id)
+                }, { onConflict: 'id' })
 
             if (error) throw error
 
@@ -74,14 +87,14 @@ export async function POST(request: Request) {
             const plan = getPlanFromProductId(paymentData.product_id)
 
             // Update profile
-            const { error } = await supabase
+            const { error } = await supabaseAdmin
                 .from('profiles')
-                .update({
+                .upsert({
+                    id: user.id,
                     subscription_plan: plan,
                     subscription_status: 'active',
                     period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-                })
-                .eq('id', user.id)
+                }, { onConflict: 'id' })
 
             if (error) throw error
 
