@@ -80,3 +80,5 @@ test('signup completion signal is authenticated and bound to its account',async(
 });
 
 test('all restored pages have available stylesheet/font assets and social metadata',()=>{for(const slug of fs.readdirSync(path.join(root,'p'))) {const file=path.join(root,'p',slug,'index.html');if(!fs.existsSync(file))continue;const h=fs.readFileSync(file,'utf8');for(const match of h.matchAll(/(?:href|src)="(\/p\/_next\/[^"?]+)/g))assert.equal(fs.existsSync(path.join(root,match[1])),true,match[1]);assert.ok(h.includes('og:description'));}});
+
+test('restored pages do not imply static editing, tracking or unsupported adoption',()=>{for(const slug of fs.readdirSync(path.join(root,'p'))) {const file=path.join(root,'p',slug,'index.html');if(!fs.existsSync(file))continue;const h=fs.readFileSync(file,'utf8');assert.equal(h.includes('Join thousands of successful'),false);assert.equal(h.includes('Stop re-printing business cards every time'),false);assert.ok(h.includes('static vCard'));assert.ok(h.includes('/dynamic-qr-code-generator.html'));}});
