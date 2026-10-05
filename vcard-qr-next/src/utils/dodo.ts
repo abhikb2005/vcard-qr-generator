@@ -9,13 +9,15 @@ export const DodoPayments = {
         email,
         name,
         userId,
-        redirectUrl
+        redirectUrl,
+        attribution = {}
     }: {
         productId: string;
         email: string;
         name?: string;
         userId: string;
         redirectUrl: string;
+        attribution?: Record<string, string>;
     }) {
         if (!DODO_API_KEY) throw new Error('Missing DODO_PAYMENTS_API_KEY')
 
@@ -34,7 +36,7 @@ export const DodoPayments = {
                     email,
                     name: name || email.split('@')[0]
                 },
-                metadata: { user_id: userId },
+                metadata: { ...attribution, user_id: userId },
                 return_url: redirectUrl
             })
         })
@@ -52,7 +54,7 @@ export const DodoPayments = {
     async getCheckoutSessionStatus(sessionId: string) {
         if (!DODO_API_KEY) throw new Error('Missing DODO_PAYMENTS_API_KEY')
 
-        const response = await fetch(`${DODO_BASE_URL}/checkouts/${sessionId}`, {
+        const response = await fetch(`${DODO_BASE_URL}/checkouts/${encodeURIComponent(sessionId)}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${DODO_API_KEY}`
@@ -70,7 +72,7 @@ export const DodoPayments = {
     async getSubscription(subscriptionId: string) {
         if (!DODO_API_KEY) throw new Error('Missing DODO_PAYMENTS_API_KEY')
 
-        const response = await fetch(`${DODO_BASE_URL}/subscriptions/${subscriptionId}`, {
+        const response = await fetch(`${DODO_BASE_URL}/subscriptions/${encodeURIComponent(subscriptionId)}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${DODO_API_KEY}`
@@ -88,7 +90,7 @@ export const DodoPayments = {
     async getPayment(paymentId: string) {
         if (!DODO_API_KEY) throw new Error('Missing DODO_PAYMENTS_API_KEY')
 
-        const response = await fetch(`${DODO_BASE_URL}/payments/${paymentId}`, {
+        const response = await fetch(`${DODO_BASE_URL}/payments/${encodeURIComponent(paymentId)}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${DODO_API_KEY}`

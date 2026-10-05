@@ -26,14 +26,16 @@
       linker: { domains: ['app.vcardqrcodegenerator.com'] }
     });
     function getDynamicAppUrl() {
+      window.VcardAnalytics.captureAttribution();
       var url = new URL('https://app.vcardqrcodegenerator.com/login');
       url.searchParams.set('mode', 'signup');
       url.searchParams.set('intent', 'dynamic_event_manager');
       url.searchParams.set('segment', 'event_manager');
       url.searchParams.set('landing_variant', 'event_manager');
       var params = new URLSearchParams(window.location.search);
+      try { if (params.get('analytics_test') === '1' || sessionStorage.getItem('vcard_analytics_test') === '1') url.searchParams.set('analytics_test', '1'); } catch (error) { if (params.get('analytics_test') === '1') url.searchParams.set('analytics_test', '1'); }
       ['utm_source', 'utm_medium', 'utm_campaign', 'utm_adgroup', 'utm_term', 'utm_content'].forEach(function (key) {
-        if (params.has(key)) url.searchParams.set(key, params.get(key));
+        if (window.VcardAnalytics.canTrack() && params.has(key)) url.searchParams.set(key, params.get(key));
       });
       return url.toString();
     }
@@ -489,6 +491,11 @@
       </a>
     </section>
 
+    <section class="max-w-5xl mx-auto px-6 py-10">
+      <h2 class="text-2xl font-bold">Plan the printed handoff</h2>
+      <p>Example only: an event organizer prints a QR on a registration sign, then updates the agenda destination after a room change. The printed QR stays fixed. Scan activity is not a count of registrations or unique guests.</p>
+      <p><a href="/blog/qr-code-and-vcard-guide/" class="text-indigo-600 underline">Understand contact vCards and phone compatibility</a> before choosing a contact QR or an editable web link.</p>
+    </section>
   </main>
 
   <footer class="bg-slate-950 text-slate-400 py-10 text-center">

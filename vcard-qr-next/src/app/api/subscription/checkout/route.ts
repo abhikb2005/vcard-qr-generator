@@ -18,7 +18,9 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { tier } = await request.json()
+    const { tier, attribution: incoming = {} } = await request.json()
+    const allowed = ['customer_segment', 'landing_variant', 'landing_page', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_adgroup', 'utm_term', 'utm_content']
+    const attribution = Object.fromEntries(allowed.filter(key => typeof incoming?.[key] === 'string').map(key => [key, incoming[key].slice(0, 100)]))
     const productId = PRODUCT_IDS[tier as keyof typeof PRODUCT_IDS]
 
     if (!productId) {
@@ -28,13 +30,15 @@ export async function POST(request: Request) {
     try {
         const returnUrl = new URL('/dashboard', request.url)
         returnUrl.searchParams.set('payment_verifying', 'true')
+        for (const [key, value] of Object.entries(attribution)) returnUrl.searchParams.set(key, String(value))
 
         const data = await DodoPayments.createCheckoutSession({
             productId,
             email: user.email!,
             name: user.user_metadata?.full_name,
             userId: user.id,
-            redirectUrl: returnUrl.toString()
+            redirectUrl: returnUrl.toString(),
+            attribution
         })
 
         return NextResponse.json({ url: data.checkout_url })

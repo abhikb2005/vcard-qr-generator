@@ -4,7 +4,9 @@ function setupWindow(gtag) {
   const storage = new Map();
   global.window = global;
   global.location = {
-    hostname: 'localhost',
+    hostname: 'www.vcardqrcodegenerator.com',
+    origin: 'https://www.vcardqrcodegenerator.com',
+    search: '',
     pathname: '/test',
     href: 'http://localhost/test'
   };
@@ -13,6 +15,8 @@ function setupWindow(gtag) {
     getItem: (key) => storage.has(key) ? storage.get(key) : null,
     setItem: (key, value) => storage.set(key, String(value))
   };
+  storage.set('cookie_consent', 'accepted');
+  global.sessionStorage = global.localStorage;
   global.gtag = gtag;
   delete require.cache[require.resolve('../analytics.js')];
   return require('../analytics.js');

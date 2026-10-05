@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { UserIcon, PhoneIcon, EnvelopeIcon, BriefcaseIcon, MapPinIcon, GlobeAltIcon, ArrowPathIcon, CheckIcon, LinkIcon } from '@heroicons/react/24/outline'
-import { sanitizeError, trackEvent } from '@/lib/analytics'
+import { getAttributionParams, sanitizeError, trackEvent } from '@/lib/analytics'
 
 const generateShortId = (length: number = 6) => {
     const array = new Uint8Array(length);
@@ -99,7 +99,10 @@ export default function VCardForm({ userId, initialData }: { userId: string, ini
                 alert('Error processing vCard: ' + error.message)
             }
         } else {
+            const attribution = getAttributionParams()
+            if (!initialData) trackEvent('dynamic_qr_created', { ...attribution, qr_type: 'dynamic_vcard' })
             trackEvent('generated_qr_code', {
+                ...attribution,
                 qr_type: 'dynamic_vcard',
                 source_page: window.location.pathname,
                 has_logo: false,

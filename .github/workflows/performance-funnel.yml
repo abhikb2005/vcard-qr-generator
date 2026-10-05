@@ -1,0 +1,29 @@
+name: Performance funnel checks
+on:
+  pull_request:
+    paths:
+      - 'analytics.js'
+      - 'consent.js'
+      - 'index.html'
+      - 'dynamic-qr-code-generator.html'
+      - 'sitemap.xml'
+      - 'p/**'
+      - 'tests/**'
+      - 'vcard-qr-next/**'
+      - '.github/workflows/performance-funnel.yml'
+  workflow_dispatch:
+jobs:
+  focused-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: vcard-qr-next/package-lock.json
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: vcard-qr-next
+      - run: node --test tests/analytics-helper.test.cjs tests/analytics-html-contract.test.cjs tests/sitemap-canonical.test.cjs tests/performance-funnel.test.cjs
+      - run: npx tsc --noEmit
+        working-directory: vcard-qr-next
