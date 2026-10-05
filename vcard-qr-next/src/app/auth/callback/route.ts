@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
+import { isFirstSignIn } from '@/lib/signup'
 import { createClient } from '@/utils/supabase/server'
 
 export async function GET(request: Request) {
@@ -11,17 +13,25 @@ export async function GET(request: Request) {
 
     if (code) {
         const supabase = await createClient()
-        const { error } = await supabase.auth.exchangeCodeForSession(code)
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
         if (!error) {
+            const consentAccepted = (await cookies()).get('vcard_consent')?.value === 'accepted'
+            const redirect = (url: string) => {
+                const response = NextResponse.redirect(url)
+                if (consentAccepted && data.user && isFirstSignIn(data.user)) {
+                    response.cookies.set('vcard_signup', data.user.id + ':' + (data.user.app_metadata.provider === 'google' ? 'google' : 'email'), { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax', path: '/', maxAge: 3600 })
+                }
+                return response
+            }
             const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
             const isLocalEnv = process.env.NODE_ENV === 'development'
             if (isLocalEnv) {
                 // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
-                return NextResponse.redirect(`${origin}${next}`)
+                return redirect(`${origin}${next}`)
             } else if (forwardedHost) {
-                return NextResponse.redirect(`https://${forwardedHost}${next}`)
+                return redirect(`https://${forwardedHost}${next}`)
             } else {
-                return NextResponse.redirect(`${origin}${next}`)
+                return redirect(`${origin}${next}`)
             }
         }
     }

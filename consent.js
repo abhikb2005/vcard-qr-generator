@@ -14,7 +14,26 @@
   });
 
   // Check if user already consented
-  var consent = localStorage.getItem('cookie_consent');
+  var shared = document.cookie.match(/(?:^|; )vcard_consent=(accepted|rejected)(?:;|$)/);
+  var consent;
+  try {
+    consent = shared ? shared[1] : localStorage.getItem('cookie_consent');
+    if (consent) localStorage.setItem('cookie_consent', consent);
+    if (new URLSearchParams(location.search).get('analytics_test') === '1') sessionStorage.setItem('vcard_analytics_test', '1');
+  } catch (error) { consent = shared ? shared[1] : null; }
+  var qa = new URLSearchParams(location.search).get('analytics_test') === '1';
+  try { qa = qa || sessionStorage.getItem('vcard_analytics_test') === '1'; } catch (error) {}
+  window['ga-disable-G-E90B41BNEH'] = qa || (location.hostname !== 'www.vcardqrcodegenerator.com' && location.hostname !== 'app.vcardqrcodegenerator.com');
+  function saveChoice(choice) {
+    try {
+      localStorage.setItem('cookie_consent', choice);
+      if (choice === 'rejected') sessionStorage.removeItem('vcard_ga4_attribution');
+    } catch (error) {}
+    if (location.hostname === 'www.vcardqrcodegenerator.com' || location.hostname === 'app.vcardqrcodegenerator.com')
+      document.cookie = 'vcard_consent=' + choice + '; Domain=vcardqrcodegenerator.com; Path=/; Max-Age=15552000; SameSite=Lax; Secure';
+    window.dispatchEvent(new Event('vcard:consent'));
+  }
+  if (consent) saveChoice(consent);
   if (consent === 'accepted') {
     gtag('consent', 'update', {
       ad_storage: 'granted',
@@ -23,7 +42,7 @@
       analytics_storage: 'granted'
     });
   } else if (consent === 'rejected') {
-    // Keep denied — no update needed
+    // Keep denied â€” no update needed
   }
 
   // Build and inject the banner (only if no choice made yet)
@@ -47,7 +66,7 @@
       document.body.appendChild(banner);
 
       document.getElementById('cookie-accept').addEventListener('click', function () {
-        localStorage.setItem('cookie_consent', 'accepted');
+        saveChoice('accepted');
         gtag('consent', 'update', {
           ad_storage: 'granted',
           ad_user_data: 'granted',
@@ -58,7 +77,7 @@
       });
 
       document.getElementById('cookie-reject').addEventListener('click', function () {
-        localStorage.setItem('cookie_consent', 'rejected');
+        saveChoice('rejected');
         banner.remove();
       });
     });

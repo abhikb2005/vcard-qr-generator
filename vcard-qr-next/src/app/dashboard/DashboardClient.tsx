@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import CreateQrForm from '@/components/CreateQrForm'
 import LogoutButton from '@/components/LogoutButton'
@@ -8,7 +8,7 @@ import { LinkIcon, QrCodeIcon, ChartBarIcon, ArrowTopRightOnSquareIcon, Calendar
 import Link from 'next/link'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { trackEvent, trackPurchase } from '@/lib/analytics'
+import { captureAttribution, canTrack, getAttributionParams, trackSignUp, trackEvent, trackPurchase } from '@/lib/analytics'
 
 const LIMITS = {
     free: 1,
@@ -36,10 +36,32 @@ export default function DashboardClient() {
     const [showPricing, setShowPricing] = useState(false)
     const [loadingTier, setLoadingTier] = useState<string | null>(null)
 
-    const supabase = createClient()
+    const supabase = useMemo(() => createClient(), [])
     const router = useRouter()
     const searchParams = useSearchParams()
     const customerSegment = searchParams.get('segment') === 'event_manager' ? 'event_manager' : ''
+
+    useEffect(() => {
+        const reportSignup = async () => {
+            captureAttribution()
+            if (!canTrack()) return
+            const { data: { user } } = await supabase.auth.getUser()
+            if (!user) return
+            const response = await fetch('/api/analytics/signup', { cache: 'no-store' })
+            const signal = await response.json()
+            let pending = false
+            try { pending = localStorage.getItem('vcard_pending_signup') === user.id } catch { /* optional */ }
+            if (signal.completed || pending) {
+                if (trackSignUp({ signup_method: pending ? 'email' : signal.method }, user.id)) {
+                    try { localStorage.removeItem('vcard_pending_signup') } catch { /* optional */ }
+                }
+            }
+        }
+        const report = () => { void reportSignup().catch(() => {}) }
+        report()
+        window.addEventListener('vcard:consent', report)
+        return () => window.removeEventListener('vcard:consent', report)
+    }, [supabase])
 
     useEffect(() => {
         async function getData() {
@@ -83,20 +105,21 @@ export default function DashboardClient() {
             // Handle Payment Verification
             const sessionId = searchParams.get('session_id')
             const subscriptionId = searchParams.get('subscription_id')
-            if (searchParams.get('payment_verifying') === 'true' && (sessionId || subscriptionId)) {
+            const paymentId = searchParams.get('payment_id')
+            if (searchParams.get('payment_verifying') === 'true' && (sessionId || subscriptionId || paymentId)) {
                 setVerifyingPayment(true)
-                verifyPayment({ sessionId, subscriptionId })
+                verifyPayment({ sessionId, subscriptionId, paymentId })
             }
         }
         getData()
     }, [router, supabase, searchParams])
 
-    const verifyPayment = async ({ sessionId, subscriptionId }: { sessionId: string | null, subscriptionId: string | null }) => {
+    const verifyPayment = async ({ sessionId, subscriptionId, paymentId }: { sessionId: string | null, subscriptionId: string | null, paymentId: string | null }) => {
         try {
             const res = await fetch('/api/subscription/verify', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sessionId, subscriptionId })
+                body: JSON.stringify({ sessionId, subscriptionId, paymentId })
             })
             const json = await res.json()
             if (json.success) {
@@ -106,8 +129,9 @@ export default function DashboardClient() {
                     value: json.value,
                     currency: json.currency || 'USD'
                 }
-                trackPurchase({
-                    transaction_id: json.payment_id || json.subscription_id || sessionId || subscriptionId,
+                if (json.payment_id && json.revenue_verified) trackPurchase({
+                    ...getAttributionParams(),
+                    transaction_id: json.payment_id,
                     value: json.value ?? planDetails.value,
                     currency: json.currency || planDetails.currency,
                     plan_id: planDetails.plan_id,
@@ -161,6 +185,7 @@ export default function DashboardClient() {
         setLoadingTier(tier)
         const planDetails = PLAN_DETAILS[tier] || { plan_id: tier, plan_name: tier, value: 0, currency: 'USD' }
         const planParams = {
+            ...getAttributionParams(),
             ...planDetails,
             source_page: window.location.pathname
         }
@@ -168,7 +193,7 @@ export default function DashboardClient() {
         try {
             const res = await fetch('/api/subscription/checkout', {
                 method: 'POST',
-                body: JSON.stringify({ tier })
+                body: JSON.stringify({ tier, attribution: getAttributionParams() })
             })
             const json = await res.json()
             if (json.url) {

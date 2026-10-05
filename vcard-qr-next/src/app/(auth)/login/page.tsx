@@ -12,7 +12,7 @@ import {
   RotateCcw,
   Sparkles,
 } from "lucide-react";
-import { trackEvent } from "@/lib/analytics";
+import { canTrack, captureAttribution, trackEvent } from "@/lib/analytics";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -40,9 +40,13 @@ export default function LoginPage() {
   const supabase = createClient();
 
   useEffect(() => {
+    captureAttribution();
+    const onConsent = () => captureAttribution();
+    window.addEventListener("vcard:consent", onConsent);
     const params = new URLSearchParams(window.location.search);
     setIsSignUp(params.get("mode") === "signup");
     setCustomerSegment(params.get("segment") || "");
+    return () => window.removeEventListener("vcard:consent", onConsent);
   }, []);
 
   const isEventManager = customerSegment === "event_manager";
@@ -159,7 +163,11 @@ export default function LoginPage() {
       ) {
         setError("This email is already registered. Please sign in instead.");
       } else {
-        setMessage("Check your email for the confirmation link.");
+        if (data.user && canTrack()) {
+          try { localStorage.setItem('vcard_pending_signup', data.user.id); } catch { /* storage optional */ }
+        }
+        if (data.session) { router.push(dashboardPath); router.refresh(); }
+        else setMessage("Check your email for the confirmation link.");
       }
     } catch {
       setError("An unexpected error occurred");

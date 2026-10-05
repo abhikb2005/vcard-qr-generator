@@ -195,6 +195,9 @@ def _write_sitemap(posts: List[Post]) -> None:
         if not path.exists():
             return
         try:
+            html = path.read_text(encoding="utf-8")
+            if re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*noindex', html, re.I):
+                return
             loc = normalize_url(path)
             if loc in seen:
                 return
@@ -211,6 +214,9 @@ def _write_sitemap(posts: List[Post]) -> None:
     include(ROOT / "qr-code-with-logo.html")
     include(ROOT / "dynamic-qr-code-generator.html")
     include(ROOT / "bulk-qr-code.html")
+
+    for slug in ["sales-representative-new-york", "real-estate-agent-los-angeles"]:
+        include(ROOT / "p" / slug / "index.html")
 
     blogs_index = ROOT / "blogs" / "index.html"
     if blogs_index.exists():

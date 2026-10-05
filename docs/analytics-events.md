@@ -27,6 +27,10 @@ This site uses `trackEvent(eventName, params = {})` from `/analytics.js` on the 
 
 ## Purchase Idempotency
 
+All helper events and campaign storage require accepted consent. The consent choice is synchronized by a Secure SameSite=Lax parent-domain cookie; attribution remains session-scoped and allowlisted. Use `analytics_test=1` for QA: the flag persists for the app session, and helpers suppress QA and non-production host events. No contact payloads or auth/payment query parameters are included in base page URLs.
+
+Subscription activation alone is entitlement evidence, not new revenue. The dashboard sends `purchase` only with a verified successful Dodo payment ID and server `revenue_verified`, never with a subscription/session ID or catalogue estimate. Cross-browser deduplication still depends on GA4 transaction ID processing; Dodo remains the revenue source of truth.
+
 `purchase` is de-duplicated in `localStorage` by `transaction_id` using the key `vcard_ga4_purchase_ids`. Refreshing a payment success URL should not send another `purchase` for the same transaction. The helper still no-ops safely if localStorage is unavailable.
 
 ## Monetization Funnel

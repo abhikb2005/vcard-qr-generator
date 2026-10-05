@@ -45,7 +45,13 @@ To avoid conflicts, each area of the codebase has a designated owner.
 
 ---
 
+## Planned Work
+
+- 2026-10-05 Codex: OCTOBER-PERFORMANCE-01. Worktree `october-performance`, branch `codex/october-performance`, from origin/main because original main has overlapping uncommitted funnel edits. Scope: matched reporting, consent-aware funnel, homepage metadata/guide, relevant 404 restoration, dynamic links and private unsent prospect drafts. Cleanup after merge and production verification; retain if blocked.
+
 ## 📬 Messages Between Agents
+
+[2026-10-05] **Codex -> All**: CLAIMED OCTOBER-PERFORMANCE-01 under direct owner authorization. Original work and stashes untouched. No generic blogs, outreach sends, automation resumes or ad spend changes.
 
 > Post messages here. Format: `[Date] [Agent Name]: Message`
 
@@ -155,6 +161,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-10-05 | Codex | OCTOBER-PERFORMANCE-01: matched GSC homepage diagnosis, consent-aware signup/activation, verified charge semantics, truthful guide, 30 directory repairs and favicon, focused tests/build, private ten-prospect CEO review packet. | analytics/consent, homepage/guide/dynamic, p/sitemap, SaaS funnel, tests, performance docs |
 | 2026-08-26 | Codex | Follow-up after manual Growth reconciliation still left the account Free: subscription verification now writes via the server-side Supabase admin client (after binding the active Dodo subscription metadata to the authenticated user) and upserts the profile, avoiding browser RLS/update-policy dependence. Build passed; live user-session entitlement verification remains required. | `vcard-qr-next/src/app/api/subscription/verify/route.ts`, `data/agent-board.md` |
 | 2026-08-26 | Codex | Found a second entitlement defect from a live Growth purchase: Dodo subscription `sub_0NmFBC84qzg9YzfHWkxAa` is active and linked to the intended user, but the webhook only set `subscription_status` and never set `subscription_plan`. Webhook now maps product IDs to Starter/Growth/Business on active/renewed/succeeded events, trims service credentials, and fails deliveries when the profile update fails so the provider can retry. | `vcard-qr-next/src/app/api/webhooks/dodo/route.ts`, `data/agent-board.md` |
 | 2026-08-26 | Codex | Diagnosed and repaired Dodo return/entitlement mismatches after an actual successful subscription returned to `localhost`: checkout now derives the return origin from the live request, verification securely accepts Dodo's active `subscription_id` only when its stored `metadata.user_id` matches the signed-in user, and the webhook accepts Dodo's `user_id` metadata spelling. Direct Dodo API verification confirmed `sub_0NmF9O94LMFkFyf5RGhEI` is active on Starter; it is not yet counted as verified app revenue until the signed-in dashboard entitlement flow completes. Branch `codex/dynamic-event-manager-merge`; cleanup after no-charge checkout-return and entitlement QA. | `vcard-qr-next/src/utils/dodo.ts`, `vcard-qr-next/src/app/api/subscription/checkout/route.ts`, `vcard-qr-next/src/app/api/subscription/verify/route.ts`, `vcard-qr-next/src/app/api/webhooks/dodo/route.ts`, `vcard-qr-next/src/app/dashboard/DashboardClient.tsx`, `data/agent-board.md` |
@@ -738,3 +745,10 @@ alter table public.profiles
 [2026-05-21] **Codex -> All**: Continuing controlled orank remediation: added homepage `Accept: text/markdown` handling on apex, cursor pagination endpoint (`/api/v1/templates`), and async job pattern endpoints (`/api/v1/jobs/vcard`, `/api/v1/jobs/{jobId}`) with OpenAPI and llms documentation. Worker/static docs only; no app-owned Next.js files touched.
 
 [2026-05-21] **Codex -> All**: Follow-up to markdown negotiation: orank probes the `www` homepage after canonical redirect, so the exact root Worker route now covers `www.vcardqrcodegenerator.com/` too. Non-markdown visitors are served the existing static homepage through `/index.html`; markdown clients receive `text/markdown` with `Vary: Accept`.
+
+### October 5 performance review — release candidate
+
+- Completed diagnosis from matched GSC UI windows; homepage 21/136 clicks versus bulk 28/25; ranking losses documented separately from hypotheses. Dodo/GA4 windows reconciled at aggregate level.
+- Completed scoped attribution/signup/payment review, truthful guide refresh, 30 directory restorations, focused tests/build, private ten-prospect CEO packet. No outreach/ad changes.
+- Remaining: Google unverified-app Continue requires explicit user approval; API exports and full 23-URL list; fresh signup/new dynamic save/real paid app entitlement. Owner remains FREE (6/1), no entitlement fabricated.
+- Branch `codex/october-performance`; managed worktree retained until merged and verified in production. Original dirty main, unrelated files, branches and stashes preserved. Cleanup only this task-created checkout after needed artifacts remain available; branch deletion requires approval.
