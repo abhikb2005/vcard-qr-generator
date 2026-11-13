@@ -12,7 +12,8 @@ import {
   RotateCcw,
   Sparkles,
 } from "lucide-react";
-import { canTrack, captureAttribution, trackEvent } from "@/lib/analytics";
+import { canTrack, captureAttribution, getAttributionParams, trackEvent } from "@/lib/analytics";
+import { buildAuthCallbackUrl } from "@/lib/auth-callback-url";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -83,9 +84,9 @@ export default function LoginPage() {
           "Create your first dynamic QR free, then upgrade only when you need more codes or scan analytics.",
       };
   const authCallbackUrl = (next = dashboardPath) => {
-    const callback = new URL("/auth/callback", location.origin);
-    callback.searchParams.set("next", next);
-    return callback.toString();
+    let analyticsTest = new URLSearchParams(location.search).get("analytics_test") === "1";
+    try { analyticsTest ||= sessionStorage.getItem("vcard_analytics_test") === "1"; } catch { /* optional */ }
+    return buildAuthCallbackUrl(location.origin, next, getAttributionParams(), analyticsTest);
   };
 
   const trackSignupIntent = (method: "email" | "google") => {

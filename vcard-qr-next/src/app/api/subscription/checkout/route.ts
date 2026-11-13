@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { DodoPayments } from '@/utils/dodo'
 import { NextResponse } from 'next/server'
+import { randomUUID } from 'node:crypto'
 
 // Map tiers to Dodo Product IDs (You'll need to create these in Dodo Dashboard)
 // For now, we use placeholders or enviroment variables
@@ -29,7 +30,9 @@ export async function POST(request: Request) {
 
     try {
         const returnUrl = new URL('/dashboard', request.url)
+        const checkoutAttempt = randomUUID()
         returnUrl.searchParams.set('payment_verifying', 'true')
+        returnUrl.searchParams.set('checkout_attempt', checkoutAttempt)
         for (const [key, value] of Object.entries(attribution)) returnUrl.searchParams.set(key, String(value))
 
         const data = await DodoPayments.createCheckoutSession({
@@ -41,7 +44,7 @@ export async function POST(request: Request) {
             attribution
         })
 
-        return NextResponse.json({ url: data.checkout_url })
+        return NextResponse.json({ url: data.checkout_url, sessionId: data.session_id || data.checkout_id, checkoutAttempt })
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
