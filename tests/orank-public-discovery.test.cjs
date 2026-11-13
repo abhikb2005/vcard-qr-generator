@@ -36,6 +36,7 @@ test('public catalog serves a discoverable linkset on both site hosts', async ()
     assert.equal(res.status, 200);
     assert.match(res.headers.get('content-type'), /^application\/linkset\+json/);
     const { linkset: [catalog, api] } = await res.json();
+    assert.equal(catalog.anchor, "https://vcardqrcodegenerator.com/.well-known/api-catalog");
     assert.equal(catalog.item[0].href, api.anchor);
     assert.equal(api['service-desc'][0].href, 'https://www.vcardqrcodegenerator.com/openapi.json');
     const head = await worker.fetch(new Request(url, { method: 'HEAD' }), {}, {});

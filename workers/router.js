@@ -154,7 +154,7 @@ function noTransform(response) {
     : 'public, max-age=300, no-transform');
   headers.append('link', `<${SITE_URL}/llms.txt>; rel="service-desc"; type="text/plain"`);
   headers.append('link', `<${SITE_URL}/openapi.json>; rel="service-desc"; type="application/json"`);
-  headers.append('link', `<${SITE_URL}/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"`);
+  headers.append('link', `<${BASE_URL}/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"`);
   headers.append('link', `<${SITE_URL}/.well-known/ai-catalog.json>; rel="alternate"; type="application/json"`);
   headers.append('link', `<${SITE_URL}/.well-known/agent-skills/index.json>; rel="alternate"; type="application/json"`);
   headers.append('link', `<${SITE_URL}/index.md>; rel="alternate"; type="text/markdown"`);
@@ -2119,7 +2119,7 @@ export default {
       };
       const body = {
         linkset: [{
-          anchor: `${SITE_URL}/.well-known/api-catalog`,
+          anchor: `${BASE_URL}/.well-known/api-catalog`,
           item: [{ href: `${BASE_URL}/api/v1/product` }],
         }, {
           anchor: `${BASE_URL}/api/v1/product`,
