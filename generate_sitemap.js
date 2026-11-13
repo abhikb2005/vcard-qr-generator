@@ -14,6 +14,8 @@ try {
 
 const domain = 'https://www.vcardqrcodegenerator.com';
 const lastmod = new Date().toISOString().split('T')[0];
+const isRedirect = file => fs.existsSync(file) &&
+    /<meta\b[^>]*\bhttp-equiv\s*=\s*["']refresh["']/i.test(fs.readFileSync(file, 'utf8'));
 
 const staticPages = [
     '',
@@ -33,6 +35,7 @@ try {
     blogPosts = fs.readdirSync(blogDir)
         .filter(entry => fs.statSync(path.join(blogDir, entry)).isDirectory())
         .filter(entry => fs.existsSync(path.join(blogDir, entry, 'index.html')))
+        .filter(entry => !isRedirect(path.join(blogDir, entry, 'index.html')))
         .map(entry => `/blog/${entry}/`);
     console.log(`Found ${blogPosts.length} blog posts`);
 } catch (error) {
@@ -52,6 +55,7 @@ try {
     if (fs.existsSync(indDir)) {
         fs.readdirSync(indDir)
             .filter(f => f.endsWith('.html'))
+            .filter(f => !isRedirect(path.join(indDir, f.replace('.html', ''), 'index.html')))
             .forEach(f => pSeoExtra.push(`/p/industries/${f.replace('.html', '')}/`));
     }
 } catch (error) {

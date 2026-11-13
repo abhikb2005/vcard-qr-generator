@@ -136,7 +136,7 @@
 
       <section class="space-y-6">
         <h2 class="text-2xl font-bold text-slate-900">Advanced Networking Technology Integration</h2>
-        <p>Modern <strong>QR code generators for contact details</strong> offer sophisticated features that enhance networking effectiveness beyond basic contact sharing. Implement dynamic QR codes that can be updated with event-specific information, special offers, or time-sensitive content without reprinting materials.</p>
+        <p>Printing a sign you will reuse at the next event? Use an <a href="/dynamic-qr-code-generator.html" data-cta-location="reusable_event_sign" class="text-indigo-600 underline">editable QR code for event signs</a>. Print the code once, then update its destination when the schedule, venue, or registration link changes. For a badge that just shares a person's contact details, a static vCard is enough.</p>
         
         <p>Integrate your <strong>vCard QR generator</strong> with CRM systems, marketing automation platforms, and analytics tools to create comprehensive networking workflows that capture, nurture, and convert event contacts into business opportunities.</p>
         
@@ -244,7 +244,7 @@
         destination_url: 'https://app.vcardqrcodegenerator.com/login'
       });
     };
-    document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"]').forEach(function(link) {
+    document.querySelectorAll('a[href*="app.vcardqrcodegenerator.com"], a[href="/dynamic-qr-code-generator.html"]').forEach(function(link) {
       if ((link.getAttribute('onclick') || '').indexOf('trackDynamicCta') !== -1) return;
       link.addEventListener('click', function() {
         gtag('event', 'clicked_dynamic_qr_cta', {
