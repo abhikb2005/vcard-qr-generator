@@ -48,6 +48,7 @@ To avoid conflicts, each area of the codebase has a designated owner.
 ## Planned Work
 
 - 2026-11-13 Codex: Complete dynamic QR funnel validation in `vcard-qr-generator-funnel` on `codex/complete-dynamic-funnel`. Scope: signup attribution, Dodo checkout return, analytics tests/docs. Retain until review and end-to-end verification.
+- 2026-11-13 Codex: `codex/november-seo-repairs`, isolated worktree based on origin/main to preserve overlapping local work. Scope: event-guide discovery links, legacy content redirects and source-link cleanup. Remove worktree only after merge and live verification.
 
 - 2026-10-05 Codex: OCTOBER-PERFORMANCE-01. Worktree `october-performance`, branch `codex/october-performance`, from origin/main because original main has overlapping uncommitted funnel edits. Scope: matched reporting, consent-aware funnel, homepage metadata/guide, relevant 404 restoration, dynamic links and private unsent prospect drafts. Cleanup after merge and production verification; retain if blocked.
 
@@ -157,7 +158,8 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 ## 📝 Work Log
 
-- 2026-11-13 Codex: Continued the dynamic QR funnel from PR #29. Added consent-gated callback attribution across tabs and matched Dodo checkout references on subscription-only returns so GA4 uses the actual verified charge. Added regressions; real provider and GA4 journey remains pending.
+| 2026-11-13 | Codex | Continued the dynamic QR funnel from PR #29. Added consent-gated callback attribution across tabs and matched Dodo checkout references on subscription-only returns so GA4 uses the actual verified charge. Added regressions; real provider and GA4 journey remains pending. | Signup, dashboard, checkout, analytics tests/docs |
+| 2026-11-13 | Codex | Added measured dynamic-QR links from two event guides, updated links to unavailable comparison pages, and provided relevant static redirects for three confirmed 404s. | two event guides, developer and business-card guides, three legacy paths |
 
 | 2026-08-26 | Codex | Added the app’s purple QR brand mark as the Next.js browser-tab icon; build confirms `/icon.svg` is emitted. | `vcard-qr-next/src/app/icon.svg`, `data/agent-board.md` |
 

@@ -23,6 +23,7 @@ BLOG_DIRS = ["blog", "blogs"]  # scan both roots
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.IGNORECASE | re.DOTALL)
+REDIRECT_RE = re.compile(r'<meta\b[^>]*\bhttp-equiv\s*=\s*["\x27]refresh["\x27]', re.I)
 META_DESC_RE = re.compile(
     r"<meta\s+[^>]*name=[\"']description[\"'][^>]*content=[\"'](.*?)[\"']",
     re.IGNORECASE | re.DOTALL,
@@ -93,6 +94,8 @@ def _discover_posts() -> List[Post]:
             url = f"/{root_name}/{slug}/"
             try:
                 html = idx.read_text(encoding="utf-8")
+                if REDIRECT_RE.search(html):
+                    continue
                 meta = _parse_html_meta(html)
                 prev = existing.get(slug, {})
                 # Preserve existing date when possible; else derive from git commit date
@@ -196,6 +199,8 @@ def _write_sitemap(posts: List[Post]) -> None:
             return
         try:
             html = path.read_text(encoding="utf-8")
+            if REDIRECT_RE.search(html):
+                return
             if re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*noindex', html, re.I):
                 return
             loc = normalize_url(path)
