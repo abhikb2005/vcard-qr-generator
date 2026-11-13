@@ -41,7 +41,8 @@
 - vCard payload API: POST https://vcardqrcodegenerator.com/v1/vcard
 - Paginated template API: GET https://vcardqrcodegenerator.com/api/v1/templates?limit=2
 - Template markdown twin: GET https://vcardqrcodegenerator.com/api/v1/templates.md
-- Async vCard job API: POST https://vcardqrcodegenerator.com/api/v1/jobs/vcard
+- [Bulk QR workflow and API limits](https://www.vcardqrcodegenerator.com/developers/bulk-qr.md)
+- Single-contact job demo: POST https://vcardqrcodegenerator.com/api/v1/jobs/vcard. Read the payload in the initial response; polling does not retrieve it.
 - Streaming API: GET https://vcardqrcodegenerator.com/v1/stream
 - JSON errors: API errors return error.code, error.message, error.hint, error.docsUrl, and error.status.
 - JSON error test endpoint: GET https://vcardqrcodegenerator.com/api/v1/errors/example
