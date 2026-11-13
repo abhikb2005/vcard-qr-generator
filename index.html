@@ -46,7 +46,6 @@
   <link rel="pricing" href="https://www.vcardqrcodegenerator.com/pricing.md" type="text/markdown">
   <link rel="mcp-server" href="https://vcardqrcodegenerator.com/mcp">
   <script type="application/json" id="model-context">{"mcpServers":[{"name":"vcard-qr-code-generator","url":"https://vcardqrcodegenerator.com/mcp","transport":"streamable_http"}],"tools":["get_product_context","create_vcard_payload"]}</script>
-  <script>document.modelContext = { mcpServers: [{ name: 'vcard-qr-code-generator', url: 'https://vcardqrcodegenerator.com/mcp', transport: 'streamable_http' }], tools: ['get_product_context', 'create_vcard_payload'] }; try { navigator.modelContext = document.modelContext; } catch (error) {}</script>
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
     {
@@ -134,6 +133,7 @@
   <!-- Tailwind and QRCode Library -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+  <script defer src="/webmcp-vcard.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1206702185649949"
@@ -1006,7 +1006,7 @@
       };
 
       // Generate QR Code from form values
-      const generateQRCode = () => {
+      const generateQRCode = (event, fromTool = false) => {
         const generationId = ++staticGenerationId;
         let vCardString = '';
         try {
@@ -1030,11 +1030,19 @@
           const firstName = nameParts.shift() || '';
           const lastName = nameParts.join(' ') || '';
 
-          vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${lastName};${firstName};;;\nFN:${fullName}\nORG:${company}\nTITLE:${title}\nTEL;TYPE=WORK,VOICE:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
+          const escapeField = value => fromTool ? value.replace(/[\\;,]/g, '\\$&') : value;
+          vCardString = `BEGIN:VCARD\nVERSION:3.0\nN:${escapeField(lastName)};${escapeField(firstName)};;;\nFN:${escapeField(fullName)}\nORG:${escapeField(company)}\nTITLE:${escapeField(title)}\nTEL;TYPE=WORK,VOICE:${escapeField(phone)}\nEMAIL:${escapeField(email)}\nURL:${escapeField(website)}\nEND:VCARD`;
           qrcode.makeCode(vCardString);
+          if (fromTool) {
+            const canvas = qrCodeElement.querySelector('canvas');
+            if (!canvas) throw new Error('QR canvas unavailable');
+            downloadBtn.href = canvas.toDataURL('image/png');
+            return true;
+          }
           setTimeout(() => verifyStaticQrRendered(vCardString, generationId), 100);
         } catch (error) {
           try { qrcode.clear(); } catch (clearError) {}
+          if (fromTool) { updateUIState(false); return false; }
           const message = window.VcardAnalytics?.sanitizeError(error) || 'QR generation failed';
           scheduleStaticFailure(vCardString, generationId, 'generation', message);
         }
@@ -1080,6 +1088,8 @@
         generateQRCode();
         confirmModal.classList.add('hidden');
       };
+
+      window.registerVcardBrowserTool?.({ form, generate: () => generateQRCode(null, true) });
 
       // Event listeners
       form.addEventListener('input', generateQRCode);

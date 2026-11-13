@@ -47,6 +47,8 @@ To avoid conflicts, each area of the codebase has a designated owner.
 
 ## Planned Work
 
+- 2026-11-13 Codex: claim WebMCP and RFC 9727 catalog in `vcard-qr-generator-orank-public` (`codex/orank-public-discovery`), isolated to preserve dirty main and conflicting PR #26. Scope: homepage, Worker, tests and agent docs. Retain until merge and production verification.
+
 - 2026-11-13 Codex: Complete dynamic QR funnel validation in `vcard-qr-generator-funnel` on `codex/complete-dynamic-funnel`. Scope: signup attribution, Dodo checkout return, analytics tests/docs. Retain until review and end-to-end verification.
 - 2026-11-13 Codex: `codex/november-seo-repairs`, isolated worktree based on origin/main to preserve overlapping local work. Scope: event-guide discovery links, legacy content redirects and source-link cleanup. Remove worktree only after merge and live verification.
 
@@ -167,6 +169,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-11-13 | Codex | Registered a local static QR WebMCP tool and added the RFC 9727 public API catalog, with regression checks. No OAuth, billing, or contact upload changes. | homepage, developer discovery, Worker, llms.txt, tests |
 | 2026-10-05 | Codex | PR #29 merged; static/app production successful 14:22:53Z/14:23:02Z. All 23 historical 404 examples now resolve; Google validation started. Logo checkout created without payment, fake ID failed closed. Old owner subscriptions are expired zero-value tests; paid app entitlement and fresh signup remain gated. Final restored-page copy review removes unsupported claims. | performance report, restored p page copy |
 | 2026-10-05 | Codex | OCTOBER-PERFORMANCE-01: matched GSC homepage diagnosis, consent-aware signup/activation, verified charge semantics, truthful guide, 30 directory repairs and favicon, focused tests/build, private ten-prospect CEO review packet. | analytics/consent, homepage/guide/dynamic, p/sitemap, SaaS funnel, tests, performance docs |
 | 2026-08-26 | Codex | Follow-up after manual Growth reconciliation still left the account Free: subscription verification now writes via the server-side Supabase admin client (after binding the active Dodo subscription metadata to the authenticated user) and upserts the profile, avoiding browser RLS/update-policy dependence. Build passed; live user-session entitlement verification remains required. | `vcard-qr-next/src/app/api/subscription/verify/route.ts`, `data/agent-board.md` |

@@ -5,6 +5,8 @@ on:
       - 'analytics.js'
       - 'consent.js'
       - 'index.html'
+      - 'webmcp-vcard.js'
+      - 'workers/router.js'
       - 'dynamic-qr-code-generator.html'
       - 'sitemap.xml'
       - 'p/**'
@@ -24,6 +26,6 @@ jobs:
           cache-dependency-path: vcard-qr-next/package-lock.json
       - run: npm ci --ignore-scripts --no-audit --no-fund
         working-directory: vcard-qr-next
-      - run: node --test tests/analytics-helper.test.cjs tests/analytics-html-contract.test.cjs tests/sitemap-canonical.test.cjs tests/performance-funnel.test.cjs
+      - run: node --test tests/orank-public-discovery.test.cjs tests/analytics-helper.test.cjs tests/analytics-html-contract.test.cjs tests/sitemap-canonical.test.cjs tests/performance-funnel.test.cjs
       - run: npx tsc --noEmit
         working-directory: vcard-qr-next

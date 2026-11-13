@@ -154,6 +154,7 @@ function noTransform(response) {
     : 'public, max-age=300, no-transform');
   headers.append('link', `<${SITE_URL}/llms.txt>; rel="service-desc"; type="text/plain"`);
   headers.append('link', `<${SITE_URL}/openapi.json>; rel="service-desc"; type="application/json"`);
+  headers.append('link', `<${SITE_URL}/.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"`);
   headers.append('link', `<${SITE_URL}/.well-known/ai-catalog.json>; rel="alternate"; type="application/json"`);
   headers.append('link', `<${SITE_URL}/.well-known/agent-skills/index.json>; rel="alternate"; type="application/json"`);
   headers.append('link', `<${SITE_URL}/index.md>; rel="alternate"; type="text/markdown"`);
@@ -2072,7 +2073,7 @@ export default {
         return redirectToPreferredHost(url);
       }
       if (url.searchParams.get('mode') === 'agent' || wantsMarkdown(request)) {
-        return markdown(homepageMarkdown());
+        return noTransform(markdown(homepageMarkdown()));
       }
       if (url.hostname === 'www.vcardqrcodegenerator.com') {
         return homepageHtml(request);
@@ -2104,6 +2105,29 @@ export default {
         return new Response(null, { status: 200, headers });
       }
       return new Response(ROBOTS_TXT, { status: 200, headers });
+    }
+
+    if (url.pathname === '/.well-known/api-catalog') {
+      if (request.method !== 'GET' && request.method !== 'HEAD') {
+        return apiError('method_not_allowed', 'Use GET or HEAD.', 405,
+          'Read the public API catalog.', {}, { allow: 'GET, HEAD, OPTIONS' });
+      }
+      const headers = {
+        ...CORS_HEADERS,
+        'content-type': 'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
+        'cache-control': 'public, max-age=300',
+      };
+      const body = {
+        linkset: [{
+          anchor: `${SITE_URL}/.well-known/api-catalog`,
+          item: [{ href: `${BASE_URL}/api/v1/product` }],
+        }, {
+          anchor: `${BASE_URL}/api/v1/product`,
+          'service-desc': [{ href: `${SITE_URL}/openapi.json`, type: 'application/json' }],
+          'service-doc': [{ href: `${SITE_URL}/developers/`, type: 'text/html' }],
+        }],
+      };
+      return new Response(request.method === 'HEAD' ? null : JSON.stringify(body), { headers });
     }
 
     if (url.pathname === '/.well-known/ai-catalog.json') {
