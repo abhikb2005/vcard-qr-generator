@@ -13,6 +13,10 @@ The public API supports agent and developer workflows for vCard QR payload gener
 - `GET https://vcardqrcodegenerator.com/api/v1/stream`
 - `GET https://vcardqrcodegenerator.com/api/v1/errors/example`
 
+## Batch and download limits
+
+The job endpoint handles one contact. Read the payload from the initial response. The status URL does not retrieve a stored result, image, or ZIP. For local CSV import, preview, and the paid ZIP export, see https://www.vcardqrcodegenerator.com/developers/bulk-qr.md.
+
 ## Machine-Readable Specs
 
 - OpenAPI: https://www.vcardqrcodegenerator.com/openapi.json
