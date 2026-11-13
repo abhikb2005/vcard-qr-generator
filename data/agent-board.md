@@ -47,6 +47,8 @@ To avoid conflicts, each area of the codebase has a designated owner.
 
 ## Planned Work
 
+- Codex: restore Worker publishing in the existing public-discovery worktree and verify the bulk ZIP flow with synthetic contacts. Leave live payment credentials and checkout configuration unchanged. Retain until verification.
+
 - Codex: verify bulk agent workflow and catalog hosting in the existing public-discovery worktree. Scope: developer docs, Markdown and discovery links. Retain until deployed and verified.
 
 - 2026-11-13 Codex: claim WebMCP and RFC 9727 catalog in `vcard-qr-generator-orank-public` (`codex/orank-public-discovery`), isolated to preserve dirty main and conflicting PR #26. Scope: homepage, Worker, tests and agent docs. Retain until merge and production verification.
@@ -171,6 +173,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-11-13 | Codex | Removed routine Dodo secret writes from Worker code deployment after repeated Cloudflare 10013 failures. Existing secrets and dashboard variables are preserved. | Worker deployment workflow |
 | 2026-11-13 | Codex | Verified single-contact API job and status behavior; documented local bulk CSV workflow and paid export boundary. Deferred www MIME warning: GitHub Pages cannot set a per-file type. | developer docs, discovery, Worker Markdown |
 | 2026-11-13 | Codex | Mirror the apex RFC 9727 catalog on GitHub Pages www, which bypasses the Worker. Reuse the public discovery worktree; retain until live checks finish. | catalog, parity test |
 | 2026-11-13 | Codex | Production follow-up: static www bypasses Worker routing. Advertise the working apex API catalog from static HTML, llms.txt and Worker discovery. | homepage, developer index, Worker, tests, llms.txt |
