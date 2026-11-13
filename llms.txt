@@ -19,7 +19,7 @@
 - [Rate limits and deprecation policy](https://www.vcardqrcodegenerator.com/developers/rate-limits.html)
 - [Digital business card QR code generator guide](https://www.vcardqrcodegenerator.com/guides/digital-business-card-qr-code-generator/)
 - [OpenAPI spec](https://www.vcardqrcodegenerator.com/openapi.json)
-- [API catalog (RFC 9727)](https://www.vcardqrcodegenerator.com/.well-known/api-catalog)
+- [API catalog (RFC 9727)](https://vcardqrcodegenerator.com/.well-known/api-catalog)
 - In a WebMCP-enabled browser, the homepage exposes `generate_static_vcard_qr`: render a static QR locally, then use Download. Use only contact details the user provides.
 - [Agent Skills index](https://www.vcardqrcodegenerator.com/.well-known/agent-skills/index.json)
 - [MCP manifest](https://www.vcardqrcodegenerator.com/mcp/manifest.json)

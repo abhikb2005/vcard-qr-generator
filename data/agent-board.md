@@ -169,6 +169,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-11-13 | Codex | Production follow-up: static www bypasses Worker routing. Advertise the working apex API catalog from static HTML, llms.txt and Worker discovery. | homepage, developer index, Worker, tests, llms.txt |
 | 2026-11-13 | Codex | Registered a local static QR WebMCP tool and added the RFC 9727 public API catalog, with regression checks. No OAuth, billing, or contact upload changes. | homepage, developer discovery, Worker, llms.txt, tests |
 | 2026-10-05 | Codex | PR #29 merged; static/app production successful 14:22:53Z/14:23:02Z. All 23 historical 404 examples now resolve; Google validation started. Logo checkout created without payment, fake ID failed closed. Old owner subscriptions are expired zero-value tests; paid app entitlement and fresh signup remain gated. Final restored-page copy review removes unsupported claims. | performance report, restored p page copy |
 | 2026-10-05 | Codex | OCTOBER-PERFORMANCE-01: matched GSC homepage diagnosis, consent-aware signup/activation, verified charge semantics, truthful guide, 30 directory repairs and favicon, focused tests/build, private ten-prospect CEO review packet. | analytics/consent, homepage/guide/dynamic, p/sitemap, SaaS funnel, tests, performance docs |
