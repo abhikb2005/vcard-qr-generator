@@ -1,0 +1,27 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://vcardqrcodegenerator.com/.well-known/api-catalog",
+      "item": [
+        {
+          "href": "https://vcardqrcodegenerator.com/api/v1/product"
+        }
+      ]
+    },
+    {
+      "anchor": "https://vcardqrcodegenerator.com/api/v1/product",
+      "service-desc": [
+        {
+          "href": "https://www.vcardqrcodegenerator.com/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://www.vcardqrcodegenerator.com/developers/",
+          "type": "text/html"
+        }
+      ]
+    }
+  ]
+}
