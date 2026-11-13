@@ -39,6 +39,23 @@ test('first OAuth sign-in differs from returning login and invalid timestamps',(
   assert.equal(isFirstSignIn({created_at:'2026-08-01T14:00:00Z',last_sign_in_at:'2026-10-05T14:00:00Z'},now),false);
   assert.equal(isFirstSignIn({},now),false);
 });
+test('signup callback restores allowed campaign attribution in a fresh tab', () => {
+  const entry = browser('accepted', '?segment=event_manager&landing_variant=event_manager&utm_campaign=events&utm_medium=cpc&email=private');
+  const analyticsFile = 'vcard-qr-next/src/lib/analytics.ts';
+  const { buildAuthCallbackUrl } = load('vcard-qr-next/src/lib/auth-callback-url.ts');
+  const attribution = load(analyticsFile, {}, entry.globals).captureAttribution();
+  const origin = entry.window.location.origin;
+  const callback = new URL(buildAuthCallbackUrl(origin, '/dashboard?segment=event_manager', attribution, false));
+  const next = new URL(callback.searchParams.get('next'), origin);
+  const fresh = browser('accepted', next.search);
+  assert.deepEqual({ ...load(analyticsFile, {}, fresh.globals).captureAttribution() }, {
+    customer_segment: 'event_manager', landing_variant: 'event_manager', utm_campaign: 'events', utm_medium: 'cpc'
+  });
+  const qa = new URL(buildAuthCallbackUrl(origin, '/dashboard', {}, true));
+  assert.equal(new URL(qa.searchParams.get('next'), origin).searchParams.get('analytics_test'), '1');
+  const recovery = new URL(buildAuthCallbackUrl(origin, '/auth/reset-password', attribution, false));
+  assert.equal(recovery.searchParams.get('next'), '/auth/reset-password');
+});
 function verification({user={id:'owner'},session={payment_status:'succeeded',payment_id:'pay-real'},payment={status:'succeeded',metadata:{user_id:'owner'},product_id:'product-starter',total_amount:450,currency:'USD',created_at:new Date().toISOString()},subscription={status:'active',metadata:{user_id:'owner'},product_id:'product-starter'}}={}) {
   const updates=[];let providerCalls=0;
   const admin={from:()=>({upsert:async v=>{updates.push(v);return {error:null}}})};
@@ -51,6 +68,36 @@ test('verified owned payment reports actual amount and payment ID',async()=>{
 });
 test('subscription entitlement does not invent revenue or a charge ID',async()=>{
   const v=verification();const r=await v.POST({json:async()=>({subscriptionId:'sub-real'})});assert.equal(r.body.success,true);assert.equal(r.body.revenue_verified,false);assert.equal(r.body.payment_id,undefined);assert.equal(r.body.value,undefined);
+});
+
+test('a subscription-only redirect resolves the remembered checkout and counts its payment once', async () => {
+  const b = browser('accepted', '?payment_verifying=true&subscription_id=sub-real&checkout_attempt=attempt-a&segment=event_manager&utm_campaign=event');
+  const checkout = load('vcard-qr-next/src/lib/checkout-return.ts', {}, b.globals);
+  checkout.rememberCheckout('checkout-real', 'attempt-a');
+  const getReturn = () => checkout.getCheckoutReturn(new URLSearchParams(b.window.location.search));
+  const v = verification({
+    payment: { status: 'succeeded', metadata: { user_id: 'owner' }, subscription_id: 'sub-real', total_amount: 450, currency: 'USD' },
+    subscription: { status: 'active', metadata: { user_id: 'owner' }, product_id: 'product-starter', next_billing_date: new Date(Date.now() + 86400000).toISOString() }
+  });
+  const analytics = load('vcard-qr-next/src/lib/analytics.ts', {}, b.globals);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const { body } = await v.POST({ json: async () => getReturn() });
+    assert.equal(body.revenue_verified, true);
+    assert.equal(body.payment_id, 'pay-real');
+    analytics.trackPurchase({ ...analytics.getAttributionParams(), transaction_id: body.payment_id, value: body.value, currency: body.currency });
+  }
+  const purchases = b.calls.filter(([, name]) => name === 'purchase');
+  assert.equal(purchases.length, 1);
+  assert.equal(purchases[0][2].customer_segment, 'event_manager');
+  assert.equal(purchases[0][2].utm_campaign, 'event');
+  b.window.location.search = '?payment_verifying=true&subscription_id=sub-other&checkout_attempt=attempt-a';
+  const mismatched = await v.POST({ json: async () => getReturn() });
+  assert.equal(mismatched.status, 403);
+  assert.equal(v.updates.length, 2);
+  b.window.location.search = '?payment_verifying=true&subscription_id=sub-real&checkout_attempt=attempt-b';
+  assert.equal(getReturn().sessionId, null);
+  b.window.location.search = '?subscription_id=sub-real';
+  assert.equal(getReturn(), null);
 });
 for (const override of [{payment:{status:'succeeded',metadata:{user_id:'someone-else'},product_id:'product-starter'}},{payment:{status:'failed',metadata:{user_id:'owner'},product_id:'product-starter'}},{payment:{status:'succeeded',metadata:{user_id:'owner'},product_id:'unknown'}},{session:{payment_status:'pending'}}]) {
   test('unpaid, foreign or unknown payments fail closed '+JSON.stringify(override),async()=>{const v=verification(override);const r=await v.POST({json:async()=>({sessionId:'checkout'})});assert.equal(r.body.success,false);assert.equal(v.updates.length,0)});

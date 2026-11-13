@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { captureAttribution, canTrack, getAttributionParams, trackSignUp, trackEvent, trackPurchase } from '@/lib/analytics'
+import { getCheckoutReturn, rememberCheckout } from '@/lib/checkout-return'
 
 const LIMITS = {
     free: 1,
@@ -103,12 +104,10 @@ export default function DashboardClient() {
             setLoading(false)
 
             // Handle Payment Verification
-            const sessionId = searchParams.get('session_id')
-            const subscriptionId = searchParams.get('subscription_id')
-            const paymentId = searchParams.get('payment_id')
-            if (searchParams.get('payment_verifying') === 'true' && (sessionId || subscriptionId || paymentId)) {
+            const paymentReturn = getCheckoutReturn(searchParams)
+            if (paymentReturn) {
                 setVerifyingPayment(true)
-                verifyPayment({ sessionId, subscriptionId, paymentId })
+                verifyPayment(paymentReturn)
             }
         }
         getData()
@@ -132,8 +131,10 @@ export default function DashboardClient() {
                 if (json.payment_id && json.revenue_verified) trackPurchase({
                     ...getAttributionParams(),
                     transaction_id: json.payment_id,
-                    value: json.value ?? planDetails.value,
-                    currency: json.currency || planDetails.currency,
+                    value: json.value,
+                    currency: json.currency,
+                    payment_provider: 'dodo',
+                    payment_status: 'succeeded',
                     plan_id: planDetails.plan_id,
                     plan_name: planDetails.plan_name,
                     source_page: window.location.pathname,
@@ -141,7 +142,7 @@ export default function DashboardClient() {
                         item_id: planDetails.plan_id,
                         item_name: planDetails.plan_name,
                         item_category: 'vcard_qr',
-                        price: json.value ?? planDetails.value,
+                        price: json.value,
                         quantity: 1
                     }]
                 })
@@ -196,7 +197,8 @@ export default function DashboardClient() {
                 body: JSON.stringify({ tier, attribution: getAttributionParams() })
             })
             const json = await res.json()
-            if (json.url) {
+            if (res.ok && json.url) {
+                rememberCheckout(json.sessionId, json.checkoutAttempt)
                 trackEvent('pro_checkout_start', planParams)
                 window.location.href = json.url
             } else {

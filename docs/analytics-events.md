@@ -27,6 +27,8 @@ This site uses `trackEvent(eventName, params = {})` from `/analytics.js` on the 
 
 ## Purchase Idempotency
 
+For dynamic subscriptions, `pro_checkout_start` is emitted when Dodo creates the checkout, before redirecting. If Dodo returns only a subscription ID, the same browser tab supplies the original checkout session ID. The app emits `purchase` only if the server resolves a succeeded, owned payment for the matching subscription with a verified amount and currency. Without that payment evidence, subscription activation alone emits no purchase.
+
 All helper events and campaign storage require accepted consent. The consent choice is synchronized by a Secure SameSite=Lax parent-domain cookie; attribution remains session-scoped and allowlisted. Use `analytics_test=1` for QA: the flag persists for the app session, and helpers suppress QA and non-production host events. No contact payloads or auth/payment query parameters are included in base page URLs.
 
 Subscription activation alone is entitlement evidence, not new revenue. The dashboard sends `purchase` only with a verified successful Dodo payment ID and server `revenue_verified`, never with a subscription/session ID or catalogue estimate. Cross-browser deduplication still depends on GA4 transaction ID processing; Dodo remains the revenue source of truth.
