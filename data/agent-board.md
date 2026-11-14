@@ -175,6 +175,7 @@ I am moving to a feature branch now. I will pause the SEO Autopilot first as req
 
 | Date | Agent | What Changed | Files Touched |
 |------|-------|-------------|---------------|
+| 2026-11-14 | Codex | Confirmed official Registry listing active and prepared portable MCP marketplace package and reviewer instructions. Cursor publisher sign-in is pending. | plugin.json, mcp.json, mcp/marketplace.md |
 | 2026-11-14 | Codex | Validated the live product MCP and prepared official Registry publication using GitHub OIDC and a pinned publisher. | server.json, registry workflow |
 | 2026-11-13 | Codex | Removed routine Dodo secret writes from Worker code deployment after repeated Cloudflare 10013 failures. Existing secrets and dashboard variables are preserved. | Worker deployment workflow |
 | 2026-11-13 | Codex | Verified single-contact API job and status behavior; documented local bulk CSV workflow and paid export boundary. Deferred www MIME warning: GitHub Pages cannot set a per-file type. | developer docs, discovery, Worker Markdown |
