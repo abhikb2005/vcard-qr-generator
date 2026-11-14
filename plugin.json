@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "vcard-qr-code-generator",
+  "version": "1.0.0",
+  "description": "Create vCard contact text for QR encoding and find the right vCard QR generator workflow.",
+  "author": { "name": "vCard QR Code Generator", "url": "https://www.vcardqrcodegenerator.com/" },
+  "homepage": "https://www.vcardqrcodegenerator.com/developers/",
+  "repository": "https://github.com/abhikb2005/vcard-qr-generator",
+  "license": "Unlicense",
+  "keywords": ["vcard", "qr-code", "contacts"]
+}
