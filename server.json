@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.abhikb2005/vcard-qr-code-generator",
+  "title": "vCard QR Code Generator",
+  "description": "Discover the vCard QR generator and create vCard contact payloads for QR encoding.",
+  "repository": {
+    "url": "https://github.com/abhikb2005/vcard-qr-generator",
+    "source": "github"
+  },
+  "websiteUrl": "https://www.vcardqrcodegenerator.com/developers/",
+  "version": "2026-05-21",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://vcardqrcodegenerator.com/mcp"
+    }
+  ]
+}
