@@ -1,0 +1,35 @@
+name: Publish MCP server to official registry
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main' && github.repository == 'abhikb2005/vcard-qr-generator'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      PUBLISHER_VERSION: "1.8.9"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install official publisher
+        run: |
+          set -eu
+          cd "$RUNNER_TEMP"
+          base="https://github.com/modelcontextprotocol/registry/releases/download/v${PUBLISHER_VERSION}"
+          archive=mcp-publisher_linux_amd64.tar.gz
+          curl --fail --silent --show-error --location "$base/$archive" --output "$archive"
+          curl --fail --silent --show-error --location "$base/registry_${PUBLISHER_VERSION}_checksums.txt" --output checksums.txt
+          grep " $archive$" checksums.txt | sha256sum --check --strict
+          tar -xzf "$archive" mcp-publisher
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+      - name: Validate and publish
+        run: |
+          mcp-publisher validate server.json
+          mcp-publisher login github-oidc
+          mcp-publisher publish server.json
